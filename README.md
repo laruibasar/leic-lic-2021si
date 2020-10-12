@@ -1,4 +1,4 @@
-# g08
-47611 Tiago Conceição
-45827 Daniel Azevedo
-27969 Luís Bandarra
+> # G8
+> - Tiago Conceição	47611 
+> - Daniel Azevedo	45827 
+> - Luís Bandarra	27969 
