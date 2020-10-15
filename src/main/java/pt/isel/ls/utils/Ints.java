@@ -38,7 +38,7 @@ public class Ints {
         int mid;
 
         while (low < high) {
-            mid = (high + low) / 2 + low;
+            mid = (high + low) / 2;
             if (n > a[mid]) {
                 low = mid + 1;
             } else if (n < a[mid]) {
