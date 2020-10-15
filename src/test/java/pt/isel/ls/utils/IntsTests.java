@@ -53,4 +53,10 @@ public class IntsTests {
         assertTrue(ix< 0);
     }
 
+    @Test
+    public void test_printEachThreeElementThatSumTo_in_sortNonConsecutive_subsequence() {
+        int[] array = {1, 2, 4, 7, 8, 9, 11, 12, 15, 17};
+        assertEquals(12, Ints.indexOfBinary(array, 1, array.length - 1, 12));
+    }
+
 }
