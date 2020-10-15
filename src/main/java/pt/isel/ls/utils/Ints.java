@@ -29,12 +29,16 @@ public class Ints {
             throw new IllegalArgumentException("from(" + fromIndex + ") > to(" + toIndex + ")");
         }
 
+        if (fromIndex < 0 || toIndex > a.length) {
+            throw new IndexOutOfBoundsException("Indexes out of bound: [" + fromIndex + "; " + toIndex + "]");
+        }
+
         int low = fromIndex;
         int high = toIndex - 1;
         int mid;
 
         while (low < high) {
-            mid = high + low / 2 + 1;
+            mid = (high + low) / 2 + low;
             if (n > a[mid]) {
                 low = mid + 1;
             } else if (n < a[mid]) {
