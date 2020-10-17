@@ -24,7 +24,8 @@ public class DatabaseTests {
     @Test
     public void addStudent_wrongCourseNumber() {
         ConnectionDb db = new ConnectionDb();
-        String cmd = "insert into students values(12347,'Alexandre',0);";
+        String cmd = "insert into students (number, name, course) values"
+                + "(12347,'Alexandre',0);";
 
         try {
             db.getConnection();
@@ -46,7 +47,8 @@ public class DatabaseTests {
     @Test
     public void addStudent() {
         ConnectionDb db = new ConnectionDb();
-        String cmd = "insert into students values(12347,'Alexandre',1);";
+        String cmd = "insert into students (number, name, course) values"
+                + "(12347,'Alexandre',1);";
 
         try {
             db.getConnection();
@@ -67,13 +69,13 @@ public class DatabaseTests {
     @Test
     public void addStudent_wrongStudentNumber() {
         ConnectionDb db = new ConnectionDb();
-        String cmd = "insert into students (number, name, course) values" +
-                "(11111,'Alexandre',1);";
+        String cmd = "insert into students (number, name, course) values"
+                + "(11111,'Alexandre',1);";
 
         try {
             db.getConnection();
             db.con.setAutoCommit(false);
-            assertEquals(0, db.workTuple(cmd));
+            assertEquals(1, db.workTuple(cmd));
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -90,7 +92,7 @@ public class DatabaseTests {
     @Test
     public void changeStudent() {
         ConnectionDb db = new ConnectionDb();
-        String cmd = "update students set name = 'Alex' where number = 12346;";
+        String cmd = "update students set name = 'Alex' where number = 12345;";
 
         try {
             db.getConnection();
@@ -111,7 +113,7 @@ public class DatabaseTests {
     @Test
     public void removeStudent() {
         ConnectionDb db = new ConnectionDb();
-        String cmd = "delete from students where number = 11111;";
+        String cmd = "delete from students where number = 12345;";
 
         try {
             db.getConnection();
