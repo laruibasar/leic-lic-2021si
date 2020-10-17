@@ -17,8 +17,8 @@ public class App {
 
 
             Properties props = new Properties();
-            props.setProperty("user","tiago");
-            props.setProperty("password","tiago123");
+            props.setProperty("user","");
+            props.setProperty("password","");
             Connection con = DriverManager.getConnection(app.url,props);
 
             if(con != null){
