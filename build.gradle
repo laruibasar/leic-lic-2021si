@@ -13,6 +13,7 @@ repositories {
 
 dependencies {
     compile fileTree(dir: 'vendor/main', include: '*.jar')
+    compile fileTree(dir: 'vendor/postgresql-jdbc', include: '*.jar')
     testCompile fileTree(dir: 'vendor/test', include: '*.jar')
 }
 

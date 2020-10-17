@@ -50,7 +50,7 @@ public class IntsTests {
     public void indexOfBinary_throws_IndexOutOfBound() {
         int[] v = {1, 3, 5, 7};
         int ix = Ints.indexOfBinary(v, 1, 5, 4);
-        assertTrue(ix< 0);
+        assertTrue(ix < 0);
     }
 
     @Test
