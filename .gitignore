@@ -2,4 +2,4 @@
 .gradle
 build
 out
-
+setup_env.sh
