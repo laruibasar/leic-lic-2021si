@@ -1,6 +1,7 @@
 package pt.isel.ls;
 
 
+import pt.isel.ls.utils.ConnectionDb;
 
 public class App {
 

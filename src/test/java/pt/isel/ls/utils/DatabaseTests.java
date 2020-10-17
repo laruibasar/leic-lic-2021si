@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class DatabaseTests {
@@ -23,6 +24,29 @@ public class DatabaseTests {
     }
 
     @Test
+    public void addStudent_wrongCourseNumber(){
+
+        ConnectionDb db = new ConnectionDb();
+        String cmd = "insert into students values(12347,'Alexandre',0);";
+
+        try {
+            db.getConnection();
+            db.con.setAutoCommit(false);
+            assertEquals(0,db.workTuple(cmd));
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            try {
+                db.con.rollback();
+                db.con.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+    }
+
+    @Test
     public void addStudent(){
 
         ConnectionDb db = new ConnectionDb();
@@ -31,7 +55,30 @@ public class DatabaseTests {
         try {
             db.getConnection();
             db.con.setAutoCommit(false);
-            assertTrue(db.workTuple(cmd) > 0);
+            assertEquals(1,db.workTuple(cmd));
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            try {
+                db.con.rollback();
+                db.con.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+    }
+
+    @Test
+    public void addStudent_wrongStudentNumber(){
+
+        ConnectionDb db = new ConnectionDb();
+        String cmd = "insert into students values(11111,'Alexandre',1);";
+
+        try {
+            db.getConnection();
+            db.con.setAutoCommit(false);
+            assertEquals(0,db.workTuple(cmd));
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -53,7 +100,7 @@ public class DatabaseTests {
         try {
             db.getConnection();
             db.con.setAutoCommit(false);
-            assertTrue(db.workTuple(cmd) > 0);
+            assertEquals(1,db.workTuple(cmd));
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -76,7 +123,7 @@ public class DatabaseTests {
         try {
             db.getConnection();
             db.con.setAutoCommit(false);
-            assertTrue(db.workTuple(cmd) > 0);
+            assertEquals(1,db.workTuple(cmd));
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -87,6 +134,22 @@ public class DatabaseTests {
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
+        }
+
+    }
+
+    @Test
+    public void consultTuples(){
+
+        ConnectionDb db = new ConnectionDb();
+        String cmd = "select * from students;";
+        db.getConnection();
+        assertTrue(db.consultQuery(cmd) == true);
+
+        try {
+            db.con.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
 
     }

@@ -43,6 +43,28 @@ public class ConnectionDb {
         url += "/" + database;
     }
 
+    public boolean consultQuery(String CMD) {
+       boolean rs = false;
+
+        try {
+            //Obter um statement
+            Statement stmt = con.createStatement();
+
+            //executar o comando de select
+            ResultSet res = stmt.executeQuery(CMD);
+
+            rs = res.next();
+
+            //fechar o Statement
+            stmt.close();
+        }
+        catch(SQLException sqlex)
+        {
+            System.out.println(sqlex.getMessage());
+        }
+        return rs;
+    }
+
     public int workTuple(String CMD){
         int retVal=0;
         try
