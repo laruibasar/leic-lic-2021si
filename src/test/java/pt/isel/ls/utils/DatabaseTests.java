@@ -9,10 +9,13 @@ import static org.junit.Assert.assertTrue;
 
 public class DatabaseTests {
 
+    private String password = "tiago123";
+    private String user = "tiago";
+
     @Test
     public void connection(){
 
-        ConnectionDb db = new ConnectionDb();
+        ConnectionDb db = new ConnectionDb(user,password);
         assertTrue(db.getConnection() != null);
 
         try {
@@ -27,7 +30,7 @@ public class DatabaseTests {
     @Test
     public void addStudent(){
 
-        ConnectionDb db = new ConnectionDb();
+        ConnectionDb db = new ConnectionDb(user,password);
 
         try {
             db.getConnection();

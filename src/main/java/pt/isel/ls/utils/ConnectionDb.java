@@ -11,9 +11,9 @@ public class ConnectionDb {
     private String password;
     Connection con;
 
-    ConnectionDb(){
-        this.user = "tiago";
-        this.password = "tiago123";
+    ConnectionDb(String u, String p){
+        this.user = u;
+        this.password = p;
     }
 
     public int AddTuple(){
