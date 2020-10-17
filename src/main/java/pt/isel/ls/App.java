@@ -14,13 +14,44 @@ public class App {
         /* Create a DB connection to use through our simple app */
         // TO DO: remove hardcoded definition
         PGSimpleDataSource ds = new PGSimpleDataSource();
-        ds.setDatabaseName("testdb");
-        ds.setUser("test");
-        ds.setPassword("test");
+
+        /*
+         * url to use in getConnection
+         * this is build with value from env vars: LS_DB_HOST, LS_DB_DATABASE, LS_DB_USER, LS_DB_PASSWD
+         */
+        String url = "jdbc:postgresql://"; // localhost/test?user=fred&password=secret&ssl=true";
+        String dbHost = System.getenv("LS_DB_HOST");
+        if (dbHost == null || dbHost.length() == 0) {
+            System.out.println("Set LS_DB_HOST for connection to database");
+            System.exit(1);
+        }
+        url += dbHost;
+
+        String dbDatabase = System.getenv("LS_DB_DATABASE");
+        if (dbDatabase == null || dbDatabase.length() == 0) {
+            System.out.println("Set LS_DB_DATABASE for connection to database");
+            System.exit(1);
+        }
+        url += "/" + dbDatabase;
+
+        // set URL
+        ds.setURL(url);
+
+        String dbUser = System.getenv("LS_DB_USER");
+        if (dbUser == null || dbUser.length() == 0) {
+            System.out.println("Set LS_DB_USER for connection to database");
+            System.exit(1);
+        }
+
+        String dbPasswd = System.getenv("LS_DB_PASSWD");
+        if (dbPasswd == null || dbPasswd.length() == 0) {
+            System.out.println("Set LS_DB_PASSWD for connection to database");
+            System.exit(1);
+        }
 
         Connection conn = null;
         try {
-            conn = ds.getConnection();
+            conn = ds.getConnection(dbUser, dbPasswd);
             // use connection
             // a simple select
             String query = "SELECT * FROM students";
