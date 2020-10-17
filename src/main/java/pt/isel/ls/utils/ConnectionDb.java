@@ -1,46 +1,78 @@
 package pt.isel.ls.utils;
 
 import java.sql.*;
-import java.util.Properties;
+
+import org.postgresql.ds.PGSimpleDataSource;
 
 public class ConnectionDb {
 
-
-    private final String url = "jdbc:postgresql://localhost:5432/ls";
+    private String url = "jdbc:postgresql://";
     private String user;
     private String password;
+    private String host;
+    private String database;
     Connection con;
 
-    ConnectionDb(String u, String p){
-        this.user = u;
-        this.password = p;
+
+    public ConnectionDb(){
+
+        this.user = System.getenv("LS_DB_USER");
+        if (user == null || user.length() == 0) {
+            System.out.println("Set LS_DB_USER for connection to database");
+            System.exit(1);
+        }
+
+        this.password = System.getenv("LS_DB_PASSWD");
+        if (password == null || password.length() == 0) {
+            System.out.println("Set LS_DB_PASSWD for connection to database");
+            System.exit(1);
+        }
+
+        this.host = System.getenv("LS_DB_HOST");
+        if (host == null || host.length() == 0) {
+            System.out.println("Set LS_DB_HOST for connection to database");
+            System.exit(1);
+        }
+        url += host;
+
+        this.database = System.getenv("LS_DB_DATABASE");
+        if (database == null || database.length() == 0) {
+            System.out.println("Set LS_DB_DATABASE for connection to database");
+            System.exit(1);
+        }
+        url += "/" + database;
     }
 
-    public int AddTuple(){
-        //TODO complete method
-        Connection con = getConnection();
-        return 0;
+    public int workTuple(String CMD){
+        int retVal=0;
+        try
+        {
+            //Obter um statement para o comando parametrizado
+            PreparedStatement pstmt = con.prepareStatement(CMD);
+
+            //executar o comando de inserção
+            retVal = pstmt.executeUpdate();
+
+            //fechar o Statement
+            pstmt.close();
+        }
+        catch(SQLException sqlex)
+        {
+            System.out.println(sqlex.getMessage());
+        }
+
+        return retVal;
     }
 
-    public int ChangeTuple(){
-        //TODO complete method
-        Connection con = getConnection();
-        return 0;
-    }
-
-    public int DeleteTuple(){
-        //TODO complete method
-        Connection con = getConnection();
-        return 0;
-    }
 
     public Connection getConnection(){
 
+        con = null;
+
         try {
-            Properties props = new Properties();
-            props.setProperty("user",user);
-            props.setProperty("password",password);
-            con = DriverManager.getConnection(url,props);
+            PGSimpleDataSource ds = new PGSimpleDataSource();
+            ds.setURL(url);
+            con = ds.getConnection(user, password);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

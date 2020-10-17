@@ -9,13 +9,10 @@ import static org.junit.Assert.assertTrue;
 
 public class DatabaseTests {
 
-    private String password = "tiago123";
-    private String user = "tiago";
-
     @Test
     public void connection(){
 
-        ConnectionDb db = new ConnectionDb(user,password);
+        ConnectionDb db = new ConnectionDb();
         assertTrue(db.getConnection() != null);
 
         try {
@@ -23,25 +20,25 @@ public class DatabaseTests {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
-
     }
 
     @Test
     public void addStudent(){
 
-        ConnectionDb db = new ConnectionDb(user,password);
+        ConnectionDb db = new ConnectionDb();
+        String cmd = "insert into students values(12347,'Alexandre',1);";
 
         try {
             db.getConnection();
             db.con.setAutoCommit(false);
-            //TODO create statemente then execute it and check return value to see if the test is successful
+            assertTrue(db.workTuple(cmd) > 0);
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }finally {
             try {
                 db.con.rollback();
+                db.con.close();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
@@ -50,8 +47,48 @@ public class DatabaseTests {
 
     @Test
     public void ChangeStudent(){
-        //TODO Create test that change the content of a tuple
+        ConnectionDb db = new ConnectionDb();
+        String cmd = "update students set name = 'Alex' where number = 12346;";
+
+        try {
+            db.getConnection();
+            db.con.setAutoCommit(false);
+            assertTrue(db.workTuple(cmd) > 0);
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            try {
+                db.con.rollback();
+                db.con.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
     }
 
+    @Test
+    public void RemoveStudent(){
+
+        ConnectionDb db = new ConnectionDb();
+        String cmd = "delete from students where number = 11111;";
+
+        try {
+            db.getConnection();
+            db.con.setAutoCommit(false);
+            assertTrue(db.workTuple(cmd) > 0);
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            try {
+                db.con.rollback();
+                db.con.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+
+    }
 
 }
