@@ -11,15 +11,15 @@ public class App {
 
         System.out.println("Hello LS");
 
-        /* Create a DB connection to use through our simple app */
-        // TO DO: remove hardcoded definition
-        PGSimpleDataSource ds = new PGSimpleDataSource();
-
         /*
          * url to use in getConnection
-         * this is build with value from env vars: LS_DB_HOST, LS_DB_DATABASE, LS_DB_USER, LS_DB_PASSWD
+         * this is build with value from env vars:
+         *   - LS_DB_HOST
+         *   - LS_DB_DATABASE
+         *   - LS_DB_USER
+         *   - LS_DB_PASSWD
          */
-        String url = "jdbc:postgresql://"; // localhost/test?user=fred&password=secret&ssl=true";
+        String url = "jdbc:postgresql://";
         String dbHost = System.getenv("LS_DB_HOST");
         if (dbHost == null || dbHost.length() == 0) {
             System.out.println("Set LS_DB_HOST for connection to database");
@@ -34,7 +34,8 @@ public class App {
         }
         url += "/" + dbDatabase;
 
-        // set URL
+        /* Create a DB connection to use through our simple app */
+        PGSimpleDataSource ds = new PGSimpleDataSource();
         ds.setURL(url);
 
         String dbUser = System.getenv("LS_DB_USER");
@@ -52,8 +53,7 @@ public class App {
         Connection conn = null;
         try {
             conn = ds.getConnection(dbUser, dbPasswd);
-            // use connection
-            // a simple select
+            /* a simple select */
             String query = "SELECT * FROM students";
             PreparedStatement stmt = conn.prepareStatement(query);
             ResultSet rs = stmt.executeQuery();
@@ -65,12 +65,12 @@ public class App {
                         + " " + rs.getString(2));
             }
 
-            // a simple delete
+            /* a simple delete */
             conn.setAutoCommit(false);
 
             String queryDelete = "DELETE FROM students WHERE course = ?";
             stmt = conn.prepareStatement(queryDelete);
-            stmt.setInt(1, 2); // LEETC
+            stmt.setInt(1, 2); /* LEETC */
 
             int result = stmt.executeUpdate();
 
@@ -80,7 +80,7 @@ public class App {
                 System.out.println("Nothing to delete");
             }
 
-            // Check
+            /* Check */
             stmt = conn.prepareStatement(query);
             rs = stmt.executeQuery();
             System.out.println("After DELETE");
@@ -100,7 +100,6 @@ public class App {
                 e1.getStackTrace();
             }
 
-            // log error
             System.out.println(e.getMessage());
         } finally {
             if (conn != null) {
