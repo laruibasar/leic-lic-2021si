@@ -5,3 +5,7 @@ public abstract class Handler {
         return 0;
     }
 }
+
+interface CommandHadler{
+    CommandResult execute(CommandRequest commandRequest);
+}
