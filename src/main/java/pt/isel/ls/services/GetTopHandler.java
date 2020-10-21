@@ -3,7 +3,7 @@ package pt.isel.ls.services;
 public class GetTopHandler implements CommandHandler<GetTopHandler>{
 
     @Override
-    public void execute(GetTopHandler command) {
-
+    public int execute(GetTopHandler command) {
+        return 0;
     }
 }

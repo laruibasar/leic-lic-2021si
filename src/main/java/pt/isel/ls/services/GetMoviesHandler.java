@@ -3,7 +3,7 @@ package pt.isel.ls.services;
 public class GetMoviesHandler implements CommandHandler<GetMoviesHandler>{
 
     @Override
-    public void execute(GetMoviesHandler command) {
-
+    public int execute(GetMoviesHandler command) {
+        return 0;
     }
 }

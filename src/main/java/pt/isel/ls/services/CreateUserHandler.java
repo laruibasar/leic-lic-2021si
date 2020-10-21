@@ -4,15 +4,19 @@ import pt.isel.ls.model.User;
 
 public class CreateUserHandler implements CommandHandler<CreateUserHandler>{
 
-    private User user;
+    private String name;
+    private String mail;
 
-    public CreateUserHandler(String name, String email) {
-        user = new User(name, email);
+    public CreateUserHandler(String name, String mail) {
+        this.name = name;
+        this.mail = mail;
     }
 
 
-    @Override
-    public void execute(CreateUserHandler command) {
 
+
+    @Override
+    public int execute(CreateUserHandler command) {
+        return 0;
     }
 }

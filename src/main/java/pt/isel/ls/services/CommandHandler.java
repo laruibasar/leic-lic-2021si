@@ -7,5 +7,5 @@ package pt.isel.ls.services;
  */
 public interface CommandHandler <T> {
 
-    void execute(T command);
+    int execute(T command);
 }

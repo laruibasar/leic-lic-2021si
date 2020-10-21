@@ -21,6 +21,7 @@ public class GetUsersHandler implements CommandHandler {
 
 
     @Override
-    public void execute(Object command) {
+    public int execute(Object command) {
+        return 0;
     }
 }
