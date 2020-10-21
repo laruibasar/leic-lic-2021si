@@ -1,7 +1,7 @@
 package pt.isel.ls.model;
 
 public class User {
-    private int id;
+    private int id; //can be removed, because email is a unique attribute
     private String name;
     private String email;
 
@@ -20,7 +20,7 @@ public class User {
     public void setName(String name) {
         this.name = name;
     }
-    public String getName(String name) {
+    public String getName() {
         return name;
     }
 
