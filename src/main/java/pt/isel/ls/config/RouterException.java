@@ -1,2 +1,7 @@
-package pt.isel.ls.config;public class RouterException {
+package pt.isel.ls.config;
+
+public class RouterException extends Exception {
+    public RouterException(String description) {
+        super(description);
+    }
 }
