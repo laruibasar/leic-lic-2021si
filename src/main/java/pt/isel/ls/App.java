@@ -6,14 +6,14 @@ public class App {
     public static void main(String[] args) {
         System.out.println("Application LS - G8");
 
-        /*
-         * Setup application
-         * TODO: setup database connection for availability through application
-         * TODO: setup router service with handlers for application commands
-         */
-        AppConfig.setup();
-
         try {
+            /*
+             * Setup application
+             * TODO: setup database connection for availability through application
+             * TODO: setup router service with handlers for application commands
+             */
+            AppConfig.setup();
+
             if (args.length == 0) {
                 AppConsole.run();
             } else {
