@@ -2,15 +2,17 @@ package pt.isel.ls.services;
 
 import pt.isel.ls.model.User;
 
-public class CreateUserHandler extends Handler {
+public class CreateUserHandler implements CommandHandler<CreateUserHandler>{
+
     private User user;
 
     public CreateUserHandler(String name, String email) {
         user = new User(name, email);
     }
 
+
     @Override
-    public int execute() {
-        return 0;
+    public void execute(CreateUserHandler command) {
+
     }
 }
