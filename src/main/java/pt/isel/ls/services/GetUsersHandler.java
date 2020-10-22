@@ -1,7 +1,8 @@
 package pt.isel.ls.services;
 
 public class GetUsersHandler implements CommandHandler {
-    private int id;
+
+    private int id = 0;
 
     public GetUsersHandler() { }
 
@@ -9,19 +10,12 @@ public class GetUsersHandler implements CommandHandler {
         this.id = id;
     }
 
-//    @Override
-//    public int execute() {
-//        if (id == null) {
-//            return 1;
-//        } else {
-//            return 0;
-//        }
-//    }
-
-
-
     @Override
     public int execute(Object command) {
-        return 0;
+        if (id == 0) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 }

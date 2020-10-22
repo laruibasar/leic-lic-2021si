@@ -8,11 +8,9 @@ public class Command {
     private String method;
     private String [] path;
     private String [] parameters;
-    private boolean verified = false;
     private static List<String> templates = new ArrayList<>();
 
     //Templates pré definidos
-
     /****
      * TODO implementar forma de permitir verificação da diretoria /movies/{mid}/ratings
      */
@@ -34,11 +32,27 @@ public class Command {
         String[] input = cmd.split(" ");
         methodVerifier(method = input[0]);
         pathVerifier(path = input[1].split("/"));
-        parametersVerifier(parameters = input[2].split("="));
+        parameters = parametersVerifier(input[2]);
     }
 
-    private int parametersVerifier(String[] params) {
-        return 1;
+    /***
+     * TODO improve code
+     * @param params
+     * @return
+     */
+    private String[] parametersVerifier(String params) {
+        String aux[] = params.split("=");
+
+        //result[0] = first; resutl[1] = last&email
+        String result[] = aux[1].split("\\+");
+
+        //result[3] = mail;
+        result[3] = aux[3];
+        aux = result[2].split("&");
+
+        //result[2] = last;
+        result[2] = aux[1];
+        return result;
     }
 
     private int pathVerifier(String[] paths) {

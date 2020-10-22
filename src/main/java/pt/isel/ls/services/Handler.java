@@ -1,11 +1,13 @@
 package pt.isel.ls.services;
 
-public class Handler{
+import pt.isel.ls.utils.Command;
 
-    private CommandHandler command;
+public class Handler {
 
-    public Handler(CommandHandler command) {
-        this.command = command;
+    private Command cmd;
+
+    public Handler(String cmd) {
+        this.cmd = new Command(cmd);
     }
 
 }
