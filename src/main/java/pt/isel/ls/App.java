@@ -13,13 +13,16 @@ public class App {
              * TODO: setup router service with handlers for application commands
              */
             AppConfig.setup();
-
-            if (args.length == 0) {
-                AppConsole.run();
+            if (AppConfig.getInstance().loadConfig) {
+                if (args.length == 0) {
+                    AppConsole.run();
+                } else {
+                    AppConsole.runOnce(args);
+                }
+                System.exit(0);
             } else {
-                AppConsole.runOnce(args);
+                System.out.println("Error: failed to load config\n" + AppConfig.getInstance().loadMessage);
             }
-            System.exit(0);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.exit(1);

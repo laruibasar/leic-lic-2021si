@@ -11,7 +11,7 @@ public class GetUsersHandler extends Handler {
 
     @Override
     public int execute() {
-        if (id == null) {
+        if (id != 0) {
             return 1;
         } else {
             return 0;

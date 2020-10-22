@@ -1,14 +1,11 @@
 package pt.isel.ls;
 
-import pt.isel.ls.services.Router;
-import pt.isel.ls.services.Handler;
-
 public class AppConsole {
     public static void run() {
-
+        System.out.println("Run interactive");
     }
 
     public static void runOnce(String[] args) {
-
+        System.out.println("Run once");
     }
 }
