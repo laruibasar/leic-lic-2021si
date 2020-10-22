@@ -9,7 +9,6 @@ public class App {
         try {
             /*
              * Setup application
-             * TODO: setup database connection for availability through application
              * TODO: setup router service with handlers for application commands
              */
             AppConfig.setup();
@@ -21,7 +20,8 @@ public class App {
                 }
                 System.exit(0);
             } else {
-                System.out.println("Error: failed to load config\n" + AppConfig.getInstance().loadMessage);
+                System.out.println("Error: failed to load config\n"
+                        + AppConfig.getInstance().loadMessage);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
