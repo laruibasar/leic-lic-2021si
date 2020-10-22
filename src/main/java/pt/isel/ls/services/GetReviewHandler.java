@@ -1,10 +1,14 @@
 package pt.isel.ls.services;
 
-public class GetReviewHandler implements CommandHandler{
-
+public class GetReviewHandler extends Handler implements IHandler<GetReviewHandler>{
 
     @Override
-    public int execute(Object command) {
+    public int execute(GetReviewHandler command) {
+        return 0;
+    }
+
+    @Override
+    public int execute() {
         return 0;
     }
 }
