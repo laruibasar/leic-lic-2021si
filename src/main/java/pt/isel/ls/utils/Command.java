@@ -17,26 +17,53 @@ public class Command {
      * TODO implementar forma de permitir verificação da diretoria /movies/{mid}/ratings
      */
     static {
-        templates.add("/users");
-        templates.add("/movie");
-        templates.add("/tops/ratings");
+        templates.add("users");
+        templates.add("movie");
+        templates.add("tops");
+        templates.add("movies");
+        templates.add("ratings");
+        templates.add("reviews");
     }
 
+    /***
+     * TODO Criar exceção para caso o retorno seja 1 ?
+     * methodVerifier
+     * pathVerifier
+     */
     public Command(String cmd) {
         String[] input = cmd.split(" ");
         methodVerifier(method = input[0]);
         pathVerifier(path = input[1].split("/"));
+        parametersVerifier(parameters = input[2].split("="));
     }
 
-    private int pathVerifier(String[] strings) {
+    private int parametersVerifier(String[] params) {
+        return 1;
+    }
+
+    private int pathVerifier(String[] paths) {
+        for(String s: paths) {
+            if(!verifyTemplate(s));
+                return 1;
+        }
         return 0;
     }
 
+    /***
+     * Verifies method from the command given
+     * @param method
+     * @return
+     */
     public int methodVerifier(String method) {
-        return 0;
+        return (method.equals("GET") || method.equals("POST")) ? 0:1;
     }
 
-    //Estrutura de dados com complexidade O(1) para uma procura
+    /***
+     * Verifies the directory given by the user,
+     * with complexity O(1)
+     * @param template
+     * @return
+     */
     public boolean verifyTemplate(String template) {
         return templates.contains(template);
     }
