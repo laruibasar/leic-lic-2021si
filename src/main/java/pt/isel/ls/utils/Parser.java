@@ -21,7 +21,10 @@ public class Parser {
     private String lastName;
     private String mail;
 
-
+    /***
+     * Parser is responsible for getting all parameters from the command given
+     * @param cmd - > command given by user
+     */
     public Parser(String cmd) {
         String[] input = cmd.split(" ");
         String[] subDirectories = input[1].split("/");
@@ -95,6 +98,67 @@ public class Parser {
                     }
                 }
                 break;
+            case "GET":
+
+                //GET /users/{uid} - returns the details for the user identified by uid
+                if(subDirectories[1].equals("users") && subDirectories.length == 3) {
+                    userID = Integer.parseInt(subDirectories[2]);
+
+                    System.out.println("userID = "+userID);
+
+                //GET /movies/{mid}
+                //GET /movies/{mid}/ratings
+                //GET /movies/{mid}/reviews
+                }else if(subDirectories[1].equals("movies") && (subDirectories.length == 2 || subDirectories.length == 3)) {
+                    movieID = Integer.parseInt(subDirectories[2]);
+
+                    System.out.println("movieID ="+movieID);
+
+                //GET /movies/{mid}/reviews/{rid}
+                }else if(subDirectories[1].equals("movies") && subDirectories.length == 5) {
+                    movieID = Integer.parseInt(subDirectories[2]);
+                    reviewID = Integer.parseInt(subDirectories[4]);
+
+                    System.out.println("movieID ="+movieID +" reviewID" + reviewID);
+
+                //GET /users/{uid}/reviews
+                }else if(subDirectories[1].equals("users") && subDirectories.length == 4) {
+                    userID = Integer.parseInt(subDirectories[2]);
+
+                    System.out.println("userID = "+userID);
+
+                //GET /users/{uid}/reviews/{rid}
+                }else if(subDirectories[1].equals("users") && subDirectories.length == 5) {
+                    userID = Integer.parseInt(subDirectories[2]);
+                    reviewID = Integer.parseInt(subDirectories[4]);
+
+                //GET /tops/rating
+                    /**
+                     * TODO: Average must have only two values.
+                     *  Make maybe a break if that fails
+                     */
+                }else if(subDirectories[1].equals("tops") && subDirectories.length == 3) {
+                    //GET /tops/ratings n=10&average=highest&min=5
+                    //aux[0] = n=10
+                    //aux[1] = average=highest
+                    //aux[2] = min=5
+                    aux = input[2].split("&");
+                    String[] paramParser;
+                    paramParser = aux[0].split("=");
+                    nMovies = Integer.parseInt(paramParser[1]);
+                    paramParser = aux[1].split("=");
+                    average = paramParser[1];
+                    paramParser = aux[2].split("=");
+                    minVotes = Integer.parseInt(paramParser[1]);
+
+                    System.out.println("nMovies: "+nMovies
+                            + " average: "+average
+                            + " minVotes: "+minVotes);
+                }
+
+                /**
+                 * TODO: create some kind of error, since the method isnt valid
+                 */
             default:
                 break;
 
