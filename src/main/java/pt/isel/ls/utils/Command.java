@@ -1,13 +1,10 @@
 package pt.isel.ls.utils;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Command {
 
     private String method;
     private String [] path;
-    private String [] parameters;
+    private String [] params;
 
 
     /***
@@ -17,6 +14,9 @@ public class Command {
      */
     public Command(String cmd) {
         Parser p = new Parser(cmd);
+        this.method = p.getMethod();
+        this.path = p.getPath();
+        this.params = p.getParams();
     }
 
 

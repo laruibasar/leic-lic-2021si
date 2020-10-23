@@ -6,20 +6,8 @@ public class Parser {
     /**
      *TODO: No máximo tenho 4 parâmetros, avaliar número de campos.
      */
-    private int userID;
-    private int reviewID;
-    private int movieID;
-    private String movieTitle;
-    private int releaseYear;
-    private int rating;
-    private String reviewSummary;
-    private String review;
-    private int nMovies;
-    private String average;
-    private int minVotes;
-    private String firstName;
-    private String lastName;
-    private String mail;
+    private String method;
+    private String [] params = new String[4];
 
     /***
      * Parser is responsible for getting all parameters from the command given
@@ -31,6 +19,7 @@ public class Parser {
         String[] aux;
         switch (input[0]) {
             case "POST":
+                method = "POST";
 
                 //POST /users - creates a new user
                 if(subDirectories[1].equals("users") && subDirectories.length == 2) {
@@ -38,18 +27,18 @@ public class Parser {
                     //aux[1] = First+Last&email
                     //aux[2] = example@email.com
                     aux = input[2].split("=");
-                    mail = aux[2];
+                    params[2] = aux[2];
 
                     //result[0] = first;
                     //resutl[1] = last&email
                     String result[] = aux[1].split("\\+");
-                    firstName = result[0];
+                    params[0] = result[0];
 
                     //aux[0] = last
                     aux = result[1].split("&");
-                    lastName = aux[0];
+                    params[1] = aux[0];
 
-                    System.out.println("Mail -> " + this.mail + " FirstName :" + firstName + " SecondName :" + lastName);
+                    System.out.println("Mail -> " + params[2] + " FirstName :" + params[0] + " SecondName :" + params[1]);
 
                 //POST /movies - creates a new movie
                 }else if (subDirectories[1].equals("movies") && subDirectories.length == 2) {
@@ -59,20 +48,20 @@ public class Parser {
                     //aux[2] = releaseYear
                     //aux[3] = 2013
                     aux = input[2].split("=");
-                    movieTitle = aux[1];
-                    releaseYear = Integer.parseInt(aux[3]);
+                    params[0] = aux[1];
+                    params[1] = aux[3];
 
-                    System.out.println("Movie title = "+ movieTitle + " releaseYear = "+ releaseYear);
+                    System.out.println("Movie title = "+ params[0] + " releaseYear = "+ params[1]);
 
                 //POST /movies/{mid}/reviews - creates a new review for the movie identified by mid
                 }else if(subDirectories[1].equals("movies") && subDirectories.length == 4) {
 
                     if(-1 == input[2].indexOf('&')) {
-                        movieID = Integer.parseInt(subDirectories[2]);
+                        params[0] = subDirectories[2];
                         aux = input[2].split("=");
-                        rating = Integer.parseInt(aux[1]);
+                        params[1] = aux[1];
 
-                        System.out.println("MovieID = "+movieID +" rating = "+rating);
+                        System.out.println("MovieID = "+params[0] +" rating = "+params[1]);
 
                     }else{
                         //POST /movies/{mid}/reviews uid=546&reviewSummary=bad&review=horriblemoviemustnotbeseen&rating=0
@@ -83,54 +72,57 @@ public class Parser {
                         aux = input[2].split("&");
                         String[] paramParser;
                         paramParser = aux[0].split("=");
-                        userID = Integer.parseInt(paramParser[1]);
+                        params[0] = paramParser[1];
                         paramParser = aux[1].split("=");
-                        reviewSummary = paramParser[1];
+                        params[1] = paramParser[1];
                         paramParser = aux[2].split("=");
-                        review = paramParser[1];
+                        params[2] = paramParser[1];
                         paramParser = aux[3].split("=");
-                        rating = Integer.parseInt(paramParser[1]);
+                        params[3] = paramParser[1];
 
-                        System.out.println("userID: "+userID
-                                + " reviewSummary: "+reviewSummary
-                                + " review: "+review
-                                + " rating: "+rating);
+                        System.out.println("userID: "+params[0]
+                                + " reviewSummary: "+params[1]
+                                + " review: "+params[2]
+                                + " rating: "+params[3]);
                     }
                 }
                 break;
             case "GET":
+                method = "GET";
 
                 //GET /users/{uid} - returns the details for the user identified by uid
                 if(subDirectories[1].equals("users") && subDirectories.length == 3) {
-                    userID = Integer.parseInt(subDirectories[2]);
+                    params[0] = subDirectories[2];
 
-                    System.out.println("userID = "+userID);
+                    System.out.println("userID = "+params[0]);
 
                 //GET /movies/{mid}
                 //GET /movies/{mid}/ratings
                 //GET /movies/{mid}/reviews
                 }else if(subDirectories[1].equals("movies") && (subDirectories.length == 2 || subDirectories.length == 3)) {
-                    movieID = Integer.parseInt(subDirectories[2]);
+                    params[0] = subDirectories[2];
 
-                    System.out.println("movieID ="+movieID);
+                    System.out.println("movieID ="+params[0]);
 
                 //GET /movies/{mid}/reviews/{rid}
                 }else if(subDirectories[1].equals("movies") && subDirectories.length == 5) {
-                    movieID = Integer.parseInt(subDirectories[2]);
-                    reviewID = Integer.parseInt(subDirectories[4]);
+                    params[0] = subDirectories[2];
+                    params[1] = subDirectories[4];
 
-                    System.out.println("movieID ="+movieID +" reviewID" + reviewID);
+                    System.out.println("movieID ="+params[0] +" reviewID" + params[1]);
 
                 //GET /users/{uid}/reviews
                 }else if(subDirectories[1].equals("users") && subDirectories.length == 4) {
-                    userID = Integer.parseInt(subDirectories[2]);
+                    params[0] = subDirectories[2];
 
-                    System.out.println("userID = "+userID);
+                    System.out.println("userID = "+params[0]);
 
                 //GET /users/{uid}/reviews/{rid}
                 }else if(subDirectories[1].equals("users") && subDirectories.length == 5) {
-                    userID = Integer.parseInt(subDirectories[2]);
-                    reviewID = Integer.parseInt(subDirectories[4]);
+                    params[0] = subDirectories[2];
+                    params[1] = subDirectories[4];
+
+                    System.out.println("UserID ="+ params[0] +" ReviewID" + params[1]);
 
                 //GET /tops/rating
                     /**
@@ -145,15 +137,15 @@ public class Parser {
                     aux = input[2].split("&");
                     String[] paramParser;
                     paramParser = aux[0].split("=");
-                    nMovies = Integer.parseInt(paramParser[1]);
+                    params[0] = paramParser[1];
                     paramParser = aux[1].split("=");
-                    average = paramParser[1];
+                    params[1] = paramParser[1];
                     paramParser = aux[2].split("=");
-                    minVotes = Integer.parseInt(paramParser[1]);
+                    params[2] = paramParser[1];
 
-                    System.out.println("nMovies: "+nMovies
-                            + " average: "+average
-                            + " minVotes: "+minVotes);
+                    System.out.println("nMovies: "+params[0]
+                            + " average: "+params[1]
+                            + " minVotes: "+params[2]);
                 }
 
                 /**
@@ -166,4 +158,15 @@ public class Parser {
     }
 
 
+    public String getMethod() {
+        return method;
+    }
+
+    public String[] getPath() {
+        return null;
+    }
+
+    public String[] getParams() {
+        return params;
+    }
 }
