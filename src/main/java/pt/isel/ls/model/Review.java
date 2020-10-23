@@ -6,13 +6,15 @@ public class Review {
     private String completeReview;
     private Rating rating;
     private Movie movie;
+    private User movieCritic;
 
-    public Review(String summary, String completeReview, Rating rating, Movie movie){
+    public Review(String summary, String completeReview, Rating rating, Movie movie, User movieCritic){
 
         this.summary = summary;
         this.completeReview = completeReview;
         this.rating = rating;
         this.movie = movie;
+        this.movieCritic = movieCritic;
 
     }
 
@@ -28,10 +30,6 @@ public class Review {
     public void setRating(Rating rating) { this.rating = rating; }
     public Rating getRating() { return rating; }
 
-
-
-
-
-
-
+    public void setMovieCritic(User movieCritic) { this.movieCritic = movieCritic; }
+    public User getMovieCritic() { return movieCritic; }
 }
