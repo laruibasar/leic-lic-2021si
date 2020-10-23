@@ -24,7 +24,7 @@ create table reviews (
     summary varchar(50),
     completeReview varchar(150),
     rating int references rating(rid),
-    movie int references movies_ext(mid)
+    movie int references movies_reviews(mid)
     movieCritic int references users(uid)
 );
 
