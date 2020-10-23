@@ -3,11 +3,9 @@ package pt.isel.ls.utils;
 public class Parser {
 
 
-    /**
-     *TODO: No máximo tenho 4 parâmetros, avaliar número de campos.
-     */
     private String method;
     private String [] params = new String[4];
+    private String path;
 
     /***
      * Parser is responsible for getting all parameters from the command given
@@ -15,12 +13,13 @@ public class Parser {
      */
     public Parser(String cmd) {
         String[] input = cmd.split(" ");
+        String[] pathBuilder = cmd.split(" ");
+        path = pathBuilder[1];
         String[] subDirectories = input[1].split("/");
         String[] aux;
         switch (input[0]) {
             case "POST":
                 method = "POST";
-
                 //POST /users - creates a new user
                 if(subDirectories[1].equals("users") && subDirectories.length == 2) {
                     //aux[0] = name
@@ -38,8 +37,6 @@ public class Parser {
                     aux = result[1].split("&");
                     params[1] = aux[0];
 
-                    System.out.println("Mail -> " + params[2] + " FirstName :" + params[0] + " SecondName :" + params[1]);
-
                 //POST /movies - creates a new movie
                 }else if (subDirectories[1].equals("movies") && subDirectories.length == 2) {
                     //initial parameters String -> /movies title=Gatsby&releaseYear=2013
@@ -51,8 +48,6 @@ public class Parser {
                     params[0] = aux[1];
                     params[1] = aux[3];
 
-                    System.out.println("Movie title = "+ params[0] + " releaseYear = "+ params[1]);
-
                 //POST /movies/{mid}/reviews - creates a new review for the movie identified by mid
                 }else if(subDirectories[1].equals("movies") && subDirectories.length == 4) {
 
@@ -60,8 +55,6 @@ public class Parser {
                         params[0] = subDirectories[2];
                         aux = input[2].split("=");
                         params[1] = aux[1];
-
-                        System.out.println("MovieID = "+params[0] +" rating = "+params[1]);
 
                     }else{
                         //POST /movies/{mid}/reviews uid=546&reviewSummary=bad&review=horriblemoviemustnotbeseen&rating=0
@@ -79,14 +72,10 @@ public class Parser {
                         params[2] = paramParser[1];
                         paramParser = aux[3].split("=");
                         params[3] = paramParser[1];
-
-                        System.out.println("userID: "+params[0]
-                                + " reviewSummary: "+params[1]
-                                + " review: "+params[2]
-                                + " rating: "+params[3]);
                     }
                 }
                 break;
+
             case "GET":
                 method = "GET";
 
@@ -94,35 +83,25 @@ public class Parser {
                 if(subDirectories[1].equals("users") && subDirectories.length == 3) {
                     params[0] = subDirectories[2];
 
-                    System.out.println("userID = "+params[0]);
-
                 //GET /movies/{mid}
                 //GET /movies/{mid}/ratings
                 //GET /movies/{mid}/reviews
                 }else if(subDirectories[1].equals("movies") && (subDirectories.length == 2 || subDirectories.length == 3)) {
                     params[0] = subDirectories[2];
 
-                    System.out.println("movieID ="+params[0]);
-
                 //GET /movies/{mid}/reviews/{rid}
                 }else if(subDirectories[1].equals("movies") && subDirectories.length == 5) {
                     params[0] = subDirectories[2];
                     params[1] = subDirectories[4];
 
-                    System.out.println("movieID ="+params[0] +" reviewID" + params[1]);
-
                 //GET /users/{uid}/reviews
                 }else if(subDirectories[1].equals("users") && subDirectories.length == 4) {
                     params[0] = subDirectories[2];
-
-                    System.out.println("userID = "+params[0]);
 
                 //GET /users/{uid}/reviews/{rid}
                 }else if(subDirectories[1].equals("users") && subDirectories.length == 5) {
                     params[0] = subDirectories[2];
                     params[1] = subDirectories[4];
-
-                    System.out.println("UserID ="+ params[0] +" ReviewID" + params[1]);
 
                 //GET /tops/rating
                     /**
@@ -142,16 +121,13 @@ public class Parser {
                     params[1] = paramParser[1];
                     paramParser = aux[2].split("=");
                     params[2] = paramParser[1];
-
-                    System.out.println("nMovies: "+params[0]
-                            + " average: "+params[1]
-                            + " minVotes: "+params[2]);
                 }
 
-                /**
-                 * TODO: create some kind of error, since the method isnt valid
-                 */
+            case "EXIT /":
+                System.exit(0);
+
             default:
+                System.out.println("Invalid command entry, please try aggain.");
                 break;
 
         }
@@ -162,8 +138,8 @@ public class Parser {
         return method;
     }
 
-    public String[] getPath() {
-        return null;
+    public String getPath() {
+        return path;
     }
 
     public String[] getParams() {

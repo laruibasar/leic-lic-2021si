@@ -3,31 +3,26 @@ package pt.isel.ls.utils;
 public class Command {
 
     private String method;
-    private String [] path;
+    private String path;
     private String [] params;
 
-
     /***
-     * TODO Criar exceção para caso o retorno seja 1 ?
-     * methodVerifier
-     * pathVerifier
+     * A Parser object is responsible for handling the information contained
+     * in a command coming from the user input, the methods used
+     * to fill the fields of this class, are used to obtain
+     * the information extracted by the command's Parser.
      */
     public Command(String cmd) {
         Parser p = new Parser(cmd);
         this.method = p.getMethod();
         this.path = p.getPath();
         this.params = p.getParams();
-    }
 
-
-
-
-    /***
-     * Verifies method from the command given
-     * @param method
-     * @return
-     */
-    public int methodVerifier(String method) {
-        return (method.equals("GET") || method.equals("POST")) ? 0:1;
+        //for test
+        System.out.print("Method = "+method +" ");
+        for(String par: params) {
+            System.out.print("Parameter: " + par +" ");
+        }
+        System.out.print(" Path = "+ path +"\n\n");
     }
 }

@@ -5,7 +5,7 @@ import pt.isel.ls.utils.Parser;
 
 
 /***
- * Esta classe executa um comando
+ * Object takes command messages from a Command and exports them.
  */
 public abstract class Handler {
 
@@ -20,7 +20,7 @@ public abstract class Handler {
     }
 
     public Command setCommmand(String template){
-        Parser p = new Parser(template);
-        return null;
+        Command cmd = new Command(template);
+        return cmd;
     }
 }
