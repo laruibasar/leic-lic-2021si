@@ -64,7 +64,7 @@ public class Parser {
                 //POST /movies/{mid}/reviews - creates a new review for the movie identified by mid
                 }else if(subDirectories[1].equals("movies") && subDirectories.length == 4) {
 
-                    if(-1 != input[2].indexOf('&')) {
+                    if(-1 == input[2].indexOf('&')) {
                         movieID = Integer.parseInt(subDirectories[2]);
                         aux = input[2].split("=");
                         rating = Integer.parseInt(aux[1]);
@@ -72,10 +72,27 @@ public class Parser {
                         System.out.println("MovieID = "+movieID +" rating = "+rating);
 
                     }else{
-                        aux = input[2].split("=");
-                    }
-                }else if() {
+                        //POST /movies/{mid}/reviews uid=546&reviewSummary=bad&review=horriblemoviemustnotbeseen&rating=0
+                        //aux[0] = uid=546
+                        //aux[1] = reviewSummary=bad
+                        //aux[2] = review=horriblemoviemustnotbeseen
+                        //aux[3] = rating=0
+                        aux = input[2].split("&");
+                        String[] paramParser;
+                        paramParser = aux[0].split("=");
+                        userID = Integer.parseInt(paramParser[1]);
+                        paramParser = aux[1].split("=");
+                        reviewSummary = paramParser[1];
+                        paramParser = aux[2].split("=");
+                        review = paramParser[1];
+                        paramParser = aux[3].split("=");
+                        rating = Integer.parseInt(paramParser[1]);
 
+                        System.out.println("userID: "+userID
+                                + " reviewSummary: "+reviewSummary
+                                + " review: "+review
+                                + " rating: "+rating);
+                    }
                 }
                 break;
             default:
