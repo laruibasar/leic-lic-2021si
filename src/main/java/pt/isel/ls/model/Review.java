@@ -8,7 +8,8 @@ public class Review {
     private Movie movie;
     private User movieCritic;
 
-    public Review(String summary, String completeReview, Rating rating, Movie movie, User movieCritic){
+    public Review(String summary, String completeReview, Rating rating,
+                  Movie movie, User movieCritic) {
 
         this.summary = summary;
         this.completeReview = completeReview;
@@ -18,7 +19,9 @@ public class Review {
 
     }
 
-    public void setCompleteReview(String completeReview) { this.completeReview = completeReview; }
+    public void setCompleteReview(String completeReview) {
+        this.completeReview = completeReview;
+    }
     public String getCompleteReview() { return completeReview; }
 
     public void setSummary(String summary) { this.summary = summary; }
