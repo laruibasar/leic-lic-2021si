@@ -4,7 +4,8 @@ public class Parser {
 
     private String[] params = new String[4];
 
-    public String[] paramsFromPOST(String[] input) {
+    public String[] paramsFromPOST(String cmd) {
+        String[] input = cmd.split(" ");
         String[] aux;
         String[] subDirectories = input[1].split("/");
             //POST /users - creates a new user
@@ -64,7 +65,8 @@ public class Parser {
         return params;
     }
 
-    public String[] paramsFromGET(String[] input) {
+    public String[] paramsFromGET(String cmd) {
+        String[] input = cmd.split(" ");
         String[] aux;
         String[] subDirectories = input[1].split("/");
             //GET /users/{uid} - returns the details for the user identified by uid
@@ -112,4 +114,16 @@ public class Parser {
         }
         return params;
     }
+
+    public String parseMethod(String cmd) {
+        String[] parser = cmd.split(" ");
+        return parser[0];
+    }
+
+    public String parsePath(String cmd) {
+        String[] parser = cmd.split(" ");
+        return parser[1];
+    }
+
+
 }

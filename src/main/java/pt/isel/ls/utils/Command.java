@@ -28,21 +28,18 @@ public class Command {
     }
 
     public String getPath(String cmd) {
-        String[] pathExtractor = cmd.split(" ");
-        return path = pathExtractor[1];
+        return p.parsePath(cmd);
     }
 
     public String getMethod(String cmd) {
-        String[] methodExtractor = cmd.split(" ");
-        return method = methodExtractor[0];
+        return p.parseMethod(cmd);
     }
 
     public String[] getParams(String cmd){
-        String[] input = cmd.split(" ");
         if(method.equals("GET")) {
-            params = p.paramsFromGET(input);
+            params = p.paramsFromGET(cmd);
         }else if (method.equals("POST")){
-            params = p.paramsFromPOST(input);
+            params = p.paramsFromPOST(cmd);
         }else {
             Exit();
         }
