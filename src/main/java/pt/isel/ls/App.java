@@ -7,10 +7,6 @@ public class App {
         System.out.println("Application LS - G8");
 
         try {
-            /*
-             * Setup application
-             * TODO: setup router service with handlers for application commands
-             */
             AppConfig.setup();
             if (AppConfig.getInstance().loadConfig) {
                 if (args.length == 0) {

@@ -32,12 +32,12 @@ public class AppConfig {
 
             loadConfig = true;
             loadMessage = "OK";
-        } catch (EnvironmentVariableException e) {
+        } catch (EnvironmentVariableException ev) {
             loadConfig = false;
-            loadMessage = e.getMessage();
-        } catch (RouterException e) {
+            loadMessage = ev.getMessage();
+        } catch (RouterException re) {
             loadConfig = false;
-            loadMessage = e.getMessage();
+            loadMessage = re.getMessage();
         }
     }
 }
