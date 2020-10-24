@@ -24,12 +24,14 @@ public class Command {
     }
 
     public boolean equals(Command command) {
-        if (!this.method.equals(command.getMethod()))
+        if (!this.method.equals(command.getMethod())) {
             return false;
+        }
 
         String[] aux = command.getPath();
-        if (this.path.length != aux.length)
+        if (this.path.length != aux.length) {
             return false;
+        }
 
         for (int i = 0; i < this.path.length; i++) {
             if (path[i].isEmpty() || aux[i].isEmpty()) {
