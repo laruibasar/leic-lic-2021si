@@ -1,52 +1,50 @@
 package pt.isel.ls.utils;
 
 public class Command {
-
     private String method;
-    private String path;
-    private String [] params;
-    private Parser p;
+    private String[] path;
+    private Parameters parameters;
 
-    /***
-     * A Parser object is responsible for handling the information contained
-     * in a command coming from the user input, the methods used
-     * to fill the fields of this class, are used to obtain
-     * the information extracted by the command's Parser.
-     */
-    public Command(String cmd) {
-        p = new Parser();
-        this.path = getPath(cmd);
-        this.method = getMethod(cmd);
-        this.params = getParams(cmd);
+    public Command(String method, String path) {
+        this(method, path, new Parameters());
+    }
 
-        //for test
-        System.out.print("Method = "+method +" ");
-        for(String par: params) {
-            System.out.print("Parameter: " + par +" ");
+    public Command(String method, String path, Parameters parameters) {
+        this.method = method;
+        this.path = path.split("/", 0);
+        this.parameters = parameters;
+    }
+
+    public String getMethod() {
+        return this.method;
+    }
+
+    public String[] getPath() {
+        return this.path;
+    }
+
+    public boolean equals(Command command) {
+        if (!this.method.equals(command.getMethod()))
+            return false;
+
+        String[] aux = command.getPath();
+        if (this.path.length != aux.length)
+            return false;
+
+        for (int i = 0; i < this.path.length; i++) {
+            if (path[i].isEmpty() || aux[i].isEmpty()) {
+                continue;
+            }
+
+            if (path[i].charAt(0) == '{' || aux[i].charAt(0) == '{') {
+                continue;
+            }
+
+            if (!path[i].equals(aux[i])) {
+                return false;
+            }
         }
-        System.out.print(" Path = "+ path +"\n\n");
-    }
 
-    public String getPath(String cmd) {
-        return p.parsePath(cmd);
-    }
-
-    public String getMethod(String cmd) {
-        return p.parseMethod(cmd);
-    }
-
-    public String[] getParams(String cmd){
-        if(method.equals("GET")) {
-            params = p.paramsFromGET(cmd);
-        }else if (method.equals("POST")){
-            params = p.paramsFromPOST(cmd);
-        }else {
-            Exit();
-        }
-        return params;
-    }
-
-    public void Exit(){
-        System.exit(0);
+        return true;
     }
 }

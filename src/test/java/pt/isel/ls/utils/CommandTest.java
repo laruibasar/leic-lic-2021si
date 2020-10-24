@@ -2,15 +2,22 @@ package pt.isel.ls.utils;
 
 import org.junit.Test;
 
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
+
 public class CommandTest {
 
     @Test
-    public void commandTest() {
-        Command cmd1 = new Command("POST /users name=Daniel+Azevedo&email=azevedo_daniel1994");
-        Command cmd2 = new Command("POST /movies/240/ratings rating=8");
-        Command cmd3 = new Command("POST /movies/{mid}/reviews uid=546&reviewSummary=bad&review=horriblemoviemustnotbeseen&rating=0");
-        Command cmd4 = new Command("GET /movies/155/reviews");
-        Command cmd5 = new Command("GET /movies/156/reviews/513");
+    public void command_equals() {
+        Command template = new Command("get", "/movies/{mid}/ratings");
+        Command input = new Command("get", "/movies/150/ratings");
+        assertTrue(input.equals(template));
     }
 
+    @Test
+    public void command_not_equals() {
+        Command template = new Command("get", "/movies/{mid}/ratings");
+        Command input = new Command("get", "/users/1");
+        assertFalse(input.equals(template));
+    }
 }
