@@ -23,6 +23,14 @@ public class Command {
         return this.path;
     }
 
+    public Parameters getParameters() {
+        return parameters;
+    }
+
+    public void setParameters(Parameters params) {
+        parameters = params;
+    }
+
     public boolean equals(Command command) {
         if (!this.method.equals(command.getMethod())) {
             return false;
@@ -48,5 +56,20 @@ public class Command {
         }
 
         return true;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder str = new StringBuilder(method);
+        str.append(" ");
+
+        for (int i = 0; i < path.length; i++) {
+            str.append(path[i]).append("/");
+        }
+        str.deleteCharAt(str.length() - 1); // cut last "/"
+
+        str.append(parameters.toString());
+
+        return str.toString();
     }
 }

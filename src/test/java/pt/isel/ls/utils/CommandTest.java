@@ -2,8 +2,7 @@ package pt.isel.ls.utils;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 
 public class CommandTest {
 
@@ -19,5 +18,11 @@ public class CommandTest {
         Command template = new Command("get", "/movies/{mid}/ratings");
         Command input = new Command("get", "/users/1");
         assertFalse(input.equals(template));
+    }
+
+    @Test
+    public void command_to_string() {
+        Command cmd = new Command("get", "/movies/{mid}/ratings");
+        assertEquals("get /movies/{mid}/ratings", cmd.toString());
     }
 }
