@@ -24,8 +24,8 @@ public class App {
                 }
                 System.exit(0);
             } else {
-                System.out.println("Error: failed to load config"
-                        + AppConfig.getInstance().loadMessage);
+                System.out.println("Error: failed to load config.");
+                System.out.println(AppConfig.getInstance().loadMessage);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
