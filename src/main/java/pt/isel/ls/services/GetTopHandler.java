@@ -1,9 +1,9 @@
 package pt.isel.ls.services;
 
-public class GetUsersHandler extends Handler implements IHandler<GetUsersHandler>{
+public class GetTopHandler extends Handler implements IHandler<GetTopHandler>{
 
     @Override
-    public int execute(GetUsersHandler command) {
+    public int execute(GetTopHandler command) {
         return 0;
     }
 

@@ -1,9 +1,9 @@
 package pt.isel.ls.services;
 
-public class GetUsersHandler extends Handler implements IHandler<GetUsersHandler>{
+public class GetMoviesHandler extends Handler implements IHandler<GetMoviesHandler>{
 
     @Override
-    public int execute(GetUsersHandler command) {
+    public int execute(GetMoviesHandler command) {
         return 0;
     }
 
