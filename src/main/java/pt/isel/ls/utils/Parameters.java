@@ -1,7 +1,5 @@
 package pt.isel.ls.utils;
 
-import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 
 public class Parameters {
