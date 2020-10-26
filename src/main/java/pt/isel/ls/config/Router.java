@@ -44,7 +44,7 @@ public class Router {
         handlers.add(handler);
     }
 
-    public static Handler getHandler(Command command) throws RouterException {
+    public static Handler findHandler(Command command) throws RouterException {
         Iterator<Handler> it = handlers.iterator();
         while (it.hasNext()) {
             Handler handler = it.next();

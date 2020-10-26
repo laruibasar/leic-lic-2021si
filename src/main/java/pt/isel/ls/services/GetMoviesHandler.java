@@ -1,14 +1,11 @@
 package pt.isel.ls.services;
 
-public class GetMoviesHandler extends Handler implements IHandler<GetMoviesHandler>{
+import pt.isel.ls.utils.CommandResult;
+
+public class GetMoviesHandler extends Handler implements IHandler {
 
     @Override
-    public int execute(GetMoviesHandler command) {
-        return 0;
-    }
-
-    @Override
-    public int execute() {
-        return 0;
+    public CommandResult execute() {
+        return null;
     }
 }

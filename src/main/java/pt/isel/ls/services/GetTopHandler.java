@@ -1,14 +1,11 @@
 package pt.isel.ls.services;
 
-public class GetTopHandler extends Handler implements IHandler<GetTopHandler>{
+import pt.isel.ls.utils.CommandResult;
+
+public class GetTopHandler extends Handler implements IHandler {
 
     @Override
-    public int execute(GetTopHandler command) {
-        return 0;
-    }
-
-    @Override
-    public int execute() {
-        return 0;
+    public CommandResult execute() {
+        return null;
     }
 }
