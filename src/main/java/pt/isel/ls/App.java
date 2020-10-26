@@ -11,7 +11,8 @@ public class App {
             System.out.print("Usage:\t");
             System.out.println("java pt.isel.ls.App [method path "
                     + "[parameters]]");
-            System.exit(1);
+            //System.exit(1);
+            return;
         }
 
         try {
@@ -22,14 +23,16 @@ public class App {
                 } else {
                     AppConsole.runOnce(args);
                 }
-                System.exit(0);
+                //System.exit(0);
+                return;
             } else {
                 System.out.println("Error: failed to load config.");
                 System.out.println(AppConfig.getInstance().loadMessage);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            System.exit(1);
+            //System.exit(1);
+            return;
         }
     }
 }
