@@ -44,9 +44,6 @@ public class AppConfig {
         } catch (EnvironmentVariableException ev) {
             loadConfig = false;
             loadMessage = ev.getMessage();
-        } catch (RouterException re) {
-            loadConfig = false;
-            loadMessage = re.getMessage();
         }
     }
 }
