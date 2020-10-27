@@ -22,17 +22,40 @@ public class Review {
     public void setCompleteReview(String completeReview) {
         this.completeReview = completeReview;
     }
-    public String getCompleteReview() { return completeReview; }
 
-    public void setSummary(String summary) { this.summary = summary; }
-    public String getSummary() { return summary; }
+    public String getCompleteReview() {
+        return completeReview;
+    }
 
-    public void setMovie(Movie movie) { this.movie = movie; }
-    public Movie getMovie() { return movie; }
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
 
-    public void setRating(Rating rating) { this.rating = rating; }
-    public Rating getRating() { return rating; }
+    public String getSummary() {
+        return summary;
+    }
 
-    public void setMovieCritic(User movieCritic) { this.movieCritic = movieCritic; }
-    public User getMovieCritic() { return movieCritic; }
+    public void setMovie(Movie movie) {
+        this.movie = movie;
+    }
+
+    public Movie getMovie() {
+        return movie;
+    }
+
+    public void setRating(Rating rating) {
+        this.rating = rating;
+    }
+
+    public Rating getRating() {
+        return rating;
+    }
+
+    public void setMovieCritic(User movieCritic) {
+        this.movieCritic = movieCritic;
+    }
+
+    public User getMovieCritic() {
+        return movieCritic;
+    }
 }

@@ -1,14 +1,12 @@
 package pt.isel.ls.services;
 
-public class GetUsersHandler extends Handler implements IHandler<GetUsersHandler>{
+import pt.isel.ls.utils.CommandResult;
+
+public class GetUsersHandler extends Handler implements IHandler {
 
     @Override
-    public int execute(GetUsersHandler command) {
-        return 0;
-    }
-
-    @Override
-    public int execute() {
-        return 0;
+    public CommandResult execute() {
+        System.out.println("Handler speaking: Getting all users");
+        return null;
     }
 }

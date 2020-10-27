@@ -13,6 +13,7 @@ public class User {
     public void setId(int id) {
         this.id = id;
     }
+
     public int getId() {
         return id;
     }
@@ -20,6 +21,7 @@ public class User {
     public void setName(String name) {
         this.name = name;
     }
+
     public String getName() {
         return name;
     }
@@ -27,6 +29,7 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
     public String getEmail() {
         return email;
     }

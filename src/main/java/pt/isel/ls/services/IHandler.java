@@ -1,13 +1,7 @@
 package pt.isel.ls.services;
 
+import pt.isel.ls.utils.CommandResult;
 
-/***
- * Interface implemented by all handlers
- * @param <T>
- */
-public interface IHandler<T> {
-
-    int execute(T command);
-
-    int execute();
+public interface IHandler {
+    public CommandResult execute();
 }

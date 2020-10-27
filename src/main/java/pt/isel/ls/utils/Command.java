@@ -23,13 +23,23 @@ public class Command {
         return this.path;
     }
 
+    public Parameters getParameters() {
+        return parameters;
+    }
+
+    public void setParameters(Parameters params) {
+        parameters = params;
+    }
+
     public boolean equals(Command command) {
-        if (!this.method.equals(command.getMethod()))
+        if (!this.method.equals(command.getMethod())) {
             return false;
+        }
 
         String[] aux = command.getPath();
-        if (this.path.length != aux.length)
+        if (this.path.length != aux.length) {
             return false;
+        }
 
         for (int i = 0; i < this.path.length; i++) {
             if (path[i].isEmpty() || aux[i].isEmpty()) {
@@ -46,5 +56,22 @@ public class Command {
         }
 
         return true;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder str = new StringBuilder(method);
+        str.append(" ");
+
+        for (int i = 0; i < path.length; i++) {
+            str.append(path[i]).append("/");
+        }
+        str.deleteCharAt(str.length() - 1); // cut last "/"
+
+        if (!parameters.isEmpty()) {
+            str.append(" ").append(parameters.toString());
+        }
+
+        return str.toString();
     }
 }

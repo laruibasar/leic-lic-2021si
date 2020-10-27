@@ -1,14 +1,11 @@
 package pt.isel.ls.services;
 
-public class CreateUserHandler extends Handler implements IHandler<CreateUserHandler>{
+import pt.isel.ls.utils.CommandResult;
+
+public class CreateUserHandler extends Handler implements IHandler {
 
     @Override
-    public int execute(CreateUserHandler command) {
-        return 0;
-    }
-
-    @Override
-    public int execute() {
-        return 0;
+    public CommandResult execute() {
+        return null;
     }
 }

@@ -4,7 +4,7 @@ import pt.isel.ls.services.Handler;
 import pt.isel.ls.utils.Command;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
+//import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 
@@ -44,7 +44,7 @@ public class Router {
         handlers.add(handler);
     }
 
-    public static Handler getHandler(Command command) throws RouterException {
+    public static Handler findHandler(Command command) throws RouterException {
         Iterator<Handler> it = handlers.iterator();
         while (it.hasNext()) {
             Handler handler = it.next();

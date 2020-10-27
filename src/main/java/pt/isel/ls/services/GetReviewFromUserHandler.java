@@ -1,14 +1,11 @@
 package pt.isel.ls.services;
 
-public class GetReviewFromUserHandler extends Handler implements IHandler<GetReviewFromUserHandler>{
+import pt.isel.ls.utils.CommandResult;
+
+public class GetReviewFromUserHandler extends Handler implements IHandler {
 
     @Override
-    public int execute(GetReviewFromUserHandler command) {
-        return 0;
-    }
-
-    @Override
-    public int execute() {
-        return 0;
+    public CommandResult execute() {
+        return null;
     }
 }

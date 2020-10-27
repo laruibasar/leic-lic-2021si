@@ -1,5 +1,7 @@
 package pt.isel.ls.config;
 
+import pt.isel.ls.services.GetUsersHandler;
+
 /**
  * Configuration stores in memory all configurations needed to run
  * the application.
@@ -25,10 +27,17 @@ public class AppConfig {
         return config;
     }
 
+    private void loadRouter() {
+        /* List all handler to load into Router */
+        this.router.addHandler("GET", "/users", new GetUsersHandler());
+    }
+
     private AppConfig() {
         try {
             database = new DataBaseConfig();
+
             router = new Router();
+            loadRouter();
 
             loadConfig = true;
             loadMessage = "OK";
