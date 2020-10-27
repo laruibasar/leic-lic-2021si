@@ -5,7 +5,6 @@ import pt.isel.ls.utils.Command;
 
 import java.util.ArrayList;
 //import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.List;
 
 public class Router {
@@ -14,9 +13,9 @@ public class Router {
     //private static Hashtable<String, Handler> getHandlers;
     //private static Hashtable<String, Handler> postHandlers;
 
-    private static List<Handler> handlers;
+    private final List<Handler> handlers;
 
-    public Router() throws RouterException {
+    public Router() {
         //getHandlers = new Hashtable<>();
         //postHandlers = new Hashtable<>();
         handlers = new ArrayList<>();
@@ -38,16 +37,14 @@ public class Router {
     }
     */
 
-    public static void addHandler(String method, String path, Handler handler) {
+    public void addHandler(String method, String path, Handler handler) {
         Command template = new Command(method, path);
         handler.setTemplate(template);
         handlers.add(handler);
     }
 
-    public static Handler findHandler(Command command) throws RouterException {
-        Iterator<Handler> it = handlers.iterator();
-        while (it.hasNext()) {
-            Handler handler = it.next();
+    public  Handler findHandler(Command command) throws RouterException {
+        for (Handler handler : handlers) {
             if (handler.getTemplate().equals(command)) {
                 return handler;
             }

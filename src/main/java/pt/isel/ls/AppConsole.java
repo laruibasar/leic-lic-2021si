@@ -1,6 +1,6 @@
 package pt.isel.ls;
 
-import pt.isel.ls.config.Router;
+import pt.isel.ls.config.AppConfig;
 import pt.isel.ls.config.RouterException;
 import pt.isel.ls.services.Handler;
 import pt.isel.ls.utils.Command;
@@ -63,7 +63,7 @@ public class AppConsole {
     }
 
     private static CommandResult runCommand(Command cmd) throws RouterException {
-        Handler handler = Router.findHandler(cmd);
+        Handler handler = AppConfig.getInstance().router.findHandler(cmd);
         CommandResult result = handler.execute();
 
         return result;
