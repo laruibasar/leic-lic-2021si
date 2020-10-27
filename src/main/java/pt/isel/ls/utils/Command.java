@@ -66,9 +66,11 @@ public class Command {
         for (int i = 0; i < path.length; i++) {
             str.append(path[i]).append("/");
         }
-        str.replace(str.length() - 1, str.length(), " ");
+        str.deleteCharAt(str.length() - 1); // cut last "/"
 
-        str.append(parameters.toString());
+        if (!parameters.isEmpty()) {
+            str.append(" ").append(parameters.toString());
+        }
 
         return str.toString();
     }

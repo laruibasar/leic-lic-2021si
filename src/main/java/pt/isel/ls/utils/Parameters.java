@@ -18,6 +18,10 @@ public class Parameters {
         }
     }
 
+    public boolean isEmpty() {
+        return parameters.isEmpty();
+    }
+
     @Override
     public String toString() {
         if (parameters.isEmpty()) {
