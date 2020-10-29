@@ -1,6 +1,12 @@
 package pt.isel.ls.config;
 
+import pt.isel.ls.services.CreateReviewForMovie;
+import pt.isel.ls.services.CreateUserHandler;
+import pt.isel.ls.services.GetMoviesHandler;
 import pt.isel.ls.services.GetUsersHandler;
+import pt.isel.ls.services.GetRatingFromMovieHandler;
+import pt.isel.ls.services.GetReviewHandler;
+import pt.isel.ls.services.GetReviewFromUserHandler;
 
 /**
  * Configuration stores in memory all configurations needed to run
@@ -29,7 +35,24 @@ public class AppConfig {
 
     private void loadRouter() {
         /* List all handler to load into Router */
+        this.router.addHandler("POST", "/users", new CreateUserHandler());
         this.router.addHandler("GET", "/users", new GetUsersHandler());
+        this.router.addHandler("GET", "/users/{uid}", new GetUsersHandler());
+
+        this.router.addHandler("POST", "/movies", new GetMoviesHandler());
+        this.router.addHandler("GET", "/movies", new GetMoviesHandler());
+        this.router.addHandler("GET", "/movies/{mid}", new GetMoviesHandler());
+
+        this.router.addHandler("POST", "/movies/{mid}/ratings", new CreateReviewForMovie());
+        this.router.addHandler("GET", "/movies/{mid}/ratings", new GetRatingFromMovieHandler());
+
+        this.router.addHandler("POST", "/movies/{mid}/reviews", new GetReviewHandler());
+        this.router.addHandler("GET", "/movies/{mid}/reviews", new CreateReviewForMovie());
+
+        this.router.addHandler("GET", "/movies/{mid}/reviews/{rid}", new GetReviewFromUserHandler());
+        this.router.addHandler("GET", "/users/{uid}/reviews", new GetReviewFromUserHandler());
+        this.router.addHandler("GET", "/users/{uid}/reviews/{rid}", new GetReviewFromUserHandler());
+        this.router.addHandler("GET", "tops/ratings",new GetReviewFromUserHandler());
     }
 
     private AppConfig() {
@@ -44,9 +67,6 @@ public class AppConfig {
         } catch (EnvironmentVariableException ev) {
             loadConfig = false;
             loadMessage = ev.getMessage();
-        } catch (RouterException re) {
-            loadConfig = false;
-            loadMessage = re.getMessage();
         }
     }
 }
