@@ -1,5 +1,8 @@
 package pt.isel.ls.config;
 
+import pt.isel.ls.data.Data;
+import pt.isel.ls.data.DataConnection;
+
 public class DataBaseConfig {
     public String host;
     public int port;
@@ -38,5 +41,8 @@ public class DataBaseConfig {
             throw new EnvironmentVariableException("Environment variable "
                     + "LS_DB_PASSWD: not set");
         }
+
+        /* Setup a data connection to use */
+        Data.setDataConnection(DataConnection.getInstance());
     }
 }

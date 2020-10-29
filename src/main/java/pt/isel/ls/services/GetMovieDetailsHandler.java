@@ -1,6 +1,10 @@
 package pt.isel.ls.services;
 
+import pt.isel.ls.data.DataConnectionException;
+import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
+
+import java.sql.SQLException;
 
 
 /**
@@ -9,8 +13,9 @@ import pt.isel.ls.utils.CommandResult;
  */
 
 public class GetMovieDetailsHandler extends Handler implements IHandler {
+
     @Override
-    public CommandResult execute() {
+    public CommandResult execute(Command cmd) throws DataConnectionException, SQLException {
         String query = "select * from movies;";
 //        try (Statement stmt = con.createStatement()) {
 //            ResultSet rs = stmt.executeQuery(query);
