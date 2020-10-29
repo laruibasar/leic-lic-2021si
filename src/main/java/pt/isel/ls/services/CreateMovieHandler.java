@@ -9,16 +9,13 @@ public class CreateMovieHandler extends Handler implements IHandler {
      *  title - the movie's name.
      *  releaseYear - the movie's release year.
      */
+
+
     @Override
     public CommandResult execute() {
 //        String query = "insert into movies(name, age, genre, castAndDirectors) values\n" +
 //                 "('???????'," +
 //                " ?????????," +
-//                " null," +
-//                " null," +
-//                " null'," +
-//                " null," +
-//                " null," +
 //                " null," +
 //                " null),";
 //        try (Statement stmt = con.createStatement()) {
