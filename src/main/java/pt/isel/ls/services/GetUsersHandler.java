@@ -2,6 +2,7 @@ package pt.isel.ls.services;
 
 import pt.isel.ls.data.Data;
 import pt.isel.ls.data.DataConnectionException;
+import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
 
 import java.sql.Connection;
@@ -9,9 +10,8 @@ import java.sql.SQLException;
 
 public class GetUsersHandler extends Handler implements IHandler {
 
-
     @Override
-    public CommandResult execute() throws DataConnectionException, SQLException {
+    public CommandResult execute(Command cmd) throws DataConnectionException, SQLException {
         System.out.println("Handler speaking: Getting all users");
 
         Data mapper = new Data();

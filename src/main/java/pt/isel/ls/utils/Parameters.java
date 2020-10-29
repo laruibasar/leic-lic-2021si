@@ -1,35 +1,57 @@
 package pt.isel.ls.utils;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 public class Parameters {
-    private LinkedHashMap<String, String> parameters;
+    /* store valid parameters for the command */
+    private ArrayList<String> validParameters;
+
+    /* to store user sent parameters */
+    private LinkedHashMap<String, String> userParameters;
 
     public Parameters() {
-        parameters = new LinkedHashMap<>();
+        validParameters = new ArrayList<>();
+        userParameters = new LinkedHashMap<>();
     }
 
-    public Parameters(String params) {
+    /* To receive the acceptable parameters from the method */
+    public Parameters(String[] params) {
         this();
-        String[] param = params.split("&");
-        for (int i = 0; i < param.length; i++) {
-            String[] pair = param[i].split("=");
-            parameters.put(pair[0], pair[1]);
+        for (int i = 0; i < params.length; i++) {
+            validParameters.add(params[i]);
         }
     }
 
+    public void setValues(String params) {
+        String[] param = params.split("&");
+        for (int i = 0; i < param.length; i++) {
+            String[] pair = param[i].split("=");
+            userParameters.put(pair[0], pair[1]);
+        }
+    }
+
+    public boolean matches() {
+        for (String str : validParameters) {
+            if (!userParameters.containsKey(str)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public boolean isEmpty() {
-        return parameters.isEmpty();
+        return userParameters.isEmpty();
     }
 
     @Override
     public String toString() {
-        if (parameters.isEmpty()) {
+        if (userParameters.isEmpty()) {
             return "";
         }
 
         StringBuilder str = new StringBuilder();
-        parameters.forEach((k, v) -> str
+        userParameters.forEach((k, v) -> str
                 .append(k)
                 .append("=")
                 .append(v)

@@ -1,8 +1,7 @@
 package pt.isel.ls.data;
 
 public class DataConnectionException extends Exception {
-    public DataConnectionException(String description)
-    {
+    public DataConnectionException(String description) {
         super(description);
     }
 
