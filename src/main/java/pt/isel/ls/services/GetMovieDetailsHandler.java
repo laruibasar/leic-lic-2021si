@@ -2,15 +2,16 @@ package pt.isel.ls.services;
 
 import pt.isel.ls.utils.CommandResult;
 
+
 /**
- * GET /movies - returns a list with all movies.
+ * GET /movies/{mid} - returns the detailed information for the movie identified by mid
+ *  rating - integer between 1 and 5.
  */
 
-public class GetMoviesHandler extends Handler implements IHandler {
-
+public class GetMovieDetailsHandler extends Handler implements IHandler {
     @Override
     public CommandResult execute() {
-        String query = "select name from movies;";
+        String query = "select * from movies;";
 //        try (Statement stmt = con.createStatement()) {
 //            ResultSet rs = stmt.executeQuery(query);
 //        } catch (SQLException e) {
