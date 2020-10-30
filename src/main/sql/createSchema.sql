@@ -12,29 +12,26 @@ create table users (
 );
 
 create table movies (
+  mid serial primary key,
   name varchar(50),
-  age int,
+  year int,
   genre varchar(50),
   castAndDirectors varchar(80),
-  primary key (name, age)
+  rating int references ratings(rateId),
+  unique (name, year)
 );
 
 create table reviews (
     rid serial primary key,
     summary varchar(50),
     completeReview varchar(150),
-    rating int references rating(rid),
-    --movie int references movies_reviews(mid)
+    rating int references rating(rateId),
+    movie int references movies(mid)
     movieCritic int references users(uid)
 );
 
-create table movies_reviews (
-    rid int references reviews(rid),
-    name varchar(50) references movies(name),
-    age int references movies(age)
-);
-
 create table ratings (
-    rid serial primary key,
-    rating int check (rating between 1 AND 5)
+    rateId serial primary key,
+    rating int check (rating between 1 AND 5)--,
+    --mid int references movies(mid)
 );
