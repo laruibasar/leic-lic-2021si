@@ -1,6 +1,5 @@
 drop table if exists users;
 drop table if exists movies;
-drop table if exists movies_reviews;
 drop table if exists ratings;
 drop table if exists reviews;
 
@@ -17,7 +16,6 @@ create table movies (
   year int,
   genre varchar(50),
   castAndDirectors varchar(80),
-  rating int references ratings(rateId),
   unique (name, year)
 );
 
@@ -25,13 +23,13 @@ create table reviews (
     rid serial primary key,
     summary varchar(50),
     completeReview varchar(150),
-    rating int references rating(rateId),
-    movie int references movies(mid)
+    rating int check (rating between 1 AND 5),  --int references rating(rateId),
+    movie int references movies(mid),
     movieCritic int references users(uid)
 );
 
 create table ratings (
     rateId serial primary key,
-    rating int check (rating between 1 AND 5)--,
-    --mid int references movies(mid)
+    rating int check (rating between 1 AND 5),
+    movie int references movies(mid)
 );
