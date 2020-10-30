@@ -31,6 +31,10 @@ public class Parameters {
         }
     }
 
+    public String getValue(String key) {
+        return userParameters.get(key);
+    }
+
     public boolean matches() {
         for (String str : validParameters) {
             if (!userParameters.containsKey(str)) {

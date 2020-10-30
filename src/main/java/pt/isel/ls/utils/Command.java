@@ -15,6 +15,8 @@ public class Command {
         this.parameters = parameters;
     }
 
+    public Command() { }
+
     public String getMethod() {
         return this.method;
     }

@@ -32,8 +32,8 @@ public class AppConsole {
         System.out.println("Enter command to run: ");
         System.out.print("> ");
         Scanner sc = new Scanner(System.in);
+
         String input = sc.nextLine();
-        sc.close();
 
         return input;
     }
