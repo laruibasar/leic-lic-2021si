@@ -13,17 +13,50 @@ select * from movies where mid = ?;
 --GET /movies/{mid}/ratings - returns the rating information for the movie identified by mid. This rating information include:
     --The rating average
     --The number of votes for each rating value
-select rating, COUNT(rating)
+select
+	avg(rating)::numeric(3,2) as average,
+	(select count(rating) from(select rating
+		from ratings
+		where movie = 1
+		union all
+		select rating
+		from reviews
+		where movie = 1) as rating where rating = 1) as votesOne ,
+	(select count(rating) from(select rating
+		from ratings
+		where movie = 1
+		union all
+		select rating
+		from reviews
+		where movie = 1) as rating where rating = 2) as votesTwo ,
+	(select count(rating) from(select rating
+		from ratings
+		where movie = 1
+		union all
+		select rating
+		from reviews
+		where movie = 1) as rating where rating = 3) as votesThree,
+	(select count(rating) from(select rating
+		from ratings
+		where movie = 1
+		union all
+		select rating
+		from reviews
+		where movie = 1) as rating where rating = 4) as votesFour,
+	(select count(rating) from(select rating
+		from ratings
+		where movie = 1
+		union all
+		select rating
+		from reviews
+		where movie = 1) as rating where rating = 5) as votesFive
 from (select rating
 	from ratings
 	where movie = 1
 	union all
 	select rating
 	from reviews
-	where movie = 1) as rating
-GROUP BY rating;
---Retorna os ratings presentes em ratings e reviews segundo um movie e faz a contagem
---TODO: Not finished
+	where movie = 1) as rating;
 
 --GET /movies/{mid}/reviews - returns all the reviews for the movie identified by mid. The information for each review must not include the full review text.
 select movie, summary, rating, movieCritic from reviews where mid = ?;
@@ -45,9 +78,10 @@ select * from reviews where rid = ?; --AND uid = ?; Useless again bor the same r
        -- highest- movies with the highest average ratings
         --lowest- movies with the lowest average ratings
     --min - minimum number of votes
-select name, year, avg(rating)::numeric(10,2) as average
+select name, year, avg(rating)::numeric(10,2) as average,count(rating)
 from movies join ratings on(movies.mid = ratings.movie)
 Group by name, year
+HAVING count(rating) > 3
 ORDER BY average ASC;
---where COUNT(mid) > min
---TODO: NOT DONE! Neste momento retorna os filmes e as suas médias de ratings, falta os ratings de reviews
+
+--TODO: O count ainda apenas conta os ratings de ratings, falta contar os ratings de reviews
