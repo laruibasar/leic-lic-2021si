@@ -1,15 +1,15 @@
 package pt.isel.ls.utils;
 
 public class Command {
-    private String method;
+    private Method method;
     private String[] path;
     private Parameters parameters;
 
-    public Command(String method, String path) {
+    public Command(Method method, String path) {
         this(method, path, new Parameters());
     }
 
-    public Command(String method, String path, Parameters parameters) {
+    public Command(Method method, String path, Parameters parameters) {
         this.method = method;
         this.path = path.split("/", 0);
         this.parameters = parameters;
@@ -17,7 +17,7 @@ public class Command {
 
     public Command() { }
 
-    public String getMethod() {
+    public Method getMethod() {
         return this.method;
     }
 
@@ -62,7 +62,7 @@ public class Command {
 
     @Override
     public String toString() {
-        StringBuilder str = new StringBuilder(method);
+        StringBuilder str = new StringBuilder(method.toString());
         str.append(" ");
 
         for (int i = 0; i < path.length; i++) {

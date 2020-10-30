@@ -6,6 +6,7 @@ import pt.isel.ls.data.DataConnectionException;
 import pt.isel.ls.services.Handler;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
+import pt.isel.ls.utils.Method;
 import pt.isel.ls.utils.Parameters;
 
 import java.sql.SQLException;
@@ -54,7 +55,8 @@ public class AppConsole {
     }
 
     private static Command setCommand(String[] args) {
-        Command cmd = new Command(args[0], args[1]);
+        Method method = Method.getMethod(args[0]);
+        Command cmd = new Command(method, args[1]);
         if (args.length == 3) {
             Parameters params = new Parameters();
             params.setValues(args[2]);
