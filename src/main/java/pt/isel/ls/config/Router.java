@@ -3,6 +3,7 @@ package pt.isel.ls.config;
 import pt.isel.ls.services.Handler;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.Method;
+import pt.isel.ls.utils.Path;
 
 import java.util.ArrayList;
 //import java.util.Hashtable;
@@ -16,7 +17,7 @@ public class Router {
         handlers = new ArrayList<>();
     }
 
-    public void addHandler(Method method, String path, Handler handler) {
+    public void addHandler(Method method, Path path, Handler handler) {
         Command template = new Command(method, path);
         handler.setTemplate(template);
         handlers.add(handler);

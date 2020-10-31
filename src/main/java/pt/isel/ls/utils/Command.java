@@ -2,16 +2,16 @@ package pt.isel.ls.utils;
 
 public class Command {
     private Method method;
-    private String[] path;
+    private Path path;
     private Parameters parameters;
 
-    public Command(Method method, String path) {
+    public Command(Method method, Path path) {
         this(method, path, new Parameters());
     }
 
-    public Command(Method method, String path, Parameters parameters) {
+    public Command(Method method, Path path, Parameters parameters) {
         this.method = method;
-        this.path = path.split("/", 0);
+        this.path = path;
         this.parameters = parameters;
     }
 
@@ -21,7 +21,7 @@ public class Command {
         return this.method;
     }
 
-    public String[] getPath() {
+    public Path getPath() {
         return this.path;
     }
 
@@ -38,23 +38,8 @@ public class Command {
             return false;
         }
 
-        String[] aux = command.getPath();
-        if (this.path.length != aux.length) {
+        if (!this.path.equals(command.getPath())) {
             return false;
-        }
-
-        for (int i = 0; i < this.path.length; i++) {
-            if (path[i].isEmpty() || aux[i].isEmpty()) {
-                continue;
-            }
-
-            if (path[i].charAt(0) == '{' || aux[i].charAt(0) == '{') {
-                continue;
-            }
-
-            if (!path[i].equals(aux[i])) {
-                return false;
-            }
         }
 
         return true;
@@ -65,10 +50,7 @@ public class Command {
         StringBuilder str = new StringBuilder(method.toString());
         str.append(" ");
 
-        for (int i = 0; i < path.length; i++) {
-            str.append(path[i]).append("/");
-        }
-        str.deleteCharAt(str.length() - 1); // cut last "/"
+        str.append(path.toString());
 
         if (!parameters.isEmpty()) {
             str.append(" ").append(parameters.toString());
