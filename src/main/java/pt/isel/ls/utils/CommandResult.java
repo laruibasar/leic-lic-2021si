@@ -1,14 +1,18 @@
 package pt.isel.ls.utils;
 
 import java.sql.ResultSet;
-import java.util.ArrayList;
 
-public class CommandResult<T> {
+/**
+ *  class responsible for saving the result of the query made to the database
+ *  The ResultSet interface provides getter methods for retrieving column values
+ *  from the current row.
+ */
 
-    //vai ter os resultados dos queries executados à base de dados
-    private ArrayList<T> result = new ArrayList<>();
+public class CommandResult {
 
-    public CommandResult(T rs) {
-        result.add(rs);
+    public final ResultSet result;
+
+    public CommandResult(ResultSet rs) {
+        result = rs;
     }
 }

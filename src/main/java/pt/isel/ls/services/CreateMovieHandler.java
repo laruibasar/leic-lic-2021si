@@ -2,11 +2,13 @@ package pt.isel.ls.services;
 
 import pt.isel.ls.data.Data;
 import pt.isel.ls.data.DataConnectionException;
-import pt.isel.ls.model.Movie;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class CreateMovieHandler extends Handler implements IHandler {
 
@@ -18,20 +20,13 @@ public class CreateMovieHandler extends Handler implements IHandler {
 
     @Override
     public CommandResult execute(Command cmd) throws DataConnectionException, SQLException {
-
-        //TODO: Discutir implmentação do modelo
-        //Movie movie = new Movie(); Retornar parametro de Parameters individualmente
-
         Data mapper = new Data();
-        CommandResult cr = null;
+        CommandResult cr;
         Connection conn = null;
         try {
             conn = mapper.getDataConnection().getConnection();
-
             final String query = "insert into movies(name, age, genre, castAndDirectors) values(?,?,?,?)";
-
             PreparedStatement pstmt = conn.prepareStatement(query);
-
             /*
             pstmt.setString(1,movie.getTitle());
             pstmt.setString(2,String.valueOf((movie.getReleaseDate())));
@@ -42,22 +37,16 @@ public class CreateMovieHandler extends Handler implements IHandler {
 
             Iterate user Parameters in cmd and pstmt.setString() in loop
              */
-
-
-
-
-            int rs = pstmt.executeUpdate();
-
+            ResultSet rs = pstmt.executeQuery();
             cr = new CommandResult(rs);
-
             conn.commit();
         } catch (Exception e) {
-            conn.rollback();
+            if(conn != null)
+                conn.rollback();
             throw new DataConnectionException("Unable to add movie\n"
                     + e.getMessage(), e);
-        } finally {
-            mapper.closeConnection(conn);
-            return cr;
         }
+        mapper.closeConnection(conn);
+        return cr;
     }
 }

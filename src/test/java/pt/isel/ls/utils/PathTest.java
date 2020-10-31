@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 
 public class PathTest {
+
     @Test
     public void path_equals() {
         Path p1 = new Path("/movies/{mid}/ratings");

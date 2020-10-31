@@ -1,6 +1,5 @@
 package pt.isel.ls.config;
 
-import pt.isel.ls.services.CreateReviewForMovie;
 import pt.isel.ls.services.CreateUserHandler;
 import pt.isel.ls.services.GetMoviesHandler;
 import pt.isel.ls.services.GetUsersHandler;
