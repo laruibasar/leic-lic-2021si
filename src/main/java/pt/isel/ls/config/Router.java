@@ -2,6 +2,8 @@ package pt.isel.ls.config;
 
 import pt.isel.ls.services.Handler;
 import pt.isel.ls.utils.Command;
+import pt.isel.ls.utils.Method;
+import pt.isel.ls.utils.Path;
 
 import java.util.ArrayList;
 //import java.util.Hashtable;
@@ -9,35 +11,13 @@ import java.util.List;
 
 public class Router {
 
-    /* store the application available handlers */
-    //private static Hashtable<String, Handler> getHandlers;
-    //private static Hashtable<String, Handler> postHandlers;
-
     private final List<Handler> handlers;
 
     public Router() {
-        //getHandlers = new Hashtable<>();
-        //postHandlers = new Hashtable<>();
         handlers = new ArrayList<>();
     }
 
-    /*
-    public static void addHandler(String method, String path,
-                                  Handler handler) throws RouterException {
-        switch (method) {
-            case "post":
-                postHandlers.put(path, handler);
-                break;
-            case "get":
-                getHandlers.put(path, handler);
-                break;
-            default:
-                throw new RouterException("Router: invalid method " + method);
-        }
-    }
-    */
-
-    public void addHandler(String method, String path, Handler handler) {
+    public void addHandler(Method method, Path path, Handler handler) {
         Command template = new Command(method, path);
         handler.setTemplate(template);
         handlers.add(handler);
