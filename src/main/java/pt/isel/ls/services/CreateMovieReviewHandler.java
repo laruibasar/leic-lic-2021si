@@ -42,8 +42,7 @@ public class CreateMovieReviewHandler extends Handler implements IHandler {
             pstmt.setInt(3, Integer.parseInt(cmd.getParameters().getValue("rating")));
             pstmt.setInt(4, Integer.parseInt(cmd.getPath().getPath().get(1)));
             pstmt.setInt(5, Integer.parseInt(cmd.getParameters().getValue("uid")));
-            ResultSet rs = pstmt.executeQuery();
-            cr = new CommandResult(rs);
+            cr = new CommandResult(pstmt.executeUpdate());
             conn.commit();
         } catch (Exception e) {
             if(conn != null)

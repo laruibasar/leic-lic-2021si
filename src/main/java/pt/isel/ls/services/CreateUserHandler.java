@@ -8,7 +8,6 @@ import pt.isel.ls.utils.Parameters;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -27,7 +26,7 @@ public class CreateUserHandler extends Handler implements IHandler {
     @Override
     public CommandResult execute(Command cmd) throws DataConnectionException, SQLException {
         Data mapper = new Data();
-        CommandResult cr;
+        CommandResult<Integer> cr;
         Connection conn = null;
         try {
             conn = mapper.getDataConnection().getConnection();
@@ -37,8 +36,7 @@ public class CreateUserHandler extends Handler implements IHandler {
             pstmt.setString(1, nameSplit[0]);
             pstmt.setString(2, nameSplit[1]);
             pstmt.setString(3, cmd.getParameters().getValue("email"));
-            ResultSet rs = pstmt.executeQuery();
-            cr = new CommandResult(rs);
+            cr = new CommandResult(pstmt.executeUpdate());
             conn.commit();
         } catch (Exception e) {
             if(conn != null)

@@ -10,30 +10,36 @@ import java.sql.SQLException;
  *  from the current row.
  */
 
-public class CommandResult {
+public class CommandResult<T> {
 
-    public final ResultSet result;
+    public final T result;
 
-    public CommandResult(ResultSet rs) {
+    public CommandResult(T rs) {
         result = rs;
     }
 
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        ResultSetMetaData rsmd = null;
-        try {
-            rsmd = result.getMetaData();
-            int columnsNumber = rsmd.getColumnCount();
-            while (result.next()) {
-                for (int i = 1; i <= columnsNumber; i++) {
-                    if (i > 1) sb.append(",  ");
-                    sb.append(result.getString(i) + " " + rsmd.getColumnName(i));
+        if (result instanceof ResultSet) {
+            ResultSet rs = (ResultSet) result;
+            StringBuilder sb = new StringBuilder();
+            ResultSetMetaData rsmd = null;
+            try {
+                rsmd = rs.getMetaData();
+                int columnsNumber = rsmd.getColumnCount();
+                while (rs.next()) {
+                    for (int i = 1; i <= columnsNumber; i++) {
+                        if (i > 1) sb.append(",  ");
+                        sb.append(rs.getString(i) + " " + rsmd.getColumnName(i));
+                    }
+                    sb.append("\n");
                 }
-                sb.append("\n");
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            return sb.toString();
+        } else {
+            int Post = (int) result;
+            return Post == 1 ? "Operation was a sucess" : "Operation failed miserable";
         }
-        return sb.toString();
     }
 }

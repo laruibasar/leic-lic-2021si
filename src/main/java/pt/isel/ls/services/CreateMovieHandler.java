@@ -4,6 +4,7 @@ import pt.isel.ls.data.Data;
 import pt.isel.ls.data.DataConnectionException;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
+import pt.isel.ls.utils.Method;
 import pt.isel.ls.utils.Parameters;
 
 import java.sql.Connection;
@@ -37,8 +38,7 @@ public class CreateMovieHandler extends Handler implements IHandler {
             pstmt.setInt(2, Integer.parseInt(cmd.getParameters().getValue("releaseYear")));
             pstmt.setString(3, "NULL");
             pstmt.setString(4, "NULL");;
-            ResultSet rs = pstmt.executeQuery();
-            cr = new CommandResult(rs);
+            cr = new CommandResult(pstmt.executeUpdate());
             conn.commit();
         } catch (Exception e) {
             if(conn != null)
