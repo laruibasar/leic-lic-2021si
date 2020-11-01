@@ -27,8 +27,7 @@ public class CommandResult {
             while (result.next()) {
                 for (int i = 1; i <= columnsNumber; i++) {
                     if (i > 1) sb.append(",  ");
-                    String columnValue = result.getString(i);
-                    sb.append(columnValue + " " + rsmd.getColumnName(i));
+                    sb.append(result.getString(i) + " " + rsmd.getColumnName(i));
                 }
                 sb.append("\n");
             }

@@ -6,8 +6,12 @@ import pt.isel.ls.utils.CommandResult;
 
 import java.sql.SQLException;
 
-//vai buscar determinada (reviewId) review ao filme
-public class GetReviewFromMovieHandler extends Handler implements IHandler {
+
+/**
+ * GET /movies/{mid}/reviews - returns all the reviews for the movie identified by mid. The information for each review must not include the full review text.
+ */
+
+public class GetMovieReviewsHandler extends Handler implements IHandler {
 
     @Override
     public CommandResult execute(Command cmd) throws DataConnectionException, SQLException {

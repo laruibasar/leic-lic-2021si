@@ -48,7 +48,7 @@ public class CreateMovieReviewHandler extends Handler implements IHandler {
         } catch (Exception e) {
             if(conn != null)
                 conn.rollback();
-            throw new DataConnectionException("Unable to add movie\n"
+            throw new DataConnectionException("Unable to add review to the movie\n"
                     + e.getMessage(), e);
         }
         mapper.closeConnection(conn);

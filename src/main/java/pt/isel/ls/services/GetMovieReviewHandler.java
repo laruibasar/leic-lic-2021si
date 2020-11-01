@@ -11,10 +11,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * GET /movies - returns a list with all movies.
+ * GET /movies/{mid}/reviews/{rid} - returns the full information for the review rid of the movie identified by mid.
  */
 
-public class GetMoviesHandler extends Handler implements IHandler {
+public class GetMovieReviewHandler extends Handler implements IHandler {
 
     @Override
     public CommandResult execute(Command cmd) throws DataConnectionException, SQLException {
@@ -23,15 +23,17 @@ public class GetMoviesHandler extends Handler implements IHandler {
         Connection conn = null;
         try {
             conn = mapper.getDataConnection().getConnection();
-            final String query = "select name, year from movies";
+            final String query = "select * from reviews where rid = ? union all select from movies where name = ?";
             PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, Integer.parseInt(cmd.getPath().getPath().get(3)));
+            pstmt.setInt(2, Integer.parseInt(cmd.getPath().getPath().get(1)));
             ResultSet rs = pstmt.executeQuery();
             cr = new CommandResult(rs);
             conn.commit();
         } catch (Exception e) {
             if(conn != null)
                 conn.rollback();
-            throw new DataConnectionException("Unable to get a list of all the movies\n"
+            throw new DataConnectionException("Unable to add review to the movie\n"
                     + e.getMessage(), e);
         }
         mapper.closeConnection(conn);

@@ -10,17 +10,11 @@ import java.sql.SQLException;
 /**
  * GET /users/{uid} - returns the details for the user identified by uid
  */
+
 public class GetUserDetailsHandler extends Handler implements IHandler {
 
     @Override
-    public CommandResult execute(Command cmd) throws DataConnectionException, SQLException {
-        String query = "select * from users";
-//        try (Statement stmt = con.createStatement()) {
-//            ResultSet rs = stmt.executeQuery(query);
-//        } catch (SQLException e) {
-//            JDBCTutorialUtilities.printSQLException(e);
-//        }
-//        return rs;
+    public CommandResult execute(Command cmd) {
         return null;
     }
 }
