@@ -16,12 +16,6 @@ public class GetMovieDetailsHandler extends Handler implements IHandler {
 
     @Override
     public CommandResult execute(Command cmd) throws DataConnectionException, SQLException {
-        String query = "select * from movies;";
-//        try (Statement stmt = con.createStatement()) {
-//            ResultSet rs = stmt.executeQuery(query);
-//        } catch (SQLException e) {
-//            JDBCTutorialUtilities.printSQLException(e);
-//        }
         return null;
     }
 }

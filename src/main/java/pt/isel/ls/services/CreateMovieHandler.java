@@ -4,6 +4,7 @@ import pt.isel.ls.data.Data;
 import pt.isel.ls.data.DataConnectionException;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
+import pt.isel.ls.utils.Parameters;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,6 +19,11 @@ public class CreateMovieHandler extends Handler implements IHandler {
      *  releaseYear - the movie's release year.
      */
 
+    public CreateMovieHandler() {
+        super();
+        template.setParameters(new Parameters(new String[]{"title", "releaseYear"}));
+    }
+
     @Override
     public CommandResult execute(Command cmd) throws DataConnectionException, SQLException {
         Data mapper = new Data();
@@ -25,9 +31,12 @@ public class CreateMovieHandler extends Handler implements IHandler {
         Connection conn = null;
         try {
             conn = mapper.getDataConnection().getConnection();
-            final String query = "insert into movies(name, age, genre, castAndDirectors) values(?,?,?,?)";
+            final String query = "insert into movies(title,year,genre,castAndDirectors) values(?,?,?,?)";
             PreparedStatement pstmt = conn.prepareStatement(query);
-
+            pstmt.setString(1, cmd.getParameters().getValue("name"));
+            pstmt.setInt(2, Integer.parseInt(cmd.getParameters().getValue("releaseYear")));
+            pstmt.setString(3, "NULL");
+            pstmt.setString(4, "NULL");;
             ResultSet rs = pstmt.executeQuery();
             cr = new CommandResult(rs);
             conn.commit();

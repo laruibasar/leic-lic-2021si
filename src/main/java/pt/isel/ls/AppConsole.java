@@ -6,7 +6,6 @@ import pt.isel.ls.data.DataConnectionException;
 import pt.isel.ls.services.Handler;
 import pt.isel.ls.utils.*;
 
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -70,6 +69,6 @@ public class AppConsole {
     }
 
     private static void showResults(CommandResult cr) {
-        cr.toString();
+        System.out.println(cr.toString());
     }
 }

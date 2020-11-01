@@ -16,24 +16,6 @@ public class GetUsersHandler extends Handler implements IHandler {
 
     @Override
     public CommandResult execute(Command cmd) throws DataConnectionException, SQLException {
-        System.out.println("Handler speaking: Getting all users");
-
-        Data mapper = new Data();
-        Connection conn = null;
-        try {
-            conn = mapper.getDataConnection().getConnection();
-
-            /* insert queries, statements and results */
-
-            conn.commit();
-
-            return null;
-        } catch (Exception e) {
-            conn.rollback();
-            throw new DataConnectionException("Unable to list all users\n"
-                    + e.getMessage(), e);
-        } finally {
-            mapper.closeConnection(conn);
-        }
+        return null;
     }
 }

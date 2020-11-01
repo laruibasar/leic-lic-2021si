@@ -1,10 +1,14 @@
 package pt.isel.ls.services;
 
+import pt.isel.ls.data.Data;
 import pt.isel.ls.data.DataConnectionException;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
 import pt.isel.ls.utils.Parameters;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -22,18 +26,24 @@ public class CreateUserHandler extends Handler implements IHandler {
 
     @Override
     public CommandResult execute(Command cmd) throws DataConnectionException, SQLException {
-        String query = "insert into users(uid, fname, lname, email) values\n" +
-                //incrementar último uid
-                "(uid," +
-                "'"+ "'," +
-                "'"+ "'," +
-                "'"+ "',";
-//        try (Statement stmt = con.createStatement()) {
-//            ResultSet rs = stmt.executeQuery(query);
-//        } catch (SQLException e) {
-//            JDBCTutorialUtilities.printSQLException(e);
-//        }
-//        return rs;
-        return null;
+        Data mapper = new Data();
+        CommandResult cr;
+        Connection conn = null;
+        try {
+            conn = mapper.getDataConnection().getConnection();
+            final String query = "insert into users(fname,lname,email) values(?,?,?)";
+            PreparedStatement pstmt = conn.prepareStatement(query);
+
+            ResultSet rs = pstmt.executeQuery();
+            cr = new CommandResult(rs);
+            conn.commit();
+        } catch (Exception e) {
+            if(conn != null)
+                conn.rollback();
+            throw new DataConnectionException("Unable to add movie\n"
+                    + e.getMessage(), e);
+        }
+        mapper.closeConnection(conn);
+        return cr;
     }
 }
