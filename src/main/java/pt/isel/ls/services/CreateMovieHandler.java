@@ -27,16 +27,7 @@ public class CreateMovieHandler extends Handler implements IHandler {
             conn = mapper.getDataConnection().getConnection();
             final String query = "insert into movies(name, age, genre, castAndDirectors) values(?,?,?,?)";
             PreparedStatement pstmt = conn.prepareStatement(query);
-            /*
-            pstmt.setString(1,movie.getTitle());
-            pstmt.setString(2,String.valueOf((movie.getReleaseDate())));
-            pstmt.setString(3,movie.getGenre());
-            pstmt.setString(4,movie.getCastAndDirectors());
 
-            OR...
-
-            Iterate user Parameters in cmd and pstmt.setString() in loop
-             */
             ResultSet rs = pstmt.executeQuery();
             cr = new CommandResult(rs);
             conn.commit();

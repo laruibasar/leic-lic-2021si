@@ -69,16 +69,7 @@ public class AppConsole {
         return handler.execute(cmd);
     }
 
-    private static void showResults(CommandResult cr) throws SQLException {
-        ResultSetMetaData rsmd = cr.result.getMetaData();
-        int columnsNumber = rsmd.getColumnCount();
-        while (cr.result.next()) {
-            for (int i = 1; i <= columnsNumber; i++) {
-                if (i > 1) System.out.print(",  ");
-                String columnValue = cr.result.getString(i);
-                System.out.print(columnValue + " " + rsmd.getColumnName(i));
-            }
-            System.out.println(" ");
-        }
+    private static void showResults(CommandResult cr) {
+        cr.toString();
     }
 }
