@@ -5,8 +5,7 @@ drop table if exists reviews;
 
 create table users (
   uid serial primary key ,
-  fname varchar(50),
-  lname varchar(50),
+  name varchar(50),
   email varchar(50) unique
 );
 
