@@ -21,8 +21,16 @@ public class Command {
         return this.method;
     }
 
+    public void setMethod(Method method) {
+        this.method = method;
+    }
+
     public Path getPath() {
         return this.path;
+    }
+
+    public void setPath(Path path) {
+        this.path = path;
     }
 
     public Parameters getParameters() {
