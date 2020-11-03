@@ -2,29 +2,44 @@ package pt.isel.ls.model;
 
 public class Rating {
 
-    private int rating;
+    private float average;
+    private int votesOne;
+    private int votesTwo;
+    private int votesThree;
+    private int votesFour;
+    private int votesFive;
 
-    public Rating(int rating) throws RatingException {
-        if (rating < 1 || rating > 5) {
-            throw new RatingException("Rating: value not allow");
-        }
-        this.rating = rating;
+    public Rating(float average, int votesOne, int votesTwo, int votesThree,
+            int votesFour, int votesFive) {
+        this.average = average;
+        this.votesOne = votesOne;
+        this.votesTwo = votesTwo;
+        this.votesThree = votesThree;
+        this.votesFour = votesFour;
+        this.votesFive = votesFive;
     }
 
-    public void setRating(int rating) throws RatingException {
-        if (rating < 1 || rating > 5) {
-            throw new RatingException("Rating: value not allow");
-        }
-        this.rating = rating;
+    public float getAverage() {
+        return average;
     }
 
-    public int getRating() {
-        return rating;
+    public int getVotesOne() {
+        return votesOne;
     }
-
-    public class RatingException extends Exception {
-        public RatingException(String message) {
-            super(message);
-        }
+    
+    public int getVotesTwo() {
+        return votesTwo;
+    }
+    
+    public int getVotesThree() {
+        return votesThree;
+    }
+    
+    public int getVotesFour() { 
+        return votesFour;
+    }
+    
+    public int getVotesFive() {
+        return votesFive;
     }
 }

@@ -2,17 +2,18 @@ package pt.isel.ls.model;
 
 public class Review {
 
+    private int rid;
     private String summary;
     private String completeReview;
-    private Rating rating;
-    private Movie movie;
-    private User movieCritic;
+    private int rating;
+    private int movie;
+    private int movieCritic;
 
-    public Review(String summary, String completeReview, Rating rating,
-                  Movie movie, User movieCritic) {
+    public Review(int rid, String summary, int rating,
+                  int movie, int movieCritic) {
 
+        this.rid = rid;
         this.summary = summary;
-        this.completeReview = completeReview;
         this.rating = rating;
         this.movie = movie;
         this.movieCritic = movieCritic;
@@ -27,35 +28,19 @@ public class Review {
         return completeReview;
     }
 
-    public void setSummary(String summary) {
-        this.summary = summary;
-    }
-
     public String getSummary() {
         return summary;
     }
-
-    public void setMovie(Movie movie) {
-        this.movie = movie;
-    }
-
-    public Movie getMovie() {
+   
+    public int getMovie() {
         return movie;
     }
-
-    public void setRating(Rating rating) {
-        this.rating = rating;
-    }
-
-    public Rating getRating() {
+   
+    public int getRating() {
         return rating;
     }
-
-    public void setMovieCritic(User movieCritic) {
-        this.movieCritic = movieCritic;
-    }
-
-    public User getMovieCritic() {
+   
+    public int getMovieCritic() {
         return movieCritic;
     }
 }

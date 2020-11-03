@@ -9,10 +9,6 @@ public abstract class Handler implements IHandler {
         template = new Command();
     }
 
-    public void setTemplate(Command template) {
-        this.template = template;
-    }
-
     public Command getTemplate() {
         return template;
     }

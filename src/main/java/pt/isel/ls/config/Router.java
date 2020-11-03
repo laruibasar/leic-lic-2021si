@@ -18,8 +18,8 @@ public class Router {
     }
 
     public void addHandler(Method method, Path path, Handler handler) {
-        Command template = new Command(method, path);
-        handler.setTemplate(template);
+        handler.getTemplate().setMethod(method);
+        handler.getTemplate().setPath(path);
         handlers.add(handler);
     }
 

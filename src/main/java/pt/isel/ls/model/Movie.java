@@ -2,33 +2,27 @@ package pt.isel.ls.model;
 
 public class Movie {
 
+    private int mid;
     private String title;
     private int year;
     private String genre;
     private String castAndDirectors;
 
-    public Movie(String title, int year, String genre,
-                 String castAndDirectors) {
-
+    public Movie(int mid, String title, int year) {
+        this.mid = mid;
         this.title = title;
         this.year = year;
-        this.genre = genre;
-        this.castAndDirectors = castAndDirectors;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public int getMid() {
+        return mid;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setReleaseDate(int year) {
-        this.year = year;
-    }
-
-    public int getReleaseDate() {
+    public int getYear() {
         return year;
     }
 
