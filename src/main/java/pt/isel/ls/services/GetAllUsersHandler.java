@@ -12,7 +12,7 @@ import java.sql.SQLException;
  * GET /users - returns the list of users.
  */
 
-public class GetUsersHandler extends Handler implements IHandler {
+public class GetAllUsersHandler extends Handler implements IHandler {
 
     @Override
     public CommandResult execute(Command cmd) throws DataConnectionException, SQLException {

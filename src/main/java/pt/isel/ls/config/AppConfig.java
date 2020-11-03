@@ -32,7 +32,7 @@ public class AppConfig {
     private void loadRouter() {
         /* List all handler to load into Router */
         this.router.addHandler(Method.POST, new Path("/users"), new CreateUserHandler());
-        this.router.addHandler(Method.GET, new Path("/users"), new GetUsersHandler());
+        this.router.addHandler(Method.GET, new Path("/users"), new GetAllUsersHandler());
         this.router.addHandler(Method.GET, new Path("/users/{uid}"), new GetUserDetailsHandler());
 
         this.router.addHandler(Method.POST, new Path("/movies"), new CreateMovieHandler());
