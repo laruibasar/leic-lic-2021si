@@ -23,6 +23,7 @@ public class Review {
     public void setCompleteReview(String completeReview) {
         this.completeReview = completeReview;
     }
+
     public String getCompleteReview() {
         return completeReview;
     }
@@ -30,12 +31,15 @@ public class Review {
     public String getSummary() {
         return summary;
     }
+   
     public int getMovie() {
         return movie;
     }
+   
     public int getRating() {
         return rating;
     }
+   
     public int getMovieCritic() {
         return movieCritic;
     }
