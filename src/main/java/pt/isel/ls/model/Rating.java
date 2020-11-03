@@ -9,10 +9,8 @@ public class Rating {
     private int votesFour;
     private int votesFive;
 
-    public Rating(float average, int votesOne, int votesTwo, int votesThree, int votesFour, int votesFive) throws RatingException {
-        if (average < 1 || average > 5) {
-            throw new RatingException("Average: value not allow");
-        }
+    public Rating(float average, int votesOne, int votesTwo, int votesThree,
+            int votesFour, int votesFive) {
         this.average = average;
         this.votesOne = votesOne;
         this.votesTwo = votesTwo;
@@ -21,16 +19,27 @@ public class Rating {
         this.votesFive = votesFive;
     }
 
-    public float getAverage() { return average; }
-    public int getVotesOne() { return votesOne; }
-    public int getVotesTwo() { return votesTwo; }
-    public int getVotesThree() { return votesThree; }
-    public int getVotesFour() { return votesFour; }
-    public int getVotesFive() { return votesFive; }
+    public float getAverage() {
+        return average;
+    }
 
-    public class RatingException extends Exception {
-        public RatingException(String message) {
-            super(message);
-        }
+    public int getVotesOne() {
+        return votesOne;
+    }
+    
+    public int getVotesTwo() {
+        return votesTwo;
+    }
+    
+    public int getVotesThree() {
+        return votesThree;
+    }
+    
+    public int getVotesFour() { 
+        return votesFour;
+    }
+    
+    public int getVotesFive() {
+        return votesFive;
     }
 }
