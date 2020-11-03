@@ -4,7 +4,11 @@ import pt.isel.ls.config.AppConfig;
 import pt.isel.ls.config.RouterException;
 import pt.isel.ls.data.DataConnectionException;
 import pt.isel.ls.services.Handler;
-import pt.isel.ls.utils.*;
+import pt.isel.ls.utils.Command;
+import pt.isel.ls.utils.CommandResult;
+import pt.isel.ls.utils.Method;
+import pt.isel.ls.utils.Parameters;
+import pt.isel.ls.utils.Path;
 
 import java.sql.SQLException;
 import java.util.Scanner;
