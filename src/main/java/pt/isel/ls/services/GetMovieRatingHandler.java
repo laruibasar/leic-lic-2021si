@@ -6,7 +6,6 @@ import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Rating;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
-import pt.isel.ls.utils.EmptyResult;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

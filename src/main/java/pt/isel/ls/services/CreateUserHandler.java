@@ -30,12 +30,10 @@ public class CreateUserHandler extends Handler implements IHandler {
         Connection conn = null;
         try {
             conn = mapper.getDataConnection().getConnection();
-            final String query = "insert into users(fname,lname,email) values(?,?,?)";
+            final String query = "insert into users(name,email) values(?,?)";
             PreparedStatement pstmt = conn.prepareStatement(query);
-            String[] nameSplit = cmd.getParameters().getValue("name").split("\\+");
-            pstmt.setString(1, nameSplit[0]);
-            pstmt.setString(2, nameSplit[1]);
-            pstmt.setString(3, cmd.getParameters().getValue("email"));
+            pstmt.setString(1, cmd.getParameters().getValue("name"));
+            pstmt.setString(2, cmd.getParameters().getValue("email"));
             result = new CommandResult(pstmt.executeUpdate());
             conn.commit();
             pstmt.close();
@@ -43,7 +41,6 @@ public class CreateUserHandler extends Handler implements IHandler {
             if (conn != null) {
                 conn.rollback();
             }
-
             throw new DataConnectionException("Unable to add User\n"
                     + e.getMessage(), e);
         } finally {

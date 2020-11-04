@@ -6,7 +6,6 @@ import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Review;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
-import pt.isel.ls.utils.EmptyResult;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,7 +24,7 @@ public class GetUserAllReviewsHandler extends Handler implements IHandler {
     private LinkedList<String> tuple = new LinkedList<>();
 
     @Override
-    public CommandResult execute(Command cmd) throws DataConnectionException, SQLException, EmptyResult {
+    public CommandResult execute(Command cmd) throws DataConnectionException, SQLException {
         Data mapper = new Data();
         Connection conn = null;
         try {

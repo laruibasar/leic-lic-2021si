@@ -6,7 +6,6 @@ import pt.isel.ls.model.Model;
 import pt.isel.ls.model.User;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
-import pt.isel.ls.utils.EmptyResult;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,12 +24,12 @@ public class GetAllUsersHandler extends Handler implements IHandler {
     private LinkedList<String> tuple = new LinkedList<>();
 
     @Override
-    public CommandResult execute(Command cmd) throws DataConnectionException, SQLException, EmptyResult {
+    public CommandResult execute(Command cmd) throws DataConnectionException, SQLException {
         Data mapper = new Data();
         Connection conn = null;
         try {
             conn = mapper.getDataConnection().getConnection();
-            final String query = "select uid from users;";
+            final String query = "select uid, name from users;";
             PreparedStatement pstmt = conn.prepareStatement(query);
             ResultSet rs = pstmt.executeQuery();
             ResultSetMetaData rsmd = rs.getMetaData();
@@ -49,12 +48,11 @@ public class GetAllUsersHandler extends Handler implements IHandler {
             if (conn != null) {
                 conn.rollback();
             }
-            throw new DataConnectionException("Unable to get a list of all the movies\n"
+            throw new DataConnectionException("Unable to get users\n"
                     + e.getMessage(), e);
         } finally {
             mapper.closeConnection(conn);
         }
-
         return new CommandResult(user);
     }
 }

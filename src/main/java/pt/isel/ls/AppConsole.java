@@ -3,7 +3,6 @@ package pt.isel.ls;
 import pt.isel.ls.services.Handler;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
-import pt.isel.ls.utils.EmptyResult;
 import pt.isel.ls.config.AppConfig;
 import pt.isel.ls.config.RouterException;
 import pt.isel.ls.data.DataConnectionException;
@@ -25,7 +24,7 @@ public class AppConsole {
 
             try {
                 run = runOnce(args);
-            } catch (RouterException | DataConnectionException | SQLException | EmptyResult re) {
+            } catch (RouterException | DataConnectionException | SQLException re) {
                 System.out.println(re.getMessage());
             }
         }
@@ -40,7 +39,7 @@ public class AppConsole {
     }
 
     public static boolean runOnce(String[] args) throws RouterException,
-            DataConnectionException, SQLException, EmptyResult {
+            DataConnectionException, SQLException {
 
         if (args[0].toUpperCase().equals("EXIT")) {
             System.out.println("Exiting...");
@@ -70,13 +69,13 @@ public class AppConsole {
     }
 
     private static CommandResult runCommand(Command cmd) throws RouterException,
-            DataConnectionException, SQLException, EmptyResult {
+            DataConnectionException, SQLException {
 
         Handler handler = AppConfig.getInstance().router.findHandler(cmd);
         return handler.execute(cmd);
     }
 
-    private static void showResults(CommandResult cr) throws EmptyResult {
+    private static void showResults(CommandResult cr) {
         cr.printResults();
     }
 }

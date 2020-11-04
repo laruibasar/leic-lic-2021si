@@ -6,7 +6,6 @@ import pt.isel.ls.model.Model;
 import pt.isel.ls.model.User;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
-import pt.isel.ls.utils.EmptyResult;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -26,12 +25,13 @@ public class GetUserDetailsHandler extends Handler implements IHandler {
     private LinkedList<String> tuple = new LinkedList<>();
 
     @Override
-    public CommandResult execute(Command cmd) throws DataConnectionException, SQLException, EmptyResult {
+    public CommandResult execute(Command cmd) throws DataConnectionException, SQLException {
         Data mapper = new Data();
         Connection conn = null;
         try {
             conn = mapper.getDataConnection().getConnection();
-            final String query = "select * from users where uid = ?;";
+            //TODO: escolher atributos e decidir ordem
+            final String query = "select id, name, email from users where uid = ?;";
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setString(1, cmd.getPath().getPath().get(1));
             ResultSet rs = pstmt.executeQuery();

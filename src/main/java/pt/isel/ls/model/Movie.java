@@ -6,13 +6,11 @@ public class Movie extends Model {
     private String title;
     private int year;
 
-    public Movie(int mid, int selector) {
-        super(selector);
+    public Movie(int mid) {
         this.mid = mid;
     }
 
-    public Movie(int mid, String title, int year, int selector) {
-        super(selector);
+    public Movie(int mid, String title, int year) {
         this.mid = mid;
         this.title = title;
         this.year = year;
@@ -32,14 +30,15 @@ public class Movie extends Model {
 
     @Override
     public String toString() {
-        switch (selector) {
-            case 3:
-                return "MovieID = " + mid + " \nTitle = " + title + " \nYear = " + year;
-            case 1:
-                return "MovieID = " + mid;
-            default:
-                return null;
-        }
+//        switch (selector) {
+//            case 3:
+//                return "MovieID = " + mid + " \nTitle = " + title + " \nYear = " + year;
+//            case 1:
+//                return "MovieID = " + mid;
+//            default:
+//                return null;
+//        }
+        return null;
     }
 
 }
