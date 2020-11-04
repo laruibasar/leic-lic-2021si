@@ -19,11 +19,10 @@ import java.sql.SQLException;
  * GET /users/{uid}/reviews - returns all reviews from the user identified by uid. Must not include the full review.
  */
 
-public class GetUserReviewsHandler extends Handler implements IHandler {
+public class GetUserAllReviewsHandler extends Handler implements IHandler {
 
     private LinkedList<Model> reviews = new LinkedList<>();
     private LinkedList<String> tuple = new LinkedList<>();
-    private final String query = "select rid, summary, movie, rating from reviews where movieCritic = ?;";
 
     @Override
     public CommandResult execute(Command cmd) throws DataConnectionException, SQLException, EmptyResult {
@@ -31,6 +30,7 @@ public class GetUserReviewsHandler extends Handler implements IHandler {
         Connection conn = null;
         try {
             conn = mapper.getDataConnection().getConnection();
+            final String query = "select rid, summary, movie, rating from reviews where movieCritic = ?;";
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setString(1, cmd.getPath().getPath().get(1));
             ResultSet rs = pstmt.executeQuery();

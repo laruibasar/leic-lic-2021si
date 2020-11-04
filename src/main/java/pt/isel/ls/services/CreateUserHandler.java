@@ -18,8 +18,6 @@ import java.sql.SQLException;
 
 public class CreateUserHandler extends Handler implements IHandler {
 
-    private final String query = "insert into users(fname,lname,email) values(?,?,?)";
-
     public CreateUserHandler() {
         super();
         template.setParameters(new Parameters(new String[]{"name", "email"}));
@@ -32,6 +30,7 @@ public class CreateUserHandler extends Handler implements IHandler {
         Connection conn = null;
         try {
             conn = mapper.getDataConnection().getConnection();
+            final String query = "insert into users(fname,lname,email) values(?,?,?)";
             PreparedStatement pstmt = conn.prepareStatement(query);
             String[] nameSplit = cmd.getParameters().getValue("name").split("\\+");
             pstmt.setString(1, nameSplit[0]);

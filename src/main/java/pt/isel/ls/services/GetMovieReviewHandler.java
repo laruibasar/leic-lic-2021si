@@ -23,7 +23,6 @@ public class GetMovieReviewHandler extends Handler implements IHandler {
 
     private LinkedList<Model> reviews = new LinkedList<>();
     private LinkedList<String> tuple = new LinkedList<>();
-    private final String query = "select movie, summary, rating, movieCritic from reviews where mid = ?;";
 
     @Override
     public CommandResult execute(Command cmd) throws DataConnectionException, SQLException, EmptyResult {
@@ -31,8 +30,9 @@ public class GetMovieReviewHandler extends Handler implements IHandler {
         Connection conn = null;
         try {
             conn = mapper.getDataConnection().getConnection();
+            final String query = "select * from reviews where rid = ?;";
             PreparedStatement pstmt = conn.prepareStatement(query);
-            pstmt.setString(1, cmd.getPath().getPath().get(1));
+            pstmt.setInt(1,Integer.parseInt(cmd.getPath().getPath().get(2)));
             ResultSet rs = pstmt.executeQuery();
             ResultSetMetaData rsmd = rs.getMetaData();
             int columnsNumber = rsmd.getColumnCount();
@@ -40,11 +40,12 @@ public class GetMovieReviewHandler extends Handler implements IHandler {
                 for (int i = 1; i <= columnsNumber; i++) {
                     tuple.add(rs.getString(i));
                 }
-                reviews.add(new Review(
-                        Integer.parseInt(tuple.get(0)),
+                reviews.add(new Review(Integer.parseInt(tuple.get(0)),
                         tuple.get(1),
-                        Integer.parseInt(tuple.get(2)),
+                        tuple.get(2),
                         Integer.parseInt(tuple.get(3)),
+                        Integer.parseInt(tuple.get(4)),
+                        Integer.parseInt(tuple.get(5)),
                         columnsNumber));
                 tuple.clear();
             }
@@ -61,6 +62,7 @@ public class GetMovieReviewHandler extends Handler implements IHandler {
         } finally {
             mapper.closeConnection(conn);
         }
+
         return new CommandResult(reviews);
     }
 }

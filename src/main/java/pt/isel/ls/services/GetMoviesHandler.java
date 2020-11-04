@@ -23,7 +23,6 @@ public class GetMoviesHandler extends Handler implements IHandler {
 
     private LinkedList<Model> movies = new LinkedList<>();
     private LinkedList<String> tuple = new LinkedList<>();
-    private final String query = "select mid, name from movies;";
 
     @Override
     public CommandResult execute(Command cmd) throws DataConnectionException, SQLException, EmptyResult {
@@ -31,6 +30,7 @@ public class GetMoviesHandler extends Handler implements IHandler {
         Connection conn = null;
         try {
             conn = mapper.getDataConnection().getConnection();
+            final String query = "select mid, name from movies;";
             PreparedStatement pstmt = conn.prepareStatement(query);
             ResultSet rs = pstmt.executeQuery();
             ResultSetMetaData rsmd = rs.getMetaData();

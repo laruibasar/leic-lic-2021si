@@ -43,10 +43,10 @@ public class AppConfig {
         this.router.addHandler(Method.GET, new Path("/movies/{mid}/ratings"), new GetMovieRatingHandler());
 
         this.router.addHandler(Method.POST, new Path("/movies/{mid}/reviews"), new CreateMovieReviewHandler());
-        this.router.addHandler(Method.GET, new Path("/movies/{mid}/reviews"), new GetMovieReviewsHandler());
+        this.router.addHandler(Method.GET, new Path("/movies/{mid}/reviews"), new GetMovieAllReviewsHandler());
 
-        this.router.addHandler(Method.GET, new Path("/movies/{mid}/reviews/{rid}"), new GetMovieRatingInformationHandler());
-        this.router.addHandler(Method.GET, new Path("/users/{uid}/reviews"), new GetUserReviewsHandler());
+        this.router.addHandler(Method.GET, new Path("/movies/{mid}/reviews/{rid}"), new GetMovieReviewHandler());
+        this.router.addHandler(Method.GET, new Path("/users/{uid}/reviews"), new GetUserAllReviewsHandler());
         this.router.addHandler(Method.GET, new Path("/users/{uid}/reviews/{rid}"), new GetUserReviewHandler());
         this.router.addHandler(Method.GET, new Path("tops/ratings"), new GetTopRatingsHandler());
     }

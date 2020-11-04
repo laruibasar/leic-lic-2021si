@@ -15,15 +15,15 @@ import java.sql.ResultSetMetaData;
 import java.util.LinkedList;
 import java.sql.SQLException;
 
+
 /**
- * GET /movies/{mid}/reviews/{rid} - returns the full information for the review rid of the movie identified by mid.
+ * GET /movies/{mid}/reviews - returns the reviews identified by mid. The information must not include the full review.
  */
 
-public class GetMovieRatingInformationHandler extends Handler implements IHandler {
+public class GetMovieAllReviewsHandler extends Handler implements IHandler {
 
     private LinkedList<Model> reviews = new LinkedList<>();
     private LinkedList<String> tuple = new LinkedList<>();
-    private final String query = "select * from reviews where rid = ?;";
 
     @Override
     public CommandResult execute(Command cmd) throws DataConnectionException, SQLException, EmptyResult {
@@ -31,8 +31,9 @@ public class GetMovieRatingInformationHandler extends Handler implements IHandle
         Connection conn = null;
         try {
             conn = mapper.getDataConnection().getConnection();
+            final String query = "select movie, summary, rating, movieCritic from reviews where mid = ?;";
             PreparedStatement pstmt = conn.prepareStatement(query);
-            pstmt.setInt(1,Integer.parseInt(cmd.getPath().getPath().get(2)));
+            pstmt.setString(1, cmd.getPath().getPath().get(1));
             ResultSet rs = pstmt.executeQuery();
             ResultSetMetaData rsmd = rs.getMetaData();
             int columnsNumber = rsmd.getColumnCount();
@@ -40,12 +41,11 @@ public class GetMovieRatingInformationHandler extends Handler implements IHandle
                 for (int i = 1; i <= columnsNumber; i++) {
                     tuple.add(rs.getString(i));
                 }
-                reviews.add(new Review(Integer.parseInt(tuple.get(0)),
+                reviews.add(new Review(
+                        Integer.parseInt(tuple.get(0)),
                         tuple.get(1),
-                        tuple.get(2),
+                        Integer.parseInt(tuple.get(2)),
                         Integer.parseInt(tuple.get(3)),
-                        Integer.parseInt(tuple.get(4)),
-                        Integer.parseInt(tuple.get(5)),
                         columnsNumber));
                 tuple.clear();
             }
@@ -56,7 +56,6 @@ public class GetMovieRatingInformationHandler extends Handler implements IHandle
             if (conn != null) {
                 conn.rollback();
             }
-
             throw new DataConnectionException("Unable to get a list of all the movies\n"
                     + e.getMessage(), e);
         } finally {

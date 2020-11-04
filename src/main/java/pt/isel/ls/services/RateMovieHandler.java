@@ -18,8 +18,6 @@ import java.sql.SQLException;
 
 public class RateMovieHandler extends Handler implements IHandler {
 
-    private final String query = "insert into ratings(mid,rating) values(?,?)";
-
     public RateMovieHandler() {
         super();
         template.setParameters(new Parameters(new String[]{"rating"}));
@@ -32,6 +30,7 @@ public class RateMovieHandler extends Handler implements IHandler {
         Connection conn = null;
         try {
             conn = mapper.getDataConnection().getConnection();
+            final String query = "insert into ratings(mid,rating) values(?,?)";
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setInt(1, Integer.parseInt(cmd.getPath().getPath().get(1)));
             pstmt.setString(2,cmd.getParameters().getValue("rating"));

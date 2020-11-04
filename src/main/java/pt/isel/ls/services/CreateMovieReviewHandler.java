@@ -21,10 +21,6 @@ import java.sql.SQLException;
 
 public class CreateMovieReviewHandler extends Handler implements IHandler {
 
-    private final String query = "insert into reviews(summary,completeReview,rating,movie,movieCritic) "
-            +
-            "values(?,?,?,?,?)";
-
     public CreateMovieReviewHandler() {
         super();
         template.setParameters(new Parameters(new String[]{"uid", "reviewSummary", "review", "rating"}));
@@ -38,6 +34,9 @@ public class CreateMovieReviewHandler extends Handler implements IHandler {
         Connection conn = null;
         try {
             conn = mapper.getDataConnection().getConnection();
+            final String query = "insert into reviews(summary,completeReview,rating,movie,movieCritic) "
+                    +
+                    "values(?,?,?,?,?)";
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setString(1, cmd.getParameters().getValue("reviewSummary"));
             pstmt.setString(2, cmd.getParameters().getValue("review"));

@@ -29,23 +29,6 @@ public class GetTopRatingsHandler extends Handler implements IHandler {
 
     private LinkedList<Model> topRatings = new LinkedList<>();
     private LinkedList<String> tuple = new LinkedList<>();
-    private final String query = "select mid, name, year\n"
-            +
-            "from (movies join "
-            +
-            "(select rating, movie from ratings union all select rating, movie from reviews) as rates "
-            +
-            "on(movies.mid = rates.movie))\n"
-            +
-            "group by name, year\n"
-            +
-            "having count(rating) > ?\n"
-            +
-            "ORDER BY (CASE WHEN 1=? THEN avg(rating) END) DESC,\n"
-            +
-            "\t\t (CASE WHEN 2=2 THEN avg(rating) END) ASC\n"
-            +
-            "FETCH FIRST ? ROWS ONLY;";
 
     public GetTopRatingsHandler() {
         super();
@@ -58,6 +41,23 @@ public class GetTopRatingsHandler extends Handler implements IHandler {
         Connection conn = null;
         try {
             conn = mapper.getDataConnection().getConnection();
+            final String query = "select mid, name, year\n"
+                    +
+                    "from (movies join "
+                    +
+                    "(select rating, movie from ratings union all select rating, movie from reviews) as rates "
+                    +
+                    "on(movies.mid = rates.movie))\n"
+                    +
+                    "group by name, year\n"
+                    +
+                    "having count(rating) > ?\n"
+                    +
+                    "ORDER BY (CASE WHEN 1=? THEN avg(rating) END) DESC,\n"
+                    +
+                    "\t\t (CASE WHEN 2=2 THEN avg(rating) END) ASC\n"
+                    +
+                    "FETCH FIRST ? ROWS ONLY;";
             PreparedStatement pstmt = conn.prepareStatement(query);
 
             pstmt.setInt(1, Integer.parseInt(cmd.getParameters().getValue("min")));

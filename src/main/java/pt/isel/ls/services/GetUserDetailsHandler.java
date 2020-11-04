@@ -24,7 +24,6 @@ public class GetUserDetailsHandler extends Handler implements IHandler {
 
     private LinkedList<Model> user = new LinkedList<>();
     private LinkedList<String> tuple = new LinkedList<>();
-    private final String query = "select * from users where uid = ?;";
 
     @Override
     public CommandResult execute(Command cmd) throws DataConnectionException, SQLException, EmptyResult {
@@ -32,6 +31,7 @@ public class GetUserDetailsHandler extends Handler implements IHandler {
         Connection conn = null;
         try {
             conn = mapper.getDataConnection().getConnection();
+            final String query = "select * from users where uid = ?;";
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setString(1, cmd.getPath().getPath().get(1));
             ResultSet rs = pstmt.executeQuery();

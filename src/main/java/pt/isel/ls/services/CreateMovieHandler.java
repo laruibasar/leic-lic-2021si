@@ -17,7 +17,6 @@ public class CreateMovieHandler extends Handler implements IHandler {
      *  title - the movie's name.
      *  releaseYear - the movie's release year.
      */
-    private final String query = "insert into movies(title,year) values(?,?)";
 
     public CreateMovieHandler() {
         super();
@@ -31,6 +30,7 @@ public class CreateMovieHandler extends Handler implements IHandler {
         Connection conn = null;
         try {
             conn = mapper.getDataConnection().getConnection();
+            final String query = "insert into movies(title,year) values(?,?)";
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setString(1, cmd.getParameters().getValue("name"));
             pstmt.setInt(2, Integer.parseInt(cmd.getParameters().getValue("releaseYear")));
