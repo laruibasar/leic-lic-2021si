@@ -33,9 +33,14 @@ public class User extends Model {
     public String toString() {
         switch (selector) {
             case 3:
+                //GET USER DETAILS
                 return "UserId = " + id + " Name = " + name + " Email = " + email;
             case 1:
-                return "UserId = " + id;
+                //CREATE USER
+                return "UserId = " + id + " Name = " + name;
+            case 2:
+                //GET ALL USERS
+                return "Name = " + name;
             default:
                 return null;
         }

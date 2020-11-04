@@ -34,7 +34,7 @@ public class Movie extends Model {
     public String toString() {
         switch (selector) {
             case 3:
-                return "MovieId = " + mid + " Title = " + title + "Year = " + year;
+                return "MovieID = " + mid + " \nTitle = " + title + " \nYear = " + year;
             case 1:
                 return "MovieID = " + mid;
             default:
