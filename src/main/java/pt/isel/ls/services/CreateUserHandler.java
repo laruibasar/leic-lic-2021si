@@ -41,11 +41,13 @@ public class CreateUserHandler extends Handler implements IHandler {
             conn.commit();
             pstmt.close();
         } catch (Exception e) {
-            if(conn != null)
+            if (conn != null) {
                 conn.rollback();
+            }
+
             throw new DataConnectionException("Unable to add User\n"
                     + e.getMessage(), e);
-        }finally {
+        } finally {
             mapper.closeConnection(conn);
         }
 

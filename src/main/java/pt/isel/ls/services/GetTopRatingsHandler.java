@@ -24,12 +24,22 @@ public class GetTopRatingsHandler extends Handler implements IHandler {
 
     private LinkedList<Movie> topRatings = new LinkedList<>();
     private LinkedList<String> tuple = new LinkedList<>();
-    private final String query = "select mid, name, year\n" +
-            "from (movies join (select rating, movie from ratings union all select rating, movie from reviews) as rates on(movies.mid = rates.movie))\n" +
-            "group by name, year\n" +
-            "having count(rating) > ?\n" +
-            "ORDER BY (CASE WHEN 1=? THEN avg(rating) END) DESC,\n" +
-            "\t\t (CASE WHEN 2=2 THEN avg(rating) END) ASC\n" +
+    private final String query = "select mid, name, year\n"
+            +
+            "from (movies join "
+            +
+            "(select rating, movie from ratings union all select rating, movie from reviews) as rates "
+            +
+            "on(movies.mid = rates.movie))\n"
+            +
+            "group by name, year\n"
+            +
+            "having count(rating) > ?\n"
+            +
+            "ORDER BY (CASE WHEN 1=? THEN avg(rating) END) DESC,\n"
+            +
+            "\t\t (CASE WHEN 2=2 THEN avg(rating) END) ASC\n"
+            +
             "FETCH FIRST ? ROWS ONLY;";
 
     public GetTopRatingsHandler() {
@@ -47,7 +57,7 @@ public class GetTopRatingsHandler extends Handler implements IHandler {
 
             pstmt.setInt(1, Integer.parseInt(cmd.getParameters().getValue("min")));
             String average = cmd.getParameters().getValue("average");
-            switch (average){
+            switch (average) {
                 case "highest":
                     pstmt.setInt(2,1);
                     break;
@@ -59,14 +69,13 @@ public class GetTopRatingsHandler extends Handler implements IHandler {
             pstmt.setInt(3, Integer.parseInt(cmd.getParameters().getValue("n")));
 
             ResultSet rs = pstmt.executeQuery();
-            ResultSetMetaData rsmd=rs.getMetaData();
+            ResultSetMetaData rsmd = rs.getMetaData();
             int columnsNumber = rsmd.getColumnCount();
-            while (rs.next()){
+            while (rs.next()) {
                 for (int i = 1; i <= columnsNumber; i++) {
                     tuple.add(rs.getString(i));
                 }
-                topRatings.add( new Movie(
-                        Integer.parseInt(tuple.get(0)),
+                topRatings.add(new Movie(Integer.parseInt(tuple.get(0)),
                         tuple.get(1),
                         Integer.parseInt(tuple.get(2))));
                 tuple.clear();
@@ -75,8 +84,9 @@ public class GetTopRatingsHandler extends Handler implements IHandler {
             rs.close();
             pstmt.close();
         } catch (Exception e) {
-            if(conn != null)
+            if (conn != null) {
                 conn.rollback();
+            }
             throw new DataConnectionException("Unable to get a list of all the movies\n"
                     + e.getMessage(), e);
         } catch (InvalidAverageException e) {
@@ -89,7 +99,7 @@ public class GetTopRatingsHandler extends Handler implements IHandler {
     }
 
     private static class InvalidAverageException extends Throwable {
-        public InvalidAverageException(String message){
+        public InvalidAverageException(String message) {
             super(message);
         }
     }

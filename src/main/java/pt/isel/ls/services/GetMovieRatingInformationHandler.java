@@ -3,7 +3,6 @@ package pt.isel.ls.services;
 import pt.isel.ls.data.Data;
 import pt.isel.ls.data.DataConnectionException;
 import pt.isel.ls.model.Review;
-import pt.isel.ls.model.User;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
 
@@ -29,9 +28,9 @@ public class GetMovieRatingInformationHandler extends Handler implements IHandle
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setInt(1,Integer.parseInt(cmd.getPath().getPath().get(2)));
             ResultSet rs = pstmt.executeQuery();
-            ResultSetMetaData rsmd=rs.getMetaData();
+            ResultSetMetaData rsmd = rs.getMetaData();
             int columnsNumber = rsmd.getColumnCount();
-            while (rs.next()){
+            while (rs.next()) {
                 for (int i = 1; i <= columnsNumber; i++) {
                     tuple.add(rs.getString(i));
                 }
@@ -47,11 +46,13 @@ public class GetMovieRatingInformationHandler extends Handler implements IHandle
             rs.close();
             pstmt.close();
         } catch (Exception e) {
-            if(conn != null)
+            if (conn != null) {
                 conn.rollback();
+            }
+
             throw new DataConnectionException("Unable to get a list of all the movies\n"
                     + e.getMessage(), e);
-        }finally {
+        } finally {
             mapper.closeConnection(conn);
         }
 

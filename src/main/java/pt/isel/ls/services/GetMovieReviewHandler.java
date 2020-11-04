@@ -45,8 +45,10 @@ public class GetMovieReviewHandler extends Handler implements IHandler {
             rs.close();
             pstmt.close();
         } catch (Exception e) {
-            if (conn != null)
+            if (conn != null) {
                 conn.rollback();
+            }
+
             throw new DataConnectionException("Unable to get a list of all the movies\n"
                     + e.getMessage(), e);
         } finally {

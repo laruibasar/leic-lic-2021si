@@ -16,13 +16,17 @@ public class Movie {
         this.year = year;
     }
 
-    public int getMid() { return mid; }
+    public int getMid() {
+        return mid;
+    }
 
     public String getTitle() {
         return title;
     }
 
-    public int getYear() { return year; }
+    public int getYear() {
+        return year;
+    }
 }
 
 

@@ -8,7 +8,6 @@ import pt.isel.ls.utils.Parameters;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -22,7 +21,9 @@ import java.sql.SQLException;
 
 public class CreateMovieReviewHandler extends Handler implements IHandler {
 
-    private final String query = "insert into reviews(summary,completeReview,rating,movie,movieCritic) values(?,?,?,?,?)";
+    private final String query = "insert into reviews(summary,completeReview,rating,movie,movieCritic) "
+            +
+            "values(?,?,?,?,?)";
 
     public CreateMovieReviewHandler() {
         super();
@@ -47,11 +48,13 @@ public class CreateMovieReviewHandler extends Handler implements IHandler {
             conn.commit();
             pstmt.close();
         } catch (Exception e) {
-            if(conn != null)
+            if (conn != null) {
                 conn.rollback();
+            }
+
             throw new DataConnectionException("Unable to add review to the movie\n"
                     + e.getMessage(), e);
-        }finally {
+        } finally {
             mapper.closeConnection(conn);
         }
 

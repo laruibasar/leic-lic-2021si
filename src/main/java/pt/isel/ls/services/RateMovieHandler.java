@@ -39,11 +39,13 @@ public class RateMovieHandler extends Handler implements IHandler {
             conn.commit();
             pstmt.close();
         } catch (Exception e) {
-            if(conn != null)
+            if (conn != null) {
                 conn.rollback();
+            }
+
             throw new DataConnectionException("Unable to add movie\n"
                     + e.getMessage(), e);
-        }finally {
+        } finally {
             mapper.closeConnection(conn);
         }
         return result;

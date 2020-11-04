@@ -28,7 +28,9 @@ public class CommandResult<T> {
                 int columnsNumber = rsmd.getColumnCount();
                 while (rs.next()) {
                     for (int i = 1; i <= columnsNumber; i++) {
-                        if (i > 1) sb.append(",  ");
+                        if (i > 1) {
+                            sb.append(",  ");
+                        }
                         sb.append(rs.getString(i) + " " + rsmd.getColumnName(i));
                     }
                     sb.append("\n");
@@ -38,8 +40,8 @@ public class CommandResult<T> {
             }
             return sb.toString();
         } else {
-            int Post = (int) result;
-            return Post == 1 ? "Operation was a sucess" : "Operation failed miserable";
+            int post = (int) result;
+            return post == 1 ? "Operation was a sucess" : "Operation failed miserable";
         }
     }
 }

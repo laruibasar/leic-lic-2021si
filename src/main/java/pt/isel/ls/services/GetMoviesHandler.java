@@ -27,9 +27,9 @@ public class GetMoviesHandler extends Handler implements IHandler {
             conn = mapper.getDataConnection().getConnection();
             PreparedStatement pstmt = conn.prepareStatement(query);
             ResultSet rs = pstmt.executeQuery();
-            ResultSetMetaData rsmd=rs.getMetaData();
+            ResultSetMetaData rsmd = rs.getMetaData();
             int columnsNumber = rsmd.getColumnCount();
-            while (rs.next()){
+            while (rs.next()) {
                 for (int i = 1; i <= columnsNumber; i++) {
                     tuple.add(rs.getString(i));
                 }
@@ -40,11 +40,12 @@ public class GetMoviesHandler extends Handler implements IHandler {
             rs.close();
             pstmt.close();
         } catch (Exception e) {
-            if(conn != null)
+            if (conn != null) {
                 conn.rollback();
+            }
             throw new DataConnectionException("Unable to get a list of all the movies\n"
                     + e.getMessage(), e);
-        }finally {
+        } finally {
             mapper.closeConnection(conn);
         }
 
