@@ -9,19 +9,22 @@ public class Review {
     private int movie;
     private int movieCritic;
 
-    public Review(int rid, String summary, int rating,
-                  int movie, int movieCritic) {
+    public Review(int rid, String summary, int movie, int rating) {
 
         this.rid = rid;
         this.summary = summary;
         this.rating = rating;
         this.movie = movie;
-        this.movieCritic = movieCritic;
-
     }
 
-    public void setCompleteReview(String completeReview) {
+    public Review(int rid, String completeReview, String summary, int movie, int rating, int movieCritic) {
+
+        this.rid = rid;
         this.completeReview = completeReview;
+        this.summary = summary;
+        this.rating = rating;
+        this.movie = movie;
+        this.movieCritic = movieCritic;
     }
     public String getCompleteReview() {
         return completeReview;
