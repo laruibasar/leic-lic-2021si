@@ -13,8 +13,6 @@ create table movies (
   mid serial primary key,
   name varchar(50),
   year int,
-  genre varchar(50),
-  castAndDirectors varchar(80),
   unique (name, year)
 );
 
