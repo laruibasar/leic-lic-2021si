@@ -20,7 +20,7 @@ public class AppConsole {
 
             try {
                 run = runOnce(args);
-            } catch (RouterException | DataConnectionException | SQLException re) {
+            } catch (RouterException | DataConnectionException | SQLException | EmptyResult re) {
                 System.out.println(re.getMessage());
             }
         }
@@ -34,7 +34,7 @@ public class AppConsole {
         return sc.nextLine();
     }
 
-    public static boolean runOnce(String[] args) throws RouterException, DataConnectionException, SQLException {
+    public static boolean runOnce(String[] args) throws RouterException, DataConnectionException, SQLException, EmptyResult {
         if (args[0].toUpperCase().equals("EXIT")) {
             System.out.println("Exiting...");
             return false;
@@ -68,7 +68,7 @@ public class AppConsole {
         return handler.execute(cmd);
     }
 
-    private static void showResults(CommandResult cr) {
-        System.out.println(cr.toString());
+    private static void showResults(CommandResult cr) throws EmptyResult {
+        cr.printResults();
     }
 }

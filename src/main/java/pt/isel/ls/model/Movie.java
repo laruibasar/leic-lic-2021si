@@ -1,6 +1,6 @@
 package pt.isel.ls.model;
 
-public class Movie {
+public class Movie extends Model {
 
     private int mid;
     private String title;
@@ -10,7 +10,8 @@ public class Movie {
         this.mid = mid;
     }
 
-    public Movie(int mid, String title, int year) {
+    public Movie(int mid, String title, int year, int selector) {
+        super(selector);
         this.mid = mid;
         this.title = title;
         this.year = year;
@@ -27,6 +28,19 @@ public class Movie {
     public int getYear() {
         return year;
     }
+
+    @Override
+    public String toString() {
+        switch (selector) {
+            case 1:
+                return "MovieId = "+mid + " Title = "+title + "Year = "+year;
+            case 2:
+                return "MovieID = "+mid + " Title = "+title;
+            default:
+                return null;
+        }
+    }
+
 }
 
 

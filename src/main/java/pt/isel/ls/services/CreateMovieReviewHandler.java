@@ -34,7 +34,7 @@ public class CreateMovieReviewHandler extends Handler implements IHandler {
     @Override
     public CommandResult execute(Command cmd) throws DataConnectionException, SQLException {
         Data mapper = new Data();
-        CommandResult<Integer> result;
+        CommandResult result;
         Connection conn = null;
         try {
             conn = mapper.getDataConnection().getConnection();

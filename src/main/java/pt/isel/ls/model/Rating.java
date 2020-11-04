@@ -1,6 +1,6 @@
 package pt.isel.ls.model;
 
-public class Rating {
+public class Rating extends Model {
 
     private float average;
     private int votesOne;
@@ -49,5 +49,10 @@ public class Rating {
         public RatingException(String message) {
             super(message);
         }
+    }
+
+    @Override
+    public String toString() {
+        return null;
     }
 }

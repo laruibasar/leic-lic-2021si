@@ -1,6 +1,6 @@
 package pt.isel.ls.model;
 
-public class Review {
+public class Review extends Model {
 
     private int rid;
     private String summary;
@@ -18,7 +18,6 @@ public class Review {
     }
 
     public Review(int rid, String completeReview, String summary, int movie, int rating, int movieCritic) {
-
         this.rid = rid;
         this.completeReview = completeReview;
         this.summary = summary;
@@ -45,5 +44,39 @@ public class Review {
 
     public int getMovieCritic() {
         return movieCritic;
+    }
+
+    @Override
+    public String toString() {
+        switch (selector) {
+            case 1:
+                //impressão de um comentário
+                return rating +
+                        "\n\n" +
+                        summary +
+                        "\n" +
+                        movieCritic +
+                        "\n\n" +
+                        completeReview +
+                        "\n\n MovieID = " +
+                        movie +
+                        " \nReviewID = " +
+                        rid;
+            case 2:
+                //impressão de todos os comentários
+                return "Stars "+
+                        rating +
+                        "\n\n" +
+                        summary +
+                        "\n" +
+                        movieCritic +
+                        "\n\n MovieID = " +
+                        movie +
+                        " \nReviewID = " +
+                        rid;
+
+            default:
+                return null;
+        }
     }
 }
