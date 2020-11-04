@@ -2,13 +2,13 @@ package pt.isel.ls.services;
 
 import pt.isel.ls.data.Data;
 import pt.isel.ls.data.DataConnectionException;
+import pt.isel.ls.model.Movie;
+import pt.isel.ls.model.Rating;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.LinkedList;
 
 /**
  * GET /movies/{mid}/ratings - returns the rating information for the movie identified by mid. This rating information include:
@@ -19,71 +19,90 @@ import java.sql.SQLException;
 
 public class GetMovieRatingHandler extends Handler implements IHandler {
 
+    private LinkedList<Rating> ratings = new LinkedList<>();
+    private LinkedList<String> tuple = new LinkedList<>();
+    private final String query = "\\set movieId ?\n" +
+            "select\n" +
+            "\tavg(rating)::numeric(3,2) as average,\n" +
+            "\t(select count(rating) from(select rating\n" +
+            "\t\tfrom ratings\n" +
+            "\t\twhere movie = :movieId\n" +
+            "\t\tunion all\n" +
+            "\t\tselect rating\n" +
+            "\t\tfrom reviews\n" +
+            "\t\twhere movie = :movieId) as rating where rating = 1) as votesOne ,\n" +
+            "\t(select count(rating) from(select rating\n" +
+            "\t\tfrom ratings\n" +
+            "\t\twhere movie = :movieId\n" +
+            "\t\tunion all\n" +
+            "\t\tselect rating\n" +
+            "\t\tfrom reviews\n" +
+            "\t\twhere movie = :movieId) as rating where rating = 2) as votesTwo ,\n" +
+            "\t(select count(rating) from(select rating\n" +
+            "\t\tfrom ratings\n" +
+            "\t\twhere movie = :movieId\n" +
+            "\t\tunion all\n" +
+            "\t\tselect rating\n" +
+            "\t\tfrom reviews\n" +
+            "\t\twhere movie = :movieId) as rating where rating = 3) as votesThree,\n" +
+            "\t(select count(rating) from(select rating\n" +
+            "\t\tfrom ratings\n" +
+            "\t\twhere movie = :movieId\n" +
+            "\t\tunion all\n" +
+            "\t\tselect rating\n" +
+            "\t\tfrom reviews\n" +
+            "\t\twhere movie = :movieId) as rating where rating = 4) as votesFour,\n" +
+            "\t(select count(rating) from(select rating\n" +
+            "\t\tfrom ratings\n" +
+            "\t\twhere movie = :movieId\n" +
+            "\t\tunion all\n" +
+            "\t\tselect rating\n" +
+            "\t\tfrom reviews\n" +
+            "\t\twhere movie = :movieId) as rating where rating = 5) as votesFive\n" +
+            "from (select rating\n" +
+            "\t  from ratings\n" +
+            "\t  where movie = :movieId\n" +
+            "\t  union all\n" +
+            "\t  select rating\n" +
+            "\t  from reviews\n" +
+            "\t  where movie = :movieId) as rating;";
     @Override
     public CommandResult execute(Command cmd) throws DataConnectionException, SQLException {
         Data mapper = new Data();
-        CommandResult cr;
         Connection conn = null;
         try {
             conn = mapper.getDataConnection().getConnection();
-            final String query = "select\n" +
-                    "\tavg(rating)::numeric(3,2) as average,\n" +
-                    "\t(select count(rating) from(select rating\n" +
-                    "\t\tfrom ratings\n" +
-                    "\t\twhere movie = ?\n" +
-                    "\t\tunion all\n" +
-                    "\t\tselect rating\n" +
-                    "\t\tfrom reviews\n" +
-                    "\t\twhere movie = ?) as rating where rating = 1) as votesOne ,\n" +
-                    "\t(select count(rating) from(select rating\n" +
-                    "\t\tfrom ratings\n" +
-                    "\t\twhere movie = ?\n" +
-                    "\t\tunion all\n" +
-                    "\t\tselect rating\n" +
-                    "\t\tfrom reviews\n" +
-                    "\t\twhere movie = ?) as rating where rating = 2) as votesTwo ,\n" +
-                    "\t(select count(rating) from(select rating\n" +
-                    "\t\tfrom ratings\n" +
-                    "\t\twhere movie = ?\n" +
-                    "\t\tunion all\n" +
-                    "\t\tselect rating\n" +
-                    "\t\tfrom reviews\n" +
-                    "\t\twhere movie = ?) as rating where rating = 3) as votesThree,\n" +
-                    "\t(select count(rating) from(select rating\n" +
-                    "\t\tfrom ratings\n" +
-                    "\t\twhere movie = ?\n" +
-                    "\t\tunion all\n" +
-                    "\t\tselect rating\n" +
-                    "\t\tfrom reviews\n" +
-                    "\t\twhere movie = ?) as rating where rating = 4) as votesFour,\n" +
-                    "\t(select count(rating) from(select rating\n" +
-                    "\t\tfrom ratings\n" +
-                    "\t\twhere movie = ?\n" +
-                    "\t\tunion all\n" +
-                    "\t\tselect rating\n" +
-                    "\t\tfrom reviews\n" +
-                    "\t\twhere movie = ?) as rating where rating = 5) as votesFive\n" +
-                    "from (select rating\n" +
-                    "\tfrom ratings\n" +
-                    "\twhere movie = ?\n" +
-                    "\tunion all\n" +
-                    "\tselect rating\n" +
-                    "\tfrom reviews\n" +
-                    "\twhere movie = ?) as rating";
             PreparedStatement pstmt = conn.prepareStatement(query);
-            for(int i = 1; i < 13; i++)
-                pstmt.setString(i, cmd.getPath().getPath().get(1));
+            pstmt.setString(1, cmd.getPath().getPath().get(1));
             ResultSet rs = pstmt.executeQuery();
-            cr = new CommandResult(rs);
+            ResultSetMetaData rsmd=rs.getMetaData();
+            int columnsNumber = rsmd.getColumnCount();
+            while (rs.next()){
+                for (int i = 1; i <= columnsNumber; i++) {
+                    tuple.add(rs.getString(i));
+                }
+                ratings.add(new Rating(
+                        Float.parseFloat(tuple.get(0)),
+                        Integer.parseInt(tuple.get(1)),
+                        Integer.parseInt(tuple.get(2)),
+                        Integer.parseInt(tuple.get(3)),
+                        Integer.parseInt(tuple.get(4)),
+                        Integer.parseInt(tuple.get(5))));
+                tuple.clear();
+            }
             conn.commit();
+            rs.close();
+            pstmt.close();
         } catch (Exception e) {
             if(conn != null)
                 conn.rollback();
             throw new DataConnectionException("Unable to get a list of all the movies\n"
                     + e.getMessage(), e);
+        }finally {
+            mapper.closeConnection(conn);
         }
-        mapper.closeConnection(conn);
-        return cr;
+
+        return new CommandResult(ratings);
     }
 }
 

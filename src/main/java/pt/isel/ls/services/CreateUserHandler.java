@@ -18,6 +18,8 @@ import java.sql.SQLException;
 
 public class CreateUserHandler extends Handler implements IHandler {
 
+    private final String query = "insert into users(fname,lname,email) values(?,?,?)";
+
     public CreateUserHandler() {
         super();
         template.setParameters(new Parameters(new String[]{"name", "email"}));
@@ -26,25 +28,27 @@ public class CreateUserHandler extends Handler implements IHandler {
     @Override
     public CommandResult execute(Command cmd) throws DataConnectionException, SQLException {
         Data mapper = new Data();
-        CommandResult<Integer> cr;
+        CommandResult result;
         Connection conn = null;
         try {
             conn = mapper.getDataConnection().getConnection();
-            final String query = "insert into users(fname,lname,email) values(?,?,?)";
             PreparedStatement pstmt = conn.prepareStatement(query);
             String[] nameSplit = cmd.getParameters().getValue("name").split("\\+");
             pstmt.setString(1, nameSplit[0]);
             pstmt.setString(2, nameSplit[1]);
             pstmt.setString(3, cmd.getParameters().getValue("email"));
-            cr = new CommandResult(pstmt.executeUpdate());
+            result = new CommandResult(pstmt.executeUpdate());
             conn.commit();
+            pstmt.close();
         } catch (Exception e) {
             if(conn != null)
                 conn.rollback();
             throw new DataConnectionException("Unable to add User\n"
                     + e.getMessage(), e);
+        }finally {
+            mapper.closeConnection(conn);
         }
-        mapper.closeConnection(conn);
-        return cr;
+
+        return result;
     }
 }

@@ -4,12 +4,10 @@ import pt.isel.ls.data.Data;
 import pt.isel.ls.data.DataConnectionException;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
-import pt.isel.ls.utils.Method;
 import pt.isel.ls.utils.Parameters;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class CreateMovieHandler extends Handler implements IHandler {
@@ -19,6 +17,7 @@ public class CreateMovieHandler extends Handler implements IHandler {
      *  title - the movie's name.
      *  releaseYear - the movie's release year.
      */
+    private final String query = "insert into movies(title,year) values(?,?)";
 
     public CreateMovieHandler() {
         super();
@@ -28,25 +27,24 @@ public class CreateMovieHandler extends Handler implements IHandler {
     @Override
     public CommandResult execute(Command cmd) throws DataConnectionException, SQLException {
         Data mapper = new Data();
-        CommandResult cr;
+        CommandResult result;
         Connection conn = null;
         try {
             conn = mapper.getDataConnection().getConnection();
-            final String query = "insert into movies(title,year,genre,castAndDirectors) values(?,?,?,?)";
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setString(1, cmd.getParameters().getValue("name"));
             pstmt.setInt(2, Integer.parseInt(cmd.getParameters().getValue("releaseYear")));
-            pstmt.setString(3, "NULL");
-            pstmt.setString(4, "NULL");;
-            cr = new CommandResult(pstmt.executeUpdate());
+            result = new CommandResult(pstmt.executeUpdate());
             conn.commit();
+            pstmt.close();
         } catch (Exception e) {
             if(conn != null)
                 conn.rollback();
             throw new DataConnectionException("Unable to add movie\n"
                     + e.getMessage(), e);
+        }finally {
+            mapper.closeConnection(conn);
         }
-        mapper.closeConnection(conn);
-        return cr;
+        return result;
     }
 }
