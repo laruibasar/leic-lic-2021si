@@ -53,6 +53,16 @@ public class Rating extends Model {
 
     @Override
     public String toString() {
-        return null;
+        return "Number of votes: "
+                + "\n\t1 = "
+                + votesOne
+                + "\n\t2 = "
+                + votesTwo
+                + "\n\t3 = "
+                + votesThree
+                + "\n\t4 = "
+                + votesFour
+                + "\n\t5 = "
+                + votesFive;
     }
 }

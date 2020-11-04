@@ -19,7 +19,6 @@ public class CommandResult {
             throw new EmptyResult("empty result");
         }
         this.commandResults = commandResults;
-        this.status = status;
     }
 
     public CommandResult(int status) throws FailedCommand {
@@ -34,8 +33,8 @@ public class CommandResult {
             for (Model cr : commandResults) {
                 System.out.println(cr.toString());
             }
-        } else if (commandResults.isEmpty()) {
-                throw new EmptyResult("Empty result");
+        } else {
+            throw new EmptyResult("Empty result");
         }
     }
 }

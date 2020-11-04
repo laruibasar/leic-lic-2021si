@@ -1,9 +1,9 @@
 package pt.isel.ls.utils;
 
 public enum Method {
-    GET ("GET"),
-    PUT ("PUT"),
-    POST ("POST");
+    GET("GET"),
+    PUT("PUT"),
+    POST("POST");
 
     private final String method;
 
