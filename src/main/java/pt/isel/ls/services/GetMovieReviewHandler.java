@@ -2,12 +2,18 @@ package pt.isel.ls.services;
 
 import pt.isel.ls.data.Data;
 import pt.isel.ls.data.DataConnectionException;
+import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Review;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
+import pt.isel.ls.utils.EmptyResult;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.util.LinkedList;
+import java.sql.SQLException;
 
 /**
  * GET /movies/{mid}/reviews/{rid} - returns the full information for the review rid of the movie identified by mid.
@@ -15,12 +21,12 @@ import java.util.LinkedList;
 
 public class GetMovieReviewHandler extends Handler implements IHandler {
 
-    private LinkedList<Review> reviews = new LinkedList<>();
+    private LinkedList<Model> reviews = new LinkedList<>();
     private LinkedList<String> tuple = new LinkedList<>();
     private final String query = "select movie, summary, rating, movieCritic from reviews where mid = ?;";
 
     @Override
-    public CommandResult execute(Command cmd) throws DataConnectionException, SQLException {
+    public CommandResult execute(Command cmd) throws DataConnectionException, SQLException, EmptyResult {
         Data mapper = new Data();
         Connection conn = null;
         try {
@@ -38,7 +44,8 @@ public class GetMovieReviewHandler extends Handler implements IHandler {
                         Integer.parseInt(tuple.get(0)),
                         tuple.get(1),
                         Integer.parseInt(tuple.get(2)),
-                        Integer.parseInt(tuple.get(3))));
+                        Integer.parseInt(tuple.get(3)),
+                        columnsNumber));
                 tuple.clear();
             }
             conn.commit();

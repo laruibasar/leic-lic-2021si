@@ -9,21 +9,22 @@ public class Review extends Model {
     private int movie;
     private int movieCritic;
 
-    public Review(int rid, String summary, int movie, int rating) {
-
+    public Review(int rid, String summary, int movie, int rating, int selector) {
+        super(selector);
         this.rid = rid;
         this.summary = summary;
         this.rating = rating;
         this.movie = movie;
     }
 
-    public Review(int rid, String completeReview, String summary, int movie, int rating, int movieCritic) {
+    public Review(int rid, String completeReview, String summary, int movie, int rating, int critic, int selector) {
+        super(selector);
         this.rid = rid;
         this.completeReview = completeReview;
         this.summary = summary;
         this.rating = rating;
         this.movie = movie;
-        this.movieCritic = movieCritic;
+        this.movieCritic = critic;
     }
 
     public String getCompleteReview() {
@@ -49,30 +50,51 @@ public class Review extends Model {
     @Override
     public String toString() {
         switch (selector) {
-            case 1:
+            case 6:
                 //impressão de um comentário
-                return rating +
-                        "\n\n" +
-                        summary +
-                        "\n" +
-                        movieCritic +
-                        "\n\n" +
-                        completeReview +
-                        "\n\n MovieID = " +
-                        movie +
-                        " \nReviewID = " +
+                return "Stars = "
+                        +
+                        rating
+                        +
+                        "Summary = "
+                        +
+                        summary
+                        +
+                        "Movie Critic = "
+                        +
+                        movieCritic
+                        +
+                        "Complete Review = "
+                        +
+                        completeReview
+                        +
+                        "MovieID = "
+                        +
+                        movie
+                        +
+                        "ReviewID = "
+                        +
                         rid;
-            case 2:
+            case 5:
                 //impressão de todos os comentários
-                return "Stars "+
-                        rating +
-                        "\n\n" +
-                        summary +
-                        "\n" +
-                        movieCritic +
-                        "\n\n MovieID = " +
-                        movie +
-                        " \nReviewID = " +
+                return "Stars ="
+                        +
+                        rating
+                        +
+                        "Summary = "
+                        +
+                        summary
+                        +
+                        "MovieCritic = "
+                        +
+                        movieCritic
+                        +
+                        "MovieID = "
+                        +
+                        movie
+                        +
+                        "ReviewID = "
+                        +
                         rid;
 
             default:

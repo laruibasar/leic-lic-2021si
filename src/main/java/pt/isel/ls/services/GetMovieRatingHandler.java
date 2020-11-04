@@ -2,12 +2,18 @@ package pt.isel.ls.services;
 
 import pt.isel.ls.data.Data;
 import pt.isel.ls.data.DataConnectionException;
+import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Rating;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
+import pt.isel.ls.utils.EmptyResult;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.util.LinkedList;
+import java.sql.SQLException;
 
 /**
  * GET /movies/{mid}/ratings - returns the rating information for the movie identified by mid. This include:
@@ -18,7 +24,7 @@ import java.util.LinkedList;
 
 public class GetMovieRatingHandler extends Handler implements IHandler {
 
-    private LinkedList<Rating> ratings = new LinkedList<>();
+    private LinkedList<Model> ratings = new LinkedList<>();
     private LinkedList<String> tuple = new LinkedList<>();
     private final String query = "\\set movieId ?\n"
             +
@@ -111,7 +117,7 @@ public class GetMovieRatingHandler extends Handler implements IHandler {
             "\t  where movie = :movieId) as rating;";
 
     @Override
-    public CommandResult execute(Command cmd) throws DataConnectionException, SQLException {
+    public CommandResult execute(Command cmd) throws DataConnectionException, SQLException, EmptyResult {
         Data mapper = new Data();
         Connection conn = null;
         try {

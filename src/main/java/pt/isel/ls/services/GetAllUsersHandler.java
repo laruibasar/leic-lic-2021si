@@ -2,11 +2,18 @@ package pt.isel.ls.services;
 
 import pt.isel.ls.data.Data;
 import pt.isel.ls.data.DataConnectionException;
+import pt.isel.ls.model.Model;
 import pt.isel.ls.model.User;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
-import java.sql.*;
+import pt.isel.ls.utils.EmptyResult;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.util.LinkedList;
+import java.sql.SQLException;
 
 /**
  * GET /users - returns the list of users.
@@ -14,12 +21,12 @@ import java.util.LinkedList;
 
 public class GetAllUsersHandler extends Handler implements IHandler {
 
-    private LinkedList<User> user = new LinkedList<>();
+    private LinkedList<Model> user = new LinkedList<>();
     private LinkedList<String> tuple = new LinkedList<>();
     private final String query = "select uid from users;";
 
     @Override
-    public CommandResult execute(Command cmd) throws DataConnectionException, SQLException {
+    public CommandResult execute(Command cmd) throws DataConnectionException, SQLException, EmptyResult {
         Data mapper = new Data();
         Connection conn = null;
         try {
@@ -32,7 +39,7 @@ public class GetAllUsersHandler extends Handler implements IHandler {
                 for (int i = 1; i <= columnsNumber; i++) {
                     tuple.add(rs.getString(i));
                 }
-                user.add(new User(Integer.parseInt(tuple.get(0))));
+                user.add(new User(Integer.parseInt(tuple.get(0)),columnsNumber));
                 tuple.clear();
             }
             conn.commit();

@@ -62,7 +62,7 @@ public class AppConsole {
         return cmd;
     }
 
-    private static CommandResult runCommand(Command cmd) throws RouterException, DataConnectionException, SQLException {
+    private static CommandResult runCommand(Command cmd) throws RouterException, DataConnectionException, SQLException, EmptyResult {
         Handler handler = AppConfig.getInstance().router.findHandler(cmd);
 
         return handler.execute(cmd);

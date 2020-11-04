@@ -2,12 +2,18 @@ package pt.isel.ls.services;
 
 import pt.isel.ls.data.Data;
 import pt.isel.ls.data.DataConnectionException;
+import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Movie;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
+import pt.isel.ls.utils.EmptyResult;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.util.LinkedList;
+import java.sql.SQLException;
 
 
 /**
@@ -16,12 +22,12 @@ import java.util.LinkedList;
 
 public class GetMovieDetailsHandler extends Handler implements IHandler {
 
-    private LinkedList<Movie> movies = new LinkedList<>();
+    private LinkedList<Model> movies = new LinkedList<>();
     private LinkedList<String> tuple = new LinkedList<>();
     private final String query = "select * from movies where mid = ?";
 
     @Override
-    public CommandResult execute(Command cmd) throws DataConnectionException, SQLException {
+    public CommandResult execute(Command cmd) throws DataConnectionException, SQLException, EmptyResult {
         Data mapper = new Data();
         Connection conn = null;
         try {
@@ -40,7 +46,8 @@ public class GetMovieDetailsHandler extends Handler implements IHandler {
                 movies.add(new Movie(
                         Integer.parseInt(tuple.get(0)),
                         tuple.get(1),
-                        Integer.parseInt(tuple.get(2))));
+                        Integer.parseInt(tuple.get(2)),
+                        columnsNumber));
                 tuple.clear();
             }
             conn.commit();
