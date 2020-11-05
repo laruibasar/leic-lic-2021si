@@ -33,7 +33,7 @@ Destacam-se os seguintes aspectos deste modelo:
 A aplicação está dividida em várias camadas, de modo a permitir uma melhor 
 gestão dos componentes e uma separação das responsabilidades de cada camada.
 
-(_insert diagram_)
+![](images/LayerBlock.png)
 
 O desenvolvimento da aplicação aproxima-se da utilização do _design_ MVC, onde
 temos o componente _Model_ onde se define a ligação á base de dados Postgresql bem
@@ -44,7 +44,7 @@ diversos _Handlers_ que fazem a ponte entre o _input_ do utilizador, na forma de
 um comando, e o _output_ que vêm da base de dados.
 
 Por fim, procurou-se criar a _View_ da aplicação numa classe que tem toda a 
-interação com a consola, e que permite rápidamente mudar para uma outra view (_Web_)
+interação com a consola, e que permite rapidamente mudar para uma outra view (_Web_)
 devido ao seu encapsulamento. 
 
 ### Processamento de comandos
