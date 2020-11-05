@@ -1,15 +1,15 @@
 package pt.isel.ls.utils;
 
 import pt.isel.ls.model.Model;
+
+import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
- *  class responsible for saving the result of the query made to the database
- *  The ResultSet interface provides getter methods for retrieving column values
- *  from the current row.
+ *  Save the command result from the execution by the handler.
  */
 
-public class CommandResult {
+public class CommandResult implements Iterable<Model> {
 
     private LinkedList<Model> commandResults;
     private int status;
@@ -19,11 +19,8 @@ public class CommandResult {
         this.status = status;
     }
 
-    public void printResults() {
-        if (commandResults.size() > 0) {
-            for (Model cr : commandResults) {
-                System.out.println(cr.toString());
-            }
-        }
+    @Override
+    public Iterator<Model> iterator() {
+        return commandResults.iterator();
     }
 }

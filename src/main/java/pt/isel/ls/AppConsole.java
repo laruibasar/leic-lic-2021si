@@ -1,5 +1,6 @@
 package pt.isel.ls;
 
+import pt.isel.ls.model.Model;
 import pt.isel.ls.services.Handler;
 import pt.isel.ls.services.exceptions.InvalidAverageException;
 import pt.isel.ls.utils.Command;
@@ -80,6 +81,8 @@ public class AppConsole {
     }
 
     private static void showResults(CommandResult cr) {
-        cr.printResults();
+        for (Model model : cr) {
+            System.out.println(model.toString());
+        }
     }
 }
