@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public class AppConsole {
-    public static void run() throws InvalidAverageException {
+    public static void run() throws Exception {
         System.out.println("Run in interactive mode");
 
         boolean run = true;
@@ -25,8 +25,8 @@ public class AppConsole {
 
             try {
                 run = runOnce(args);
-            } catch (RouterException | DataConnectionException | SQLException re) {
-                System.out.println(re.getMessage());
+            } catch (Exception e) {
+                throw new Exception(e.getMessage());
             }
         }
     }
@@ -39,8 +39,7 @@ public class AppConsole {
         return sc.nextLine();
     }
 
-    public static boolean runOnce(String[] args) throws RouterException,
-            DataConnectionException, SQLException, InvalidAverageException {
+    public static boolean runOnce(String[] args) throws Exception {
 
         if (args[0].toUpperCase().equals("EXIT")) {
             System.out.println("Exiting...");
@@ -50,8 +49,12 @@ public class AppConsole {
         Command cmd = setCommand(args);
         System.out.println("Running command: " + cmd.toString());
 
-        CommandResult result = runCommand(cmd);
-        showResults(result);
+        try {
+            CommandResult result = runCommand(cmd);
+            showResults(result);
+        } catch (RouterException | DataConnectionException | SQLException | InvalidAverageException e) {
+            throw new Exception(e.getMessage());
+        }
 
         return true;
     }

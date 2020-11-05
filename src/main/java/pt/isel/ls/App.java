@@ -1,10 +1,9 @@
 package pt.isel.ls;
 
 import pt.isel.ls.config.AppConfig;
-import pt.isel.ls.services.exceptions.InvalidAverageException;
 
 public class App {
-    public static void main(String[] args) throws InvalidAverageException {
+    public static void main(String[] args) {
         System.out.println("Application LS - G8\n");
 
         if (args.length != 0 && args.length != 2 && args.length != 3) {
