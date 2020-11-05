@@ -113,8 +113,15 @@ que define o _template_, bem como o construtor-base dos _handlers_.
 
 Depois é feito o _handler_ para cada comando aceite pela aplicação que extende 
 a classe base `Handler` e implementa o interface `IHandler`.
+Cada _handler_ tem a definição dos parâmetros que aceita e necessita de receber
+para executar o pedido. No processo de validação dos parâmetros recebidos...
 
-(_describe how the router works and how path parameters are extracted_)
+Nesta fase, o _handler_ tem o código que trata do acesso á base de dados, que em 
+fase seguinte, será feito um _refactoring_ e movido esse código para a camada 
+aplicacional correta, relacionada com o acesso e tratamento de acesso á BD.
+
+##### Retorno dos resultados
+
 
 ### Gestão de ligações
 
@@ -135,3 +142,11 @@ a classe base `Handler` e implementa o interface `IHandler`.
 (_enumerate the functionality that is not concluded and the identified defects_)
 
 (_identify improvements to be made on the next phase_)
+
+Nesta fase, os _handlers_ têm a lógica de acesso á base de dados, o que nos 
+parece ser uma quebra no isolamento que pretendemos alcançar na aplicação.
+Na fase seguinte pretendemos desenvolver a camada de acesso a dados (_Model_) 
+criando as classes de mapeamento ou _data access objects_ para ser elas a fazerem
+a interação com o modelo de dados e tornando transparente para o _handler_ como 
+é feito o processamento dos dados, ficando só responsável por reunir a informação
+necessária e dar a ordem de execução, bem como retornar os dados tratados.
