@@ -1,7 +1,7 @@
+drop table if exists reviews;
+drop table if exists ratings;
 drop table if exists users;
 drop table if exists movies;
-drop table if exists ratings;
-drop table if exists reviews;
 
 create table users (
   uid serial primary key ,
