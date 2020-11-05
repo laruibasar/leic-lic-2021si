@@ -36,9 +36,9 @@ gestão dos componentes e uma separação das responsabilidades de cada camada.
 ![](images/LayerBlock.png)
 
 O desenvolvimento da aplicação aproxima-se da utilização do _design_ MVC, onde
-temos o componente _Model_, compreendendo a configuração e instânciação da 
+temos o componente _Model_, compreendendo a configuração e inicialização da 
 ligação á base de dados Postgresql, bem como introdução de classes representando
-o _domain_ da aplicação.
+o _domain_.
 
 A componente do _Controller_, que está refletida na existência do _Router_ e dos
 diversos _Handlers_ que fazem a ponte entre o _input_ do utilizador, na forma de 
