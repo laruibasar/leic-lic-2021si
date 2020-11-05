@@ -15,7 +15,7 @@ select * from movies where mid = ?;
     --The number of votes for each rating value
 \set movieId ?
 select
-	avg(rating)::numeric(3,2) as average,
+	:movieId as MovieId, avg(rating)::numeric(3,2) as average,
 	(select count(rating) from(select rating
 		from ratings
 		where movie = :movieId

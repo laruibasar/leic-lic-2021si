@@ -22,7 +22,6 @@ import java.sql.SQLException;
 public class GetUserReviewHandler extends Handler implements IHandler {
 
     private LinkedList<Model> reviews = new LinkedList<>();
-    private LinkedList<String> tuple = new LinkedList<>();
 
     @Override
     public CommandResult execute(Command cmd) throws DataConnectionException, SQLException, EmptyResult {
@@ -34,21 +33,14 @@ public class GetUserReviewHandler extends Handler implements IHandler {
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setInt(1, Integer.parseInt(cmd.getPath().getPath().get(2)));
             ResultSet rs = pstmt.executeQuery();
-            ResultSetMetaData rsmd = rs.getMetaData();
-            int columnsNumber = rsmd.getColumnCount();
             while (rs.next()) {
-                for (int i = 1; i <= columnsNumber; i++) {
-                    tuple.add(rs.getString(i));
-                }
                 reviews.add(new Review(
-                        Integer.parseInt(tuple.get(0)),
-                        tuple.get(1),
-                        tuple.get(2),
-                        Integer.parseInt(tuple.get(3)),
-                        Integer.parseInt(tuple.get(4)),
-                        Integer.parseInt(tuple.get(5)),
-                        columnsNumber));
-                tuple.clear();
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getInt(4),
+                        rs.getInt(5),
+                        rs.getInt(3)));
             }
             conn.commit();
             rs.close();

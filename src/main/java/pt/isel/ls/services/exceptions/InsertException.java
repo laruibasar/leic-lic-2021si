@@ -1,4 +1,4 @@
-package pt.isel.ls.utils;
+package pt.isel.ls.services.exceptions;
 
 public class InsertException extends Exception {
 

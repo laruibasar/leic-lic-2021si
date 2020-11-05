@@ -2,13 +2,17 @@ package pt.isel.ls.services;
 
 import pt.isel.ls.data.Data;
 import pt.isel.ls.data.DataConnectionException;
+import pt.isel.ls.model.Model;
+import pt.isel.ls.model.User;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
 import pt.isel.ls.utils.Parameters;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
 
 /**
  * POST /users - creates a new user, given the following parameters
@@ -17,6 +21,8 @@ import java.sql.SQLException;
  */
 
 public class CreateUserHandler extends Handler implements IHandler {
+
+    private LinkedList<Model> users = new LinkedList<>();
 
     public CreateUserHandler() {
         super();
@@ -30,13 +36,17 @@ public class CreateUserHandler extends Handler implements IHandler {
         Connection conn = null;
         try {
             conn = mapper.getDataConnection().getConnection();
-            final String query = "insert into users(fname,lname,email) values(?,?,?)";
+            final String query = "insert into users(name,email) values(?,?)";
             PreparedStatement pstmt = conn.prepareStatement(query);
-            String[] nameSplit = cmd.getParameters().getValue("name").split("\\+");
-            pstmt.setString(1, nameSplit[0]);
-            pstmt.setString(2, nameSplit[1]);
-            pstmt.setString(3, cmd.getParameters().getValue("email"));
-            result = new CommandResult(pstmt.executeUpdate());
+            final String name = cmd.getParameters().getValue("name");
+            final String email = cmd.getParameters().getValue("email");
+            pstmt.setString(1, name);
+            pstmt.setString(2, email);
+            int status = pstmt.executeUpdate();
+            ResultSet rs = pstmt.getGeneratedKeys();
+            User user = new User(rs.getInt(1),name,email);
+            users.add(user);
+            result = new CommandResult(users,status);
             conn.commit();
             pstmt.close();
         } catch (Exception e) {

@@ -22,7 +22,6 @@ import java.sql.SQLException;
 public class GetMoviesHandler extends Handler implements IHandler {
 
     private LinkedList<Model> movies = new LinkedList<>();
-    private LinkedList<String> tuple = new LinkedList<>();
 
     @Override
     public CommandResult execute(Command cmd) throws DataConnectionException, SQLException, EmptyResult {
@@ -33,14 +32,10 @@ public class GetMoviesHandler extends Handler implements IHandler {
             final String query = "select mid, name from movies;";
             PreparedStatement pstmt = conn.prepareStatement(query);
             ResultSet rs = pstmt.executeQuery();
-            ResultSetMetaData rsmd = rs.getMetaData();
-            int columnsNumber = rsmd.getColumnCount();
             while (rs.next()) {
-                for (int i = 1; i <= columnsNumber; i++) {
-                    tuple.add(rs.getString(i));
-                }
-                movies.add(new Movie(Integer.parseInt(tuple.get(0)),columnsNumber));
-                tuple.clear();
+                movies.add(new Movie(
+                        rs.getInt(1),
+                        rs.getString(2)));
             }
             conn.commit();
             rs.close();

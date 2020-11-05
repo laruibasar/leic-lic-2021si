@@ -23,7 +23,6 @@ import java.sql.SQLException;
 public class GetUserDetailsHandler extends Handler implements IHandler {
 
     private LinkedList<Model> user = new LinkedList<>();
-    private LinkedList<String> tuple = new LinkedList<>();
 
     @Override
     public CommandResult execute(Command cmd) throws DataConnectionException, SQLException, EmptyResult {
@@ -35,18 +34,11 @@ public class GetUserDetailsHandler extends Handler implements IHandler {
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setString(1, cmd.getPath().getPath().get(1));
             ResultSet rs = pstmt.executeQuery();
-            ResultSetMetaData rsmd = rs.getMetaData();
-            int columnsNumber = rsmd.getColumnCount();
             while (rs.next()) {
-                for (int i = 1; i <= columnsNumber; i++) {
-                    tuple.add(rs.getString(i));
-                }
                 user.add(new User(
-                        Integer.parseInt(tuple.get(0)),
-                        tuple.get(1),
-                        tuple.get(2),
-                        columnsNumber));
-                tuple.clear();
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3)));
             }
             conn.commit();
             rs.close();

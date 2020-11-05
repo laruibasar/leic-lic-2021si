@@ -2,13 +2,17 @@ package pt.isel.ls.services;
 
 import pt.isel.ls.data.Data;
 import pt.isel.ls.data.DataConnectionException;
+import pt.isel.ls.model.Model;
+import pt.isel.ls.model.Review;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
 import pt.isel.ls.utils.Parameters;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
 
 /**
  * POST /movies/{mid}/reviews - creates a new review for the movie identified by mid, given the following parameters
@@ -20,6 +24,8 @@ import java.sql.SQLException;
  */
 
 public class CreateMovieReviewHandler extends Handler implements IHandler {
+
+    private LinkedList<Model> reviews = new LinkedList<>();
 
     public CreateMovieReviewHandler() {
         super();
@@ -38,12 +44,21 @@ public class CreateMovieReviewHandler extends Handler implements IHandler {
                     +
                     "values(?,?,?,?,?)";
             PreparedStatement pstmt = conn.prepareStatement(query);
-            pstmt.setString(1, cmd.getParameters().getValue("reviewSummary"));
-            pstmt.setString(2, cmd.getParameters().getValue("review"));
-            pstmt.setInt(3, Integer.parseInt(cmd.getParameters().getValue("rating")));
-            pstmt.setInt(4, Integer.parseInt(cmd.getPath().getPath().get(1)));
-            pstmt.setInt(5, Integer.parseInt(cmd.getParameters().getValue("uid")));
-            result = new CommandResult(pstmt.executeUpdate());
+            final String summary = cmd.getParameters().getValue("reviewSummary");
+            final String completeReview = cmd.getParameters().getValue("review");
+            final int rating = Integer.parseInt(cmd.getParameters().getValue("rating"));
+            final int movie = Integer.parseInt(cmd.getPath().getPath().get(1));
+            final int movieCritic = Integer.parseInt(cmd.getParameters().getValue("uid"));
+            pstmt.setString(1, summary);
+            pstmt.setString(2, completeReview);
+            pstmt.setInt(3, rating);
+            pstmt.setInt(4, movie);
+            pstmt.setInt(5, movieCritic);
+            int status = pstmt.executeUpdate();
+            ResultSet rs = pstmt.getGeneratedKeys();
+            Review review = new Review(rs.getInt(1), completeReview,summary,movie,rating,movieCritic);
+            reviews.add(review);
+            result = new CommandResult(reviews,status);
             conn.commit();
             pstmt.close();
         } catch (Exception e) {

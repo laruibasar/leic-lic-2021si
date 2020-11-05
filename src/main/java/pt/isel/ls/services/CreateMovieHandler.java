@@ -2,15 +2,21 @@ package pt.isel.ls.services;
 
 import pt.isel.ls.data.Data;
 import pt.isel.ls.data.DataConnectionException;
+import pt.isel.ls.model.Model;
+import pt.isel.ls.model.Movie;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
 import pt.isel.ls.utils.Parameters;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
 
 public class CreateMovieHandler extends Handler implements IHandler {
+
+    private LinkedList<Model> movies = new LinkedList<>();
 
     /**
      *POST /movies - creates a new movie, given the following parameters
@@ -32,9 +38,14 @@ public class CreateMovieHandler extends Handler implements IHandler {
             conn = mapper.getDataConnection().getConnection();
             final String query = "insert into movies(title,year) values(?,?)";
             PreparedStatement pstmt = conn.prepareStatement(query);
-            pstmt.setString(1, cmd.getParameters().getValue("name"));
-            pstmt.setInt(2, Integer.parseInt(cmd.getParameters().getValue("releaseYear")));
-            result = new CommandResult(pstmt.executeUpdate());
+            final String name = cmd.getParameters().getValue("name");
+            final int year = Integer.parseInt(cmd.getParameters().getValue("releaseYear"));
+            pstmt.setString(1,name);
+            pstmt.setInt(2, year);
+            int status = pstmt.executeUpdate();
+            ResultSet rs = pstmt.getGeneratedKeys();
+            Movie movie = new Movie(rs.getInt(1),name,year);
+            result = new CommandResult(movies,status);
             conn.commit();
             pstmt.close();
         } catch (Exception e) {

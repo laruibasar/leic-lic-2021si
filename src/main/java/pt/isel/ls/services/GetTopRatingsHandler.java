@@ -4,6 +4,7 @@ import pt.isel.ls.data.Data;
 import pt.isel.ls.data.DataConnectionException;
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Movie;
+import pt.isel.ls.services.exceptions.InvalidAverageException;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
 import pt.isel.ls.utils.EmptyResult;
@@ -28,7 +29,6 @@ import java.sql.SQLException;
 public class GetTopRatingsHandler extends Handler implements IHandler {
 
     private LinkedList<Model> topRatings = new LinkedList<>();
-    private LinkedList<String> tuple = new LinkedList<>();
 
     public GetTopRatingsHandler() {
         super();
@@ -36,9 +36,21 @@ public class GetTopRatingsHandler extends Handler implements IHandler {
     }
 
     @Override
-    public CommandResult execute(Command cmd) throws DataConnectionException, SQLException, EmptyResult {
+    public CommandResult execute(Command cmd) throws DataConnectionException, SQLException, EmptyResult, InvalidAverageException {
         Data mapper = new Data();
         Connection conn = null;
+        String avg = cmd.getParameters().getValue("average");
+        int average;
+        switch (avg) {
+            case "highest":
+                average = 1;
+                break;
+            case "lowest":
+                average = 0;
+                break;
+            default:
+                throw new InvalidAverageException("Invalid Parameter found, only accept values; highest or lowest ");
+        }
         try {
             conn = mapper.getDataConnection().getConnection();
             final String query = "select mid, name, year\n"
@@ -61,31 +73,15 @@ public class GetTopRatingsHandler extends Handler implements IHandler {
             PreparedStatement pstmt = conn.prepareStatement(query);
 
             pstmt.setInt(1, Integer.parseInt(cmd.getParameters().getValue("min")));
-            String average = cmd.getParameters().getValue("average");
-            switch (average) {
-                case "highest":
-                    pstmt.setInt(2,1);
-                    break;
-                case "lowest":
-                    pstmt.setInt(2,0);
-                    break;
-                default: throw new InvalidAverageException("Invalid ");
-            }
+            pstmt.setInt(2,average);
             pstmt.setInt(3, Integer.parseInt(cmd.getParameters().getValue("n")));
 
             ResultSet rs = pstmt.executeQuery();
-            ResultSetMetaData rsmd = rs.getMetaData();
-            int columnsNumber = rsmd.getColumnCount();
             while (rs.next()) {
-                for (int i = 1; i <= columnsNumber; i++) {
-                    tuple.add(rs.getString(i));
-                }
                 topRatings.add(new Movie(
-                        Integer.parseInt(tuple.get(0)),
-                        tuple.get(1),
-                        Integer.parseInt(tuple.get(2)),
-                        columnsNumber));
-                tuple.clear();
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getInt(3)));
             }
             conn.commit();
             rs.close();
@@ -96,18 +92,10 @@ public class GetTopRatingsHandler extends Handler implements IHandler {
             }
             throw new DataConnectionException("Unable to get a list of all the movies\n"
                     + e.getMessage(), e);
-        } catch (InvalidAverageException e) {
-            e.printStackTrace();
         } finally {
             mapper.closeConnection(conn);
         }
 
         return new CommandResult(topRatings);
-    }
-
-    private static class InvalidAverageException extends Throwable {
-        public InvalidAverageException(String message) {
-            super(message);
-        }
     }
 }

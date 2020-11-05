@@ -3,7 +3,7 @@ package pt.isel.ls.services;
 import pt.isel.ls.data.Data;
 import pt.isel.ls.data.DataConnectionException;
 import pt.isel.ls.model.Model;
-import pt.isel.ls.model.Rating;
+import pt.isel.ls.model.MovieRating;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
 import pt.isel.ls.utils.EmptyResult;
@@ -11,7 +11,6 @@ import pt.isel.ls.utils.EmptyResult;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.util.LinkedList;
 import java.sql.SQLException;
 
@@ -25,7 +24,6 @@ import java.sql.SQLException;
 public class GetMovieRatingHandler extends Handler implements IHandler {
 
     private LinkedList<Model> ratings = new LinkedList<>();
-    private LinkedList<String> tuple = new LinkedList<>();
 
     @Override
     public CommandResult execute(Command cmd) throws DataConnectionException, SQLException, EmptyResult {
@@ -123,22 +121,18 @@ public class GetMovieRatingHandler extends Handler implements IHandler {
                     +
                     "\t  where movie = :movieId) as rating;";
             PreparedStatement pstmt = conn.prepareStatement(query);
-            pstmt.setString(1, cmd.getPath().getPath().get(1));
+            int movie = Integer.parseInt(cmd.getPath().getPath().get(1));
+            pstmt.setInt(1, movie);
             ResultSet rs = pstmt.executeQuery();
-            ResultSetMetaData rsmd = rs.getMetaData();
-            int columnsNumber = rsmd.getColumnCount();
             while (rs.next()) {
-                for (int i = 1; i <= columnsNumber; i++) {
-                    tuple.add(rs.getString(i));
-                }
-                ratings.add(new Rating(
-                        Float.parseFloat(tuple.get(0)),
-                        Integer.parseInt(tuple.get(1)),
-                        Integer.parseInt(tuple.get(2)),
-                        Integer.parseInt(tuple.get(3)),
-                        Integer.parseInt(tuple.get(4)),
-                        Integer.parseInt(tuple.get(5))));
-                tuple.clear();
+                ratings.add(new MovieRating(
+                        movie,
+                        rs.getFloat(1),
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getInt(5),
+                        rs.getInt(6)));
             }
             conn.commit();
             rs.close();
@@ -147,7 +141,6 @@ public class GetMovieRatingHandler extends Handler implements IHandler {
             if (conn != null) {
                 conn.rollback();
             }
-
             throw new DataConnectionException("Unable to get a list of all the movies\n"
                     + e.getMessage(), e);
         } finally {

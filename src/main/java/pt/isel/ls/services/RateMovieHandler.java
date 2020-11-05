@@ -2,13 +2,18 @@ package pt.isel.ls.services;
 
 import pt.isel.ls.data.Data;
 import pt.isel.ls.data.DataConnectionException;
+import pt.isel.ls.model.Model;
+import pt.isel.ls.model.Rating;
+import pt.isel.ls.model.User;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
 import pt.isel.ls.utils.Parameters;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
 
 /**
  * POST /movies/{mid}/ratings - submits a new rating for the movie identified by mid, given the following parameters
@@ -17,6 +22,8 @@ import java.sql.SQLException;
  */
 
 public class RateMovieHandler extends Handler implements IHandler {
+
+    private LinkedList<Model> ratings = new LinkedList<>();
 
     public RateMovieHandler() {
         super();
@@ -32,9 +39,16 @@ public class RateMovieHandler extends Handler implements IHandler {
             conn = mapper.getDataConnection().getConnection();
             final String query = "insert into ratings(mid,rating) values(?,?)";
             PreparedStatement pstmt = conn.prepareStatement(query);
-            pstmt.setInt(1, Integer.parseInt(cmd.getPath().getPath().get(1)));
-            pstmt.setString(2,cmd.getParameters().getValue("rating"));
-            result = new CommandResult(pstmt.executeUpdate());
+            final int mid = Integer.parseInt(cmd.getPath().getPath().get(1));
+            final int rate = Integer.parseInt(cmd.getParameters().getValue("rating"));
+            pstmt.setInt(1, mid);
+            pstmt.setInt(2, rate);
+
+            int status = pstmt.executeUpdate();
+            ResultSet rs = pstmt.getGeneratedKeys();
+            Rating rating = new Rating(rs.getInt(1),mid,rate);
+            ratings.add(rating);
+            result = new CommandResult(ratings,status);
             conn.commit();
             pstmt.close();
         } catch (Exception e) {
