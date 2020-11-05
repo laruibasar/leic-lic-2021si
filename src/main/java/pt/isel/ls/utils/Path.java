@@ -22,6 +22,7 @@ public class Path {
         return path;
     }
 
+    public boolean matches(Path cmp) {
     /*
      * Retrieve the value of String in path.
      * We need to send the index

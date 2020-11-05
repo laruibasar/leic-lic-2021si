@@ -25,7 +25,7 @@ public class Router {
 
     public  Handler findHandler(Command command) throws RouterException {
         for (Handler handler : handlers) {
-            if (handler.getTemplate().equals(command)) {
+            if (handler.getTemplate().matches(command)) {
                 return handler;
             }
         }
