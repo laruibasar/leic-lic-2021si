@@ -1,6 +1,6 @@
 package pt.isel.ls.model;
 
-public class Review {
+public class Review extends Model {
 
     private int rid;
     private String summary;
@@ -9,38 +9,34 @@ public class Review {
     private int movie;
     private int movieCritic;
 
-    public Review(int rid, String summary, int rating,
-                  int movie, int movieCritic) {
-
+    public Review(int rid, String summary, int movie, int rating) {
         this.rid = rid;
         this.summary = summary;
         this.rating = rating;
         this.movie = movie;
-        this.movieCritic = movieCritic;
-
     }
 
-    public void setCompleteReview(String completeReview) {
+    public Review(int rid, String completeReview, String summary, int movie, int rating, int critic) {
+        this.rid = rid;
         this.completeReview = completeReview;
+        this.summary = summary;
+        this.rating = rating;
+        this.movie = movie;
+        this.movieCritic = critic;
     }
 
-    public String getCompleteReview() {
-        return completeReview;
-    }
-
-    public String getSummary() {
-        return summary;
-    }
-   
-    public int getMovie() {
-        return movie;
-    }
-   
-    public int getRating() {
-        return rating;
-    }
-   
-    public int getMovieCritic() {
-        return movieCritic;
+    @Override
+    public String toString() {
+        if (completeReview == null) {
+            return "Stars =" + rating
+                    + "\nMovieCritic = " + movieCritic
+                    + "\nSummary = " + summary;
+        }
+        return "Stars = " + rating
+                + "\nSummary = " + summary
+                + "\nMovie Critic = " + movieCritic
+                + "\n\nComplete Review = " + completeReview
+                + "\nMovieID = " + movie
+                + "\nReviewID = " + rid;
     }
 }

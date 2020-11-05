@@ -3,7 +3,7 @@ package pt.isel.ls.services;
 import pt.isel.ls.data.Data;
 import pt.isel.ls.data.DataConnectionException;
 import pt.isel.ls.model.Model;
-import pt.isel.ls.model.Movie;
+import pt.isel.ls.model.Review;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
 
@@ -14,12 +14,12 @@ import java.util.LinkedList;
 import java.sql.SQLException;
 
 /**
- * GET /movies - returns a list with all movies.
+ * GET /users/{uid}/reviews - returns all reviews from the user identified by uid. Must not include the full review.
  */
 
-public class GetMoviesHandler extends Handler implements IHandler {
+public class GetUserAllReviewsHandler extends Handler implements IHandler {
 
-    private LinkedList<Model> movies = new LinkedList<>();
+    private LinkedList<Model> reviews = new LinkedList<>();
 
     @Override
     public CommandResult execute(Command cmd) throws DataConnectionException, SQLException {
@@ -27,13 +27,16 @@ public class GetMoviesHandler extends Handler implements IHandler {
         Connection conn = null;
         try {
             conn = mapper.getDataConnection().getConnection();
-            final String query = "select mid, name from movies;";
+            final String query = "select rid, summary, movie, rating from reviews where movieCritic = ?;";
             PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, cmd.getPath().getPath().get(1));
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                movies.add(new Movie(
+                reviews.add(new Review(
                         rs.getInt(1),
-                        rs.getString(2)));
+                        rs.getString(2),
+                        rs.getInt(3),
+                        rs.getInt(4)));
             }
             conn.commit();
             rs.close();
@@ -42,12 +45,13 @@ public class GetMoviesHandler extends Handler implements IHandler {
             if (conn != null) {
                 conn.rollback();
             }
+
             throw new DataConnectionException("Unable to get a list of all the movies\n"
                     + e.getMessage(), e);
         } finally {
             mapper.closeConnection(conn);
         }
 
-        return new CommandResult(movies,movies.size());
+        return new CommandResult(reviews,reviews.size());
     }
 }

@@ -29,6 +29,6 @@ public class Router {
                 return handler;
             }
         }
-        throw new RouterException("Router: invalid command " + command.toString());
+        throw new RouterException("Invalid command " + command.toString());
     }
 }

@@ -23,6 +23,15 @@ public class Path {
     }
 
     public boolean matches(Path cmp) {
+    /*
+     * Retrieve the value of String in path.
+     * We need to send the index
+     */
+    public String getValue(int index) {
+        return path.get(index);
+    }
+
+    public boolean equals(Path cmp) {
         if (path.size() != cmp.getPath().size()) {
             return false;
         }

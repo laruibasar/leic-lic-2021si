@@ -1,11 +1,13 @@
 package pt.isel.ls;
 
+import pt.isel.ls.model.Model;
+import pt.isel.ls.services.Handler;
+import pt.isel.ls.services.exceptions.InvalidAverageException;
+import pt.isel.ls.utils.Command;
+import pt.isel.ls.utils.CommandResult;
 import pt.isel.ls.config.AppConfig;
 import pt.isel.ls.config.RouterException;
 import pt.isel.ls.data.DataConnectionException;
-import pt.isel.ls.services.Handler;
-import pt.isel.ls.utils.Command;
-import pt.isel.ls.utils.CommandResult;
 import pt.isel.ls.utils.Method;
 import pt.isel.ls.utils.Parameters;
 import pt.isel.ls.utils.Path;
@@ -14,7 +16,7 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public class AppConsole {
-    public static void run() {
+    public static void run() throws Exception {
         System.out.println("Run in interactive mode");
 
         boolean run = true;
@@ -24,8 +26,8 @@ public class AppConsole {
 
             try {
                 run = runOnce(args);
-            } catch (RouterException | DataConnectionException | SQLException re) {
-                System.out.println(re.getMessage());
+            } catch (Exception e) {
+                throw new Exception(e.getMessage());
             }
         }
     }
@@ -35,12 +37,11 @@ public class AppConsole {
         System.out.print("> ");
         Scanner sc = new Scanner(System.in);
 
-        String input = sc.nextLine();
-
-        return input;
+        return sc.nextLine();
     }
 
-    public static boolean runOnce(String[] args) throws RouterException, DataConnectionException, SQLException {
+    public static boolean runOnce(String[] args) throws Exception {
+
         if (args[0].toUpperCase().equals("EXIT")) {
             System.out.println("Exiting...");
             return false;
@@ -49,8 +50,12 @@ public class AppConsole {
         Command cmd = setCommand(args);
         System.out.println("Running command: " + cmd.toString());
 
-        CommandResult result = runCommand(cmd);
-        showResults(result);
+        try {
+            CommandResult result = runCommand(cmd);
+            showResults(result);
+        } catch (RouterException | DataConnectionException | SQLException | InvalidAverageException e) {
+            throw new Exception(e.getMessage());
+        }
 
         return true;
     }
@@ -68,14 +73,16 @@ public class AppConsole {
         return cmd;
     }
 
-    private static CommandResult runCommand(Command cmd) throws RouterException, DataConnectionException, SQLException {
-        Handler handler = AppConfig.getInstance().router.findHandler(cmd);
-        CommandResult result = handler.execute(cmd);
+    private static CommandResult runCommand(Command cmd) throws RouterException,
+            DataConnectionException, SQLException, InvalidAverageException {
 
-        return result;
+        Handler handler = AppConfig.getInstance().router.findHandler(cmd);
+        return handler.execute(cmd);
     }
 
-    private static void showResults(CommandResult result) {
-        // TODO: pretty print results
+    private static void showResults(CommandResult cr) {
+        for (Model model : cr) {
+            System.out.println(model.toString());
+        }
     }
 }

@@ -1,12 +1,19 @@
 package pt.isel.ls.config;
 
-import pt.isel.ls.services.CreateReviewForMovie;
+import pt.isel.ls.services.CreateMovieHandler;
+import pt.isel.ls.services.CreateMovieReviewHandler;
 import pt.isel.ls.services.CreateUserHandler;
+import pt.isel.ls.services.GetAllUsersHandler;
+import pt.isel.ls.services.GetMovieAllReviewsHandler;
+import pt.isel.ls.services.GetMovieDetailsHandler;
+import pt.isel.ls.services.GetMovieRatingHandler;
+import pt.isel.ls.services.GetMovieReviewHandler;
 import pt.isel.ls.services.GetMoviesHandler;
-import pt.isel.ls.services.GetUsersHandler;
-import pt.isel.ls.services.GetRatingFromMovieHandler;
-import pt.isel.ls.services.GetReviewHandler;
-import pt.isel.ls.services.GetReviewFromUserHandler;
+import pt.isel.ls.services.GetTopRatingsHandler;
+import pt.isel.ls.services.GetUserAllReviewsHandler;
+import pt.isel.ls.services.GetUserDetailsHandler;
+import pt.isel.ls.services.GetUserReviewHandler;
+import pt.isel.ls.services.RateMovieHandler;
 import pt.isel.ls.utils.Method;
 import pt.isel.ls.utils.Path;
 
@@ -38,23 +45,23 @@ public class AppConfig {
     private void loadRouter() {
         /* List all handler to load into Router */
         this.router.addHandler(Method.POST, new Path("/users"), new CreateUserHandler());
-        this.router.addHandler(Method.GET, new Path("/users"), new GetUsersHandler());
-        this.router.addHandler(Method.GET, new Path("/users/{uid}"), new GetUsersHandler());
+        this.router.addHandler(Method.GET, new Path("/users"), new GetAllUsersHandler());
+        this.router.addHandler(Method.GET, new Path("/users/{uid}"), new GetUserDetailsHandler());
 
-        this.router.addHandler(Method.POST, new Path("/movies"), new GetMoviesHandler());
+        this.router.addHandler(Method.POST, new Path("/movies"), new CreateMovieHandler());
         this.router.addHandler(Method.GET, new Path("/movies"), new GetMoviesHandler());
-        this.router.addHandler(Method.GET, new Path("/movies/{mid}"), new GetMoviesHandler());
+        this.router.addHandler(Method.GET, new Path("/movies/{mid}"), new GetMovieDetailsHandler());
 
-        this.router.addHandler(Method.POST, new Path("/movies/{mid}/ratings"), new CreateReviewForMovie());
-        this.router.addHandler(Method.GET, new Path("/movies/{mid}/ratings"), new GetRatingFromMovieHandler());
+        this.router.addHandler(Method.POST, new Path("/movies/{mid}/ratings"), new RateMovieHandler());
+        this.router.addHandler(Method.GET, new Path("/movies/{mid}/ratings"), new GetMovieRatingHandler());
 
-        this.router.addHandler(Method.POST, new Path("/movies/{mid}/reviews"), new GetReviewHandler());
-        this.router.addHandler(Method.GET, new Path("/movies/{mid}/reviews"), new CreateReviewForMovie());
+        this.router.addHandler(Method.POST, new Path("/movies/{mid}/reviews"), new CreateMovieReviewHandler());
+        this.router.addHandler(Method.GET, new Path("/movies/{mid}/reviews"), new GetMovieAllReviewsHandler());
 
-        this.router.addHandler(Method.GET, new Path("/movies/{mid}/reviews/{rid}"), new GetReviewFromUserHandler());
-        this.router.addHandler(Method.GET, new Path("/users/{uid}/reviews"), new GetReviewFromUserHandler());
-        this.router.addHandler(Method.GET, new Path("/users/{uid}/reviews/{rid}"), new GetReviewFromUserHandler());
-        this.router.addHandler(Method.GET, new Path("tops/ratings"), new GetReviewFromUserHandler());
+        this.router.addHandler(Method.GET, new Path("/movies/{mid}/reviews/{rid}"), new GetMovieReviewHandler());
+        this.router.addHandler(Method.GET, new Path("/users/{uid}/reviews"), new GetUserAllReviewsHandler());
+        this.router.addHandler(Method.GET, new Path("/users/{uid}/reviews/{rid}"), new GetUserReviewHandler());
+        this.router.addHandler(Method.GET, new Path("tops/ratings"), new GetTopRatingsHandler());
     }
 
     private AppConfig() {

@@ -1,12 +1,15 @@
 package pt.isel.ls.model;
 
-public class Movie {
+public class Movie extends Model {
 
     private int mid;
     private String title;
     private int year;
-    private String genre;
-    private String castAndDirectors;
+
+    public Movie(int mid, String title) {
+        this.mid = mid;
+        this.title = title;
+    }
 
     public Movie(int mid, String title, int year) {
         this.mid = mid;
@@ -14,31 +17,14 @@ public class Movie {
         this.year = year;
     }
 
-    public int getMid() {
-        return mid;
+    @Override
+    public String toString() {
+        if (year == 0) {
+            return "MovieID = " + mid + " \nTitle = " + title;
+        }
+        return "MovieID = " + mid + " \nTitle = " + title + " \nYear = " + year;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
-
-    public String getGenre() {
-        return genre;
-    }
-
-    public void setCastAndDirectors(String castAndDirectors) {
-        this.castAndDirectors = castAndDirectors;
-    }
-
-    public String getCastAndDirectors() {
-        return castAndDirectors;
-    }
 }
+
+

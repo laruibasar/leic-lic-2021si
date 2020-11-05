@@ -28,8 +28,7 @@ public class App {
                 System.out.println(AppConfig.getInstance().loadMessage);
             }
         } catch (Exception e) {
-            System.out.println("Error: " + e.getStackTrace());
-            System.out.println(e.getMessage());
+            System.out.println("Error: " + e.getMessage());
             return;
         }
     }

@@ -3,29 +3,30 @@ package pt.isel.ls.services;
 import pt.isel.ls.data.Data;
 import pt.isel.ls.data.DataConnectionException;
 import pt.isel.ls.model.Model;
-import pt.isel.ls.model.Rating;
+import pt.isel.ls.model.Movie;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
 import pt.isel.ls.utils.Parameters;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 
-/**
- * POST /movies/{mid}/ratings - submits a new rating for the movie identified by mid, given the following parameters
- *
- * rating - integer between 1 and 5.
- */
+public class CreateMovieHandler extends Handler implements IHandler {
 
-public class RateMovieHandler extends Handler implements IHandler {
+    private LinkedList<Model> movies = new LinkedList<>();
 
-    private LinkedList<Model> ratings = new LinkedList<>();
+    /**
+     *POST /movies - creates a new movie, given the following parameters
+     *  title - the movie's name.
+     *  releaseYear - the movie's release year.
+     */
 
-    public RateMovieHandler() {
+    public CreateMovieHandler() {
         super();
-        template.setParameters(new Parameters(new String[]{"rating"}));
+        template.setParameters(new Parameters(new String[]{"title", "releaseYear"}));
     }
 
     @Override
@@ -35,18 +36,16 @@ public class RateMovieHandler extends Handler implements IHandler {
         Connection conn = null;
         try {
             conn = mapper.getDataConnection().getConnection();
-            final String query = "insert into ratings(mid,rating) values(?,?)";
+            final String query = "insert into movies(title,year) values(?,?)";
             PreparedStatement pstmt = conn.prepareStatement(query);
-            final int mid = Integer.parseInt(cmd.getPath().getPath().get(1));
-            final int rate = Integer.parseInt(cmd.getParameters().getValue("rating"));
-            pstmt.setInt(1, mid);
-            pstmt.setInt(2, rate);
-
+            final String name = cmd.getParameters().getValue("title");
+            final int year = Integer.parseInt(cmd.getParameters().getValue("releaseYear"));
+            pstmt.setString(1,name);
+            pstmt.setInt(2, year);
             int status = pstmt.executeUpdate();
             ResultSet rs = pstmt.getGeneratedKeys();
-            Rating rating = new Rating(rs.getInt(1),mid,rate);
-            ratings.add(rating);
-            result = new CommandResult(ratings,status);
+            Movie movie = new Movie(rs.getInt(1),name,year);
+            result = new CommandResult(movies,status);
             conn.commit();
             rs.close();
             pstmt.close();
@@ -54,7 +53,6 @@ public class RateMovieHandler extends Handler implements IHandler {
             if (conn != null) {
                 conn.rollback();
             }
-
             throw new DataConnectionException("Unable to add movie\n"
                     + e.getMessage(), e);
         } finally {
