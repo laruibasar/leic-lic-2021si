@@ -26,7 +26,7 @@ create table reviews (
 );
 
 create table ratings (
-    rateId serial primary key,
+    ratingId serial primary key,
     rating int check (rating between 1 AND 5),
     movie int references movies(mid)
 );
