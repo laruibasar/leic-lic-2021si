@@ -21,7 +21,11 @@ public class Path {
     public ArrayList<String> getPath() {
         return path;
     }
-    
+
+    /*
+     * Retrieve the value of String in path.
+     * We need to send the index
+     */
     public String getValue(int index) {
         return path.get(index);
     }
