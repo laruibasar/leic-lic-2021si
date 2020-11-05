@@ -113,20 +113,59 @@ que define o _template_, bem como o construtor-base dos _handlers_.
 
 Depois é feito o _handler_ para cada comando aceite pela aplicação que extende 
 a classe base `Handler` e implementa o interface `IHandler`.
+Cada _handler_ tem a definição dos parâmetros que aceita e necessita de receber
+para executar o pedido. No processo de validação dos parâmetros recebidos...
 
-(_describe how the router works and how path parameters are extracted_)
+Nesta fase, o _handler_ tem o código que trata do acesso á base de dados, que em 
+fase seguinte, será feito um _refactoring_ e movido esse código para a camada 
+aplicacional correta, relacionada com o acesso e tratamento de acesso á BD.
 
-### Gestão de ligações
+##### Retorno dos resultados
 
-(_describe how connections are created, used and disposed_, namely its relation with transaction scopes).
+Os _handlers_ retornam os resultados da execução do comando através de uma 
+instância da classe `CommandResult` que é constituída por um conjunto de 
+informação que representa:
+*  Estado: 0 - sem resultados, > 0 - número afetações de resultados
+*  Lista modelos: representa o resultado dos modelos do domain que agregam a 
+informação-alvo da interação com a base de dados.
 
 ### Acesso a dados
 
-(_describe any created classes to help on data access_).
+A aplicação tem prevista uma camada aplicacional para tratar dos dados e as 
+interações com a BD, pelo que se desenvolveu a seguinte lógica:
+*  `DataBaseConfig` - Carrega de variáveis ambiente e prepara a configuração da
+ligação, inclusive a iniciação da `Data` que guarda a conexão á BD através da
+`DataConnection`
+*  `DataConnection` - Responsável por estabelecer a ligação e manter a conexão á BD
+*  `Data` - Classe que torna transparente a ligação á BD, permitindo ao utilizador
+obter a conexão á BD quando necessário para fazer as queries _necessárias_.
+
+Estas 3 classes permitem estabelecer a ligação á base de dados sempre que 
+necessário ser executado um comando. Para assegurar a atomicidade das transações,
+optou-se por na classe `DataConnection` definir á partida que o _auto commit_ 
+está desabilitado, sendo necessário em todas as transações fazer o _commit_ ou 
+_rollback_. Essa tarefa acrescenta um custo em definir mais uma linha de código,
+que seria desnecessária, na operação de _select_ mas sendo que pode ser necessário
+fazer várias operações de _select_ numa transação, garantimos que não existiu
+uma alteração que invalida os dados entre selects e/ou outras operações.
+
+A definição deste modo para utilização da BD permite a evolução para a definição
+da camada de dados de forma completamente separada da lógica de negócio definida
+nos _handlers_ para tratar os comandos.
+
+A evolução pode passar pela alteração da classe `Data` para a transformar numa classe 
+abstrata que depois serve para definir as várias classes que realizam as operações
+de interação com a BD, conforme o _handler_. Ou pode ser a criação de outras 
+classes do estilo da _DataConnection_ que possam ser utilizadas para interagir 
+com base de dados diferentes da atual ou, mesmo através da ligação a uma API externa.
+
+### Acesso a dados
 
 (_identify any non-trivial used SQL statements_).
 
 ### Processamento de erros
+
+
 
 (_describe how errors are handled and communicated to the application user_).
 
@@ -135,3 +174,11 @@ a classe base `Handler` e implementa o interface `IHandler`.
 (_enumerate the functionality that is not concluded and the identified defects_)
 
 (_identify improvements to be made on the next phase_)
+
+Nesta fase, os _handlers_ têm a lógica de acesso á base de dados, o que nos 
+parece ser uma quebra no isolamento que pretendemos alcançar na aplicação.
+Na fase seguinte pretendemos desenvolver a camada de acesso a dados (_Model_) 
+criando as classes de mapeamento ou _data access objects_ para ser elas a fazerem
+a interação com o modelo de dados e tornando transparente para o _handler_ como 
+é feito o processamento dos dados, ficando só responsável por reunir a informação
+necessária e dar a ordem de execução, bem como retornar os dados tratados.
