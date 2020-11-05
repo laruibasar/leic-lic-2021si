@@ -13,8 +13,7 @@ public class DataBaseConfig {
     public DataBaseConfig() throws EnvironmentVariableException {
         host = System.getenv("LS_DB_HOST");
         if (host == null || host.length() == 0) {
-            throw new EnvironmentVariableException("Environment variable "
-                    + "LS_DB_HOST: not set");
+            throw new EnvironmentVariableException("LS_DB_HOST not set");
         }
 
         String getPort = System.getenv("LS_DB_PORT");
@@ -26,20 +25,17 @@ public class DataBaseConfig {
 
         database = System.getenv("LS_DB_DATABASE");
         if (database == null || database.length() == 0) {
-            throw new EnvironmentVariableException("Environment variable "
-                    + "LS_DB_DATABASE: not set");
+            throw new EnvironmentVariableException("LS_DB_DATABASE not set");
         }
 
         user = System.getenv("LS_DB_USER");
         if (user == null || user.length() == 0) {
-            throw new EnvironmentVariableException("Environment variable "
-                    + "LS_DB_USER: not set");
+            throw new EnvironmentVariableException("LS_DB_USER not set");
         }
 
         password = System.getenv("LS_DB_PASSWD");
         if (password == null || password.length() == 0) {
-            throw new EnvironmentVariableException("Environment variable "
-                    + "LS_DB_PASSWD: not set");
+            throw new EnvironmentVariableException("LS_DB_PASSWD not set");
         }
 
         /* Setup a data connection to use */
