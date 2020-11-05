@@ -23,7 +23,6 @@ public class GetAllUsersHandler extends Handler implements IHandler {
     @Override
     public CommandResult execute(Command cmd) throws DataConnectionException, SQLException {
         Data mapper = new Data();
-        int usersNumber = 0;
         Connection conn = null;
         try {
             conn = mapper.getDataConnection().getConnection();
@@ -32,7 +31,6 @@ public class GetAllUsersHandler extends Handler implements IHandler {
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 users.add(new User(rs.getInt(1),rs.getString(2)));
-                usersNumber++;
             }
             conn.commit();
             rs.close();
@@ -47,6 +45,6 @@ public class GetAllUsersHandler extends Handler implements IHandler {
             mapper.closeConnection(conn);
         }
 
-        return new CommandResult(users,usersNumber);
+        return new CommandResult(users,users.size());
     }
 }

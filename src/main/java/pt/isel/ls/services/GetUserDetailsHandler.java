@@ -6,11 +6,9 @@ import pt.isel.ls.model.Model;
 import pt.isel.ls.model.User;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.util.LinkedList;
 import java.sql.SQLException;
 
@@ -21,7 +19,7 @@ import java.sql.SQLException;
 
 public class GetUserDetailsHandler extends Handler implements IHandler {
 
-    private LinkedList<Model> user = new LinkedList<>();
+    private LinkedList<Model> users = new LinkedList<>();
 
     @Override
     public CommandResult execute(Command cmd) throws DataConnectionException, SQLException {
@@ -29,13 +27,12 @@ public class GetUserDetailsHandler extends Handler implements IHandler {
         Connection conn = null;
         try {
             conn = mapper.getDataConnection().getConnection();
-            //TODO: escolher atributos e decidir ordem
             final String query = "select id, name, email from users where uid = ?;";
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setString(1, cmd.getPath().getPath().get(1));
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                user.add(new User(
+                users.add(new User(
                         rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3)));
@@ -54,6 +51,6 @@ public class GetUserDetailsHandler extends Handler implements IHandler {
             mapper.closeConnection(conn);
         }
 
-        return new CommandResult(user);
+        return new CommandResult(users,users.size());
     }
 }

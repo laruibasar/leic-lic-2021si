@@ -4,11 +4,9 @@ import pt.isel.ls.data.Data;
 import pt.isel.ls.data.DataConnectionException;
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Rating;
-import pt.isel.ls.model.User;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
 import pt.isel.ls.utils.Parameters;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

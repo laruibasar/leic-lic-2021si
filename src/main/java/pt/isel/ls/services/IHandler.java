@@ -9,5 +9,5 @@ import java.sql.SQLException;
 
 public interface IHandler {
     public CommandResult execute(Command cmd) throws DataConnectionException,
-            SQLException, EmptyResult, InvalidAverageException;
+            SQLException, InvalidAverageException;
 }

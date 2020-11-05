@@ -11,7 +11,6 @@ import pt.isel.ls.utils.Parameters;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.util.LinkedList;
 import java.sql.SQLException;
 
@@ -35,7 +34,7 @@ public class GetTopRatingsHandler extends Handler implements IHandler {
     }
 
     @Override
-    public CommandResult execute(Command cmd) throws DataConnectionException, SQLException, EmptyResult, InvalidAverageException {
+    public CommandResult execute(Command cmd) throws DataConnectionException, SQLException, InvalidAverageException {
         Data mapper = new Data();
         Connection conn = null;
         String avg = cmd.getParameters().getValue("average");
@@ -95,6 +94,6 @@ public class GetTopRatingsHandler extends Handler implements IHandler {
             mapper.closeConnection(conn);
         }
 
-        return new CommandResult(topRatings);
+        return new CommandResult(topRatings,topRatings.size());
     }
 }

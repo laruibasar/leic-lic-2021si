@@ -25,7 +25,7 @@ public class GetMovieRatingHandler extends Handler implements IHandler {
     private LinkedList<Model> ratings = new LinkedList<>();
 
     @Override
-    public CommandResult execute(Command cmd) throws DataConnectionException, SQLException, EmptyResult {
+    public CommandResult execute(Command cmd) throws DataConnectionException, SQLException {
         Data mapper = new Data();
         Connection conn = null;
         try {
@@ -146,7 +146,7 @@ public class GetMovieRatingHandler extends Handler implements IHandler {
             mapper.closeConnection(conn);
         }
 
-        return new CommandResult(ratings);
+        return new CommandResult(ratings,ratings.size());
     }
 }
 

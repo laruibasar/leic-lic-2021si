@@ -10,7 +10,6 @@ import pt.isel.ls.utils.CommandResult;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.util.LinkedList;
 import java.sql.SQLException;
 
@@ -53,6 +52,6 @@ public class GetUserAllReviewsHandler extends Handler implements IHandler {
             mapper.closeConnection(conn);
         }
 
-        return new CommandResult(reviews);
+        return new CommandResult(reviews,reviews.size());
     }
 }

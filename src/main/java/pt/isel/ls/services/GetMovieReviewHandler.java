@@ -10,7 +10,6 @@ import pt.isel.ls.utils.CommandResult;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.util.LinkedList;
 import java.sql.SQLException;
 
@@ -23,7 +22,7 @@ public class GetMovieReviewHandler extends Handler implements IHandler {
     private LinkedList<Model> reviews = new LinkedList<>();
 
     @Override
-    public CommandResult execute(Command cmd) throws DataConnectionException, SQLException, EmptyResult {
+    public CommandResult execute(Command cmd) throws DataConnectionException, SQLException {
         Data mapper = new Data();
         Connection conn = null;
         try {
@@ -57,6 +56,6 @@ public class GetMovieReviewHandler extends Handler implements IHandler {
             mapper.closeConnection(conn);
         }
 
-        return new CommandResult(reviews);
+        return new CommandResult(reviews,reviews.size());
     }
 }

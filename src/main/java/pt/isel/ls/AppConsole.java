@@ -1,6 +1,7 @@
 package pt.isel.ls;
 
 import pt.isel.ls.services.Handler;
+import pt.isel.ls.services.exceptions.InvalidAverageException;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
 import pt.isel.ls.config.AppConfig;
@@ -14,7 +15,7 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public class AppConsole {
-    public static void run() {
+    public static void run() throws InvalidAverageException {
         System.out.println("Run in interactive mode");
 
         boolean run = true;
@@ -39,7 +40,7 @@ public class AppConsole {
     }
 
     public static boolean runOnce(String[] args) throws RouterException,
-            DataConnectionException, SQLException {
+            DataConnectionException, SQLException, InvalidAverageException {
 
         if (args[0].toUpperCase().equals("EXIT")) {
             System.out.println("Exiting...");
@@ -69,7 +70,7 @@ public class AppConsole {
     }
 
     private static CommandResult runCommand(Command cmd) throws RouterException,
-            DataConnectionException, SQLException {
+            DataConnectionException, SQLException, InvalidAverageException {
 
         Handler handler = AppConfig.getInstance().router.findHandler(cmd);
         return handler.execute(cmd);
