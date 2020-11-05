@@ -10,10 +10,8 @@ public class MovieRating extends Model {
     private int votesFour;
     private int votesFive;
 
-    public MovieRating(int mid, float avg, int one, int two, int three, int four, int five) throws RatingException {
-        if (avg < 1 || avg > 5) {
-            throw new RatingException("Average: value not allow");
-        }
+    public MovieRating(int mid, float avg, int one,
+                       int two, int three, int four, int five) {
         this.movieId = mid;
         this.average = avg;
         this.votesOne = one;
@@ -25,12 +23,6 @@ public class MovieRating extends Model {
 
     public float getAverage() {
         return average;
-    }
-
-    public class RatingException extends Exception {
-        public RatingException(String message) {
-            super(message);
-        }
     }
 
     @Override
