@@ -27,26 +27,6 @@ public class MovieRating extends Model {
         return average;
     }
 
-    public int getVotesOne() {
-        return votesOne;
-    }
-
-    public int getVotesTwo() {
-        return votesTwo;
-    }
-
-    public int getVotesThree() {
-        return votesThree;
-    }
-
-    public int getVotesFour() {
-        return votesFour;
-    }
-
-    public int getVotesFive() {
-        return votesFive;
-    }
-
     public class RatingException extends Exception {
         public RatingException(String message) {
             super(message);
