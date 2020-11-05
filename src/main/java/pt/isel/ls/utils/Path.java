@@ -22,7 +22,6 @@ public class Path {
         return path;
     }
 
-    public boolean matches(Path cmp) {
     /*
      * Retrieve the value of String in path.
      * We need to send the index
@@ -31,7 +30,7 @@ public class Path {
         return path.get(index);
     }
 
-    public boolean equals(Path cmp) {
+    public boolean matches(Path cmp) {
         if (path.size() != cmp.getPath().size()) {
             return false;
         }

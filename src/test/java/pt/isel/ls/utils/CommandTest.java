@@ -14,14 +14,14 @@ public class CommandTest {
     public void command_equals() {
         Command template = new Command(Method.GET, new Path("/movies/{mid}/ratings"));
         Command input = new Command(Method.GET, new Path("/movies/150/ratings"));
-        assertTrue(input.equals(template));
+        assertTrue(input.matches(template));
     }
 
     @Test
     public void command_not_equals() {
         Command template = new Command(Method.GET, new Path("/movies/{mid}/ratings"));
         Command input = new Command(Method.GET, new Path("/users/1"));
-        assertFalse(input.equals(template));
+        assertFalse(input.matches(template));
     }
 
     @Test
