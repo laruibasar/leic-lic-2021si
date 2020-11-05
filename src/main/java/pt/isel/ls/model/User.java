@@ -5,16 +5,15 @@ public class User extends Model {
     private String name;
     private String email;
 
-    public User(int id, String name, String email, int selector) {
-        super(selector);
+    public User(int id, String name, String email) {
         this.id = id;
         this.name = name;
         this.email = email;
     }
 
-    public User(int id, int selector) {
-        super(selector);
+    public User(int id, String name) {
         this.id = id;
+        this.name = name;
     }
 
     public int getId() {

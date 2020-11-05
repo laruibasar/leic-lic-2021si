@@ -6,13 +6,12 @@ public class Movie extends Model {
     private String title;
     private int year;
 
-    public Movie(int mid, int selector) {
-        super(selector);
+    public Movie(int mid, String title) {
         this.mid = mid;
+        this.title = title;
     }
 
-    public Movie(int mid, String title, int year, int selector) {
-        super(selector);
+    public Movie(int mid, String title, int year) {
         this.mid = mid;
         this.title = title;
         this.year = year;

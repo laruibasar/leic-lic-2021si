@@ -9,16 +9,14 @@ public class Review extends Model {
     private int movie;
     private int movieCritic;
 
-    public Review(int rid, String summary, int movie, int rating, int selector) {
-        super(selector);
+    public Review(int rid, String summary, int movie, int rating) {
         this.rid = rid;
         this.summary = summary;
         this.rating = rating;
         this.movie = movie;
     }
 
-    public Review(int rid, String completeReview, String summary, int movie, int rating, int critic, int selector) {
-        super(selector);
+    public Review(int rid, String completeReview, String summary, int movie, int rating, int critic) {
         this.rid = rid;
         this.completeReview = completeReview;
         this.summary = summary;
