@@ -25,51 +25,18 @@ public class Review extends Model {
         this.movieCritic = critic;
     }
 
-    public String getCompleteReview() {
-        return completeReview;
-    }
-
-    public String getSummary() {
-        return summary;
-    }
-
-    public int getMovie() {
-        return movie;
-    }
-
-    public int getRating() {
-        return rating;
-    }
-
-    public int getMovieCritic() {
-        return movieCritic;
-    }
-
     @Override
     public String toString() {
-//            case 6:
-//                //GET SPECIFIC REVIEW
-//                return "Stars = " + rating
-//                        + "\nSummary = " + summary
-//                        + "\nMovie Critic = " + movieCritic
-//                        + "\n\nComplete Review = " + completeReview
-//                        + "\nMovieID = " + movie
-//                        + "\nReviewID = " + rid;
-//            case 5:
-//                //GET ALL REVIEWS
-//                return "Stars =" + rating
-//                        + "\nMovieCritic = " + movieCritic
-//                        + "\nSummary = " + summary ;
-//            case 7:
-//                //CREATE REVIEW
-//                return "uid =" + movieCritic
-//                        + "\nreviewSummary = " + summary
-//                        + "\nreview = " + completeReview
-//                        + "\nrating = " + rating
-//                        + "\nreviewID = " + rid;
-//            default:
-//                return null;
-//        }
-        return null;
+        if (completeReview == null) {
+            return "Stars =" + rating
+                    + "\nMovieCritic = " + movieCritic
+                    + "\nSummary = " + summary;
+        }
+        return "Stars = " + rating
+                + "\nSummary = " + summary
+                + "\nMovie Critic = " + movieCritic
+                + "\n\nComplete Review = " + completeReview
+                + "\nMovieID = " + movie
+                + "\nReviewID = " + rid;
     }
 }

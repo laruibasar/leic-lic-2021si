@@ -17,29 +17,12 @@ public class Movie extends Model {
         this.year = year;
     }
 
-    public int getMid() {
-        return mid;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
     @Override
     public String toString() {
-        /*switch (selector) {
-            case 3:
-                return "MovieId = " + mid + " Title = " + title + "Year = " + year;
-            case 1:
-                return "MovieID = " + mid;
-            default:
-                return null;
-        }*/
-        return null;
+        if (year == 0) {
+            return "MovieID = " + mid + " \nTitle = " + title;
+        }
+        return "MovieID = " + mid + " \nTitle = " + title + " \nYear = " + year;
     }
 
 }

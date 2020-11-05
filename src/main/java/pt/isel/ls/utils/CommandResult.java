@@ -19,10 +19,6 @@ public class CommandResult {
         this.status = status;
     }
 
-    public CommandResult(int status) {
-        this.status = status;
-    }
-
     public void printResults() {
         if (commandResults.size() > 0) {
             for (Model cr : commandResults) {
