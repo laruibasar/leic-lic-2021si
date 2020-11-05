@@ -1,5 +1,5 @@
 -- Add user
-insert into users(fname,lname,email) values(?,?,?)
+insert into users(name,email) values(?,?,?)
 
 -- Add movie
 insert into movies(title,year,genre,castAndDirectors) values(?,?,?,?)
