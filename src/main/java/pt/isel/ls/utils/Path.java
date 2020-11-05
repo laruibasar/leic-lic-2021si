@@ -21,6 +21,10 @@ public class Path {
     public ArrayList<String> getPath() {
         return path;
     }
+    
+    public String getValue(int index) {
+        return path.get(index);
+    }
 
     public boolean equals(Path cmp) {
         if (path.size() != cmp.getPath().size()) {
