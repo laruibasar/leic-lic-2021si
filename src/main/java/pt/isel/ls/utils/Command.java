@@ -41,12 +41,12 @@ public class Command {
         parameters = params;
     }
 
-    public boolean equals(Command command) {
+    public boolean matches(Command command) {
         if (!this.method.equals(command.getMethod())) {
             return false;
         }
 
-        if (!this.path.equals(command.getPath())) {
+        if (!this.path.matches(command.getPath())) {
             return false;
         }
 

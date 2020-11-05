@@ -22,7 +22,7 @@ public class Path {
         return path;
     }
 
-    public boolean equals(Path cmp) {
+    public boolean matches(Path cmp) {
         if (path.size() != cmp.getPath().size()) {
             return false;
         }
