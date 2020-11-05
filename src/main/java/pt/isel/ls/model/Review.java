@@ -47,56 +47,29 @@ public class Review extends Model {
 
     @Override
     public String toString() {
-        switch (selector) {
-            case 6:
-                //impressão de um comentário
-                return "Stars = "
-                        +
-                        rating
-                        +
-                        "Summary = "
-                        +
-                        summary
-                        +
-                        "Movie Critic = "
-                        +
-                        movieCritic
-                        +
-                        "Complete Review = "
-                        +
-                        completeReview
-                        +
-                        "MovieID = "
-                        +
-                        movie
-                        +
-                        "ReviewID = "
-                        +
-                        rid;
-            case 5:
-                //impressão de todos os comentários
-                return "Stars ="
-                        +
-                        rating
-                        +
-                        "Summary = "
-                        +
-                        summary
-                        +
-                        "MovieCritic = "
-                        +
-                        movieCritic
-                        +
-                        "MovieID = "
-                        +
-                        movie
-                        +
-                        "ReviewID = "
-                        +
-                        rid;
-
-            default:
-                return null;
-        }
+//            case 6:
+//                //GET SPECIFIC REVIEW
+//                return "Stars = " + rating
+//                        + "\nSummary = " + summary
+//                        + "\nMovie Critic = " + movieCritic
+//                        + "\n\nComplete Review = " + completeReview
+//                        + "\nMovieID = " + movie
+//                        + "\nReviewID = " + rid;
+//            case 5:
+//                //GET ALL REVIEWS
+//                return "Stars =" + rating
+//                        + "\nMovieCritic = " + movieCritic
+//                        + "\nSummary = " + summary ;
+//            case 7:
+//                //CREATE REVIEW
+//                return "uid =" + movieCritic
+//                        + "\nreviewSummary = " + summary
+//                        + "\nreview = " + completeReview
+//                        + "\nrating = " + rating
+//                        + "\nreviewID = " + rid;
+//            default:
+//                return null;
+//        }
+        return null;
     }
 }

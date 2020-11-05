@@ -6,12 +6,9 @@ import pt.isel.ls.model.Model;
 import pt.isel.ls.model.User;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
-import pt.isel.ls.utils.EmptyResult;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.util.LinkedList;
 import java.sql.SQLException;
 
@@ -24,7 +21,7 @@ public class GetAllUsersHandler extends Handler implements IHandler {
     private LinkedList<Model> users = new LinkedList<>();
 
     @Override
-    public CommandResult execute(Command cmd) throws DataConnectionException, SQLException, EmptyResult {
+    public CommandResult execute(Command cmd) throws DataConnectionException, SQLException {
         Data mapper = new Data();
         int usersNumber = 0;
         Connection conn = null;
@@ -35,7 +32,7 @@ public class GetAllUsersHandler extends Handler implements IHandler {
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 users.add(new User(rs.getInt(1),rs.getString(2)));
-                //usersNumber++;
+                usersNumber++;
             }
             conn.commit();
             rs.close();
@@ -50,6 +47,6 @@ public class GetAllUsersHandler extends Handler implements IHandler {
             mapper.closeConnection(conn);
         }
 
-        return new CommandResult(users/*,usersNumber*/);
+        return new CommandResult(users,usersNumber);
     }
 }

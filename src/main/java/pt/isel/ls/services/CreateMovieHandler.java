@@ -47,6 +47,7 @@ public class CreateMovieHandler extends Handler implements IHandler {
             Movie movie = new Movie(rs.getInt(1),name,year);
             result = new CommandResult(movies,status);
             conn.commit();
+            rs.close();
             pstmt.close();
         } catch (Exception e) {
             if (conn != null) {

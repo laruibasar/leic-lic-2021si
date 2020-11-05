@@ -7,7 +7,6 @@ import pt.isel.ls.model.Movie;
 import pt.isel.ls.services.exceptions.InvalidAverageException;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
-import pt.isel.ls.utils.EmptyResult;
 import pt.isel.ls.utils.Parameters;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

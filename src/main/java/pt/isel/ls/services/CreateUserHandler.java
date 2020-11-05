@@ -48,6 +48,7 @@ public class CreateUserHandler extends Handler implements IHandler {
             users.add(user);
             result = new CommandResult(users,status);
             conn.commit();
+            rs.close();
             pstmt.close();
         } catch (Exception e) {
             if (conn != null) {

@@ -14,28 +14,20 @@ public class CommandResult {
     private LinkedList<Model> commandResults;
     private int status;
 
-    public CommandResult(LinkedList<Model> commandResults) throws EmptyResult {
-        if (commandResults == null) {
-            throw new EmptyResult("empty result");
-        }
+    public CommandResult(LinkedList<Model> commandResults, int status) {
         this.commandResults = commandResults;
         this.status = status;
     }
 
-    public CommandResult(int status) throws FailedCommand {
-        if (status == 0) {
-            throw new FailedCommand("The command wasn't executed properly");
-        }
+    public CommandResult(int status) {
         this.status = status;
     }
 
-    public void printResults() throws EmptyResult {
+    public void printResults() {
         if (commandResults.size() > 0) {
             for (Model cr : commandResults) {
                 System.out.println(cr.toString());
             }
-        } else if (commandResults.isEmpty()) {
-                throw new EmptyResult("Empty result");
         }
     }
 }

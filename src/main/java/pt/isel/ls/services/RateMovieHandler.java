@@ -50,6 +50,7 @@ public class RateMovieHandler extends Handler implements IHandler {
             ratings.add(rating);
             result = new CommandResult(ratings,status);
             conn.commit();
+            rs.close();
             pstmt.close();
         } catch (Exception e) {
             if (conn != null) {

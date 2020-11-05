@@ -30,13 +30,10 @@ public class User extends Model {
 
     @Override
     public String toString() {
-        switch (selector) {
-            case 3:
-                return "UserId = " + id + " Name = " + name + " Email = " + email;
-            case 1:
-                return "UserId = " + id;
-            default:
-                return null;
+        StringBuilder str = new StringBuilder("UserId = " + id + " Name = " + name);
+        if(email != null) {
+            str.append(" Email = " + email);
         }
+        return str.toString();
     }
 }

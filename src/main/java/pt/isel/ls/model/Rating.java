@@ -11,9 +11,4 @@ public class Rating extends Model {
         this.movieId = movieId;
         this.rating = rating;
     }
-
-    @Override
-    public String toString() {
-        return null;
-    }
 }

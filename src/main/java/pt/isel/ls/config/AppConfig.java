@@ -1,6 +1,19 @@
 package pt.isel.ls.config;
 
-import pt.isel.ls.services.*;
+import pt.isel.ls.services.CreateMovieHandler;
+import pt.isel.ls.services.CreateMovieReviewHandler;
+import pt.isel.ls.services.CreateUserHandler;
+import pt.isel.ls.services.GetAllUsersHandler;
+import pt.isel.ls.services.GetMovieAllReviewsHandler;
+import pt.isel.ls.services.GetMovieDetailsHandler;
+import pt.isel.ls.services.GetMovieRatingHandler;
+import pt.isel.ls.services.GetMovieReviewHandler;
+import pt.isel.ls.services.GetMoviesHandler;
+import pt.isel.ls.services.GetTopRatingsHandler;
+import pt.isel.ls.services.GetUserAllReviewsHandler;
+import pt.isel.ls.services.GetUserDetailsHandler;
+import pt.isel.ls.services.GetUserReviewHandler;
+import pt.isel.ls.services.RateMovieHandler;
 import pt.isel.ls.utils.Method;
 import pt.isel.ls.utils.Path;
 

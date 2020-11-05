@@ -1,10 +1,14 @@
 package pt.isel.ls;
 
+import pt.isel.ls.services.Handler;
+import pt.isel.ls.utils.Command;
+import pt.isel.ls.utils.CommandResult;
 import pt.isel.ls.config.AppConfig;
 import pt.isel.ls.config.RouterException;
 import pt.isel.ls.data.DataConnectionException;
-import pt.isel.ls.services.Handler;
-import pt.isel.ls.utils.*;
+import pt.isel.ls.utils.Method;
+import pt.isel.ls.utils.Parameters;
+import pt.isel.ls.utils.Path;
 
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -20,7 +24,7 @@ public class AppConsole {
 
             try {
                 run = runOnce(args);
-            } catch (RouterException | DataConnectionException | SQLException | EmptyResult re) {
+            } catch (RouterException | DataConnectionException | SQLException re) {
                 System.out.println(re.getMessage());
             }
         }
@@ -34,7 +38,9 @@ public class AppConsole {
         return sc.nextLine();
     }
 
-    public static boolean runOnce(String[] args) throws RouterException, DataConnectionException, SQLException, EmptyResult {
+    public static boolean runOnce(String[] args) throws RouterException,
+            DataConnectionException, SQLException {
+
         if (args[0].toUpperCase().equals("EXIT")) {
             System.out.println("Exiting...");
             return false;
@@ -62,13 +68,14 @@ public class AppConsole {
         return cmd;
     }
 
-    private static CommandResult runCommand(Command cmd) throws RouterException, DataConnectionException, SQLException, EmptyResult {
-        Handler handler = AppConfig.getInstance().router.findHandler(cmd);
+    private static CommandResult runCommand(Command cmd) throws RouterException,
+            DataConnectionException, SQLException {
 
+        Handler handler = AppConfig.getInstance().router.findHandler(cmd);
         return handler.execute(cmd);
     }
 
-    private static void showResults(CommandResult cr) throws EmptyResult {
+    private static void showResults(CommandResult cr) {
         cr.printResults();
     }
 }

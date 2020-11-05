@@ -31,14 +31,15 @@ public class Movie extends Model {
 
     @Override
     public String toString() {
-        switch (selector) {
+        /*switch (selector) {
             case 3:
                 return "MovieId = " + mid + " Title = " + title + "Year = " + year;
             case 1:
                 return "MovieID = " + mid;
             default:
                 return null;
-        }
+        }*/
+        return null;
     }
 
 }

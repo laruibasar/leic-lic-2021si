@@ -60,6 +60,7 @@ public class CreateMovieReviewHandler extends Handler implements IHandler {
             reviews.add(review);
             result = new CommandResult(reviews,status);
             conn.commit();
+            rs.close();
             pstmt.close();
         } catch (Exception e) {
             if (conn != null) {
