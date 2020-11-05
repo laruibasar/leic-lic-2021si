@@ -12,7 +12,7 @@ public class Path {
     public Path(String path) {
         this();
         for (String str : path.split("/")) {
-            if (!str.isEmpty()) {
+            if (!str.isBlank()) {
                 this.path.add(str);
             }
         }
@@ -22,7 +22,15 @@ public class Path {
         return path;
     }
 
-    public boolean equals(Path cmp) {
+    /*
+     * Retrieve the value of String in path.
+     * We need to send the index
+     */
+    public String getValue(int index) {
+        return path.get(index);
+    }
+
+    public boolean matches(Path cmp) {
         if (path.size() != cmp.getPath().size()) {
             return false;
         }

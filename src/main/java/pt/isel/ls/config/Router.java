@@ -25,10 +25,10 @@ public class Router {
 
     public  Handler findHandler(Command command) throws RouterException {
         for (Handler handler : handlers) {
-            if (handler.getTemplate().equals(command)) {
+            if (handler.getTemplate().matches(command)) {
                 return handler;
             }
         }
-        throw new RouterException("Router: invalid command");
+        throw new RouterException("Invalid command " + command.toString());
     }
 }

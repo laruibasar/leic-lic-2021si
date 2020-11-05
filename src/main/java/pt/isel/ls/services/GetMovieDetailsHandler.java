@@ -30,7 +30,7 @@ public class GetMovieDetailsHandler extends Handler implements IHandler {
             conn = mapper.getDataConnection().getConnection();
             final String query = "select * from movies where mid = ?";
             PreparedStatement pstmt = conn.prepareStatement(query);
-            pstmt.setString(1, cmd.getPath().getPath().get(1));
+            pstmt.setInt(1, Integer.parseInt(cmd.getPath().getValue(1)));
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {

@@ -8,10 +8,7 @@ import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
 import pt.isel.ls.utils.Parameters;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.LinkedList;
 
 /**
@@ -37,13 +34,16 @@ public class CreateUserHandler extends Handler implements IHandler {
         try {
             conn = mapper.getDataConnection().getConnection();
             final String query = "insert into users(name,email) values(?,?)";
-            PreparedStatement pstmt = conn.prepareStatement(query);
+            PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             final String name = cmd.getParameters().getValue("name");
             final String email = cmd.getParameters().getValue("email");
             pstmt.setString(1, name);
             pstmt.setString(2, email);
             int status = pstmt.executeUpdate();
+
             ResultSet rs = pstmt.getGeneratedKeys();
+            rs.next();
+
             User user = new User(rs.getInt(1),name,email);
             users.add(user);
             result = new CommandResult(users,status);

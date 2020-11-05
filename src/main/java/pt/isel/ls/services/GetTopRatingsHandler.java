@@ -47,7 +47,7 @@ public class GetTopRatingsHandler extends Handler implements IHandler {
                 average = 0;
                 break;
             default:
-                throw new InvalidAverageException("Invalid Parameter found, only accept values; highest or lowest ");
+                throw new InvalidAverageException(avg);
         }
         try {
             conn = mapper.getDataConnection().getConnection();
