@@ -12,7 +12,7 @@ public class Path {
     public Path(String path) {
         this();
         for (String str : path.split("/")) {
-            if (!str.isEmpty()) {
+            if (!str.isBlank()) {
                 this.path.add(str);
             }
         }
