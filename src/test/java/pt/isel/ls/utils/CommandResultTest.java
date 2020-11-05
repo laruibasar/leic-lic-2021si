@@ -2,7 +2,13 @@ package pt.isel.ls.utils;
 
 import org.junit.Test;
 import pt.isel.ls.App;
+import pt.isel.ls.data.DataConnectionException;
+import pt.isel.ls.services.GetMovieDetailsHandler;
+import pt.isel.ls.services.Handler;
 import pt.isel.ls.services.exceptions.InvalidAverageException;
+
+import java.sql.SQLException;
+import java.util.LinkedList;
 
 public class CommandResultTest {
 
@@ -19,5 +25,14 @@ public class CommandResultTest {
                 + "\nMovieID = " + "1"
                 + "\nReviewID = " + "1234";
         App.main(aux);
+    }
+
+    @Test
+    public void get_movie_by_id() throws InvalidAverageException, DataConnectionException, SQLException {
+        Handler handler = new GetMovieDetailsHandler();
+        Command cmd = new Command(Method.GET, new Path("/movies/1"));
+
+        CommandResult cr = handler.execute(cmd);
+
     }
 }
