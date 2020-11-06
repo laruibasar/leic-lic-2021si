@@ -1,9 +1,11 @@
 package pt.isel.ls.utils;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 
-public class Parameters {
+public class Parameters implements Iterable<String> {
     /* store valid parameters for the command */
     private ArrayList<String> validParameters;
 
@@ -71,4 +73,8 @@ public class Parameters {
         return str.toString();
     }
 
+    @Override
+    public Iterator<String> iterator() {
+        return validParameters.iterator();
+    }
 }

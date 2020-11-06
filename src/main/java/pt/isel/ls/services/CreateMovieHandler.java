@@ -7,6 +7,7 @@ import pt.isel.ls.model.Movie;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
 import pt.isel.ls.utils.Parameters;
+import pt.isel.ls.utils.ParametersExceptions;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,7 +21,7 @@ public class CreateMovieHandler extends Handler implements IHandler {
     private LinkedList<Model> movies = new LinkedList<>();
 
     /**
-     *POST /movies - creates a new movie, given the following parameters
+     * POST /movies - creates a new movie, given the following parameters
      *  title - the movie's name.
      *  releaseYear - the movie's release year.
      */
@@ -32,9 +33,20 @@ public class CreateMovieHandler extends Handler implements IHandler {
     }
 
     @Override
-    public CommandResult execute(Command cmd) throws DataConnectionException, SQLException {
+    public CommandResult execute(Command cmd) throws DataConnectionException,
+            SQLException, ParametersExceptions {
         CommandResult result;
         Connection conn = null;
+
+        if (!template.getParameters().isValid(cmd.getParameters())) {
+            StringBuilder keys = new StringBuilder("Missing ");
+            for (String str : template.getParameters()) {
+                if (cmd.getParameters().getValue(str) == null) {
+                    keys.append("\"").append(str).append("\" ");
+                }
+            }
+            throw new ParametersExceptions(keys.toString());
+        }
 
         try {
             conn = Data.getDataConnection().getConnection();

@@ -50,10 +50,6 @@ public class Command {
             return false;
         }
 
-        if (!this.getParameters().isValid(command.getParameters())) {
-            return false;
-        }
-
         return true;
     }
 
