@@ -3,8 +3,22 @@ package pt.isel.ls.utils;
 import org.junit.Test;
 import pt.isel.ls.config.AppConfig;
 import pt.isel.ls.data.DataConnectionException;
-import pt.isel.ls.model.*;
-import pt.isel.ls.services.*;
+import pt.isel.ls.model.Model;
+import pt.isel.ls.model.Movie;
+import pt.isel.ls.model.MovieRating;
+import pt.isel.ls.model.Rating;
+import pt.isel.ls.model.Review;
+import pt.isel.ls.model.User;
+import pt.isel.ls.services.GetMovieDetailsHandler;
+import pt.isel.ls.services.GetMovieRatingHandler;
+import pt.isel.ls.services.GetMovieReviewHandler;
+import pt.isel.ls.services.GetMoviesHandler;
+import pt.isel.ls.services.GetTopRatingsHandler;
+import pt.isel.ls.services.GetUserAllReviewsHandler;
+import pt.isel.ls.services.GetUserDetailsHandler;
+import pt.isel.ls.services.GetUserReviewHandler;
+import pt.isel.ls.services.Handler;
+import pt.isel.ls.services.RateMovieHandler;
 import pt.isel.ls.services.exceptions.InvalidAverageException;
 
 import java.sql.SQLException;
@@ -37,34 +51,37 @@ public class CommandResultTest {
         Command cmd = new Command(Method.GET, new Path("/movies/1/ratings"));
         CommandResult cr = handler.execute(cmd);
 
-        Model rating = new MovieRating(1, 4.5f, 0, 0, 0, 1, 1);
+        Model rating = new MovieRating(1, 4.5f, 0, 0, 0, 2, 2);
 
-        assertEquals(cr.iterator().next(), rating);
+        assertEquals(rating.toString(), cr.iterator().next().toString());
     }
 
     @Test
     public void get_movie_review() throws InvalidAverageException, DataConnectionException, SQLException {
-        Handler handler = new GetMovieRatingHandler();
+        Handler handler = new GetMovieReviewHandler();
         Command cmd = new Command(Method.GET, new Path("/movies/1/reviews/2"));
         CommandResult cr = handler.execute(cmd);
 
-        Model review = new Review(2, "Gladiator is a historical epic from director Ridley Scott.", "Great", 1, 4, 4);
+        Model review = new Review(2, "Great",
+                "Gladiator is a historical epic from director Ridley Scott.", 4, 1, 4);
 
-        assertEquals(cr.iterator().next(), review);
+        assertEquals(review.toString(), cr.iterator().next().toString());
     }
 
     @Test
     public void get_movies() throws InvalidAverageException, DataConnectionException, SQLException {
-        Handler handler = new GetMovieRatingHandler();
+        Handler handler = new GetMoviesHandler();
         Command cmd = new Command(Method.GET, new Path("/movies"));
-        CommandResult cr = handler.execute(cmd);
 
         LinkedList<Model> movies = new LinkedList<>();
-        movies.add(new Movie(1, "Gladiator", 2000));
-        movies.add(new Movie(2, "The Fast and the Furious", 2001));
-        movies.add(new Movie(3, "Finding Nemo", 2003));
-
-        assertEquals(movies, cr.iterator());
+        movies.add(new Movie(1, "Gladiator"));
+        movies.add(new Movie(2, "The Fast and the Furious"));
+        movies.add(new Movie(3, "Finding Nemo"));
+        int n = 0;
+        CommandResult cr = handler.execute(cmd);
+        for (Model model : cr) {
+            assertEquals(movies.get(n++).toString(), model.toString());
+        }
     }
 
     @Test
