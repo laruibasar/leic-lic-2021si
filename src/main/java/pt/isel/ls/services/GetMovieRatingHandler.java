@@ -75,7 +75,7 @@ public class GetMovieRatingHandler extends Handler implements IHandler {
                     + "\t  from reviews\n"
                     + "\t  where movie = :movieId) as rating;";
             PreparedStatement pstmt = conn.prepareStatement(query);
-            int movie = Integer.parseInt(cmd.getPath().getPath().get(1));
+            int movie = Integer.parseInt(cmd.getPath().getValue(1));
             pstmt.setInt(1, movie);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -96,7 +96,7 @@ public class GetMovieRatingHandler extends Handler implements IHandler {
                 conn.rollback();
             }
             throw new DataConnectionException("Unable to get a list of all the movies\n"
-                    + e.getMessage(), e);
+                    + e.getMessage());
         } finally {
             Data.closeConnection(conn);
         }

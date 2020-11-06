@@ -54,7 +54,7 @@ public class RateMovieHandler extends Handler implements IHandler {
             rs.next();
             Rating rating = new Rating(rs.getInt(1), mid, rate);
             ratings.add(rating);
-            result = new CommandResult(ratings,status);
+            result = new CommandResult(ratings, status);
 
             rs.close();
             pstmt.close();
@@ -63,8 +63,8 @@ public class RateMovieHandler extends Handler implements IHandler {
             if (conn != null) {
                 conn.rollback();
             }
-            throw new DataConnectionException("Unable to add movie\n"
-                    + e.getMessage(), e);
+            throw new DataConnectionException("Unable to add rating to movie\n"
+                    + e.getMessage());
         } finally {
             Data.closeConnection(conn);
         }

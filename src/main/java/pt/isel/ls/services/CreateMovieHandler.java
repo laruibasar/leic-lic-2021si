@@ -64,7 +64,7 @@ public class CreateMovieHandler extends Handler implements IHandler {
                 conn.rollback();
             }
             throw new DataConnectionException("Unable to add movie\n"
-                    + e.getMessage(), e);
+                    + e.getMessage());
         } finally {
             Data.closeConnection(conn);
         }

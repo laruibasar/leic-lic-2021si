@@ -48,30 +48,25 @@ public class GetTopRatingsHandler extends Handler implements IHandler {
             default:
                 throw new InvalidAverageException(avg);
         }
+
         try {
             conn = Data.getDataConnection().getConnection();
             final String query = "select mid, name, year\n"
-                    +
-                    "from (movies join "
-                    +
-                    "(select rating, movie from ratings union all select rating, movie from reviews) as rates "
-                    +
-                    "on(movies.mid = rates.movie))\n"
-                    +
-                    "group by name, year\n"
-                    +
-                    "having count(rating) > ?\n"
-                    +
-                    "ORDER BY (CASE WHEN 1=? THEN avg(rating) END) DESC,\n"
-                    +
-                    "\t\t (CASE WHEN 2=2 THEN avg(rating) END) ASC\n"
-                    +
-                    "FETCH FIRST ? ROWS ONLY;";
+                    + "from (movies join "
+                    + "(select rating, movie from ratings union all select rating, movie from reviews) as rates "
+                    + "on(movies.mid = rates.movie))\n"
+                    + "group by name, year\n"
+                    + "having count(rating) > ?\n"
+                    + "ORDER BY (CASE WHEN 1=? THEN avg(rating) END) DESC,\n"
+                    + "\t\t (CASE WHEN 2=2 THEN avg(rating) END) ASC\n"
+                    + "FETCH FIRST ? ROWS ONLY;";
             PreparedStatement pstmt = conn.prepareStatement(query);
 
-            pstmt.setInt(1, Integer.parseInt(cmd.getParameters().getValue("min")));
-            pstmt.setInt(2,average);
-            pstmt.setInt(3, Integer.parseInt(cmd.getParameters().getValue("n")));
+            pstmt.setInt(1,
+                    Integer.parseInt(cmd.getParameters().getValue("min")));
+            pstmt.setInt(2, average);
+            pstmt.setInt(3,
+                    Integer.parseInt(cmd.getParameters().getValue("n")));
 
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -80,19 +75,19 @@ public class GetTopRatingsHandler extends Handler implements IHandler {
                         rs.getString(2),
                         rs.getInt(3)));
             }
-            conn.commit();
             rs.close();
             pstmt.close();
+            conn.commit();
         } catch (Exception e) {
             if (conn != null) {
                 conn.rollback();
             }
             throw new DataConnectionException("Unable to get a list of all the movies\n"
-                    + e.getMessage(), e);
+                    + e.getMessage());
         } finally {
             Data.closeConnection(conn);
         }
 
-        return new CommandResult(topRatings,topRatings.size());
+        return new CommandResult(topRatings, topRatings.size());
     }
 }

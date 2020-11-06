@@ -64,7 +64,7 @@ public class CreateUserHandler extends Handler implements IHandler {
                 conn.rollback();
             }
             throw new DataConnectionException("Unable to add User\n"
-                    + e.getMessage(), e);
+                    + e.getMessage());
         } finally {
             Data.closeConnection(conn);
         }

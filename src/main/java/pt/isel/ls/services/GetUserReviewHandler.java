@@ -27,7 +27,7 @@ public class GetUserReviewHandler extends Handler implements IHandler {
             conn = Data.getDataConnection().getConnection();
             final String query = "select * from reviews where rid = ?;";
             PreparedStatement pstmt = conn.prepareStatement(query);
-            pstmt.setInt(1, Integer.parseInt(cmd.getPath().getPath().get(2)));
+            pstmt.setInt(1, Integer.parseInt(cmd.getPath().getValue(2)));
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 reviews.add(new Review(
@@ -45,12 +45,12 @@ public class GetUserReviewHandler extends Handler implements IHandler {
             if (conn != null) {
                 conn.rollback();
             }
-            throw new DataConnectionException("Unable to get a list of all the movies\n"
-                    + e.getMessage(), e);
+            throw new DataConnectionException("Unable to get review \n"
+                    + e.getMessage());
         } finally {
             Data.closeConnection(conn);
         }
 
-        return new CommandResult(reviews,reviews.size());
+        return new CommandResult(reviews, reviews.size());
     }
 }
