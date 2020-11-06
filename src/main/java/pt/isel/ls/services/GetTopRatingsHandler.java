@@ -58,7 +58,7 @@ public class GetTopRatingsHandler extends Handler implements IHandler {
                     +
                     "on(movies.mid = rates.movie))\n"
                     +
-                    "group by name, year\n"
+                    "group by mid, name, year\n"
                     +
                     "having count(rating) > ?\n"
                     +

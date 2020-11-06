@@ -1,6 +1,7 @@
 package pt.isel.ls.utils;
 
 import org.junit.Test;
+import pt.isel.ls.config.AppConfig;
 import pt.isel.ls.data.DataConnectionException;
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Movie;
@@ -20,16 +21,19 @@ import static org.junit.Assert.assertEquals;
 
 public class CommandResultTest {
 
+    public CommandResultTest() {
+        AppConfig.setup();
+    }
+
+
     @Test
     public void get_movie_details() throws InvalidAverageException, DataConnectionException, SQLException {
-//        String[] args = new String[]{"GET", "/movies/1"};
-//        App.main(args);
         Handler handler = new GetMovieDetailsHandler();
         Command cmd = new Command(Method.GET, new Path("/movies/1"));
         CommandResult cr = handler.execute(cmd);
 
         Model movie = new Movie(1, "Gladiator", 2000);
-        assertEquals(movie, cr.iterator().next());
+        assertEquals(movie.toString(), cr.iterator().next().toString());
     }
 
     @Test
@@ -71,6 +75,7 @@ public class CommandResultTest {
 
     @Test
     public void get_top_ratings() throws InvalidAverageException, DataConnectionException, SQLException {
+
         Handler handler = new GetTopRatingsHandler();
         Parameters parameters = new Parameters();
         parameters.setValues("n=10&average=highest&min=2");
@@ -80,7 +85,11 @@ public class CommandResultTest {
         LinkedList<Model> movies = new LinkedList<>();
         movies.add(new Movie(1, "Gladiator", 2000));
         movies.add(new Movie(2, "The Fast and the Furious", 2001));
+        int n = 0;
 
-        assertEquals(movies, cr.iterator());
+        for (Model model : cr) {
+            assertEquals(movies.get(n++).toString(), model.toString());
+        }
+
     }
 }
