@@ -35,7 +35,6 @@ public class GetTopRatingsHandler extends Handler implements IHandler {
 
     @Override
     public CommandResult execute(Command cmd) throws DataConnectionException, SQLException, InvalidAverageException {
-        Data mapper = new Data();
         Connection conn = null;
         String avg = cmd.getParameters().getValue("average");
         int average;
@@ -50,7 +49,7 @@ public class GetTopRatingsHandler extends Handler implements IHandler {
                 throw new InvalidAverageException(avg);
         }
         try {
-            conn = mapper.getDataConnection().getConnection();
+            conn = Data.getDataConnection().getConnection();
             final String query = "select mid, name, year\n"
                     +
                     "from (movies join "
@@ -91,7 +90,7 @@ public class GetTopRatingsHandler extends Handler implements IHandler {
             throw new DataConnectionException("Unable to get a list of all the movies\n"
                     + e.getMessage(), e);
         } finally {
-            mapper.closeConnection(conn);
+            Data.closeConnection(conn);
         }
 
         return new CommandResult(topRatings,topRatings.size());

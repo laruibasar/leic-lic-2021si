@@ -23,10 +23,9 @@ public class GetMoviesHandler extends Handler implements IHandler {
 
     @Override
     public CommandResult execute(Command cmd) throws DataConnectionException, SQLException {
-        Data mapper = new Data();
         Connection conn = null;
         try {
-            conn = mapper.getDataConnection().getConnection();
+            conn = Data.getDataConnection().getConnection();
             final String query = "select mid, name from movies;";
             PreparedStatement pstmt = conn.prepareStatement(query);
             ResultSet rs = pstmt.executeQuery();
@@ -45,7 +44,7 @@ public class GetMoviesHandler extends Handler implements IHandler {
             throw new DataConnectionException("Unable to get a list of all the movies\n"
                     + e.getMessage(), e);
         } finally {
-            mapper.closeConnection(conn);
+            Data.closeConnection(conn);
         }
 
         return new CommandResult(movies,movies.size());

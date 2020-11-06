@@ -28,37 +28,41 @@ public class CreateUserHandler extends Handler implements IHandler {
 
     @Override
     public CommandResult execute(Command cmd) throws DataConnectionException, SQLException {
-        Data mapper = new Data();
         CommandResult result;
         Connection conn = null;
-        try {
-            conn = mapper.getDataConnection().getConnection();
-            final String query = "insert into users(name,email) values(?,?)";
-            PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            final String name = cmd.getParameters().getValue("name");
-            final String email = cmd.getParameters().getValue("email");
-            pstmt.setString(1, name);
-            pstmt.setString(2, email);
-            int status = pstmt.executeUpdate();
 
+        try {
+            conn = Data.getDataConnection().getConnection();
+            final String query = "insert into users(name, email) values(?, ?)";
+
+            PreparedStatement pstmt = conn.prepareStatement(
+                    query,
+                    Statement.RETURN_GENERATED_KEYS);
+
+            final String name = cmd.getParameters().getValue("name");
+            pstmt.setString(1, name);
+
+            final String email = cmd.getParameters().getValue("email");
+            pstmt.setString(2, email);
+
+            int status = pstmt.executeUpdate();
             ResultSet rs = pstmt.getGeneratedKeys();
             rs.next();
-
-            User user = new User(rs.getInt(1),name,email);
+            User user = new User(rs.getInt(1), name, email);
             users.add(user);
             result = new CommandResult(users,status);
-            conn.commit();
+
             rs.close();
             pstmt.close();
+            conn.commit();
         } catch (Exception e) {
             if (conn != null) {
                 conn.rollback();
             }
-
             throw new DataConnectionException("Unable to add User\n"
                     + e.getMessage(), e);
         } finally {
-            mapper.closeConnection(conn);
+            Data.closeConnection(conn);
         }
 
         return result;

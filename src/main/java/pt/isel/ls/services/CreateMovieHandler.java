@@ -8,10 +8,7 @@ import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
 import pt.isel.ls.utils.Parameters;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.LinkedList;
 
 public class CreateMovieHandler extends Handler implements IHandler {
@@ -26,29 +23,38 @@ public class CreateMovieHandler extends Handler implements IHandler {
 
     public CreateMovieHandler() {
         super();
-        template.setParameters(new Parameters(new String[]{"title", "releaseYear"}));
+        template.setParameters(
+                new Parameters(new String[]{"title", "releaseYear"}));
     }
 
     @Override
     public CommandResult execute(Command cmd) throws DataConnectionException, SQLException {
-        Data mapper = new Data();
         CommandResult result;
         Connection conn = null;
+
         try {
-            conn = mapper.getDataConnection().getConnection();
-            final String query = "insert into movies(title,year) values(?,?)";
-            PreparedStatement pstmt = conn.prepareStatement(query);
+            conn = Data.getDataConnection().getConnection();
+
+            final String query = "insert into movies (title, year) values(?, ?)";
+            PreparedStatement pstmt = conn.prepareStatement(
+                    query,
+                    Statement.RETURN_GENERATED_KEYS);
+
             final String name = cmd.getParameters().getValue("title");
-            final int year = Integer.parseInt(cmd.getParameters().getValue("releaseYear"));
             pstmt.setString(1,name);
+
+            final int year = Integer.parseInt(cmd.getParameters().getValue("releaseYear"));
             pstmt.setInt(2, year);
+
             int status = pstmt.executeUpdate();
             ResultSet rs = pstmt.getGeneratedKeys();
-            Movie movie = new Movie(rs.getInt(1),name,year);
-            result = new CommandResult(movies,status);
-            conn.commit();
+            rs.next(); // move to column
+            Movie movie = new Movie(rs.getInt(1), name, year);
+            result = new CommandResult(movies, status);
+
             rs.close();
             pstmt.close();
+            conn.commit();
         } catch (Exception e) {
             if (conn != null) {
                 conn.rollback();
@@ -56,8 +62,9 @@ public class CreateMovieHandler extends Handler implements IHandler {
             throw new DataConnectionException("Unable to add movie\n"
                     + e.getMessage(), e);
         } finally {
-            mapper.closeConnection(conn);
+            Data.closeConnection(conn);
         }
+        
         return result;
     }
 }

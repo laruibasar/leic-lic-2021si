@@ -8,10 +8,7 @@ import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
 import pt.isel.ls.utils.Parameters;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.LinkedList;
 
 /**
@@ -32,45 +29,55 @@ public class CreateMovieReviewHandler extends Handler implements IHandler {
         template.setParameters(new Parameters(new String[]{"uid", "reviewSummary", "review", "rating"}));
     }
 
-
     @Override
     public CommandResult execute(Command cmd) throws DataConnectionException, SQLException {
-        Data mapper = new Data();
         CommandResult result;
         Connection conn = null;
+
         try {
-            conn = mapper.getDataConnection().getConnection();
-            final String query = "insert into reviews(summary,completeReview,rating,movie,movieCritic) "
-                    +
-                    "values(?,?,?,?,?)";
-            PreparedStatement pstmt = conn.prepareStatement(query);
+            conn = Data.getDataConnection().getConnection();
+            final String query = "insert into reviews "
+                    + "(summary, completeReview, rating, movie, movieCritic) "
+                    + "values(?, ?, ?, ?, ?)";
+
+            PreparedStatement pstmt = conn.prepareStatement(
+                    query,
+                    Statement.RETURN_GENERATED_KEYS);
+
             final String summary = cmd.getParameters().getValue("reviewSummary");
-            final String completeReview = cmd.getParameters().getValue("review");
-            final int rating = Integer.parseInt(cmd.getParameters().getValue("rating"));
-            final int movie = Integer.parseInt(cmd.getPath().getPath().get(1));
-            final int movieCritic = Integer.parseInt(cmd.getParameters().getValue("uid"));
             pstmt.setString(1, summary);
+
+            final String completeReview = cmd.getParameters().getValue("review");
             pstmt.setString(2, completeReview);
+
+            final int rating = Integer.parseInt(cmd.getParameters().getValue("rating"));
             pstmt.setInt(3, rating);
+
+            final int movie = Integer.parseInt(cmd.getPath().getValue(1));
             pstmt.setInt(4, movie);
+
+            final int movieCritic = Integer.parseInt(cmd.getParameters().getValue("uid"));
             pstmt.setInt(5, movieCritic);
+
             int status = pstmt.executeUpdate();
             ResultSet rs = pstmt.getGeneratedKeys();
-            Review review = new Review(rs.getInt(1), completeReview,summary,movie,rating,movieCritic);
+            rs.next(); // move to column
+            Review review = new Review(rs.getInt(1),
+                    completeReview, summary, movie, rating, movieCritic);
             reviews.add(review);
             result = new CommandResult(reviews,status);
-            conn.commit();
+
             rs.close();
             pstmt.close();
+            conn.commit();
         } catch (Exception e) {
             if (conn != null) {
                 conn.rollback();
             }
-
             throw new DataConnectionException("Unable to add review to the movie\n"
                     + e.getMessage(), e);
         } finally {
-            mapper.closeConnection(conn);
+            Data.closeConnection(conn);
         }
 
         return result;

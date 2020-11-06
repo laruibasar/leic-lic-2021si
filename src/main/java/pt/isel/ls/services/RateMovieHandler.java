@@ -7,10 +7,8 @@ import pt.isel.ls.model.Rating;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
 import pt.isel.ls.utils.Parameters;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import java.sql.*;
 import java.util.LinkedList;
 
 /**
@@ -30,36 +28,43 @@ public class RateMovieHandler extends Handler implements IHandler {
 
     @Override
     public CommandResult execute(Command cmd) throws DataConnectionException, SQLException {
-        Data mapper = new Data();
         CommandResult result;
         Connection conn = null;
+
         try {
-            conn = mapper.getDataConnection().getConnection();
-            final String query = "insert into ratings(mid,rating) values(?,?)";
-            PreparedStatement pstmt = conn.prepareStatement(query);
-            final int mid = Integer.parseInt(cmd.getPath().getPath().get(1));
-            final int rate = Integer.parseInt(cmd.getParameters().getValue("rating"));
+            conn = Data.getDataConnection().getConnection();
+            final String query = "insert into ratings(mid, rating) values(?, ?)";
+
+            PreparedStatement pstmt = conn.prepareStatement(
+                    query,
+                    Statement.RETURN_GENERATED_KEYS);
+
+            final int mid = Integer.parseInt(cmd.getPath().getValue(1));
             pstmt.setInt(1, mid);
+
+            final int rate = Integer.parseInt(cmd.getParameters().getValue("rating"));
             pstmt.setInt(2, rate);
 
             int status = pstmt.executeUpdate();
             ResultSet rs = pstmt.getGeneratedKeys();
-            Rating rating = new Rating(rs.getInt(1),mid,rate);
+            rs.next();
+            Rating rating = new Rating(rs.getInt(1), mid, rate);
             ratings.add(rating);
             result = new CommandResult(ratings,status);
-            conn.commit();
+
             rs.close();
             pstmt.close();
+            conn.commit();
         } catch (Exception e) {
             if (conn != null) {
                 conn.rollback();
             }
-
             throw new DataConnectionException("Unable to add movie\n"
                     + e.getMessage(), e);
         } finally {
-            mapper.closeConnection(conn);
+            Data.closeConnection(conn);
         }
+
         return result;
     }
 }
