@@ -27,7 +27,7 @@ public class GetUserReviewHandler extends Handler implements IHandler {
             conn = Data.getDataConnection().getConnection();
             final String query = "select * from reviews where rid = ?;";
             PreparedStatement pstmt = conn.prepareStatement(query);
-            pstmt.setInt(1, Integer.parseInt(cmd.getPath().getPath().get(2)));
+            pstmt.setInt(1, Integer.parseInt(cmd.getPath().getPath().get(3)));
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 reviews.add(new Review(
@@ -36,7 +36,7 @@ public class GetUserReviewHandler extends Handler implements IHandler {
                         rs.getString(3),
                         rs.getInt(4),
                         rs.getInt(5),
-                        rs.getInt(3)));
+                        rs.getInt(6)));
             }
             conn.commit();
             rs.close();

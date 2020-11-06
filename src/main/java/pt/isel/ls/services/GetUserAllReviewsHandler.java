@@ -28,7 +28,7 @@ public class GetUserAllReviewsHandler extends Handler implements IHandler {
             conn = Data.getDataConnection().getConnection();
             final String query = "select rid, summary, movie, rating from reviews where movieCritic = ?;";
             PreparedStatement pstmt = conn.prepareStatement(query);
-            pstmt.setString(1, cmd.getPath().getPath().get(1));
+            pstmt.setInt(1, Integer.parseInt(cmd.getPath().getPath().get(1)));
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 reviews.add(new Review(

@@ -26,9 +26,9 @@ public class GetUserDetailsHandler extends Handler implements IHandler {
         Connection conn = null;
         try {
             conn = Data.getDataConnection().getConnection();
-            final String query = "select id, name, email from users where uid = ?;";
+            final String query = "select uid, name, email from users where uid = ?;";
             PreparedStatement pstmt = conn.prepareStatement(query);
-            pstmt.setString(1, cmd.getPath().getPath().get(1));
+            pstmt.setInt(1, Integer.parseInt(cmd.getPath().getPath().get(1)));
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 users.add(new User(
