@@ -8,7 +8,6 @@ import pt.isel.ls.services.Handler;
 import pt.isel.ls.services.exceptions.InvalidAverageException;
 
 import java.sql.SQLException;
-import java.util.LinkedList;
 
 public class CommandResultTest {
 
