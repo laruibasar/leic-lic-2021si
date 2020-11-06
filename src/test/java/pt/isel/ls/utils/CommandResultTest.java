@@ -3,14 +3,8 @@ package pt.isel.ls.utils;
 import org.junit.Test;
 import pt.isel.ls.config.AppConfig;
 import pt.isel.ls.data.DataConnectionException;
-import pt.isel.ls.model.Model;
-import pt.isel.ls.model.Movie;
-import pt.isel.ls.model.MovieRating;
-import pt.isel.ls.model.Review;
-import pt.isel.ls.services.GetMovieDetailsHandler;
-import pt.isel.ls.services.GetMovieRatingHandler;
-import pt.isel.ls.services.GetTopRatingsHandler;
-import pt.isel.ls.services.Handler;
+import pt.isel.ls.model.*;
+import pt.isel.ls.services.*;
 import pt.isel.ls.services.exceptions.InvalidAverageException;
 
 import java.sql.SQLException;
@@ -75,7 +69,6 @@ public class CommandResultTest {
 
     @Test
     public void get_top_ratings() throws InvalidAverageException, DataConnectionException, SQLException {
-
         Handler handler = new GetTopRatingsHandler();
         Parameters parameters = new Parameters();
         parameters.setValues("n=10&average=highest&min=2");
@@ -90,6 +83,57 @@ public class CommandResultTest {
         for (Model model : cr) {
             assertEquals(movies.get(n++).toString(), model.toString());
         }
+
+    }
+
+    @Test
+    public void get_user_all_reviews() throws InvalidAverageException, DataConnectionException, SQLException {
+        Handler handler = new GetUserAllReviewsHandler();
+        Command cmd = new Command(Method.GET, new Path("/users/1/reviews"));
+        CommandResult cr = handler.execute(cmd);
+
+
+        Review review = new Review(1234,"Edge of Your Seat Fun!",1,5);
+        assertEquals(review.toString(), cr.iterator().next().toString());
+
+    }
+
+    @Test
+    public void get_user_details() throws InvalidAverageException, DataConnectionException, SQLException {
+        Handler handler = new GetUserDetailsHandler();
+        Command cmd = new Command(Method.GET, new Path("/users/1/"));
+        CommandResult cr = handler.execute(cmd);
+
+        User user = new User(1,"Mike Albuquerque","Mike-Alb@gmail.com");
+        assertEquals(user.toString(), cr.iterator().next().toString());
+
+    }
+
+    @Test
+    public void get_user_review() throws InvalidAverageException, DataConnectionException, SQLException {
+        Handler handler = new GetUserReviewHandler();
+        Command cmd = new Command(Method.GET, new Path("/users/1/reviews/1234"));
+        CommandResult cr = handler.execute(cmd);
+
+        Review review = new Review(1234,"Edge of Your Seat Fun!",
+                "Great Story! Great Writing! Great Acting! Great Directing! This movie has it all.",
+                5,1,1);
+        assertEquals(review.toString(), cr.iterator().next().toString());
+
+    }
+
+    @Test
+    public void rate_movie_handler() throws InvalidAverageException, DataConnectionException, SQLException {
+        Handler handler = new RateMovieHandler();
+        Parameters parameters = new Parameters();
+        parameters.setValues("rating=3");
+        Command cmd = new Command(Method.GET, new Path("/movies/1/ratings"),parameters);
+        CommandResult cr = handler.execute(cmd);
+
+        Rating rating = new Rating(6,3,1);
+        assertEquals(rating.toString(), cr.iterator().next().toString());
+        //rollback
+        //Test already executed, rating already inserted
 
     }
 }

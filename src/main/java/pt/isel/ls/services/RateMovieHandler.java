@@ -7,10 +7,8 @@ import pt.isel.ls.model.Rating;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
 import pt.isel.ls.utils.Parameters;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import java.sql.*;
 import java.util.LinkedList;
 
 /**
@@ -34,8 +32,8 @@ public class RateMovieHandler extends Handler implements IHandler {
         Connection conn = null;
         try {
             conn = Data.getDataConnection().getConnection();
-            final String query = "insert into ratings(mid,rating) values(?,?)";
-            PreparedStatement pstmt = conn.prepareStatement(query);
+            final String query = "insert into ratings(movie,rating) values(?,?)";
+            PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             final int mid = Integer.parseInt(cmd.getPath().getPath().get(1));
             final int rate = Integer.parseInt(cmd.getParameters().getValue("rating"));
             pstmt.setInt(1, mid);
@@ -43,7 +41,8 @@ public class RateMovieHandler extends Handler implements IHandler {
 
             int status = pstmt.executeUpdate();
             ResultSet rs = pstmt.getGeneratedKeys();
-            Rating rating = new Rating(rs.getInt(1),mid,rate);
+            rs.next();
+            Rating rating = new Rating(rs.getInt(1),rate,mid);
             ratings.add(rating);
             result = new CommandResult(ratings,status);
             conn.commit();
@@ -54,7 +53,7 @@ public class RateMovieHandler extends Handler implements IHandler {
                 conn.rollback();
             }
 
-            throw new DataConnectionException("Unable to add movie\n"
+            throw new DataConnectionException("Unable to add rating\n"
                     + e.getMessage(), e);
         } finally {
             Data.closeConnection(conn);
