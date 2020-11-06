@@ -56,7 +56,7 @@ public class CreateMovieReviewHandler extends Handler implements IHandler {
             pstmt.setInt(5, movieCritic);
             int status = pstmt.executeUpdate();
             ResultSet rs = pstmt.getGeneratedKeys();
-            Review review = new Review(rs.getInt(1), completeReview,summary,movie,rating,movieCritic);
+            Review review = new Review(rs.getInt(1), summary,completeReview,rating,movie,movieCritic);
             reviews.add(review);
             result = new CommandResult(reviews,status);
             conn.commit();
