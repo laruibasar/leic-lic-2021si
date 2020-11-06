@@ -8,6 +8,7 @@ import pt.isel.ls.model.MovieRating;
 import pt.isel.ls.model.Review;
 import pt.isel.ls.services.GetMovieDetailsHandler;
 import pt.isel.ls.services.GetMovieRatingHandler;
+import pt.isel.ls.services.GetTopRatingsHandler;
 import pt.isel.ls.services.Handler;
 import pt.isel.ls.services.exceptions.InvalidAverageException;
 
@@ -64,6 +65,21 @@ public class CommandResultTest {
         movies.add(new Movie(1, "Gladiator", 2000));
         movies.add(new Movie(2, "The Fast and the Furious", 2001));
         movies.add(new Movie(3, "Finding Nemo", 2003));
+
+        assertEquals(movies, cr.iterator());
+    }
+
+    @Test
+    public void get_top_ratings() throws InvalidAverageException, DataConnectionException, SQLException {
+        Handler handler = new GetTopRatingsHandler();
+        Parameters parameters = new Parameters();
+        parameters.setValues("n=10&average=highest&min=2");
+        Command cmd = new Command(Method.GET, new Path("tops/ratings"),parameters);
+        CommandResult cr = handler.execute(cmd);
+
+        LinkedList<Model> movies = new LinkedList<>();
+        movies.add(new Movie(1, "Gladiator", 2000));
+        movies.add(new Movie(2, "The Fast and the Furious", 2001));
 
         assertEquals(movies, cr.iterator());
     }
