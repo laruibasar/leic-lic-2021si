@@ -29,7 +29,7 @@ public class GetMovieReviewHandler extends Handler implements IHandler {
             conn = mapper.getDataConnection().getConnection();
             final String query = "select * from reviews where rid = ?;";
             PreparedStatement pstmt = conn.prepareStatement(query);
-            pstmt.setInt(1,Integer.parseInt(cmd.getPath().getPath().get(2)));
+            pstmt.setInt(1, Integer.parseInt(cmd.getPath().getValue(3)));
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {

@@ -16,7 +16,7 @@ public class Review extends Model {
         this.movie = movie;
     }
 
-    public Review(int rid, String completeReview, String summary, int movie, int rating, int critic) {
+    public Review(int rid, String summary, String completeReview, int rating, int movie, int critic) {
         this.rid = rid;
         this.completeReview = completeReview;
         this.summary = summary;
