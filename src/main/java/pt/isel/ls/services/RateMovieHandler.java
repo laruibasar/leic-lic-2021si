@@ -30,11 +30,10 @@ public class RateMovieHandler extends Handler implements IHandler {
 
     @Override
     public CommandResult execute(Command cmd) throws DataConnectionException, SQLException {
-        Data mapper = new Data();
         CommandResult result;
         Connection conn = null;
         try {
-            conn = mapper.getDataConnection().getConnection();
+            conn = Data.getDataConnection().getConnection();
             final String query = "insert into ratings(mid,rating) values(?,?)";
             PreparedStatement pstmt = conn.prepareStatement(query);
             final int mid = Integer.parseInt(cmd.getPath().getPath().get(1));
@@ -58,7 +57,7 @@ public class RateMovieHandler extends Handler implements IHandler {
             throw new DataConnectionException("Unable to add movie\n"
                     + e.getMessage(), e);
         } finally {
-            mapper.closeConnection(conn);
+            Data.closeConnection(conn);
         }
         return result;
     }

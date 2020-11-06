@@ -1,3 +1,4 @@
+
 package pt.isel.ls.data;
 
 import java.sql.Connection;
@@ -6,7 +7,7 @@ import java.sql.SQLException;
 public class Data {
     private static DataConnection dataConnection = null;
 
-    public DataConnection getDataConnection() {
+    public static DataConnection getDataConnection() {
         return dataConnection;
     }
 
@@ -14,7 +15,7 @@ public class Data {
         dataConnection = data;
     }
 
-    public void closeConnection(Connection conn) throws DataConnectionException {
+    public static void closeConnection(Connection conn) throws DataConnectionException {
         if (conn != null) {
             try {
                 conn.close();

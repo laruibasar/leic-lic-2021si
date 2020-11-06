@@ -23,10 +23,9 @@ public class GetMovieReviewHandler extends Handler implements IHandler {
 
     @Override
     public CommandResult execute(Command cmd) throws DataConnectionException, SQLException {
-        Data mapper = new Data();
         Connection conn = null;
         try {
-            conn = mapper.getDataConnection().getConnection();
+            conn = Data.getDataConnection().getConnection();
             final String query = "select * from reviews where rid = ?;";
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setInt(1, Integer.parseInt(cmd.getPath().getValue(3)));
@@ -53,7 +52,7 @@ public class GetMovieReviewHandler extends Handler implements IHandler {
             throw new DataConnectionException("Unable to get a list of all the movies\n"
                     + e.getMessage(), e);
         } finally {
-            mapper.closeConnection(conn);
+            Data.closeConnection(conn);
         }
 
         return new CommandResult(reviews,reviews.size());
