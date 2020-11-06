@@ -35,9 +35,13 @@ public class Parameters {
         return userParameters.get(key);
     }
 
-    public boolean matches() {
+    private LinkedHashMap<String, String> getParameters() {
+        return userParameters;
+    }
+
+    public boolean isValid(Parameters params) {
         for (String str : validParameters) {
-            if (!userParameters.containsKey(str)) {
+            if (!params.getParameters().containsKey(str)) {
                 return false;
             }
         }
