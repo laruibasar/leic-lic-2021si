@@ -35,11 +35,10 @@ public class CreateMovieReviewHandler extends Handler implements IHandler {
 
     @Override
     public CommandResult execute(Command cmd) throws DataConnectionException, SQLException {
-        Data mapper = new Data();
         CommandResult result;
         Connection conn = null;
         try {
-            conn = mapper.getDataConnection().getConnection();
+            conn = Data.getDataConnection().getConnection();
             final String query = "insert into reviews(summary,completeReview,rating,movie,movieCritic) "
                     +
                     "values(?,?,?,?,?)";
@@ -70,7 +69,7 @@ public class CreateMovieReviewHandler extends Handler implements IHandler {
             throw new DataConnectionException("Unable to add review to the movie\n"
                     + e.getMessage(), e);
         } finally {
-            mapper.closeConnection(conn);
+            Data.closeConnection(conn);
         }
 
         return result;

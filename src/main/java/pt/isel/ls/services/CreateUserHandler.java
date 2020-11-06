@@ -28,11 +28,10 @@ public class CreateUserHandler extends Handler implements IHandler {
 
     @Override
     public CommandResult execute(Command cmd) throws DataConnectionException, SQLException {
-        Data mapper = new Data();
         CommandResult result;
         Connection conn = null;
         try {
-            conn = mapper.getDataConnection().getConnection();
+            conn = Data.getDataConnection().getConnection();
             final String query = "insert into users(name,email) values(?,?)";
             PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             final String name = cmd.getParameters().getValue("name");
@@ -58,7 +57,7 @@ public class CreateUserHandler extends Handler implements IHandler {
             throw new DataConnectionException("Unable to add User\n"
                     + e.getMessage(), e);
         } finally {
-            mapper.closeConnection(conn);
+            Data.closeConnection(conn);
         }
 
         return result;
