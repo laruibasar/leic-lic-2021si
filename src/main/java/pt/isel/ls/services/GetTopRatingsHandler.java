@@ -51,7 +51,7 @@ public class GetTopRatingsHandler extends Handler implements IHandler {
 
         try {
             conn = Data.getDataConnection().getConnection();
-            final String query = "select mid, name, year\n"
+            final String query = "select mid, title, year\n"
                     +
                     "from (movies join "
                     +
@@ -59,7 +59,7 @@ public class GetTopRatingsHandler extends Handler implements IHandler {
                     +
                     "on(movies.mid = rates.movie))\n"
                     +
-                    "group by mid, name, year\n"
+                    "group by mid, title, year\n"
                     +
                     "having count(rating) > ?\n"
                     +
