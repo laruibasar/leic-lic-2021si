@@ -54,8 +54,8 @@ public class AppConsole {
         try {
             CommandResult result = runCommand(cmd);
             showResults(result);
-        } catch (RouterException | DataConnectionException | SQLException |
-                InvalidAverageException | ParametersExceptions e) {
+        } catch (RouterException | DataConnectionException | SQLException
+                | InvalidAverageException | ParametersExceptions e) {
             System.out.println("ERROR " + e.getMessage() + "\n");
         }
 
