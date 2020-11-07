@@ -10,15 +10,26 @@ Este documento contém os aspectos relevantes do desenho e implementação da fa
 
 O seguinte diagrama apresenta a modelo entidade-associação para a informação gerida pelo sistema. 
 
-(_include an image or a link to the conceptual diagram_)
+![](https://github.com/isel-leic-ls/2021-1-LI41N-G8/blob/phase1-docs/docs/images/ModeloER-phase1.png)
 
 Destacam-se os seguintes aspectos deste modelo:
 
 * (_include a list of relevant design issues_)
 
+
+* As chaves primárias do modelo relacional, são obtidas através da atribuição do pseudo-tipo SERIAL
+à respetiva coluna. É de notar que SERIAL não cria implicitamente um índice na coluna. Contudo isso 
+poder resolvido facilmente com a atribuição dessa coluna como PRIMARY KEY.
+
+* 
+
 O modelo conceptual apresenta ainda as seguintes restrições:
 
-* (_include a list of relevant design issues_)
+
+* O valor de um rating têm que estar compreendido entre 1 e 5.
+* Um usuário só pode fazer um review por cada movie.
+* Não pode existir users com o mesmo email.
+* Dois filmes podem ter títulos iguais, mas não podem ser do mesmo ano.
     
 ### Modelação física ###
 
@@ -174,6 +185,12 @@ com base de dados diferentes da atual ou, mesmo através da ligação a uma API 
 (_enumerate the functionality that is not concluded and the identified defects_)
 
 (_identify improvements to be made on the next phase_)
+
+Na execução dos comandos no respetivo _handler_, o resultado da _query_ deverá ser
+filtrado corretamente. Ou seja, a ordem dos atributos a receber da base de dados deverá
+ser predefinida pelo utilizador. Assim, caso ocorra uma alteração no script de criação
+de uma tabela, a mesma continua a corresponder à ordem dos parâmetros no construtor do
+modelo correspondente.
 
 Nesta fase, os _handlers_ têm a lógica de acesso á base de dados, o que nos 
 parece ser uma quebra no isolamento que pretendemos alcançar na aplicação.

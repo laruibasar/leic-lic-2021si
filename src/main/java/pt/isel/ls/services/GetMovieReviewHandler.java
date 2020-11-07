@@ -28,7 +28,7 @@ public class GetMovieReviewHandler extends Handler implements IHandler {
             conn = Data.getDataConnection().getConnection();
             final String query = "select * from reviews where rid = ?;";
             PreparedStatement pstmt = conn.prepareStatement(query);
-            pstmt.setInt(1, Integer.parseInt(cmd.getPath().getValue(3)));
+            pstmt.setInt(1, Integer.parseInt(cmd.getPath().getValue(2)));
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
@@ -49,8 +49,10 @@ public class GetMovieReviewHandler extends Handler implements IHandler {
                 conn.rollback();
             }
 
-            throw new DataConnectionException("Unable to get a list of all the movies\n"
-                    + e.getMessage(), e);
+            throw new DataConnectionException("Unable to get the review: "
+                    + cmd.getPath().getValue(2)
+                    + " for movie: " + cmd.getPath().getValue(1) + "\n"
+                    + e.getMessage());
         } finally {
             Data.closeConnection(conn);
         }

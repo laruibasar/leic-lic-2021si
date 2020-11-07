@@ -1,9 +1,10 @@
 package pt.isel.ls.utils;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 
-public class Parameters {
+public class Parameters implements Iterable<String> {
     /* store valid parameters for the command */
     private ArrayList<String> validParameters;
 
@@ -35,9 +36,13 @@ public class Parameters {
         return userParameters.get(key);
     }
 
-    public boolean matches() {
+    private LinkedHashMap<String, String> getParameters() {
+        return userParameters;
+    }
+
+    public boolean isValid(Parameters params) {
         for (String str : validParameters) {
-            if (!userParameters.containsKey(str)) {
+            if (!params.getParameters().containsKey(str)) {
                 return false;
             }
         }
@@ -67,4 +72,8 @@ public class Parameters {
         return str.toString();
     }
 
+    @Override
+    public Iterator<String> iterator() {
+        return validParameters.iterator();
+    }
 }

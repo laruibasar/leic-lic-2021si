@@ -23,6 +23,7 @@ public class GetAllUsersHandler extends Handler implements IHandler {
     @Override
     public CommandResult execute(Command cmd) throws DataConnectionException, SQLException {
         Connection conn = null;
+
         try {
             conn = Data.getDataConnection().getConnection();
             final String query = "select uid, name from users;";
@@ -39,7 +40,7 @@ public class GetAllUsersHandler extends Handler implements IHandler {
                 conn.rollback();
             }
             throw new DataConnectionException("Unable to get a list of all the users\n"
-                    + e.getMessage(), e);
+                    + e.getMessage());
         } finally {
             Data.closeConnection(conn);
         }

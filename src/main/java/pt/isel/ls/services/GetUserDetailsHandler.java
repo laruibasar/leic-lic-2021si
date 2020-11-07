@@ -26,9 +26,10 @@ public class GetUserDetailsHandler extends Handler implements IHandler {
         Connection conn = null;
         try {
             conn = Data.getDataConnection().getConnection();
-            final String query = "select uid, name, email from users where uid = ?;";
+            final String query = "select id, name, email from users where uid = ?;";
             PreparedStatement pstmt = conn.prepareStatement(query);
-            pstmt.setInt(1, Integer.parseInt(cmd.getPath().getPath().get(1)));
+            pstmt.setInt(1,
+                    Integer.parseInt(cmd.getPath().getValue(1)));
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 users.add(new User(
@@ -44,12 +45,13 @@ public class GetUserDetailsHandler extends Handler implements IHandler {
                 conn.rollback();
             }
 
-            throw new DataConnectionException("Unable to get a list of all the movies\n"
-                    + e.getMessage(), e);
+            throw new DataConnectionException("Unable to get details for user: "
+                    + cmd.getPath().getValue(1) + "\n"
+                    + e.getMessage());
         } finally {
             Data.closeConnection(conn);
         }
 
-        return new CommandResult(users,users.size());
+        return new CommandResult(users, users.size());
     }
 }

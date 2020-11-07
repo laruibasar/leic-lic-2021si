@@ -46,8 +46,9 @@ public class GetMovieDetailsHandler extends Handler implements IHandler {
             if (conn != null) {
                 conn.rollback();
             }
-            throw new DataConnectionException("Unable to get information of the movie\n"
-                    + e.getMessage(), e);
+            throw new DataConnectionException("Unable to get details from movie "
+                    + cmd.getPath().getValue(1) + "\n"
+                    + e.getMessage());
         } finally {
             Data.closeConnection(conn);
         }

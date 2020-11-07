@@ -4,19 +4,20 @@ import pt.isel.ls.model.Model;
 import pt.isel.ls.services.Handler;
 import pt.isel.ls.services.exceptions.InvalidAverageException;
 import pt.isel.ls.utils.Command;
-import pt.isel.ls.utils.CommandResult;
 import pt.isel.ls.config.AppConfig;
 import pt.isel.ls.config.RouterException;
 import pt.isel.ls.data.DataConnectionException;
+import pt.isel.ls.utils.CommandResult;
 import pt.isel.ls.utils.Method;
 import pt.isel.ls.utils.Parameters;
+import pt.isel.ls.utils.ParametersExceptions;
 import pt.isel.ls.utils.Path;
 
 import java.sql.SQLException;
 import java.util.Scanner;
 
 public class AppConsole {
-    public static void run() throws Exception {
+    public static void run() {
         System.out.println("Run in interactive mode");
 
         boolean run = true;
@@ -27,7 +28,7 @@ public class AppConsole {
             try {
                 run = runOnce(args);
             } catch (Exception e) {
-                throw new Exception(e.getMessage());
+                System.out.println("ERROR " + e.getMessage() + "\n");
             }
         }
     }
@@ -40,7 +41,7 @@ public class AppConsole {
         return sc.nextLine();
     }
 
-    public static boolean runOnce(String[] args) throws Exception {
+    public static boolean runOnce(String[] args) {
 
         if (args[0].toUpperCase().equals("EXIT")) {
             System.out.println("Exiting...");
@@ -53,8 +54,9 @@ public class AppConsole {
         try {
             CommandResult result = runCommand(cmd);
             showResults(result);
-        } catch (RouterException | DataConnectionException | SQLException | InvalidAverageException e) {
-            throw new Exception(e.getMessage());
+        } catch (RouterException | DataConnectionException | SQLException
+                | InvalidAverageException | ParametersExceptions e) {
+            System.out.println("ERROR " + e.getMessage() + "\n");
         }
 
         return true;
@@ -74,7 +76,8 @@ public class AppConsole {
     }
 
     private static CommandResult runCommand(Command cmd) throws RouterException,
-            DataConnectionException, SQLException, InvalidAverageException {
+            DataConnectionException, SQLException, InvalidAverageException,
+            ParametersExceptions {
 
         Handler handler = AppConfig.getInstance().router.findHandler(cmd);
         return handler.execute(cmd);

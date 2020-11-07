@@ -48,6 +48,7 @@ public class GetTopRatingsHandler extends Handler implements IHandler {
             default:
                 throw new InvalidAverageException(avg);
         }
+
         try {
             conn = Data.getDataConnection().getConnection();
             final String query = "select mid, name, year\n"
@@ -88,11 +89,11 @@ public class GetTopRatingsHandler extends Handler implements IHandler {
                 conn.rollback();
             }
             throw new DataConnectionException("Unable to get a list of all the movies\n"
-                    + e.getMessage(), e);
+                    + e.getMessage());
         } finally {
             Data.closeConnection(conn);
         }
 
-        return new CommandResult(topRatings,topRatings.size());
+        return new CommandResult(topRatings, topRatings.size());
     }
 }

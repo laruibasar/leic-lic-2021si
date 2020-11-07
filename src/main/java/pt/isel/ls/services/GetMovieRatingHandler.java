@@ -139,8 +139,8 @@ public class GetMovieRatingHandler extends Handler implements IHandler {
             if (conn != null) {
                 conn.rollback();
             }
-            throw new DataConnectionException("Unable to get the movie rating indicated\n"
-                    + e.getMessage(), e);
+            throw new DataConnectionException("Unable to get a list of all the movies\n"
+                    + e.getMessage());
         } finally {
             Data.closeConnection(conn);
         }

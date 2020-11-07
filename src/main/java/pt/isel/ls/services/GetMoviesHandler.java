@@ -42,11 +42,11 @@ public class GetMoviesHandler extends Handler implements IHandler {
                 conn.rollback();
             }
             throw new DataConnectionException("Unable to get a list of all the movies\n"
-                    + e.getMessage(), e);
+                    + e.getMessage());
         } finally {
             Data.closeConnection(conn);
         }
 
-        return new CommandResult(movies,movies.size());
+        return new CommandResult(movies, movies.size());
     }
 }
