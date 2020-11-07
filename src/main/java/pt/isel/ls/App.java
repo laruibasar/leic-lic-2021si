@@ -14,22 +14,17 @@ public class App {
             return;
         }
 
-        try {
-            AppConfig.setup();
-            if (AppConfig.getInstance().loadConfig) {
-                if (args.length == 0) {
-                    AppConsole.run();
-                } else {
-                    AppConsole.runOnce(args);
-                }
-                return;
+        AppConfig.setup();
+        if (AppConfig.getInstance().loadConfig) {
+            if (args.length == 0) {
+                AppConsole.run();
             } else {
-                System.out.println("Error: failed to load config.");
-                System.out.println(AppConfig.getInstance().loadMessage);
+                AppConsole.runOnce(args);
             }
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
             return;
+        } else {
+            System.out.println("Error: failed to load config.");
+            System.out.println(AppConfig.getInstance().loadMessage);
         }
     }
 }
