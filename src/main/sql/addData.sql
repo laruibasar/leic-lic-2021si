@@ -5,7 +5,7 @@ insert into users(name, email ) values
 ('Maria Antonieta', 'MariaAnt-1755@gmail.com'),
 ('Vasco Couves', 'ze-da-horta@hotmail.com');
 
-insert into movies(name, year) values
+insert into movies(title, year) values
 ('Gladiator', 2000),
 ('The Fast and the Furious', 2001),
 ('Finding Nemo', 2003);

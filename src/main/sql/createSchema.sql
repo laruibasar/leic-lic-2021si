@@ -11,7 +11,7 @@ create table users (
 
 create table movies (
   mid serial primary key,
-  name varchar(50),
+  title varchar(50),
   year int,
   unique (name, year)
 );

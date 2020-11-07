@@ -19,6 +19,10 @@ public class CommandResult implements Iterable<Model> {
         this.status = status;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
     @Override
     public Iterator<Model> iterator() {
         return commandResults.iterator();
