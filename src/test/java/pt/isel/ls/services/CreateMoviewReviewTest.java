@@ -51,14 +51,6 @@ public class CreateMoviewReviewTest {
                 + "pela+negativa!+Um+embelezamento+cheio+de+erros+de+cenário");
         Command cmd = new Command(Method.POST, new Path("/movies/1/reviews"), params);
         CreateMovieReviewHandler handler = new CreateMovieReviewHandler();
-        CommandResult rs = handler.execute(cmd);
-
-        assertEquals(1, rs.getStatus());
-        for (Model test : rs) {
-            Review testMovie = (Review) test;
-            assertEquals("O melhor do género", testMovie.getSummary());
-            assertEquals(5, testMovie.getRating());
-            assertEquals(1, testMovie.getMovie());
-        }
+        CommandResult rs = handler.execute(cmd); // expect fail here
     }
 }

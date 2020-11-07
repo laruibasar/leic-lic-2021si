@@ -48,14 +48,7 @@ public class CreateMovieTest {
         params.setValues("title=The+Godfather&releaseYear=1972");
         Command cmd = new Command(Method.POST, new Path("/movies"), params);
         CreateMovieHandler handler = new CreateMovieHandler();
-        CommandResult rs = handler.execute(cmd);
-
-        assertEquals(1, rs.getStatus());
-        for (Model test : rs) {
-            Movie testMovie = (Movie) test;
-            assertEquals("The Godfather", testMovie.getTitle());
-            assertEquals(1972, testMovie.getYear());
-        }
+        CommandResult rs = handler.execute(cmd); // expect fail here
     }
 
     @Test (expected = ParametersExceptions.class)
@@ -67,13 +60,6 @@ public class CreateMovieTest {
         params.setValues("title=The+Godfather:+part+II");
         Command cmd = new Command(Method.POST, new Path("/movies"), params);
         CreateMovieHandler handler = new CreateMovieHandler();
-        CommandResult rs = handler.execute(cmd);
-
-        assertEquals(1, rs.getStatus());
-        for (Model test : rs) {
-            Movie testMovie = (Movie) test;
-            assertEquals("The Godfather", testMovie.getTitle());
-            assertEquals(1972, testMovie.getYear());
-        }
+        CommandResult rs = handler.execute(cmd); // expect fail here
     }
 }

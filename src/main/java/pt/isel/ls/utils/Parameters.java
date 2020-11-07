@@ -28,7 +28,9 @@ public class Parameters implements Iterable<String> {
         String[] param = params.split("&");
         for (int i = 0; i < param.length; i++) {
             String[] pair = param[i].split("=");
-            userParameters.put(pair[0], pair[1]);
+            userParameters.put(
+                    pair[0],
+                    pair.length < 2 ? "Buggy Joe" : pair[1]);
         }
     }
 

@@ -16,6 +16,14 @@ public class User extends Model {
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder("UserId = " + id + " Name = " + name);
