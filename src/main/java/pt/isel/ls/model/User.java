@@ -24,6 +24,10 @@ public class User extends Model {
         return email;
     }
 
+    public int getId() {
+        return id;
+    }
+
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder("UserId = " + id + " Name = " + name);
