@@ -17,7 +17,10 @@ Destacam-se os seguintes aspectos deste modelo:
 * (_include a list of relevant design issues_)
 
 
-* As chaves primárias do modelo relacional, são obtidas através da atribuição do pseudo-tipo SERIAL à respetiva coluna. É de notar que SERIAL não cria implicitamente um índice na coluna. Contudo isso poder resolvido facilmente com a atribuição dessa coluna como PRIMARY KEY.
+* As chaves primárias do modelo relacional, são obtidas através da atribuição do pseudo-tipo SERIAL
+à respetiva coluna. É de notar que SERIAL não cria implicitamente um índice na coluna. Contudo isso 
+poder resolvido facilmente com a atribuição dessa coluna como PRIMARY KEY.
+
 * 
 
 O modelo conceptual apresenta ainda as seguintes restrições:
