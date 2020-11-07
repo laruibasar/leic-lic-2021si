@@ -22,7 +22,7 @@ public class TestDataConnection extends DataConnection {
         Connection conn = null;
 
         PGSimpleDataSource ds = new PGSimpleDataSource();
-            ds.setURL(getConnectionUrl());
+        ds.setURL(getConnectionUrl());
         conn = ds.getConnection(getConnectionUser(), getConnectionPassword());
 
         /*

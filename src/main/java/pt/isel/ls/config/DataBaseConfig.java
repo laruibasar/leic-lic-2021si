@@ -1,7 +1,7 @@
 package pt.isel.ls.config;
 
 import pt.isel.ls.data.Data;
-import pt.isel.ls.data.connectors.PSQLDataConnection;
+import pt.isel.ls.data.connectors.PsqlDataConnection;
 import pt.isel.ls.data.connectors.TestDataConnection;
 
 public class DataBaseConfig {
@@ -48,11 +48,11 @@ public class DataBaseConfig {
         if (databaseType ==  null || password.length() == 0) {
             // throw new EnvironmentVariableException("LS_DB_TYPE not set, "
             //        + "choose Test or Postgresql");
-            Data.setDataConnection(PSQLDataConnection.getInstance());
+            Data.setDataConnection(PsqlDataConnection.getInstance());
         }
 
         if (DatabaseType_PSQL.equals(databaseType)) {
-            Data.setDataConnection(PSQLDataConnection.getInstance());
+            Data.setDataConnection(PsqlDataConnection.getInstance());
         }
 
         /* Test Database, so we can test and write our data */

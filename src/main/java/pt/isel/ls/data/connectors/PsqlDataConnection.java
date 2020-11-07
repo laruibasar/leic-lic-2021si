@@ -8,12 +8,12 @@ import pt.isel.ls.data.DataConnection;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class PSQLDataConnection extends DataConnection {
-    private static PSQLDataConnection dataConnection = null;
+public class PsqlDataConnection extends DataConnection {
+    private static PsqlDataConnection dataConnection = null;
 
     public static DataConnection getInstance() {
         if (dataConnection == null) {
-            dataConnection = new PSQLDataConnection();
+            dataConnection = new PsqlDataConnection();
         }
         return dataConnection;
     }
