@@ -80,9 +80,9 @@ select * from reviews where rid = ?; --AND uid = ?; Useless again bor the same r
        -- highest- movies with the highest average ratings	ORDER BY DESC
        --lowest- movies with the lowest average ratings		ORDER BY ASC
     --min - minimum number of votes							Parameter
-select mid, name, year
+select mid, title, year
 from (movies join (select rating, movie from ratings union all select rating, movie from reviews) as rates on(movies.mid = rates.movie))
-group by mid, name, year
+group by mid, title, year
 having count(rating) > ?
 ORDER BY (CASE WHEN 1=? THEN avg(rating) END) DESC,
 		 (CASE WHEN 2=2 THEN avg(rating) END) ASC

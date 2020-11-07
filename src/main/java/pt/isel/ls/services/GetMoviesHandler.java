@@ -26,7 +26,7 @@ public class GetMoviesHandler extends Handler implements IHandler {
         Connection conn = null;
         try {
             conn = Data.getDataConnection().getConnection();
-            final String query = "select mid, name from movies;";
+            final String query = "select mid, title from movies;";
             PreparedStatement pstmt = conn.prepareStatement(query);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {

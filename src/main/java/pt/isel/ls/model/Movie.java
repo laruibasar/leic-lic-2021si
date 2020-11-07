@@ -11,10 +11,23 @@ public class Movie extends Model {
         this.title = title;
     }
 
+    public Movie(String title, int year) {
+        this.title = title;
+        this.year = year;
+    }
+
     public Movie(int mid, String title, int year) {
         this.mid = mid;
         this.title = title;
         this.year = year;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public int getYear() {
+        return year;
     }
 
     @Override

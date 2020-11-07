@@ -70,9 +70,11 @@ public class GetTopRatingsHandler extends Handler implements IHandler {
                     "FETCH FIRST ? ROWS ONLY;";
             PreparedStatement pstmt = conn.prepareStatement(query);
 
-            pstmt.setInt(1, Integer.parseInt(cmd.getParameters().getValue("min")));
-            pstmt.setInt(2,average);
-            pstmt.setInt(3, Integer.parseInt(cmd.getParameters().getValue("n")));
+            pstmt.setInt(1,
+                    Integer.parseInt(cmd.getParameters().getValue("min")));
+            pstmt.setInt(2, average);
+            pstmt.setInt(3,
+                    Integer.parseInt(cmd.getParameters().getValue("n")));
 
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -81,9 +83,9 @@ public class GetTopRatingsHandler extends Handler implements IHandler {
                         rs.getString(2),
                         rs.getInt(3)));
             }
-            conn.commit();
             rs.close();
             pstmt.close();
+            conn.commit();
         } catch (Exception e) {
             if (conn != null) {
                 conn.rollback();

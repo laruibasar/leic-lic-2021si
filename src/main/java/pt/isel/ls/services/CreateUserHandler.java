@@ -55,7 +55,10 @@ public class CreateUserHandler extends Handler implements IHandler {
                     query,
                     Statement.RETURN_GENERATED_KEYS);
 
-            final String name = cmd.getParameters().getValue("name");
+            final String name = cmd
+                    .getParameters()
+                    .getValue("name")
+                    .replace("+", " ");
             pstmt.setString(1, name);
 
             final String email = cmd.getParameters().getValue("email");
