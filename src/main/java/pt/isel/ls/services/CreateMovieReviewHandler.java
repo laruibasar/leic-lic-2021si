@@ -31,7 +31,8 @@ public class CreateMovieReviewHandler extends Handler implements IHandler {
 
     public CreateMovieReviewHandler() {
         super();
-        template.setParameters(new Parameters(new String[]{"uid", "reviewSummary", "review", "rating"}));
+        template.setParameters(
+                new Parameters(new String[]{"uid", "reviewSummary", "review", "rating"}));
     }
 
     @Override
@@ -60,10 +61,16 @@ public class CreateMovieReviewHandler extends Handler implements IHandler {
                     query,
                     Statement.RETURN_GENERATED_KEYS);
 
-            final String summary = cmd.getParameters().getValue("reviewSummary");
+            final String summary = cmd
+                    .getParameters()
+                    .getValue("reviewSummary")
+                    .replace("+", " ");
             pstmt.setString(1, summary);
 
-            final String completeReview = cmd.getParameters().getValue("review");
+            final String completeReview = cmd
+                    .getParameters()
+                    .getValue("review")
+                    .replace("+", " ");
             pstmt.setString(2, completeReview);
 
             final int rating = Integer.parseInt(cmd.getParameters().getValue("rating"));

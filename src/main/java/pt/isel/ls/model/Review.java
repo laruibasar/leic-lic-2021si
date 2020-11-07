@@ -25,6 +25,18 @@ public class Review extends Model {
         this.movieCritic = critic;
     }
 
+    public String getSummary() {
+        return summary;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public int getMovie() {
+        return movie;
+    }
+
     @Override
     public String toString() {
         if (completeReview == null) {

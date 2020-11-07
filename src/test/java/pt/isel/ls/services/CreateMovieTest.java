@@ -21,7 +21,7 @@ import java.sql.SQLException;
 public class CreateMovieTest {
 
     @Test
-    public void insert_correct_test() throws DataConnectionException,
+    public void insert_movie_test() throws DataConnectionException,
             SQLException, ParametersExceptions {
         AppConfig.setup();
 

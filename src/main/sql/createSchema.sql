@@ -13,7 +13,7 @@ create table movies (
   mid serial primary key,
   title varchar(50),
   year int,
-  unique (name, year)
+  unique (title, year)
 );
 
 create table reviews (

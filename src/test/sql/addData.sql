@@ -5,7 +5,7 @@ insert into users(name, email ) values
 ('Maria Antonieta', 'MariaAnt-1755@gmail.com'),
 ('Vasco Couves', 'ze-da-horta@hotmail.com');
 
-insert into movies(name, year) values
+insert into movies(title, year) values
 ('Gladiator', 2000),
 ('The Fast and the Furious', 2001),
 ('Finding Nemo', 2003);
@@ -18,7 +18,7 @@ insert into reviews(summary, completeReview, rating, movie, movieCritic) values
 ('A solid entertainment weel done action heist movie', 'The Fast and the Furious is a gritty and gratifying cheap thrill, Rob Cohens high-octane hot-car.',3, 3, 5);
 
  insert into ratings(rating, movie) values
- ( 4, 1),
+ (4, 1),
  (5, 1),
  (3, 2),
  (3, 2),
