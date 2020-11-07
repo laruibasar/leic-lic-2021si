@@ -18,7 +18,7 @@ insert into reviews(summary, completeReview, rating, movie, movieCritic) values
 ('A solid entertainment weel done action heist movie', 'The Fast and the Furious is a gritty and gratifying cheap thrill, Rob Cohens high-octane hot-car.',3, 3, 5);
 
  insert into ratings(rating, movie) values
- ( 4, 1),
+ (4, 1),
  (5, 1),
  (3, 2),
  (3, 2),

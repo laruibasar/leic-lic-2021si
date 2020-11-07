@@ -29,54 +29,98 @@ public class GetMovieRatingHandler extends Handler implements IHandler {
         Connection conn = null;
         try {
             conn = Data.getDataConnection().getConnection();
-            final String query = "\\set movieId ?\n"
-                    + "select\n"
-                    + "\tavg(rating)::numeric(3,2) as average,\n"
-                    + "\t(select count(rating) from(select rating\n"
-                    + "\t\tfrom ratings\n"
-                    + "\t\twhere movie = :movieId\n"
-                    + "\t\tunion all\n"
-                    + "\t\tselect rating\n"
-                    + "\t\tfrom reviews\n"
-                    + "\t\twhere movie = :movieId) as rating where rating = 1) as votesOne ,\n"
-                    + "\t(select count(rating) from(select rating\n"
-                    + "\t\tfrom ratings\n"
-                    + "\t\twhere movie = :movieId\n"
-                    + "\t\tunion all\n"
-                    + "\t\tselect rating\n"
-                    + "\t\tfrom reviews\n"
-                    + "\t\twhere movie = :movieId) as rating where rating = 2) as votesTwo ,\n"
-                    + "\t(select count(rating) from(select rating\n"
-                    + "\t\tfrom ratings\n"
-                    + "\t\twhere movie = :movieId\n"
-                    + "\t\tunion all\n"
-                    + "\t\tselect rating\n"
-                    + "\t\tfrom reviews\n"
-                    + "\t\twhere movie = :movieId) as rating where rating = 3) as votesThree,\n"
-                    + "\t(select count(rating) from(select rating\n"
-                    + "\t\tfrom ratings\n"
-                    + "\t\twhere movie = :movieId\n"
-                    + "\t\tunion all\n"
-                    + "\t\tselect rating\n"
-                    + "\t\tfrom reviews\n"
-                    + "\t\twhere movie = :movieId) as rating where rating = 4) as votesFour,\n"
-                    + "\t(select count(rating) from(select rating\n"
-                    + "\t\tfrom ratings\n"
-                    + "\t\twhere movie = :movieId\n"
-                    + "\t\tunion all\n"
-                    + "\t\tselect rating\n"
-                    + "\t\tfrom reviews\n"
-                    + "\t\twhere movie = :movieId) as rating where rating = 5) as votesFive\n"
-                    + "from (select rating\n"
-                    + "\t  from ratings\n"
-                    + "\t  where movie = :movieId\n"
-                    + "\t  union all\n"
-                    + "\t  select rating\n"
-                    + "\t  from reviews\n"
-                    + "\t  where movie = :movieId) as rating;";
+            final String query = "select\n"
+                    +
+                    "\tavg(rating)::numeric(3,2) as average,\n"
+                    +
+                    "\t(select count(rating) from(select rating\n"
+                    +
+                    "\t\tfrom ratings\n"
+                    +
+                    "\t\twhere movie = ?\n"
+                    +
+                    "\t\tunion all\n"
+                    +
+                    "\t\tselect rating\n"
+                    +
+                    "\t\tfrom reviews\n"
+                    +
+                    "\t\twhere movie = ?) as rating where rating = 1) as votesOne ,\n"
+                    +
+                    "\t(select count(rating) from(select rating\n"
+                    +
+                    "\t\tfrom ratings\n"
+                    +
+                    "\t\twhere movie = ?\n"
+                    +
+                    "\t\tunion all\n"
+                    +
+                    "\t\tselect rating\n"
+                    +
+                    "\t\tfrom reviews\n"
+                    +
+                    "\t\twhere movie = ?) as rating where rating = 2) as votesTwo ,\n"
+                    +
+                    "\t(select count(rating) from(select rating\n"
+                    +
+                    "\t\tfrom ratings\n"
+                    +
+                    "\t\twhere movie = ?\n"
+                    +
+                    "\t\tunion all\n"
+                    +
+                    "\t\tselect rating\n"
+                    +
+                    "\t\tfrom reviews\n"
+                    +
+                    "\t\twhere movie = ?) as rating where rating = 3) as votesThree,\n"
+                    +
+                    "\t(select count(rating) from(select rating\n"
+                    +
+                    "\t\tfrom ratings\n"
+                    +
+                    "\t\twhere movie = ?\n"
+                    +
+                    "\t\tunion all\n"
+                    +
+                    "\t\tselect rating\n"
+                    +
+                    "\t\tfrom reviews\n"
+                    +
+                    "\t\twhere movie = ?) as rating where rating = 4) as votesFour,\n"
+                    +
+                    "\t(select count(rating) from(select rating\n"
+                    +
+                    "\t\tfrom ratings\n"
+                    +
+                    "\t\twhere movie = ?\n"
+                    +
+                    "\t\tunion all\n"
+                    +
+                    "\t\tselect rating\n"
+                    +
+                    "\t\tfrom reviews\n"
+                    +
+                    "\t\twhere movie = ?) as rating where rating = 5) as votesFive\n"
+                    +
+                    "from (select rating\n"
+                    +
+                    "\t  from ratings\n"
+                    +
+                    "\t  where movie = ?\n"
+                    +
+                    "\t  union all\n"
+                    +
+                    "\t  select rating\n"
+                    +
+                    "\t  from reviews\n"
+                    +
+                    "\t  where movie = ?) as rating;";
             PreparedStatement pstmt = conn.prepareStatement(query);
             int movie = Integer.parseInt(cmd.getPath().getValue(1));
-            pstmt.setInt(1, movie);
+            for (int i = 1; i < 13; i++) {
+                pstmt.setInt(i, movie);
+            }
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 ratings.add(new MovieRating(

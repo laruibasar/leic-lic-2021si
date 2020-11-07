@@ -36,7 +36,7 @@ public class GetUserReviewHandler extends Handler implements IHandler {
                         rs.getString(3),
                         rs.getInt(4),
                         rs.getInt(5),
-                        rs.getInt(3)));
+                        rs.getInt(6)));
             }
             conn.commit();
             rs.close();

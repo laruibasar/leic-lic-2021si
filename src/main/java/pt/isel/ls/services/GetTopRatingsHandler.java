@@ -52,14 +52,22 @@ public class GetTopRatingsHandler extends Handler implements IHandler {
         try {
             conn = Data.getDataConnection().getConnection();
             final String query = "select mid, title, year\n"
-                    + "from (movies join "
-                    + "(select rating, movie from ratings union all select rating, movie from reviews) as rates "
-                    + "on(movies.mid = rates.movie))\n"
-                    + "group by title, year\n"
-                    + "having count(rating) > ?\n"
-                    + "ORDER BY (CASE WHEN 1=? THEN avg(rating) END) DESC,\n"
-                    + "\t\t (CASE WHEN 2=2 THEN avg(rating) END) ASC\n"
-                    + "FETCH FIRST ? ROWS ONLY;";
+                    +
+                    "from (movies join "
+                    +
+                    "(select rating, movie from ratings union all select rating, movie from reviews) as rates "
+                    +
+                    "on(movies.mid = rates.movie))\n"
+                    +
+                    "group by mid, title, year\n"
+                    +
+                    "having count(rating) > ?\n"
+                    +
+                    "ORDER BY (CASE WHEN 1=? THEN avg(rating) END) DESC,\n"
+                    +
+                    "\t\t (CASE WHEN 2=2 THEN avg(rating) END) ASC\n"
+                    +
+                    "FETCH FIRST ? ROWS ONLY;";
             PreparedStatement pstmt = conn.prepareStatement(query);
 
             pstmt.setInt(1,

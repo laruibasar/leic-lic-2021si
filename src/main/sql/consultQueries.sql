@@ -68,7 +68,7 @@ select * from reviews where rid = ?; --AND mid = ?; Useless because rid is prima
 --TODO: Finish!
 
 --GET /users/{uid}/reviews - returns all the reviews made from the user identified by uid. The information for each review must not include the full review text.
-select movie Critic, movie, summary, rating from reviews where uid =?;
+select rid, summary, movie, rating from reviews where movieCritic = ?;
 
 --GET /users/{uid}/reviews/{rid} - returns the full information for the review rid made by the user identified by uid.
 select * from reviews where rid = ?; --AND uid = ?; Useless again bor the same reason

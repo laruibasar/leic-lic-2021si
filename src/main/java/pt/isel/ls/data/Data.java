@@ -1,3 +1,4 @@
+
 package pt.isel.ls.data;
 
 import java.sql.Connection;
