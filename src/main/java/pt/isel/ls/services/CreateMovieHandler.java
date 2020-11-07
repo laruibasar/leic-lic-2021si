@@ -37,6 +37,7 @@ public class CreateMovieHandler extends Handler implements IHandler {
             SQLException, ParametersExceptions {
         CommandResult result;
         Connection conn = null;
+        Movie movie;
 
         if (!template.getParameters().isValid(cmd.getParameters())) {
             StringBuilder keys = new StringBuilder("Missing ");
@@ -56,21 +57,27 @@ public class CreateMovieHandler extends Handler implements IHandler {
                     query,
                     Statement.RETURN_GENERATED_KEYS);
 
-            final String name = cmd.getParameters().getValue("title");
-            pstmt.setString(1,name);
+            final String title = cmd
+                    .getParameters()
+                    .getValue("title")
+                    .replace("+", " ");
+            pstmt.setString(1, title);
 
             final int year = Integer.parseInt(cmd.getParameters().getValue("releaseYear"));
             pstmt.setInt(2, year);
 
-            int status = pstmt.executeUpdate();
+            final int status = pstmt.executeUpdate();
             ResultSet rs = pstmt.getGeneratedKeys();
             rs.next(); // move to column
-            Movie movie = new Movie(rs.getInt(1), name, year);
-            result = new CommandResult(movies, status);
+
+            movie = new Movie(rs.getInt(1), title, year);
+            movies.add(movie);
 
             rs.close();
             pstmt.close();
             conn.commit();
+
+            result = new CommandResult(movies, status);
         } catch (Exception e) {
             if (conn != null) {
                 conn.rollback();
