@@ -19,8 +19,7 @@ import static org.junit.Assert.assertEquals;
 public class CreateUserTest {
 
     @Test
-    public void insert_user_test() throws DataConnectionException,
-            SQLException, ParametersExceptions {
+    public void insert_user_test() throws HandlerException {
         AppConfig.setup();
 
         Parameters params = new Parameters();
@@ -38,8 +37,7 @@ public class CreateUserTest {
     }
 
     @Test
-    public void insert_user_with_empty_name() throws DataConnectionException,
-            SQLException, ParametersExceptions {
+    public void insert_user_with_empty_name() throws HandlerException {
         AppConfig.setup();
 
         Parameters params = new Parameters();
