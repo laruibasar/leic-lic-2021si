@@ -2,7 +2,9 @@ package pt.isel.ls.services;
 
 import org.junit.Test;
 import pt.isel.ls.config.AppConfig;
+import pt.isel.ls.data.IUserData;
 import pt.isel.ls.data.common.DataConnectionException;
+import pt.isel.ls.mockdata.MockUserData;
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.User;
 import pt.isel.ls.utils.Command;
@@ -22,10 +24,14 @@ public class CreateUserTest {
     public void insert_user_test() throws HandlerException {
         AppConfig.setup();
 
+        IUserData mock = new MockUserData();
+
         Parameters params = new Parameters();
         params.setValues("name=John+Smith&email=hi@example.com");
         Command cmd = new Command(Method.POST, new Path("/users/"), params);
         CreateUserHandler handler = new CreateUserHandler();
+        
+        handler.setUserData(mock);
         CommandResult rs = handler.execute(cmd);
 
         assertEquals(1, rs.getStatus());
