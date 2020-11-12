@@ -14,6 +14,7 @@ public class GetAllUsersHandler extends Handler implements IHandler {
     IUserData userData;
 
     public GetAllUsersHandler() {
+        super();
         userData = new UserData();
     }
 

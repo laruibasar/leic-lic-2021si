@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public abstract class Data {
     private static DataConnection dataConnection = null;
 
-    public static DataConnection getDataConnection() {
+    public DataConnection getDataConnection() {
         return dataConnection;
     }
 
@@ -15,7 +15,7 @@ public abstract class Data {
         dataConnection = data;
     }
 
-    public static void closeConnection(Connection conn) throws DataConnectionException {
+    public void closeConnection(Connection conn) throws DataConnectionException {
         if (conn != null) {
             try {
                 conn.close();
