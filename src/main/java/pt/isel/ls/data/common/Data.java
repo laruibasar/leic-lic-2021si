@@ -15,6 +15,17 @@ public abstract class Data {
         dataConnection = data;
     }
 
+    public void rollbackConnection(Connection conn) throws DataConnectionException {
+        if (conn != null) {
+            try {
+                conn.rollback();
+            } catch (SQLException e) {
+                throw new DataConnectionException("Failed to rollback\n"
+                        + e.getMessage());
+            }
+        }
+    }
+
     public void closeConnection(Connection conn) throws DataConnectionException {
         if (conn != null) {
             try {
