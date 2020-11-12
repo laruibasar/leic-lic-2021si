@@ -1,7 +1,7 @@
 package pt.isel.ls.services;
 
-import pt.isel.ls.data.Data;
-import pt.isel.ls.data.DataConnectionException;
+import pt.isel.ls.data.common.Data;
+import pt.isel.ls.data.common.DataConnectionException;
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Movie;
 import pt.isel.ls.services.exceptions.InvalidAverageException;

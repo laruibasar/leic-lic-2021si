@@ -1,4 +1,4 @@
-package pt.isel.ls.data;
+package pt.isel.ls.data.common;
 
 public class DataConnectionException extends Exception {
     public DataConnectionException(String description) {

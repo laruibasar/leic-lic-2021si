@@ -1,50 +1,33 @@
 package pt.isel.ls.services;
 
-import pt.isel.ls.data.Data;
-import pt.isel.ls.data.DataConnectionException;
-import pt.isel.ls.model.Model;
-import pt.isel.ls.model.User;
+import pt.isel.ls.data.IUserData;
+import pt.isel.ls.data.UserData;
+import pt.isel.ls.data.common.DataConnectionException;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.LinkedList;
-import java.sql.SQLException;
 
 /**
  * GET /users - returns the list of users.
  */
 
 public class GetAllUsersHandler extends Handler implements IHandler {
+    IUserData userData;
 
-    private LinkedList<Model> users = new LinkedList<>();
+    public GetAllUsersHandler() {
+        userData = new UserData();
+    }
+
+    // to use for testing mainly
+    public void setUserData(IUserData userData) {
+        this.userData = userData;
+    }
 
     @Override
-    public CommandResult execute(Command cmd) throws DataConnectionException, SQLException {
-        Connection conn = null;
-
+    public CommandResult execute(Command cmd) throws HandlerException {
         try {
-            conn = Data.getDataConnection().getConnection();
-            final String query = "select uid, name from users;";
-            PreparedStatement pstmt = conn.prepareStatement(query);
-            ResultSet rs = pstmt.executeQuery();
-            while (rs.next()) {
-                users.add(new User(rs.getInt(1),rs.getString(2)));
-            }
-            conn.commit();
-            rs.close();
-            pstmt.close();
-        } catch (Exception e) {
-            if (conn != null) {
-                conn.rollback();
-            }
-            throw new DataConnectionException("Unable to get a list of all the users\n"
-                    + e.getMessage());
-        } finally {
-            Data.closeConnection(conn);
+            return userData.getAllUsers();
+        } catch (DataConnectionException e) {
+            throw new HandlerException(e.getMessage(), e);
         }
-
-        return new CommandResult(users,users.size());
     }
 }
