@@ -1,5 +1,7 @@
 package pt.isel.ls.services;
 
+import pt.isel.ls.data.IMovieData;
+import pt.isel.ls.data.MovieData;
 import pt.isel.ls.data.common.Data;
 import pt.isel.ls.data.common.DataConnectionException;
 import pt.isel.ls.model.Model;
@@ -16,29 +18,28 @@ import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.util.LinkedList;
 
+/**
+ * POST /movies - creates a new movie, given the following parameters
+ *  title - the movie's name.
+ *  releaseYear - the movie's release year.
+ */
 public class CreateMovieHandler extends Handler implements IHandler {
-
-    private LinkedList<Model> movies = new LinkedList<>();
-
-    /**
-     * POST /movies - creates a new movie, given the following parameters
-     *  title - the movie's name.
-     *  releaseYear - the movie's release year.
-     */
+    IMovieData movieData;
 
     public CreateMovieHandler() {
         super();
+        movieData = new MovieData();
         template.setParameters(
                 new Parameters(new String[]{"title", "releaseYear"}));
     }
 
-    @Override
-    public CommandResult execute(Command cmd) throws DataConnectionException,
-            SQLException, ParametersExceptions {
-        CommandResult result;
-        Connection conn = null;
-        Movie movie;
+    // good for testing
+    public void setMovieData(IMovieData movieData) {
+        this.movieData = movieData;
+    }
 
+    @Override
+    public CommandResult execute(Command cmd) throws HandlerException {
         if (!template.getParameters().isValid(cmd.getParameters())) {
             StringBuilder keys = new StringBuilder("Missing ");
             for (String str : template.getParameters()) {
@@ -46,47 +47,20 @@ public class CreateMovieHandler extends Handler implements IHandler {
                     keys.append("\"").append(str).append("\" ");
                 }
             }
-            throw new ParametersExceptions(keys.toString());
+            throw new HandlerException("Handler: missing parameters: "
+                    + keys.toString());
         }
+
+        final String title = cmd
+                .getParameters()
+                .getValue("title")
+                .replace("+", " ");
+        final int year = Integer.parseInt(cmd.getParameters().getValue("releaseYear"));
 
         try {
-            conn = Data.getDataConnection().getConnection();
-
-            final String query = "insert into movies (title, year) values(?, ?)";
-            PreparedStatement pstmt = conn.prepareStatement(
-                    query,
-                    Statement.RETURN_GENERATED_KEYS);
-
-            final String title = cmd
-                    .getParameters()
-                    .getValue("title")
-                    .replace("+", " ");
-            pstmt.setString(1, title);
-
-            final int year = Integer.parseInt(cmd.getParameters().getValue("releaseYear"));
-            pstmt.setInt(2, year);
-
-            final int status = pstmt.executeUpdate();
-            ResultSet rs = pstmt.getGeneratedKeys();
-            rs.next(); // move to column
-
-            movie = new Movie(rs.getInt(1), title, year);
-            movies.add(movie);
-
-            rs.close();
-            pstmt.close();
-            conn.commit();
-
-            result = new CommandResult(movies, status);
-        } catch (Exception e) {
-            if (conn != null) {
-                conn.rollback();
-            }
-            throw new DataConnectionException("Unable to add movie\n"
-                    + e.getMessage());
-        } finally {
-            Data.closeConnection(conn);
+            return movieData.createMovie(title, year);
+        } catch (DataConnectionException e) {
+            throw new HandlerException(e.getMessage(), e);
         }
-        return result;
     }
 }
