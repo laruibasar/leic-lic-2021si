@@ -1,5 +1,7 @@
 package pt.isel.ls.services;
 
+import pt.isel.ls.data.IMovieData;
+import pt.isel.ls.data.MovieData;
 import pt.isel.ls.data.common.Data;
 import pt.isel.ls.data.common.DataConnectionException;
 import pt.isel.ls.model.Model;
@@ -16,37 +18,24 @@ import java.sql.SQLException;
 /**
  * GET /movies - returns a list with all movies.
  */
-
 public class GetMoviesHandler extends Handler implements IHandler {
+    IMovieData movieData;
 
-    private LinkedList<Model> movies = new LinkedList<>();
+    public GetMoviesHandler() {
+        super();
+        movieData = new MovieData();
+    }
+
+    public void setMovieDataConnection(IMovieData movieData) {
+        this.movieData = movieData;
+    }
 
     @Override
-    public CommandResult execute(Command cmd) throws DataConnectionException, SQLException {
-        Connection conn = null;
+    public CommandResult execute(Command cmd) throws HandlerException {
         try {
-            conn = Data.getDataConnection().getConnection();
-            final String query = "select mid, title from movies;";
-            PreparedStatement pstmt = conn.prepareStatement(query);
-            ResultSet rs = pstmt.executeQuery();
-            while (rs.next()) {
-                movies.add(new Movie(
-                        rs.getInt(1),
-                        rs.getString(2)));
-            }
-            conn.commit();
-            rs.close();
-            pstmt.close();
-        } catch (Exception e) {
-            if (conn != null) {
-                conn.rollback();
-            }
-            throw new DataConnectionException("Unable to get a list of all the movies\n"
-                    + e.getMessage());
-        } finally {
-            Data.closeConnection(conn);
+            return movieData.getAllMovies();
+        } catch (DataConnectionException e) {
+            throw new HandlerException(e.getMessage(), e);
         }
-
-        return new CommandResult(movies, movies.size());
     }
 }

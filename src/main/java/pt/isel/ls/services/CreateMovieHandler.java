@@ -34,7 +34,7 @@ public class CreateMovieHandler extends Handler implements IHandler {
     }
 
     // good for testing
-    public void setMovieData(IMovieData movieData) {
+    public void setMovieDataConnection(IMovieData movieData) {
         this.movieData = movieData;
     }
 

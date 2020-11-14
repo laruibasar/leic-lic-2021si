@@ -9,7 +9,6 @@ import pt.isel.ls.utils.CommandResult;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
 
@@ -54,7 +53,36 @@ public class MovieData extends Data implements IMovieData {
 
     @Override
     public CommandResult getAllMovies() throws DataConnectionException {
-        return null;
+        Connection conn = null;
+        CommandResult result = null;
+        LinkedList<Model> movies = new LinkedList<>();
+
+        try {
+            conn = getDataConnection().getConnection();
+
+            final String query = "select mid, title, year from movies;";
+            PreparedStatement stmt = conn.prepareStatement(query);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                movies.add(new Movie(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getInt(3)));
+            }
+
+            rs.close();
+            stmt.close();
+            conn.commit();
+            result = new CommandResult(movies, movies.size());
+        } catch (Exception e) {
+            rollbackConnection(conn);
+            throw new DataConnectionException("Unable to get a list of all the movies\n"
+                + e.getMessage(), e);
+        } finally {
+            closeConnection(conn);
+        }
+
+        return result;
     }
 
     @Override
