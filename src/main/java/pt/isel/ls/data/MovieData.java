@@ -123,7 +123,7 @@ public class MovieData extends Data implements IMovieData {
 
             rs.close();
             stmt.close();
-            conn.close();
+            conn.commit();
             if (movie != null) {
                 movies.add(movie);
             }
