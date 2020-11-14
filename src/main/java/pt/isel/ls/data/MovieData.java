@@ -87,6 +87,55 @@ public class MovieData extends Data implements IMovieData {
 
     @Override
     public CommandResult getMovie(int id) throws DataConnectionException {
-        return null;
+        Connection conn = null;
+        CommandResult result = null;
+        LinkedList<Model> movies = new LinkedList<>();
+
+        try {
+            conn = getDataConnection().getConnection();
+
+            final String query = "select mid, title, year from movies where mid = ?";
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            Movie movie = null;
+            if (rs.first()) {
+                movie = new Movie(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getInt(3));
+            }
+
+            /* Should we add more details to movie? */
+            /*
+            final String queryDetails = "select genre, director, actors "
+                    + "from movie_details where mid = ?";
+            stmt = conn.prepareStatement(queryDetails);
+            stmt.setInt(1, id);
+
+            if (rs.first()) {
+                movie.setGenre(rs.getString(1));
+                movie.setDirectors(rs.getString(2));
+                movie.setActors(rs.getString(3));
+            }
+            */
+
+            rs.close();
+            stmt.close();
+            conn.close();
+            if (movie != null) {
+                movies.add(movie);
+            }
+            result = new CommandResult(movies, movies.size());
+        } catch (Exception e) {
+            rollbackConnection(conn);
+            throw new DataConnectionException("Unable to get details from movie "
+                    + id + "\n" + e.getMessage(), e);
+        } finally {
+            closeConnection(conn);
+        }
+
+        return result;
     }
 }

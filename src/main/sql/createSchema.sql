@@ -1,6 +1,7 @@
 drop table if exists reviews;
 drop table if exists ratings;
 drop table if exists users;
+drop table if exists movie_details;
 drop table if exists movies;
 
 create table users (
@@ -14,6 +15,14 @@ create table movies (
   title varchar(50),
   year int,
   unique (title, year)
+);
+
+create table movie_details (
+    id serial primary key,
+    mid int references movies(mid),
+    genre varchar(50),
+    director text,
+    actors text
 );
 
 create table reviews (
