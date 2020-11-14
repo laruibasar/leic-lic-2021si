@@ -23,7 +23,6 @@ import java.util.LinkedList;
  *  name - the user's name
  *  email - the user's unique email.
  */
-
 public class CreateUserHandler extends Handler implements IHandler {
     IUserData userData;
 
@@ -46,7 +45,8 @@ public class CreateUserHandler extends Handler implements IHandler {
                     keys.append("\"").append(str).append("\" ");
                 }
             }
-            throw new HandlerException("Handler: missing parameters: " + keys.toString());
+            throw new HandlerException("Handler: missing parameters: "
+                    + keys.toString());
         }
 
         final String name = template
