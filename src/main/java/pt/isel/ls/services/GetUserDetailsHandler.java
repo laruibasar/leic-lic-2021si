@@ -29,7 +29,7 @@ public class GetUserDetailsHandler extends Handler implements IHandler {
         userData = new UserData();
     }
 
-    public void setUserData(IUserData userData) {
+    public void setUserDataConnection(IUserData userData) {
         this.userData = userData;
     }
 

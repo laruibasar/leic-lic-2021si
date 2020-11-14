@@ -32,7 +32,7 @@ public class CreateUserHandler extends Handler implements IHandler {
         template.setParameters(new Parameters(new String[]{"name", "email"}));
     }
 
-    public void setUserData(IUserData userData) {
+    public void setUserDataConnection(IUserData userData) {
         this.userData = userData;
     }
 

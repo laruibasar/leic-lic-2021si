@@ -19,8 +19,7 @@ import static org.junit.Assert.assertEquals;
 public class GetAllUsersTest {
 
     @Test
-    public void select_all_users() throws DataConnectionException,
-            SQLException, ParametersExceptions, HandlerException {
+    public void select_all_users() throws HandlerException {
         AppConfig.setup();
 
         Command cmd = new Command(Method.GET, new Path("/users/"), new Parameters());

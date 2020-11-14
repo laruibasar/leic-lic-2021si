@@ -19,7 +19,7 @@ public class GetAllUsersHandler extends Handler implements IHandler {
     }
 
     // to use for testing mainly
-    public void setUserData(IUserData userData) {
+    public void setUserDataConnection(IUserData userData) {
         this.userData = userData;
     }
 
