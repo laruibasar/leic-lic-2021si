@@ -16,11 +16,10 @@ import java.sql.SQLException;
 
 import static org.junit.Assert.assertEquals;
 
-public class CreateMoviewReviewTest {
+public class CreateMovieReviewTest {
 
     @Test
-    public void insert_review_correct() throws DataConnectionException,
-            SQLException, ParametersExceptions {
+    public void insert_review_correct() throws HandlerException {
         AppConfig.setup();
 
         Parameters params = new Parameters();
@@ -41,8 +40,7 @@ public class CreateMoviewReviewTest {
     }
 
     @Test (expected = ParametersExceptions.class)
-    public void insert_misspell_parameter() throws DataConnectionException,
-            SQLException, ParametersExceptions {
+    public void insert_misspell_parameter() throws HandlerException {
         AppConfig.setup();
 
         Parameters params = new Parameters();
