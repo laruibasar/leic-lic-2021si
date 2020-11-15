@@ -3,15 +3,17 @@ package pt.isel.ls.utils;
 public class Command {
     private Method method;
     private Path path;
+    private Header header;
     private Parameters parameters;
 
     public Command(Method method, Path path) {
-        this(method, path, new Parameters());
+        this(method, path, new Header(), new Parameters());
     }
 
-    public Command(Method method, Path path, Parameters parameters) {
+    public Command(Method method, Path path, Header header, Parameters parameters) {
         this.method = method;
         this.path = path;
+        this.header = header;
         this.parameters = parameters;
     }
 
@@ -62,6 +64,10 @@ public class Command {
 
         if (!parameters.isEmpty()) {
             str.append(" ").append(parameters.toString());
+        }
+
+        if (!header.isEmpty()) {
+            str.append(" ").append(header.toString());
         }
 
         return str.toString();
