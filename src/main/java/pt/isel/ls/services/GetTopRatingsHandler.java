@@ -1,18 +1,11 @@
 package pt.isel.ls.services;
 
-import pt.isel.ls.data.common.Data;
+import pt.isel.ls.data.ITopRatingData;
+import pt.isel.ls.data.TopRatingData;
 import pt.isel.ls.data.common.DataConnectionException;
-import pt.isel.ls.model.Model;
-import pt.isel.ls.model.Movie;
-import pt.isel.ls.services.exceptions.InvalidAverageException;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
 import pt.isel.ls.utils.Parameters;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.LinkedList;
-import java.sql.SQLException;
 
 /**
  * GET /tops/ratings - returns a list with the movies, given the following parameters:
@@ -23,20 +16,36 @@ import java.sql.SQLException;
  * lowest- movies with the lowest average ratings
  * min - minimum number of votes
  */
-
 public class GetTopRatingsHandler extends Handler implements IHandler {
-
-    private LinkedList<Model> topRatings = new LinkedList<>();
+    ITopRatingData topData;
 
     public GetTopRatingsHandler() {
         super();
+        topData = new TopRatingData();
         template.setParameters(new Parameters(new String[]{"n", "average", "min"}));
     }
 
+    public void setTopDataConnection(ITopRatingData topData) {
+        this.topData = topData;
+    }
+
     @Override
-    public CommandResult execute(Command cmd) throws DataConnectionException, SQLException, InvalidAverageException {
-        Connection conn = null;
-        String avg = cmd.getParameters().getValue("average");
+    public CommandResult execute(Command cmd) throws HandlerException {
+        if (!template.getParameters().isValid(cmd.getParameters())) {
+            StringBuilder keys = new StringBuilder("Missing ");
+            for (String str : template.getParameters()) {
+                if (cmd.getParameters().getValue(str) == null) {
+                    keys.append("\"").append(str).append("\" ");
+                }
+            }
+            throw new HandlerException("Handler: missing parameters: "
+                    + keys.toString());
+        }
+
+        final int number = Integer.parseInt(cmd.getParameters().getValue("n"));
+        final int min = Integer.parseInt(cmd.getParameters().getValue("min"));
+
+        final String avg = cmd.getParameters().getValue("average");
         int average;
         switch (avg) {
             case "highest":
@@ -46,56 +55,14 @@ public class GetTopRatingsHandler extends Handler implements IHandler {
                 average = 0;
                 break;
             default:
-                throw new InvalidAverageException(avg);
+                throw new HandlerException("Handler: parameter average only allow: "
+                    + "highest or lowest, sent: " + avg);
         }
 
         try {
-            conn = Data.getDataConnection().getConnection();
-            final String query = "select mid, title, year\n"
-                    +
-                    "from (movies join "
-                    +
-                    "(select rating, movie from ratings union all select rating, movie from reviews) as rates "
-                    +
-                    "on(movies.mid = rates.movie))\n"
-                    +
-                    "group by mid, title, year\n"
-                    +
-                    "having count(rating) > ?\n"
-                    +
-                    "ORDER BY (CASE WHEN 1=? THEN avg(rating) END) DESC,\n"
-                    +
-                    "\t\t (CASE WHEN 2=2 THEN avg(rating) END) ASC\n"
-                    +
-                    "FETCH FIRST ? ROWS ONLY;";
-            PreparedStatement pstmt = conn.prepareStatement(query);
-
-            pstmt.setInt(1,
-                    Integer.parseInt(cmd.getParameters().getValue("min")));
-            pstmt.setInt(2, average);
-            pstmt.setInt(3,
-                    Integer.parseInt(cmd.getParameters().getValue("n")));
-
-            ResultSet rs = pstmt.executeQuery();
-            while (rs.next()) {
-                topRatings.add(new Movie(
-                        rs.getInt(1),
-                        rs.getString(2),
-                        rs.getInt(3)));
-            }
-            rs.close();
-            pstmt.close();
-            conn.commit();
-        } catch (Exception e) {
-            if (conn != null) {
-                conn.rollback();
-            }
-            throw new DataConnectionException("Unable to get a list of all the movies\n"
-                    + e.getMessage());
-        } finally {
-            Data.closeConnection(conn);
+            return topData.getTopRating(number, average, min);
+        } catch (DataConnectionException e) {
+            throw new HandlerException(e.getMessage(), e);
         }
-
-        return new CommandResult(topRatings, topRatings.size());
     }
 }
