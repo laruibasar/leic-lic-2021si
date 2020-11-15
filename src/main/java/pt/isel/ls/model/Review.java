@@ -9,9 +9,9 @@ public class Review extends Model {
     private int movie;
     private int movieCritic;
 
-    public Review(String summary, String review, int movie, int rating, int critic) {
+    public Review(String summary, String completeReview, int movie, int rating, int critic) {
         this.summary = summary;
-        completeReview= review;
+        this.completeReview= completeReview;
         this.rating = rating;
         this.movie = movie;
         movieCritic = critic;
