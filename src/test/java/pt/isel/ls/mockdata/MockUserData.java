@@ -31,7 +31,7 @@ public class MockUserData extends Data implements IUserData {
             stmt.setString(1, name);
             stmt.setString(2, email);
 
-            int status = stmt.executeUpdate();
+            final int status = stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
             rs.next();
             User user = new User(rs.getInt(1), name, email);
