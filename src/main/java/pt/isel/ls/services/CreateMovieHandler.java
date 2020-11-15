@@ -2,21 +2,10 @@ package pt.isel.ls.services;
 
 import pt.isel.ls.data.IMovieData;
 import pt.isel.ls.data.MovieData;
-import pt.isel.ls.data.common.Data;
 import pt.isel.ls.data.common.DataConnectionException;
-import pt.isel.ls.model.Model;
-import pt.isel.ls.model.Movie;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
 import pt.isel.ls.utils.Parameters;
-import pt.isel.ls.utils.ParametersExceptions;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.Statement;
-import java.sql.SQLException;
-import java.sql.ResultSet;
-import java.util.LinkedList;
 
 /**
  * POST /movies - creates a new movie, given the following parameters

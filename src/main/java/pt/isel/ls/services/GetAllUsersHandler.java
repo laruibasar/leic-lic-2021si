@@ -9,7 +9,6 @@ import pt.isel.ls.utils.CommandResult;
 /**
  * GET /users - returns the list of users.
  */
-
 public class GetAllUsersHandler extends Handler implements IHandler {
     IUserData userData;
 
