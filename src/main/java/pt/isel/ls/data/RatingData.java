@@ -32,7 +32,7 @@ public class RatingData extends Data implements IRatingData {
             stmt.setInt(1, movie);
             stmt.setInt(2, rate);
 
-            int status = stmt.executeUpdate();
+            final int status = stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
             if (rs.first()) {
                 ratings.add(new Rating(rs.getInt(1), movie, rate));
