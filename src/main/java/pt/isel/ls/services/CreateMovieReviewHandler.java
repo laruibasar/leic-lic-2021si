@@ -44,8 +44,8 @@ public class CreateMovieReviewHandler extends Handler implements IHandler {
         }
 
         Review review = new Review(
-                template.getParameters().getValue("summary"),
-                template.getParameters().getValue("reviewSummary"),
+                template.getParameters().getValue("summary").replace("+", " "),
+                template.getParameters().getValue("reviewSummary").replace("+", " "),
                 Integer.parseInt(template.getPath().getValue(1)),
                 Integer.parseInt(template.getParameters().getValue("uid")),
                 Integer.parseInt(template.getParameters().getValue("rating"))
