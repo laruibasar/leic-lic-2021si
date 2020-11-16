@@ -1,56 +1,41 @@
 package pt.isel.ls.utils;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 
 public class Header {
 
-    /* store valid parameters for the command */
-    private ArrayList<String> validHeader;
 
-    /* to store user sent parameters */
+    /* to store header */
     private LinkedHashMap<String, String> userHeader;
 
-    public Header() {
-        validHeader = new ArrayList<>();
+    public Header(String header) {
         userHeader = new LinkedHashMap<>();
+        setValues(header);
+
+        //Default values
+        userHeader.putIfAbsent("accept","text/plain");
+        userHeader.putIfAbsent("file-name","standard output");
+
     }
 
-    /* To receive the acceptable parameters from the method */
-    public Header(String[] params) {
-        this();
-        for (int i = 0; i < params.length; i++) {
-            validHeader.add(params[i]);
-        }
-    }
-
-    public void setValues(String params) {
-        String[] param = params.split("|");
-        for (int i = 0; i < param.length; i++) {
-            String[] pair = param[i].split(":");
-            userHeader.put(
-                    pair[0],
-                    pair.length < 2 ? "Buggy Joe" : pair[1]);
+    public void setValues(String header) {
+        String[] splitHeader = header.split("\\|");
+        for (int i = 0; i < splitHeader.length; i++) {
+            String[] pair = splitHeader[i].split(":");
+            if (pair[0].equals("accept") || pair[0].equals("file-name")) {
+                userHeader.put(
+                        pair[0],
+                        pair.length < 2 ? "Buggy Joe" : pair[1]);
+            } else {
+                // non used header elements
+                // maybe exception
+            }
         }
     }
 
     public String getValue(String key) {
         return userHeader.get(key);
-    }
-
-    private LinkedHashMap<String, String> getUserHeader() {
-        return userHeader;
-    }
-
-
-    public boolean isValid(Header header) {
-        for (String str : validHeader) {
-            if (!header.getUserHeader().containsKey(str)) {
-                return false;
-            }
-        }
-        return true;
     }
 
     public boolean isEmpty() {
@@ -71,7 +56,7 @@ public class Header {
                 .append("|")
         );
 
-        str.deleteCharAt(str.length() - 1); // cut last "&"
+        str.deleteCharAt(str.length() - 1); // cut last "|"
 
         return str.toString();
     }

@@ -7,13 +7,19 @@ public class Command {
     private Parameters parameters;
 
     public Command(Method method, Path path) {
-        this(method, path, new Header(), new Parameters());
+        this(method, path, new Parameters());
     }
 
     public Command(Method method, Path path, Header header, Parameters parameters) {
         this.method = method;
         this.path = path;
         this.header = header;
+        this.parameters = parameters;
+    }
+
+    public Command(Method method, Path path, Parameters parameters) {
+        this.method = method;
+        this.path = path;
         this.parameters = parameters;
     }
 
