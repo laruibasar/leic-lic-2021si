@@ -10,6 +10,8 @@ public class title extends head{
 
     @Override
     public String toString() {
-        return "\t\t"+title;
+        return "\t\t<h1>"
+                +title
+                +"</h1>";
     }
 }

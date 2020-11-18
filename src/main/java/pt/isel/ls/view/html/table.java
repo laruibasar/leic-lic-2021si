@@ -13,7 +13,7 @@ public class table extends body {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("\n\t\t<table>\n");
+        StringBuilder sb = new StringBuilder("\t\t<table>\n");
         sb.append(r);
         sb.append("\n\t\t</table>");
         return sb.toString();

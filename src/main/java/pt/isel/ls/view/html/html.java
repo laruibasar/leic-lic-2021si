@@ -12,12 +12,29 @@ public class html {
         this.b = b;
     }
 
+    public html(head h) {
+        this.h = h;
+    }
+
+    public html(body b) {
+        this.b = b;
+    }
+
     @Override
     public String toString() {
-        return "<html>\n"
-                + h
-                + "\n"
-                + b
-                + "\n</html>";
+        if(h == null)
+            return "<html>\n"
+                    + b
+                    + "\n</html>";
+        else if (b == null)
+            return "<html>\n"
+                    + h
+                    + "\n</html>";
+        else
+            return "<html>\n"
+                    + h
+                    + "\n"
+                    + b
+                    + "\n</html>";
     }
 }

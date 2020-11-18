@@ -10,6 +10,6 @@ public class header extends body{
 
     @Override
     public String toString() {
-        return "\t\t<h1>"+header+"</h1>";
+        return "\t\t<h1>"+header+"</h1>\n";
     }
 }
