@@ -6,6 +6,7 @@ import pt.isel.ls.data.IMovieReviewData;
 import pt.isel.ls.mockdata.MockMovieReviewData;
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Review;
+import pt.isel.ls.services.common.HandlerException;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
 import pt.isel.ls.utils.Method;
