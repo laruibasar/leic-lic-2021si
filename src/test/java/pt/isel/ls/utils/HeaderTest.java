@@ -22,7 +22,7 @@ public class HeaderTest {
     @Test
     public void header_absent_accept() {
         Header header = new Header("file-name:test.txt");
-        assertEquals("text/plain", esheader.getValue("accept"));
+        assertEquals("text/plain", header.getValue("accept"));
         assertEquals("test.txt", header.getValue("file-name"));
     }
 
