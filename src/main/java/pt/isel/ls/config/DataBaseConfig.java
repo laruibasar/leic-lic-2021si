@@ -1,6 +1,6 @@
 package pt.isel.ls.config;
 
-import pt.isel.ls.data.Data;
+import pt.isel.ls.data.common.Data;
 import pt.isel.ls.data.connectors.PsqlDataConnection;
 import pt.isel.ls.data.connectors.TestDataConnection;
 

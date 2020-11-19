@@ -1,42 +1,32 @@
 package pt.isel.ls.services;
 
-import pt.isel.ls.data.Data;
-import pt.isel.ls.data.DataConnectionException;
-import pt.isel.ls.model.Model;
-import pt.isel.ls.model.User;
+import pt.isel.ls.data.IUserData;
+import pt.isel.ls.data.UserData;
+import pt.isel.ls.data.common.DataConnectionException;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
 import pt.isel.ls.utils.Parameters;
-import pt.isel.ls.utils.ParametersExceptions;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.Statement;
-import java.sql.SQLException;
-import java.sql.ResultSet;
-import java.util.LinkedList;
 
 /**
  * POST /users - creates a new user, given the following parameters
  *  name - the user's name
  *  email - the user's unique email.
  */
-
 public class CreateUserHandler extends Handler implements IHandler {
-
-    private LinkedList<Model> users = new LinkedList<>();
+    IUserData userData;
 
     public CreateUserHandler() {
         super();
+        userData = new UserData();
         template.setParameters(new Parameters(new String[]{"name", "email"}));
     }
 
-    @Override
-    public CommandResult execute(Command cmd) throws DataConnectionException,
-            SQLException, ParametersExceptions {
-        CommandResult result;
-        Connection conn = null;
+    public void setUserDataConnection(IUserData userData) {
+        this.userData = userData;
+    }
 
+    @Override
+    public CommandResult execute(Command cmd) throws HandlerException {
         if (!template.getParameters().isValid(cmd.getParameters())) {
             StringBuilder keys = new StringBuilder("Missing ");
             for (String str : template.getParameters()) {
@@ -44,46 +34,20 @@ public class CreateUserHandler extends Handler implements IHandler {
                     keys.append("\"").append(str).append("\" ");
                 }
             }
-            throw new ParametersExceptions(keys.toString());
+            throw new HandlerException("Handler: missing parameters: "
+                    + keys.toString());
         }
 
+        final String name = template
+                .getParameters()
+                .getValue("name")
+                .replace("+", " ");
         try {
-            conn = Data.getDataConnection().getConnection();
-            final String query = "insert into users(name, email) values(?, ?)";
-
-            PreparedStatement pstmt = conn.prepareStatement(
-                    query,
-                    Statement.RETURN_GENERATED_KEYS);
-
-            final String name = cmd
-                    .getParameters()
-                    .getValue("name")
-                    .replace("+", " ");
-            pstmt.setString(1, name);
-
-            final String email = cmd.getParameters().getValue("email");
-            pstmt.setString(2, email);
-
-            int status = pstmt.executeUpdate();
-            ResultSet rs = pstmt.getGeneratedKeys();
-            rs.next();
-            User user = new User(rs.getInt(1), name, email);
-            users.add(user);
-            result = new CommandResult(users,status);
-
-            rs.close();
-            pstmt.close();
-            conn.commit();
-        } catch (Exception e) {
-            if (conn != null) {
-                conn.rollback();
-            }
-            throw new DataConnectionException("Unable to add User\n"
-                    + e.getMessage());
-        } finally {
-            Data.closeConnection(conn);
+            return userData.createUser(
+                    name,
+                    template.getParameters().getValue("email"));
+        } catch (DataConnectionException e) {
+            throw new HandlerException(e.getMessage(), e);
         }
-
-        return result;
     }
 }

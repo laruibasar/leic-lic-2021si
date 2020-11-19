@@ -2,11 +2,12 @@ package pt.isel.ls;
 
 import pt.isel.ls.model.Model;
 import pt.isel.ls.services.Handler;
+import pt.isel.ls.services.HandlerException;
 import pt.isel.ls.services.exceptions.InvalidAverageException;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.config.AppConfig;
 import pt.isel.ls.config.RouterException;
-import pt.isel.ls.data.DataConnectionException;
+import pt.isel.ls.data.common.DataConnectionException;
 import pt.isel.ls.utils.CommandResult;
 import pt.isel.ls.utils.Method;
 import pt.isel.ls.utils.Parameters;
@@ -55,7 +56,7 @@ public class AppConsole {
             CommandResult result = runCommand(cmd);
             showResults(result);
         } catch (RouterException | DataConnectionException | SQLException
-                | InvalidAverageException | ParametersExceptions e) {
+                | InvalidAverageException | ParametersExceptions | HandlerException e) {
             System.out.println("ERROR " + e.getMessage() + "\n");
         }
 
@@ -77,7 +78,7 @@ public class AppConsole {
 
     private static CommandResult runCommand(Command cmd) throws RouterException,
             DataConnectionException, SQLException, InvalidAverageException,
-            ParametersExceptions {
+            ParametersExceptions, HandlerException {
 
         Handler handler = AppConfig.getInstance().router.findHandler(cmd);
         return handler.execute(cmd);

@@ -30,6 +30,10 @@ public class Movie extends Model {
         return year;
     }
 
+    public void setId(int id) {
+        mid = id;
+    }
+
     @Override
     public String toString() {
         if (year == 0) {
