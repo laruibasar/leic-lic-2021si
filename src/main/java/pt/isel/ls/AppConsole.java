@@ -1,9 +1,9 @@
 package pt.isel.ls;
 
 import pt.isel.ls.model.Model;
-import pt.isel.ls.services.Handler;
-import pt.isel.ls.services.HandlerException;
-import pt.isel.ls.services.exceptions.InvalidAverageException;
+import pt.isel.ls.handlers.Handler;
+import pt.isel.ls.handlers.HandlerException;
+import pt.isel.ls.handlers.exceptions.InvalidAverageException;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.config.AppConfig;
 import pt.isel.ls.config.RouterException;

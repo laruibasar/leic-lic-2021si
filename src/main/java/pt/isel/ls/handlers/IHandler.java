@@ -1,7 +1,7 @@
-package pt.isel.ls.services;
+package pt.isel.ls.handlers;
 
 import pt.isel.ls.data.common.DataConnectionException;
-import pt.isel.ls.services.exceptions.InvalidAverageException;
+import pt.isel.ls.handlers.exceptions.InvalidAverageException;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
 import pt.isel.ls.utils.ParametersExceptions;

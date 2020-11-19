@@ -1,4 +1,4 @@
-package pt.isel.ls.services;
+package pt.isel.ls.handlers;
 
 import pt.isel.ls.data.IMovieReviewData;
 import pt.isel.ls.data.MovieReviewData;
@@ -7,13 +7,13 @@ import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
 
 /**
- * GET /movies/{mid}/reviews/{rid} - returns the full information for the
- * review rid of the movie identified by mid.
+ * GET /movies/{mid}/reviews - returns the reviews identified by mid.
+ * The information must not include the full review.
  */
-public class GetMovieReviewHandler extends Handler implements IHandler {
+public class GetMovieAllReviewsHandler extends Handler implements IHandler {
     IMovieReviewData reviewData;
 
-    public GetMovieReviewHandler() {
+    public GetMovieAllReviewsHandler() {
         super();
         reviewData = new MovieReviewData();
     }
@@ -25,10 +25,9 @@ public class GetMovieReviewHandler extends Handler implements IHandler {
     @Override
     public CommandResult execute(Command cmd) throws HandlerException {
         final int movie = Integer.parseInt(cmd.getPath().getValue(1));
-        final int review = Integer.parseInt(cmd.getPath().getValue(2));
 
         try {
-            return reviewData.getMovieReview(movie, review);
+            return reviewData.getAllMovieReviews(movie);
         } catch (DataConnectionException e) {
             throw new HandlerException(e.getMessage(), e);
         }

@@ -1,4 +1,4 @@
-package pt.isel.ls.services;
+package pt.isel.ls.handlers;
 
 import pt.isel.ls.utils.Command;
 
