@@ -28,15 +28,12 @@ public class Header {
             String[] pair = splitHeader[i].split(":");
             switch (pair[0]) {
                 case "accept":
-                    if (pair.length < 2) {
+                    if (pair.length == 2) {
                         userHeader.replace(
                                 pair[0],
-                                "text/plain");
+                                pair[1].equals("text/html") ?  "text/html" : "text/plain");
                         break;
                     }
-                    userHeader.replace(
-                            pair[0],
-                            pair[1].equals("text/html") ?  pair[1] : "text/plain");
                     break;
                 case "file-name":
                     userHeader.replace(
@@ -45,10 +42,8 @@ public class Header {
                     break;
                 default:
                     // non used header elements
-                    // maybe exception
                     break;
             }
-
         }
     }
 
