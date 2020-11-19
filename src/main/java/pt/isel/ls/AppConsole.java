@@ -52,8 +52,7 @@ public class AppConsole {
         try {
             CommandResult result = runCommand(cmd);
             showResults(result);
-        } catch (RouterException | DataConnectionException
-                | HandlerException e) {
+        } catch (RouterException | DataConnectionException | HandlerException e) {
             System.out.println("ERROR " + e.getMessage() + "\n");
         }
 
