@@ -34,7 +34,42 @@ public class HeaderTest {
     }
 
     @Test
-    public void header_absent_accept_filename(){
+    public void header_doble_accept() {
+        Header header = new Header("accept:text/html|accept:text/plain");
+        assertEquals("text/plain", header.getValue("accept"));
+        assertEquals("standard output", header.getValue("file-name"));
+    }
+
+    @Test
+    public void header_invalid_accept() {
+        Header header = new Header("accept:|file-name:text.txt");
+        assertEquals("text/plain", header.getValue("accept"));
+        assertEquals("text.txt", header.getValue("file-name"));
+    }
+
+    @Test
+    public void header_another_invalid_accept() {
+        Header header = new Header("accept:text/css|file-name:text.txt");
+        assertEquals("text/plain", header.getValue("accept"));
+        assertEquals("text.txt", header.getValue("file-name"));
+    }
+
+    @Test
+    public void header_invalid_filename() {
+        Header header = new Header("accept:text/plain|file-name:");
+        assertEquals("text/plain", header.getValue("accept"));
+        assertEquals("standard output", header.getValue("file-name"));
+    }
+
+    @Test
+    public void header_invalid_filename_accept() {
+        Header header = new Header("accept:|file-name:");
+        assertEquals("text/plain", header.getValue("accept"));
+        assertEquals("standard output", header.getValue("file-name"));
+    }
+
+    @Test
+    public void header_absent_accept_filename() {
         Header header = new Header();
         assertEquals("text/plain", header.getValue("accept"));
         assertEquals("standard output", header.getValue("file-name"));

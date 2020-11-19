@@ -1,6 +1,5 @@
 package pt.isel.ls.utils;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 public class Header {
@@ -10,34 +9,46 @@ public class Header {
     private LinkedHashMap<String, String> userHeader;
 
     public Header(String header) {
-        userHeader = new LinkedHashMap<>();
+        this();
         setValues(header);
-
-        //Default values
-        userHeader.putIfAbsent("accept","text/plain");
-        userHeader.putIfAbsent("file-name","standard output");
     }
 
     public Header() {
         userHeader = new LinkedHashMap<>();
 
         //Default values
-        userHeader.putIfAbsent("accept","text/plain");
-        userHeader.putIfAbsent("file-name","standard output");
+        userHeader.put("accept","text/plain");
+        userHeader.put("file-name","standard output");
+
     }
 
     public void setValues(String header) {
         String[] splitHeader = header.split("\\|");
         for (int i = 0; i < splitHeader.length; i++) {
             String[] pair = splitHeader[i].split(":");
-            if (pair[0].equals("accept") || pair[0].equals("file-name")) {
-                userHeader.put(
-                        pair[0],
-                        pair.length < 2 ? "Buggy Joe" : pair[1]);
-            } else {
-                // non used header elements
-                // maybe exception
+            switch (pair[0]){
+                case "accept":
+                    if (pair.length < 2){
+                        userHeader.replace(
+                                pair[0],
+                                "text/plain");
+                        break;
+                    }
+                    userHeader.replace(
+                            pair[0],
+                            pair[1].equals("text/html") ?  pair[1] : "text/plain");
+                    break;
+                case "file-name":
+                    userHeader.replace(
+                            pair[0],
+                            pair.length < 2 ? "standard output" : pair[1]);
+                    break;
+                default:
+                    // non used header elements
+                    // maybe exception
+                    break;
             }
+
         }
     }
 
