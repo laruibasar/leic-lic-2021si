@@ -16,7 +16,14 @@ public class Header {
         //Default values
         userHeader.putIfAbsent("accept","text/plain");
         userHeader.putIfAbsent("file-name","standard output");
+    }
 
+    public Header() {
+        userHeader = new LinkedHashMap<>();
+
+        //Default values
+        userHeader.putIfAbsent("accept","text/plain");
+        userHeader.putIfAbsent("file-name","standard output");
     }
 
     public void setValues(String header) {

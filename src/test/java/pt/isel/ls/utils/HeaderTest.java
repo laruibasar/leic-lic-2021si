@@ -32,4 +32,11 @@ public class HeaderTest {
         assertEquals("text/html", header.getValue("accept"));
         assertEquals("standard output", header.getValue("file-name"));
     }
+
+    @Test
+    public void header_absent_accept_filename(){
+        Header header = new Header();
+        assertEquals("text/plain", header.getValue("accept"));
+        assertEquals("standard output", header.getValue("file-name"));
+    }
 }
