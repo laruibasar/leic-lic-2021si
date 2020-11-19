@@ -12,7 +12,6 @@ import pt.isel.ls.utils.Method;
 import pt.isel.ls.utils.Parameters;
 import pt.isel.ls.utils.Path;
 
-import java.sql.SQLException;
 import java.util.Scanner;
 
 public class AppConsole {
@@ -53,7 +52,7 @@ public class AppConsole {
         try {
             CommandResult result = runCommand(cmd);
             showResults(result);
-        } catch (RouterException | DataConnectionException | SQLException
+        } catch (RouterException | DataConnectionException
                 | HandlerException e) {
             System.out.println("ERROR " + e.getMessage() + "\n");
         }
@@ -75,7 +74,7 @@ public class AppConsole {
     }
 
     private static CommandResult runCommand(Command cmd) throws RouterException,
-            DataConnectionException, SQLException, HandlerException {
+            DataConnectionException, HandlerException {
 
         Handler handler = AppConfig.getInstance().router.findHandler(cmd);
         return handler.execute(cmd);
