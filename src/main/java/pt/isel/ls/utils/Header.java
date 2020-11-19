@@ -26,9 +26,9 @@ public class Header {
         String[] splitHeader = header.split("\\|");
         for (int i = 0; i < splitHeader.length; i++) {
             String[] pair = splitHeader[i].split(":");
-            switch (pair[0]){
+            switch (pair[0]) {
                 case "accept":
-                    if (pair.length < 2){
+                    if (pair.length < 2) {
                         userHeader.replace(
                                 pair[0],
                                 "text/plain");
