@@ -37,7 +37,7 @@ public class CommandResultTest {
 
     @Test
     public void get_movie_details() throws InvalidAverageException,
-            DataConnectionException, SQLException, ParametersExceptions, HandlerException {
+            DataConnectionException, SQLException, HandlerException {
         Handler handler = new GetMovieDetailsHandler();
         Command cmd = new Command(Method.GET, new Path("/movies/1"));
         CommandResult cr = handler.execute(cmd);
@@ -48,7 +48,7 @@ public class CommandResultTest {
 
     @Test
     public void get_movie_rating() throws InvalidAverageException,
-            DataConnectionException, SQLException, ParametersExceptions, HandlerException {
+            DataConnectionException, SQLException, HandlerException {
 
         Handler handler = new GetMovieRatingHandler();
         Command cmd = new Command(Method.GET, new Path("/movies/1/ratings"));
@@ -61,7 +61,7 @@ public class CommandResultTest {
 
     @Test
     public void get_movie_review() throws InvalidAverageException,
-            DataConnectionException, SQLException, ParametersExceptions, HandlerException {
+            DataConnectionException, SQLException, HandlerException {
         Handler handler = new GetMovieReviewHandler();
         Command cmd = new Command(Method.GET, new Path("/movies/1/reviews/2"));
         CommandResult cr = handler.execute(cmd);
@@ -74,7 +74,7 @@ public class CommandResultTest {
 
     @Test
     public void get_movies() throws InvalidAverageException,
-            DataConnectionException, SQLException, ParametersExceptions, HandlerException {
+            DataConnectionException, SQLException, HandlerException {
         Handler handler = new GetMoviesHandler();
         Command cmd = new Command(Method.GET, new Path("/movies"));
 
@@ -91,7 +91,7 @@ public class CommandResultTest {
 
     @Test
     public void get_top_ratings() throws InvalidAverageException,
-            DataConnectionException, SQLException, ParametersExceptions, HandlerException {
+            DataConnectionException, SQLException, HandlerException {
         Handler handler = new GetTopRatingsHandler();
         Parameters parameters = new Parameters();
         parameters.setValues("n=10&average=highest&min=2");
@@ -111,7 +111,7 @@ public class CommandResultTest {
 
     @Test
     public void get_user_all_reviews() throws InvalidAverageException,
-            DataConnectionException, SQLException, ParametersExceptions, HandlerException {
+            DataConnectionException, SQLException, HandlerException {
         Handler handler = new GetUserAllReviewsHandler();
         Command cmd = new Command(Method.GET, new Path("/users/1/reviews"));
         CommandResult cr = handler.execute(cmd);
@@ -124,7 +124,7 @@ public class CommandResultTest {
 
     @Test
     public void get_user_details() throws InvalidAverageException,
-            DataConnectionException, SQLException, ParametersExceptions, HandlerException {
+            DataConnectionException, SQLException, HandlerException {
         Handler handler = new GetUserDetailsHandler();
         Command cmd = new Command(Method.GET, new Path("/users/1/"));
         CommandResult cr = handler.execute(cmd);
@@ -136,7 +136,7 @@ public class CommandResultTest {
 
     @Test
     public void get_user_review() throws InvalidAverageException,
-            DataConnectionException, SQLException, ParametersExceptions, HandlerException {
+            DataConnectionException, SQLException, HandlerException {
         Handler handler = new GetUserReviewHandler();
         Command cmd = new Command(Method.GET, new Path("/users/1/reviews/1234"));
         CommandResult cr = handler.execute(cmd);
@@ -151,7 +151,7 @@ public class CommandResultTest {
 
     @Test
     public void rate_movie_handler() throws InvalidAverageException,
-            DataConnectionException, SQLException, ParametersExceptions, HandlerException {
+            DataConnectionException, SQLException, HandlerException {
         Handler handler = new RateMovieHandler();
         Parameters parameters = new Parameters();
         parameters.setValues("rating=3");

@@ -10,7 +10,6 @@ import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
 import pt.isel.ls.utils.Method;
 import pt.isel.ls.utils.Parameters;
-import pt.isel.ls.utils.ParametersExceptions;
 import pt.isel.ls.utils.Path;
 
 import static org.junit.Assert.assertEquals;
@@ -40,7 +39,7 @@ public class CreateMovieReviewTest {
         }
     }
 
-    @Test (expected = ParametersExceptions.class)
+    @Test (expected = HandlerException.class)
     public void insert_misspell_parameter() throws HandlerException {
         AppConfig.setup();
         IMovieReviewData reviewData = new MockMovieReviewData();
