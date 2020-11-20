@@ -23,14 +23,30 @@ import pt.isel.ls.utils.Path;
  */
 public class AppConfig {
     /* store configuration load status */
-    public boolean loadConfig;
-    public String loadMessage;
+    private static boolean loadConfig;
+    private static String loadMessage;
+
+    public static boolean getLoadConfig() {
+        return loadConfig;
+    }
+
+    public static String getLoadMessage() {
+        return loadMessage;
+    }
 
     /* store db config */
-    public DataBaseConfig database;
+    private static DataBaseConfig database;
+
+    public static DataBaseConfig getDatabaseInfo() {
+        return database;
+    }
 
     /* store routing information */
-    public Router router;
+    private static Router router;
+
+    public static Router getRouter() {
+        return router;
+    }
 
     private static AppConfig config;
 
