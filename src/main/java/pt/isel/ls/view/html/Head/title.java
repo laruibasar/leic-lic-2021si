@@ -1,6 +1,6 @@
-package pt.isel.ls.view.html;
+package pt.isel.ls.view.html.Head;
 
-public class title extends head{
+public class title extends head {
 
     private String title;
 

@@ -1,5 +1,8 @@
 package pt.isel.ls.view.html;
 
+import pt.isel.ls.view.html.Body.body;
+import pt.isel.ls.view.html.Head.head;
+
 public class html {
 
 

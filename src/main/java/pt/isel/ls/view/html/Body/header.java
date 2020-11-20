@@ -1,6 +1,8 @@
-package pt.isel.ls.view.html;
+package pt.isel.ls.view.html.Body;
 
-public class header extends body{
+import pt.isel.ls.view.html.Body.body;
+
+public class header extends body {
 
     private String header;
 
