@@ -92,7 +92,7 @@ public class UserData extends Data implements IUserData {
 
         try {
             conn = getDataConnection().getConnection();
-            final String query = "select id, name, email from users where uid = ?;";
+            final String query = "select uid, name, email from users where uid = ?;";
             PreparedStatement stmt = conn.prepareStatement(query);
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
