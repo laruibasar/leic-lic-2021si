@@ -40,14 +40,13 @@ public class AppConsole {
     }
 
     public static boolean runOnce(String[] args) {
-
-        if (args[0].toUpperCase().equals("EXIT")) {
-            System.out.println("Exiting...");
-            return false;
-        }
-
         Command cmd = setCommand(args);
         System.out.println("Running command: " + cmd.toString());
+
+        /* temporary fix, later we use a special CommandResult */
+        if (cmd.getMethod() == Method.EXIT) {
+            return false;
+        }
 
         try {
             CommandResult result = runCommand(cmd);

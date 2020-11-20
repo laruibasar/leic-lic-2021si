@@ -3,7 +3,8 @@ package pt.isel.ls.utils;
 public enum Method {
     GET("GET"),
     PUT("PUT"),
-    POST("POST");
+    POST("POST"),
+    EXIT("EXIT");
 
     private final String method;
 

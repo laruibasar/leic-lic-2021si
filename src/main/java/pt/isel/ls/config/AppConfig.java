@@ -3,6 +3,7 @@ package pt.isel.ls.config;
 import pt.isel.ls.handlers.CreateMovieHandler;
 import pt.isel.ls.handlers.CreateMovieReviewHandler;
 import pt.isel.ls.handlers.CreateUserHandler;
+import pt.isel.ls.handlers.ExitHandler;
 import pt.isel.ls.handlers.GetAllUsersHandler;
 import pt.isel.ls.handlers.GetMovieAllReviewsHandler;
 import pt.isel.ls.handlers.GetMovieDetailsHandler;
@@ -78,6 +79,8 @@ public class AppConfig {
         this.router.addHandler(Method.GET, new Path("/users/{uid}/reviews"), new GetUserAllReviewsHandler());
         this.router.addHandler(Method.GET, new Path("/users/{uid}/reviews/{rid}"), new GetUserReviewHandler());
         this.router.addHandler(Method.GET, new Path("tops/ratings"), new GetTopRatingsHandler());
+
+        this.router.addHandler(Method.EXIT, new Path("/"), new ExitHandler());
     }
 
     private AppConfig() {
