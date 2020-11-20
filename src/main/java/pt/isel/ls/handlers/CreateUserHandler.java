@@ -1,7 +1,7 @@
-package pt.isel.ls.services;
+package pt.isel.ls.handlers;
 
-import pt.isel.ls.data.IMovieData;
-import pt.isel.ls.data.MovieData;
+import pt.isel.ls.data.IUserData;
+import pt.isel.ls.data.UserData;
 import pt.isel.ls.data.common.DataConnectionException;
 import pt.isel.ls.services.common.Handler;
 import pt.isel.ls.services.common.HandlerException;
@@ -11,23 +11,21 @@ import pt.isel.ls.utils.CommandResult;
 import pt.isel.ls.utils.Parameters;
 
 /**
- * POST /movies - creates a new movie, given the following parameters
- *  title - the movie's name.
- *  releaseYear - the movie's release year.
+ * POST /users - creates a new user, given the following parameters
+ *  name - the user's name
+ *  email - the user's unique email.
  */
-public class CreateMovieHandler extends Handler implements IHandler {
-    IMovieData movieData;
+public class CreateUserHandler extends Handler implements IHandler {
+    IUserData userData;
 
-    public CreateMovieHandler() {
+    public CreateUserHandler() {
         super();
-        movieData = new MovieData();
-        template.setParameters(
-                new Parameters(new String[]{"title", "releaseYear"}));
+        userData = new UserData();
+        template.setParameters(new Parameters(new String[]{"name", "email"}));
     }
 
-    // good for testing
-    public void setMovieDataConnection(IMovieData movieData) {
-        this.movieData = movieData;
+    public void setUserDataConnection(IUserData userData) {
+        this.userData = userData;
     }
 
     @Override
@@ -43,14 +41,14 @@ public class CreateMovieHandler extends Handler implements IHandler {
                     + keys.toString());
         }
 
-        final String title = cmd
+        final String name = template
                 .getParameters()
-                .getValue("title")
+                .getValue("name")
                 .replace("+", " ");
-        final int year = Integer.parseInt(cmd.getParameters().getValue("releaseYear"));
-
         try {
-            return movieData.createMovie(title, year);
+            return userData.createUser(
+                    name,
+                    template.getParameters().getValue("email"));
         } catch (DataConnectionException e) {
             throw new HandlerException(e.getMessage(), e);
         }

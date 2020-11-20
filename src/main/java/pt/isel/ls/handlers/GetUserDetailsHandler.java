@@ -1,4 +1,4 @@
-package pt.isel.ls.services;
+package pt.isel.ls.handlers;
 
 import pt.isel.ls.data.IUserData;
 import pt.isel.ls.data.UserData;
@@ -10,17 +10,16 @@ import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
 
 /**
- * GET /users - returns the list of users.
+ * GET /users/{uid} - returns the details for the user identified by uid
  */
-public class GetAllUsersHandler extends Handler implements IHandler {
+public class GetUserDetailsHandler extends Handler implements IHandler {
     IUserData userData;
 
-    public GetAllUsersHandler() {
+    public GetUserDetailsHandler() {
         super();
         userData = new UserData();
     }
 
-    // to use for testing mainly
     public void setUserDataConnection(IUserData userData) {
         this.userData = userData;
     }
@@ -28,7 +27,7 @@ public class GetAllUsersHandler extends Handler implements IHandler {
     @Override
     public CommandResult execute(Command cmd) throws HandlerException {
         try {
-            return userData.getAllUsers();
+            return userData.getUser(Integer.parseInt(cmd.getPath().getValue(1)));
         } catch (DataConnectionException e) {
             throw new HandlerException(e.getMessage(), e);
         }

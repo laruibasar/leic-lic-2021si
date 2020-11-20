@@ -1,4 +1,4 @@
-package pt.isel.ls.services;
+package pt.isel.ls.handlers;
 
 import pt.isel.ls.data.IMovieReviewData;
 import pt.isel.ls.data.MovieReviewData;

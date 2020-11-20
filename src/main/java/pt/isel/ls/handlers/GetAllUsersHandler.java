@@ -1,7 +1,7 @@
-package pt.isel.ls.services;
+package pt.isel.ls.handlers;
 
-import pt.isel.ls.data.IMovieData;
-import pt.isel.ls.data.MovieData;
+import pt.isel.ls.data.IUserData;
+import pt.isel.ls.data.UserData;
 import pt.isel.ls.data.common.DataConnectionException;
 import pt.isel.ls.services.common.Handler;
 import pt.isel.ls.services.common.HandlerException;
@@ -10,24 +10,25 @@ import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
 
 /**
- * GET /movies - returns a list with all movies.
+ * GET /users - returns the list of users.
  */
-public class GetMoviesHandler extends Handler implements IHandler {
-    IMovieData movieData;
+public class GetAllUsersHandler extends Handler implements IHandler {
+    IUserData userData;
 
-    public GetMoviesHandler() {
+    public GetAllUsersHandler() {
         super();
-        movieData = new MovieData();
+        userData = new UserData();
     }
 
-    public void setMovieDataConnection(IMovieData movieData) {
-        this.movieData = movieData;
+    // to use for testing mainly
+    public void setUserDataConnection(IUserData userData) {
+        this.userData = userData;
     }
 
     @Override
     public CommandResult execute(Command cmd) throws HandlerException {
         try {
-            return movieData.getAllMovies();
+            return userData.getAllUsers();
         } catch (DataConnectionException e) {
             throw new HandlerException(e.getMessage(), e);
         }
