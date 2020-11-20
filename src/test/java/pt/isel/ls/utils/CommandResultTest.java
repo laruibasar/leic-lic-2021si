@@ -9,17 +9,17 @@ import pt.isel.ls.model.MovieRating;
 import pt.isel.ls.model.Rating;
 import pt.isel.ls.model.Review;
 import pt.isel.ls.model.User;
-import pt.isel.ls.services.GetMovieDetailsHandler;
-import pt.isel.ls.services.GetMovieRatingHandler;
-import pt.isel.ls.services.GetMovieReviewHandler;
-import pt.isel.ls.services.GetMoviesHandler;
-import pt.isel.ls.services.GetTopRatingsHandler;
-import pt.isel.ls.services.GetUserAllReviewsHandler;
-import pt.isel.ls.services.GetUserDetailsHandler;
-import pt.isel.ls.services.GetUserReviewHandler;
-import pt.isel.ls.services.common.Handler;
-import pt.isel.ls.services.common.HandlerException;
-import pt.isel.ls.services.RateMovieHandler;
+import pt.isel.ls.handlers.GetMovieDetailsHandler;
+import pt.isel.ls.handlers.GetMovieRatingHandler;
+import pt.isel.ls.handlers.GetMovieReviewHandler;
+import pt.isel.ls.handlers.GetMoviesHandler;
+import pt.isel.ls.handlers.GetTopRatingsHandler;
+import pt.isel.ls.handlers.GetUserAllReviewsHandler;
+import pt.isel.ls.handlers.GetUserDetailsHandler;
+import pt.isel.ls.handlers.GetUserReviewHandler;
+import pt.isel.ls.handlers.common.Handler;
+import pt.isel.ls.handlers.common.HandlerException;
+import pt.isel.ls.handlers.RateMovieHandler;
 
 import java.util.LinkedList;
 

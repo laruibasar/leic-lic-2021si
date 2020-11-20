@@ -1,4 +1,4 @@
-package pt.isel.ls.services.common;
+package pt.isel.ls.handlers.common;
 
 import pt.isel.ls.data.common.DataConnectionException;
 import pt.isel.ls.utils.Command;

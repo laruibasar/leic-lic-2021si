@@ -1,8 +1,8 @@
 package pt.isel.ls;
 
 import pt.isel.ls.model.Model;
-import pt.isel.ls.services.common.Handler;
-import pt.isel.ls.services.common.HandlerException;
+import pt.isel.ls.handlers.common.Handler;
+import pt.isel.ls.handlers.common.HandlerException;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.config.AppConfig;
 import pt.isel.ls.config.RouterException;
