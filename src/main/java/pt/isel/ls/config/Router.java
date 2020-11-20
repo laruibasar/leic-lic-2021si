@@ -23,6 +23,7 @@ public class Router {
     public Handler findHandler(Command command) throws RouterException {
         for (Command template : handlers.keySet()) {
             if (template.matches(command)) {
+                command.setValues(template.getPath()); // awfull code
                 return handlers.get(template);
             }
         }
