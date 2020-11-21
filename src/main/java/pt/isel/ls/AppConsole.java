@@ -1,6 +1,5 @@
 package pt.isel.ls;
 
-import pt.isel.ls.config.Router;
 import pt.isel.ls.model.Model;
 import pt.isel.ls.handlers.Handler;
 import pt.isel.ls.handlers.HandlerException;
