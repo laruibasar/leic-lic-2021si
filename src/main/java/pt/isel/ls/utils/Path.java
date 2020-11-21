@@ -1,6 +1,8 @@
 package pt.isel.ls.utils;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class Path {
     private ArrayList<String> path;
@@ -28,6 +30,20 @@ public class Path {
      */
     public String getValue(int index) {
         return path.get(index);
+    }
+
+    public Map<String, String> setValues(Path other) {
+        Map<String, String> values = new LinkedHashMap<>();
+
+        ArrayList<String> otherPath = other.getPath();
+        for (int i = 0; i < otherPath.size(); i++) {
+            if (otherPath.get(i).startsWith("{")) {
+                String key = otherPath.get(i).substring(1, otherPath.get(i).lastIndexOf("}"));
+                values.put(key, this.path.get(i));
+            }
+        }
+
+        return values;
     }
 
     public boolean matches(Path cmp) {
