@@ -3,9 +3,14 @@ package pt.isel.ls.handlers;
 import pt.isel.ls.data.IMovieData;
 import pt.isel.ls.data.MovieData;
 import pt.isel.ls.data.common.DataConnectionException;
+import pt.isel.ls.data.transaction.DataTransaction;
+import pt.isel.ls.data.transaction.IDataTransaction;
+import pt.isel.ls.model.Model;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
 import pt.isel.ls.utils.Parameters;
+
+import java.util.LinkedList;
 
 /**
  * POST /movies - creates a new movie, given the following parameters
@@ -14,10 +19,12 @@ import pt.isel.ls.utils.Parameters;
  */
 public class CreateMovieHandler extends Handler implements IHandler {
     IMovieData movieData;
+    IDataTransaction ts;
 
     public CreateMovieHandler() {
         super();
         movieData = new MovieData();
+        ts = new DataTransaction();
         template.setParameters(
                 new Parameters(new String[]{"title", "releaseYear"}));
     }
@@ -25,6 +32,10 @@ public class CreateMovieHandler extends Handler implements IHandler {
     // good for testing
     public void setMovieDataConnection(IMovieData movieData) {
         this.movieData = movieData;
+    }
+
+    public void setDataTransaction(IDataTransaction ts) {
+        this.ts = ts;
     }
 
     @Override
@@ -47,7 +58,11 @@ public class CreateMovieHandler extends Handler implements IHandler {
         final int year = Integer.parseInt(cmd.getParameters().getValue("releaseYear"));
 
         try {
-            return movieData.createMovie(title, year);
+            LinkedList<Model> result = ts.executeTransaction((connection) -> {
+                return movieData.createMovie(connection, title, year);
+            });
+
+            return new CommandResult(result, result.size());
         } catch (DataConnectionException e) {
             throw new HandlerException(e.getMessage(), e);
         }

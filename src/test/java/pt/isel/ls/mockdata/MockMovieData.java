@@ -15,54 +15,70 @@ import java.util.LinkedList;
 
 public class MockMovieData extends Data implements IMovieData {
     @Override
-    public CommandResult createMovie(String title, int year) throws DataConnectionException {
-        Connection conn = null;
-        CommandResult result = null;
+    public LinkedList<Model> createMovie(Connection connection, String title, int year)
+            throws DataConnectionException {
         LinkedList<Model> movies = new LinkedList<>();
         Movie movie = new Movie(title, year);
+        movies.add(movie);
+
+        return movies;
+    }
+
+    @Override
+    public LinkedList<Model> createMovieDetail(Connection connection, int mid,
+                                               String genre, String directors, String actors)
+            throws DataConnectionException {
+        LinkedList<Model> movies = new LinkedList<>();
+        Movie movie = new Movie();
+
+        genre = (genre != null) ? genre : "";
+        directors = (directors != null) ? directors : "";
+        actors = (actors != null) ? actors : "";
 
         try {
-            conn = getDataConnection().getConnection();
+            connection.setAutoCommit(false);
 
-            final String query = "insert into movies (title, year) values(?, ?)";
-            PreparedStatement stmt = conn.prepareStatement(
+            final String query = "insert into movie_details (mid, genre, directors, actors)"
+                    + " values(?, ?, ?, ?)";
+            PreparedStatement stmt = connection.prepareStatement(
                     query,
                     Statement.RETURN_GENERATED_KEYS);
-            stmt.setString(1, title);
-            stmt.setInt(2, year);
+            stmt.setInt(1, mid);
+            stmt.setString(2, genre);
+            stmt.setString(3, directors);
+            stmt.setString(4, actors);
 
             final int status = stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
             rs.next(); // move to column
             movie.setId(rs.getInt(1));
+            movie.setGenre(genre);
+            movie.setDirectors(directors);
+            movie.setActors(actors);
+
             movies.add(movie);
 
-            rs.close();
             stmt.close();
-            rollbackConnection(conn);
-            result = new CommandResult(movies, status);
         } catch (Exception e) {
-            rollbackConnection(conn);
-            throw new DataConnectionException("Unable to add movie: " + title
-                    + " from " + year + "\n" + e.getMessage(), e);
+            throw new DataConnectionException("Unable to add details to movie: "
+                    + mid + "\n" + e.getMessage(), e);
         } finally {
-            closeConnection(conn);
+            rollbackConnection(connection);
+            closeConnection(connection);
         }
 
-        return result;
+        return movies;
     }
 
     @Override
-    public CommandResult getAllMovies() throws DataConnectionException {
-        Connection conn = null;
-        CommandResult result = null;
+    public LinkedList<Model> getAllMovies(Connection connection) throws DataConnectionException {
         LinkedList<Model> movies = new LinkedList<>();
 
         try {
-            conn = getDataConnection().getConnection();
+            connection.setAutoCommit(false);
 
             final String query = "select mid, title, year from movies;";
-            PreparedStatement stmt = conn.prepareStatement(query);
+            PreparedStatement stmt = connection.prepareStatement(query);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 movies.add(new Movie(
@@ -71,58 +87,83 @@ public class MockMovieData extends Data implements IMovieData {
                         rs.getInt(3)));
             }
 
-            rs.close();
             stmt.close();
-            rollbackConnection(conn);
-            result = new CommandResult(movies, movies.size());
         } catch (Exception e) {
-            rollbackConnection(conn);
             throw new DataConnectionException("Unable to get a list of all the movies\n"
                     + e.getMessage(), e);
         } finally {
-            closeConnection(conn);
+            rollbackConnection(connection);
+            closeConnection(connection);
         }
 
-        return result;
+        return movies;
     }
 
     @Override
-    public CommandResult getMovie(int id) throws DataConnectionException {
-        Connection conn = null;
-        CommandResult result = null;
+    public LinkedList<Model> getMovie(Connection connection, int id) throws DataConnectionException {
         LinkedList<Model> movies = new LinkedList<>();
 
         try {
-            conn = getDataConnection().getConnection();
+            connection.setAutoCommit(false);
 
             final String query = "select mid, title, year from movies where mid = ?";
-            PreparedStatement stmt = conn.prepareStatement(query);
+            PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
 
             Movie movie = null;
-            if (rs.first()) {
+            if (rs.next()) {
                 movie = new Movie(
                         rs.getInt(1),
                         rs.getString(2),
                         rs.getInt(3));
             }
 
-            rs.close();
             stmt.close();
-            rollbackConnection(conn);
             if (movie != null) {
                 movies.add(movie);
             }
-            result = new CommandResult(movies, movies.size());
         } catch (Exception e) {
-            rollbackConnection(conn);
             throw new DataConnectionException("Unable to get details from movie "
                     + id + "\n" + e.getMessage(), e);
         } finally {
-            closeConnection(conn);
+            rollbackConnection(connection);
+            closeConnection(connection);
         }
 
-        return result;
+        return movies;
+    }
+
+    @Override
+    public LinkedList<Model> getMovieDetail(Connection connection, int id) throws DataConnectionException {
+        LinkedList<Model> movies = new LinkedList<>();
+        Movie movie = new Movie();
+
+        try {
+            connection.setAutoCommit(false);
+
+            final String queryDetails = "select genre, director, actors "
+                    + "from movie_details where mid = ?";
+            PreparedStatement stmt = connection.prepareStatement(queryDetails);
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                movie.setId(id);
+                movie.setGenre(rs.getString(1));
+                movie.setDirectors(rs.getString(2));
+                movie.setActors(rs.getString(3));
+            }
+
+            stmt.close();
+        } catch (Exception e) {
+            throw new DataConnectionException("Unable to get details from movie "
+                    + id + "\n" + e.getMessage(), e);
+        } finally {
+            rollbackConnection(connection);
+            closeConnection(connection);
+        }
+
+        return movies;
     }
 }

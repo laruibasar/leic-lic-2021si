@@ -1,10 +1,12 @@
 
 package pt.isel.ls.data.common;
 
+import pt.isel.ls.data.connectors.DataConnection;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public abstract class Data {
+public class Data {
     private static DataConnection dataConnection = null;
 
     public DataConnection getDataConnection() {
