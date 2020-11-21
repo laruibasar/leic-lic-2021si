@@ -1,5 +1,6 @@
 package pt.isel.ls;
 
+import pt.isel.ls.config.Router;
 import pt.isel.ls.model.Model;
 import pt.isel.ls.handlers.Handler;
 import pt.isel.ls.handlers.HandlerException;
@@ -49,10 +50,10 @@ public class AppConsole {
             return false;
         }
 
-        Command cmd = setCommand(args);
-        System.out.println("Running command: " + cmd.toString());
-
         try {
+            Command cmd = setCommand(args);
+            System.out.println("Running command: " + cmd.toString());
+
             CommandResult result = runCommand(cmd);
             showResults(result);
         } catch (RouterException | DataConnectionException | SQLException
@@ -63,14 +64,19 @@ public class AppConsole {
         return true;
     }
 
-    private static Command setCommand(String[] args) {
+    private static Command setCommand(String[] args) throws RouterException {
         Method method = Method.getMethod(args[0]);
         Path path = new Path(args[1]);
-        Command cmd = new Command(method, path);
+        Parameters params = new Parameters();
         if (args.length == 3) {
-            Parameters params = new Parameters();
             params.setValues(args[2]);
-            cmd.setParameters(params);
+        }
+        Command cmd = new Command(method, path, params);
+
+        try {
+            cmd.setTemplate(AppConfig.getInstance().router.findTemplate(cmd));
+        } catch (RouterException e) {
+            throw new RouterException(e.getMessage());
         }
 
         return cmd;

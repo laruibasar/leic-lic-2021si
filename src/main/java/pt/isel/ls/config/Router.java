@@ -21,10 +21,16 @@ public class Router {
     }
 
     public Handler findHandler(Command command) throws RouterException {
+        if (command.getTemplate() == null) {
+            throw new RouterException("Invalid command " + command.toString());
+        }
+        return handlers.get(command.getTemplate());
+    }
+
+    public Command findTemplate(Command command) throws RouterException {
         for (Command template : handlers.keySet()) {
             if (template.matches(command)) {
-                command.setValues(template.getPath()); // awfull code
-                return handlers.get(template);
+                return template;
             }
         }
         throw new RouterException("Invalid command " + command.toString());

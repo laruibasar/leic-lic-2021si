@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 
 public class Parameters implements Iterable<String> {
     /* store valid parameters for the command */
+    /* DEPRECATED */
     private ArrayList<String> validParameters;
 
     /* to store user sent parameters */
@@ -30,7 +31,7 @@ public class Parameters implements Iterable<String> {
             String[] pair = param[i].split("=");
             userParameters.put(
                     pair[0],
-                    pair.length < 2 ? "Buggy Joe" : pair[1]);
+                    pair.length < 2 ? "" : pair[1]);
         }
     }
 
@@ -38,13 +39,23 @@ public class Parameters implements Iterable<String> {
         return userParameters.get(key);
     }
 
-    private LinkedHashMap<String, String> getParameters() {
+    public LinkedHashMap<String, String> getParameters() {
         return userParameters;
     }
 
+    /* DEPRECATED */
     public boolean isValid(Parameters params) {
         for (String str : validParameters) {
             if (!params.getParameters().containsKey(str)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean isValid(ArrayList<String> checklist) {
+        for (String str : checklist) {
+            if (!userParameters.containsKey(str)) {
                 return false;
             }
         }
