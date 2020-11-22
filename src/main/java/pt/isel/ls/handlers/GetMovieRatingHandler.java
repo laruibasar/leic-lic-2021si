@@ -3,6 +3,9 @@ package pt.isel.ls.handlers;
 import pt.isel.ls.data.IRatingData;
 import pt.isel.ls.data.RatingData;
 import pt.isel.ls.data.common.DataConnectionException;
+import pt.isel.ls.handlers.common.Handler;
+import pt.isel.ls.handlers.common.HandlerException;
+import pt.isel.ls.handlers.common.IHandler;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
 

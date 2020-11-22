@@ -1,4 +1,4 @@
-package pt.isel.ls.handlers;
+package pt.isel.ls.handlers.common;
 
 import pt.isel.ls.utils.Command;
 

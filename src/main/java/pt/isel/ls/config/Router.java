@@ -1,6 +1,6 @@
 package pt.isel.ls.config;
 
-import pt.isel.ls.handlers.Handler;
+import pt.isel.ls.handlers.common.Handler;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.Method;
 import pt.isel.ls.utils.Path;
