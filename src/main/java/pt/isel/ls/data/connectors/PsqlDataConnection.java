@@ -36,7 +36,7 @@ public class PsqlDataConnection extends DataConnection {
     }
 
     private String getConnectionUrl() {
-        DataBaseConfig dbc = AppConfig.getInstance().database;
+        DataBaseConfig dbc = AppConfig.getDatabaseInfo();
         String url = "jdbc:postgresql://"
                 + dbc.host
                 + ":" + dbc.port
