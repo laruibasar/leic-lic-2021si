@@ -3,15 +3,10 @@ package pt.isel.ls;
 import pt.isel.ls.model.Model;
 import pt.isel.ls.services.Handler;
 import pt.isel.ls.services.exceptions.InvalidAverageException;
-import pt.isel.ls.utils.Command;
+import pt.isel.ls.utils.*;
 import pt.isel.ls.config.AppConfig;
 import pt.isel.ls.config.RouterException;
 import pt.isel.ls.data.DataConnectionException;
-import pt.isel.ls.utils.CommandResult;
-import pt.isel.ls.utils.Method;
-import pt.isel.ls.utils.Parameters;
-import pt.isel.ls.utils.ParametersExceptions;
-import pt.isel.ls.utils.Path;
 
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -65,10 +60,17 @@ public class AppConsole {
     private static Command setCommand(String[] args) {
         Method method = Method.getMethod(args[0]);
         Path path = new Path(args[1]);
+        Header header = new Header();
+        Parameters params = new Parameters();
         Command cmd = new Command(method, path);
         if (args.length == 3) {
-            Parameters params = new Parameters();
             params.setValues(args[2]);
+            cmd.setHeader(header);
+            cmd.setParameters(params);
+        } else if (args.length == 4){
+            header.setValues(args[2]);
+            params.setValues(args[3]);
+            cmd.setHeader(header);
             cmd.setParameters(params);
         }
 

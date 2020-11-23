@@ -49,6 +49,10 @@ public class Command {
         parameters = params;
     }
 
+    public void setHeader(Header header) { this.header = header; }
+
+    public Header getHeader() { return header; }
+
     public boolean matches(Command command) {
         if (!this.method.equals(command.getMethod())) {
             return false;

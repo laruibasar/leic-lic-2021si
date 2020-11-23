@@ -6,11 +6,11 @@ public class App {
     public static void main(String[] args) {
         System.out.println("Application LS - G8\n");
 
-        if (args.length != 0 && args.length != 2 && args.length != 3) {
+        if (args.length == 1 || args.length > 4) {
             System.out.println("Error: Invalid number of arguments provided");
             System.out.print("Usage:\t");
             System.out.println("java pt.isel.ls.App [method path "
-                    + "[parameters]]");
+                    + "[parameters] [header]]");
             return;
         }
 
