@@ -31,7 +31,6 @@ public class GetMovieDetailsHandler extends Handler implements IHandler {
 
     @Override
     public CommandResult execute(Command cmd) throws HandlerException {
-        IDataTransaction ts = new DataTransaction();
         try {
             final int mid = Integer.parseInt(cmd.getPath().getValue(1));
         } catch (NumberFormatException e) {

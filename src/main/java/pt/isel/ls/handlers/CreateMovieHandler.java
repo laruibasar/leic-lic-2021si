@@ -22,12 +22,10 @@ import java.util.LinkedList;
  */
 public class CreateMovieHandler extends Handler implements IHandler {
     IMovieData movieData;
-    IDataTransaction ts;
 
     public CreateMovieHandler() {
         super();
         movieData = new MovieData();
-        ts = new DataTransaction();
         template.setParameters(
                 new Parameters(new String[]{"title", "releaseYear"}));
     }
@@ -35,10 +33,6 @@ public class CreateMovieHandler extends Handler implements IHandler {
     // good for testing
     public void setMovieDataConnection(IMovieData movieData) {
         this.movieData = movieData;
-    }
-
-    public void setDataTransaction(IDataTransaction ts) {
-        this.ts = ts;
     }
 
     @Override
@@ -58,6 +52,7 @@ public class CreateMovieHandler extends Handler implements IHandler {
                 .getParameters()
                 .getValue("title")
                 .replace("+", " ");
+
         final int year = Integer.parseInt(cmd.getParameters().getValue("releaseYear"));
 
         try {

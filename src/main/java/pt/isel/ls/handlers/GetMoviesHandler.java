@@ -31,8 +31,6 @@ public class GetMoviesHandler extends Handler implements IHandler {
 
     @Override
     public CommandResult execute(Command cmd) throws HandlerException {
-        IDataTransaction ts = new DataTransaction();
-
         try {
             LinkedList<Model> result = ts.executeTransaction((connection) -> {
                 return movieData.getAllMovies(connection);
