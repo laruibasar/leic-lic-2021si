@@ -40,9 +40,11 @@ public class AppConsole {
     }
 
     public static boolean runOnce(String[] args) {
+        Command cmd = setCommand(args);
+        System.out.println("Running command: " + cmd.toString());
 
-        if (args[0].toUpperCase().equals("EXIT")) {
-            System.out.println("Exiting...");
+        /* temporary fix, later we use a special CommandResult */
+        if (cmd.getMethod() == Method.EXIT) {
             return false;
         }
 
@@ -80,7 +82,7 @@ public class AppConsole {
     private static CommandResult runCommand(Command cmd) throws RouterException,
             DataConnectionException, HandlerException {
 
-        Handler handler = AppConfig.getInstance().router.findHandler(cmd);
+        Handler handler = AppConfig.getRouter().findHandler(cmd);
         return handler.execute(cmd);
     }
 

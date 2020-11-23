@@ -13,12 +13,12 @@ public abstract class DataConnection {
     public abstract Connection getConnection() throws SQLException;
 
     protected String getConnectionUser() {
-        DataBaseConfig dbc = AppConfig.getInstance().database;
+        DataBaseConfig dbc = AppConfig.getDatabaseInfo();
         return dbc.user;
     }
 
     protected String getConnectionPassword() {
-        DataBaseConfig dbc = AppConfig.getInstance().database;
+        DataBaseConfig dbc = AppConfig.getDatabaseInfo();
         return dbc.password;
     }
 }

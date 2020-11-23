@@ -71,10 +71,13 @@ public class Path {
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder("/");
-        for (String s : path) {
-            str.append(s).append("/");
+
+        if (path.size() > 0) {
+            for (String s : path) {
+                str.append(s).append("/");
+            }
+            str.deleteCharAt(str.length() - 1); // cut last "/"
         }
-        str.deleteCharAt(str.length() - 1); // cut last "/"
 
         return str.toString();
     }

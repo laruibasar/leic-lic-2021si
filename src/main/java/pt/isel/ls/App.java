@@ -15,7 +15,7 @@ public class App {
         }
 
         AppConfig.setup();
-        if (AppConfig.getInstance().loadConfig) {
+        if (AppConfig.getLoadConfig()) {
             if (args.length == 0) {
                 AppConsole.run();
             } else {
@@ -24,7 +24,7 @@ public class App {
             return;
         } else {
             System.out.println("Error: failed to load config.");
-            System.out.println(AppConfig.getInstance().loadMessage);
+            System.out.println(AppConfig.getLoadMessage());
         }
     }
 }
