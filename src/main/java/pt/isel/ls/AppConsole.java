@@ -40,17 +40,14 @@ public class AppConsole {
     }
 
     public static boolean runOnce(String[] args) {
-        Command cmd = setCommand(args);
-        System.out.println("Running command: " + cmd.toString());
-
-        /* temporary fix, later we use a special CommandResult */
-        if (cmd.getMethod() == Method.EXIT) {
-            return false;
-        }
-
         try {
             Command cmd = setCommand(args);
             System.out.println("Running command: " + cmd.toString());
+
+            /* temporary fix, later we use a special CommandResult */
+            if (cmd.getMethod() == Method.EXIT) {
+                return false;
+            }
 
             CommandResult result = runCommand(cmd);
             showResults(result);
@@ -71,7 +68,7 @@ public class AppConsole {
         Command cmd = new Command(method, path, params);
 
         try {
-            cmd.setTemplate(AppConfig.getInstance().router.findTemplate(cmd));
+            cmd.setTemplate(AppConfig.getRouter().findTemplate(cmd));
         } catch (RouterException e) {
             throw new RouterException(e.getMessage());
         }
