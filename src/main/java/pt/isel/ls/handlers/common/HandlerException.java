@@ -1,4 +1,4 @@
-package pt.isel.ls.handlers;
+package pt.isel.ls.handlers.common;
 
 public class HandlerException extends Exception {
     public HandlerException(String description) {

@@ -6,6 +6,9 @@ import pt.isel.ls.data.common.DataConnectionException;
 import pt.isel.ls.data.transaction.DataTransaction;
 import pt.isel.ls.data.transaction.IDataTransaction;
 import pt.isel.ls.model.Model;
+import pt.isel.ls.handlers.common.Handler;
+import pt.isel.ls.handlers.common.HandlerException;
+import pt.isel.ls.handlers.common.IHandler;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
 

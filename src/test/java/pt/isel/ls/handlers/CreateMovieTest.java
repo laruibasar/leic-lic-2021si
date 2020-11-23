@@ -9,6 +9,7 @@ import pt.isel.ls.mockdata.MockDataTransaction;
 import pt.isel.ls.mockdata.MockMovieData;
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Movie;
+import pt.isel.ls.handlers.common.HandlerException;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
 import pt.isel.ls.utils.Method;
