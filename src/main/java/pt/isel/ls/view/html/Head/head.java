@@ -13,6 +13,11 @@ public class head {
 
     @Override
     public String toString() {
+        if(t == null) {
+            return "\t<head>"
+                    + "\n" +
+                    "\t</head>";
+        }
         return "\t<head>\n"
                 + t
                 + "\n\t</head>";

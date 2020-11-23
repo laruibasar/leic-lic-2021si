@@ -1,6 +1,6 @@
 package pt.isel.ls.view.html.Body;
 
-public class row extends table {
+public class row extends table{
 
     private String[] columns;
 

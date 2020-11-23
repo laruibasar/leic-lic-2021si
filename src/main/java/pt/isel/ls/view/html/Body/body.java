@@ -19,13 +19,18 @@ public class body {
 
     @Override
     public String toString() {
-        if(b == null) {
+        if(tb != null) {
             return "\t<body>\n"
                     + tb
                     + "\n\t</body>";
+        } else if (b != null) {
+            return "\t<body>\n"
+                    + b
+                    + "\n\t</body>";
+        } else {
+            return "\t<body>\n"
+                    + "\t</body>";
         }
-        return "\t<body>\n"
-                + b
-                + "\n\t</body>";
+
     }
 }
