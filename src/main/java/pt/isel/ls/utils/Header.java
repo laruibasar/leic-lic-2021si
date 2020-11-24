@@ -1,10 +1,9 @@
 package pt.isel.ls.utils;
 
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class Header {
-
-
     /* to store header */
     private LinkedHashMap<String, String> userHeader;
 
@@ -45,6 +44,10 @@ public class Header {
                     break;
             }
         }
+    }
+
+    public LinkedHashMap<String, String> getHeaders() {
+        return userHeader;
     }
 
     public String getValue(String key) {

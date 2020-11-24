@@ -41,14 +41,14 @@ public class CreateUserHandler extends Handler implements IHandler {
                     + keys.toString());
         }
 
-        final String name = template
+        final String name = cmd
                 .getParameters()
                 .getValue("name")
                 .replace("+", " ");
         try {
             return userData.createUser(
                     name,
-                    template.getParameters().getValue("email"));
+                    cmd.getParameters().getValue("email"));
         } catch (DataConnectionException e) {
             throw new HandlerException(e.getMessage(), e);
         }

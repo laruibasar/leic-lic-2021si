@@ -15,7 +15,11 @@ public class Command {
     public Command() { }
 
     public Command(Method method, Path path) {
-        this(method, path, new Parameters());
+        this(method, path, new Header(), new Parameters());
+    }
+
+    public Command(Method method, Path path, Parameters parameters) {
+        this(method, path, new Header(), parameters);
     }
 
     public Command(Method method, Path path, Header header, Parameters parameters) {
@@ -23,16 +27,13 @@ public class Command {
         this.path = path;
         this.header = header;
         this.parameters = parameters;
-    }
-
-    public Command(Method method, Path path, Parameters parameters) {
-        this.method = method;
-        this.path = path;
-        this.parameters = parameters;
         values = new LinkedHashMap<>();
 
         /* set internal values from user parameters */
         extractValuesParameters();
+
+        /* set internal values from user headers */
+        extractValuesHeaders();
     }
 
     public Method getMethod() {
@@ -58,14 +59,7 @@ public class Command {
     public void setParameters(Parameters params) {
         parameters = params;
 
-        /* because we are setting a new parameters, we need to re-create
-         * our internal values mapping
-         */
-        values = new LinkedHashMap<>();
-        if (template != null) {
-            extractValuesPath(template);
-        }
-        extractValuesParameters();
+        updateValues();
     }
 
     public Command getTemplate() {
@@ -76,6 +70,7 @@ public class Command {
         if (template != null) {
             values = new LinkedHashMap<>();
             extractValuesParameters();
+            extractValuesHeaders();
         }
 
         this.template = template;
@@ -110,9 +105,39 @@ public class Command {
         });
     }
 
-    public void setHeader(Header header) { this.header = header; }
+    private void extractValuesHeaders() {
+        Map<String, String> headerValues = this.header.getHeaders();
+        headerValues.entrySet().forEach(entry -> {
+            addKeyValue(entry.getKey(), entry.getValue());
+        });
+    }
 
-    public Header getHeader() { return header; }
+    public void setHeader(Header header) {
+        this.header = header;
+
+        updateValues();
+    }
+
+    public Header getHeader() {
+        return header;
+    }
+
+    private void updateValues() {
+        /* because we are setting new parameters or headers, we need to re-create
+         * our internal values mapping
+         */
+        values = new LinkedHashMap<>();
+        if (template != null) {
+            extractValuesPath(template);
+        }
+        if (header != null) {
+            extractValuesHeaders();
+        }
+
+        if (parameters != null) {
+            extractValuesParameters();
+        }
+    }
 
     public boolean matches(Command command) {
         if (!this.method.equals(command.getMethod())) {

@@ -61,20 +61,25 @@ public class AppConsole {
 
     private static Command setCommand(String[] args) throws RouterException {
         Method method = Method.getMethod(args[0]);
+        if (method == null) {
+            throw new RouterException("Command method invalid: " + args[0]);
+        }
+
         Path path = new Path(args[1]);
         Header header = new Header();
         Parameters params = new Parameters();
-        Command cmd = new Command(method, path);
+
         if (args.length == 3) {
-            params.setValues(args[2]);
-            cmd.setHeader(header);
-            cmd.setParameters(params);
+            if (args[2].contains("accept:") || args[2].contains("file-name:")) {
+                header.setValues(args[2]);
+            } else {
+                params.setValues(args[2]);
+            }
         } else if (args.length == 4){
             header.setValues(args[2]);
             params.setValues(args[3]);
-            cmd.setHeader(header);
-            cmd.setParameters(params);
         }
+        Command cmd = new Command(method, path, header, params);
 
         return cmd;
     }
