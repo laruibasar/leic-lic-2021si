@@ -75,7 +75,7 @@ public class AppConsole {
             } else {
                 params.setValues(args[2]);
             }
-        } else if (args.length == 4){
+        } else if (args.length == 4) {
             header.setValues(args[2]);
             params.setValues(args[3]);
         }

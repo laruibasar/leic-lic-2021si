@@ -1,7 +1,6 @@
 package pt.isel.ls.utils;
 
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 public class Header {
     /* to store header */

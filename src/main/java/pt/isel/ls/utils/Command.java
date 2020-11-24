@@ -12,7 +12,8 @@ public class Command {
     private Command template;
     private Map<String, String> values;
 
-    public Command() { }
+    public Command() {
+    }
 
     public Command(Method method, Path path) {
         this(method, path, new Header(), new Parameters());
