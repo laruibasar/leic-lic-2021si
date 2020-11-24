@@ -1,19 +1,20 @@
 package pt.isel.ls.config;
 
-import pt.isel.ls.services.CreateMovieHandler;
-import pt.isel.ls.services.CreateMovieReviewHandler;
-import pt.isel.ls.services.CreateUserHandler;
-import pt.isel.ls.services.GetAllUsersHandler;
-import pt.isel.ls.services.GetMovieAllReviewsHandler;
-import pt.isel.ls.services.GetMovieDetailsHandler;
-import pt.isel.ls.services.GetMovieRatingHandler;
-import pt.isel.ls.services.GetMovieReviewHandler;
-import pt.isel.ls.services.GetMoviesHandler;
-import pt.isel.ls.services.GetTopRatingsHandler;
-import pt.isel.ls.services.GetUserAllReviewsHandler;
-import pt.isel.ls.services.GetUserDetailsHandler;
-import pt.isel.ls.services.GetUserReviewHandler;
-import pt.isel.ls.services.RateMovieHandler;
+import pt.isel.ls.handlers.CreateMovieHandler;
+import pt.isel.ls.handlers.CreateMovieReviewHandler;
+import pt.isel.ls.handlers.CreateUserHandler;
+import pt.isel.ls.handlers.ExitHandler;
+import pt.isel.ls.handlers.GetAllUsersHandler;
+import pt.isel.ls.handlers.GetMovieAllReviewsHandler;
+import pt.isel.ls.handlers.GetMovieDetailsHandler;
+import pt.isel.ls.handlers.GetMovieRatingHandler;
+import pt.isel.ls.handlers.GetMovieReviewHandler;
+import pt.isel.ls.handlers.GetMoviesHandler;
+import pt.isel.ls.handlers.GetTopRatingsHandler;
+import pt.isel.ls.handlers.GetUserAllReviewsHandler;
+import pt.isel.ls.handlers.GetUserDetailsHandler;
+import pt.isel.ls.handlers.GetUserReviewHandler;
+import pt.isel.ls.handlers.RateMovieHandler;
 import pt.isel.ls.utils.Method;
 import pt.isel.ls.utils.Path;
 
@@ -23,14 +24,30 @@ import pt.isel.ls.utils.Path;
  */
 public class AppConfig {
     /* store configuration load status */
-    public boolean loadConfig;
-    public String loadMessage;
+    private static boolean loadConfig;
+    private static String loadMessage;
+
+    public static boolean getLoadConfig() {
+        return loadConfig;
+    }
+
+    public static String getLoadMessage() {
+        return loadMessage;
+    }
 
     /* store db config */
-    public DataBaseConfig database;
+    private static DataBaseConfig database;
+
+    public static DataBaseConfig getDatabaseInfo() {
+        return database;
+    }
 
     /* store routing information */
-    public Router router;
+    private static Router router;
+
+    public static Router getRouter() {
+        return router;
+    }
 
     private static AppConfig config;
 
@@ -62,6 +79,8 @@ public class AppConfig {
         this.router.addHandler(Method.GET, new Path("/users/{uid}/reviews"), new GetUserAllReviewsHandler());
         this.router.addHandler(Method.GET, new Path("/users/{uid}/reviews/{rid}"), new GetUserReviewHandler());
         this.router.addHandler(Method.GET, new Path("tops/ratings"), new GetTopRatingsHandler());
+
+        this.router.addHandler(Method.EXIT, new Path("/"), new ExitHandler());
     }
 
     private AppConfig() {

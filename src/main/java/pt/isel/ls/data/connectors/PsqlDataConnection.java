@@ -3,7 +3,7 @@ package pt.isel.ls.data.connectors;
 import org.postgresql.ds.PGSimpleDataSource;
 import pt.isel.ls.config.AppConfig;
 import pt.isel.ls.config.DataBaseConfig;
-import pt.isel.ls.data.DataConnection;
+import pt.isel.ls.data.common.DataConnection;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -36,7 +36,7 @@ public class PsqlDataConnection extends DataConnection {
     }
 
     private String getConnectionUrl() {
-        DataBaseConfig dbc = AppConfig.getInstance().database;
+        DataBaseConfig dbc = AppConfig.getDatabaseInfo();
         String url = "jdbc:postgresql://"
                 + dbc.host
                 + ":" + dbc.port

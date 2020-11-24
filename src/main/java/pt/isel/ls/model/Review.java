@@ -9,6 +9,14 @@ public class Review extends Model {
     private int movie;
     private int movieCritic;
 
+    public Review(String summary, String completeReview, int movie, int rating, int critic) {
+        this.summary = summary;
+        this.completeReview = completeReview;
+        this.rating = rating;
+        this.movie = movie;
+        movieCritic = critic;
+    }
+
     public Review(int rid, String summary, int movie, int rating) {
         this.rid = rid;
         this.summary = summary;
@@ -25,8 +33,20 @@ public class Review extends Model {
         this.movieCritic = critic;
     }
 
+    public void setId(int rid) {
+        this.rid = rid;
+    }
+
+    public int getId() {
+        return rid;
+    }
+
     public String getSummary() {
         return summary;
+    }
+
+    public String getCompleteReview() {
+        return completeReview;
     }
 
     public int getRating() {

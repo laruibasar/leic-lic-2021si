@@ -1,14 +1,18 @@
 package pt.isel.ls;
 
 import pt.isel.ls.model.Model;
-import pt.isel.ls.services.Handler;
-import pt.isel.ls.services.exceptions.InvalidAverageException;
-import pt.isel.ls.utils.*;
+import pt.isel.ls.handlers.common.Handler;
+import pt.isel.ls.handlers.common.HandlerException;
+import pt.isel.ls.utils.Command;
 import pt.isel.ls.config.AppConfig;
 import pt.isel.ls.config.RouterException;
-import pt.isel.ls.data.DataConnectionException;
+import pt.isel.ls.data.common.DataConnectionException;
+import pt.isel.ls.utils.CommandResult;
+import pt.isel.ls.utils.Header;
+import pt.isel.ls.utils.Method;
+import pt.isel.ls.utils.Parameters;
+import pt.isel.ls.utils.Path;
 
-import java.sql.SQLException;
 import java.util.Scanner;
 
 public class AppConsole {
@@ -37,27 +41,25 @@ public class AppConsole {
     }
 
     public static boolean runOnce(String[] args) {
-
-        if (args[0].toUpperCase().equals("EXIT")) {
-            System.out.println("Exiting...");
-            return false;
-        }
-
-        Command cmd = setCommand(args);
-        System.out.println("Running command: " + cmd.toString());
-
         try {
+            Command cmd = setCommand(args);
+            System.out.println("Running command: " + cmd.toString());
+
+            /* temporary fix, later we use a special CommandResult */
+            if (cmd.getMethod() == Method.EXIT) {
+                return false;
+            }
+
             CommandResult result = runCommand(cmd);
             showResults(result);
-        } catch (RouterException | DataConnectionException | SQLException
-                | InvalidAverageException | ParametersExceptions e) {
+        } catch (RouterException | DataConnectionException | HandlerException e) {
             System.out.println("ERROR " + e.getMessage() + "\n");
         }
 
         return true;
     }
 
-    private static Command setCommand(String[] args) {
+    private static Command setCommand(String[] args) throws RouterException {
         Method method = Method.getMethod(args[0]);
         Path path = new Path(args[1]);
         Header header = new Header();
@@ -78,10 +80,9 @@ public class AppConsole {
     }
 
     private static CommandResult runCommand(Command cmd) throws RouterException,
-            DataConnectionException, SQLException, InvalidAverageException,
-            ParametersExceptions {
+            DataConnectionException, HandlerException {
 
-        Handler handler = AppConfig.getInstance().router.findHandler(cmd);
+        Handler handler = AppConfig.getRouter().findHandler(cmd);
         return handler.execute(cmd);
     }
 
