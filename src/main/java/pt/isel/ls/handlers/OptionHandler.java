@@ -8,6 +8,11 @@ import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
 
 public class OptionHandler extends Handler implements IHandler {
+    public OptionHandler() {
+        super();
+        description = "Show a list of available commands and their description";
+    }
+
     @Override
     public CommandResult execute(Command cmd) throws DataConnectionException, HandlerException {
         return null;
