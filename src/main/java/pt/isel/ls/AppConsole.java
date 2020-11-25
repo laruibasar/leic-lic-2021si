@@ -6,7 +6,6 @@ import pt.isel.ls.handlers.common.HandlerException;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.config.AppConfig;
 import pt.isel.ls.config.RouterException;
-import pt.isel.ls.data.common.DataConnectionException;
 import pt.isel.ls.utils.CommandResult;
 import pt.isel.ls.utils.Method;
 import pt.isel.ls.utils.Parameters;
@@ -40,6 +39,12 @@ public class AppConsole {
     }
 
     public static boolean runOnce(String[] args) {
+        if (args.length == 1) {
+            System.out.println("Command: method path [header] [parameters]");
+            System.out.println("Run OPTION / to list available commands.\n");
+            return true;
+        }
+
         try {
             Command cmd = setCommand(args);
             System.out.println("Running command: " + cmd.toString());
@@ -51,7 +56,7 @@ public class AppConsole {
 
             CommandResult result = runCommand(cmd);
             showResults(result);
-        } catch (RouterException | DataConnectionException | HandlerException e) {
+        } catch (RouterException | HandlerException e) {
             System.out.println("ERROR " + e.getMessage() + "\n");
         }
 
@@ -60,6 +65,10 @@ public class AppConsole {
 
     private static Command setCommand(String[] args) throws RouterException {
         Method method = Method.getMethod(args[0].toUpperCase());
+        if (method == null) {
+            throw new RouterException("Method invalid " + args[0]);
+        }
+
         Path path = new Path(args[1]);
         Parameters params = new Parameters();
         if (args.length == 3) {
@@ -77,7 +86,7 @@ public class AppConsole {
     }
 
     private static CommandResult runCommand(Command cmd) throws RouterException,
-            DataConnectionException, HandlerException {
+            HandlerException {
 
         Handler handler = AppConfig.getRouter().findHandler(cmd);
         return handler.execute(cmd);
