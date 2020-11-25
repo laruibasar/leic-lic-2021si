@@ -18,6 +18,9 @@ public class GetMovieDetailsHandler extends Handler implements IHandler {
     public GetMovieDetailsHandler() {
         super();
         movieData = new MovieData();
+        description = "Return the detailed information for the movie identified by mid";
+
+        validValues.add("mid");
     }
 
     public void setMovieDataConnection(IMovieData movieData) {
@@ -26,8 +29,22 @@ public class GetMovieDetailsHandler extends Handler implements IHandler {
 
     @Override
     public CommandResult execute(Command cmd) throws HandlerException {
+        String check = checkNeededValues(cmd);
+        if (check.length() > 0) {
+            throw new HandlerException("Handler missing parameters: "
+                    + check);
+        }
+
+        int movie;
         try {
-            return movieData.getMovie(Integer.parseInt(cmd.getPath().getValue(1)));
+            movie = Integer.parseInt(cmd.getValue("mid"));
+        } catch (NumberFormatException e) {
+            throw new HandlerException("Handler invalid format for mid: "
+                    + cmd.getValue("mid"));
+        }
+
+        try {
+            return movieData.getMovie(movie);
         } catch (DataConnectionException e) {
             throw new HandlerException(e.getMessage(), e);
         }

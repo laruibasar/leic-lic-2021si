@@ -8,7 +8,6 @@ import pt.isel.ls.handlers.common.HandlerException;
 import pt.isel.ls.handlers.common.IHandler;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
-import pt.isel.ls.utils.Parameters;
 
 /**
  * POST /users - creates a new user, given the following parameters
@@ -21,7 +20,10 @@ public class CreateUserHandler extends Handler implements IHandler {
     public CreateUserHandler() {
         super();
         userData = new UserData();
-        template.setParameters(new Parameters(new String[]{"name", "email"}));
+        description = "Create a new user";
+
+        validValues.add("name");
+        validValues.add("email");
     }
 
     public void setUserDataConnection(IUserData userData) {
@@ -30,25 +32,16 @@ public class CreateUserHandler extends Handler implements IHandler {
 
     @Override
     public CommandResult execute(Command cmd) throws HandlerException {
-        if (!template.getParameters().isValid(cmd.getParameters())) {
-            StringBuilder keys = new StringBuilder("Missing ");
-            for (String str : template.getParameters()) {
-                if (cmd.getParameters().getValue(str) == null) {
-                    keys.append("\"").append(str).append("\" ");
-                }
-            }
-            throw new HandlerException("Handler: missing parameters: "
-                    + keys.toString());
+        String check = checkNeededValues(cmd);
+        if (check.length() > 0) {
+            throw new HandlerException("Handler missing parameters: "
+                    + check);
         }
 
-        final String name = template
-                .getParameters()
-                .getValue("name")
-                .replace("+", " ");
         try {
             return userData.createUser(
-                    name,
-                    template.getParameters().getValue("email"));
+                    cmd.getValue("name"),
+                    cmd.getValue("email"));
         } catch (DataConnectionException e) {
             throw new HandlerException(e.getMessage(), e);
         }

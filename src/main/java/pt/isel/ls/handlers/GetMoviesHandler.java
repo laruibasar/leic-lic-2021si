@@ -18,6 +18,8 @@ public class GetMoviesHandler extends Handler implements IHandler {
     public GetMoviesHandler() {
         super();
         movieData = new MovieData();
+        description = "Return list with all movies";
+
     }
 
     public void setMovieDataConnection(IMovieData movieData) {

@@ -8,6 +8,11 @@ import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
 
 public class ExitHandler extends Handler implements IHandler {
+    public ExitHandler() {
+        super();
+        description = "Exit program";
+    }
+
     @Override
     public CommandResult execute(Command cmd) throws DataConnectionException, HandlerException {
         return new CommandResult(null, 0);
