@@ -1,10 +1,12 @@
 package pt.isel.ls.services;
 
 import org.junit.Test;
+
 import pt.isel.ls.config.AppConfig;
 import pt.isel.ls.data.DataConnectionException;
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Movie;
+import pt.isel.ls.services.CreateMovieHandler;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
 import pt.isel.ls.utils.Method;
@@ -12,9 +14,9 @@ import pt.isel.ls.utils.Parameters;
 import pt.isel.ls.utils.ParametersExceptions;
 import pt.isel.ls.utils.Path;
 
-import java.sql.SQLException;
-
 import static org.junit.Assert.assertEquals;
+
+import java.sql.SQLException;
 
 public class CreateMovieTest {
 
