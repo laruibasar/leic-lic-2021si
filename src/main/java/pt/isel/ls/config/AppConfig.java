@@ -14,6 +14,7 @@ import pt.isel.ls.handlers.GetTopRatingsHandler;
 import pt.isel.ls.handlers.GetUserAllReviewsHandler;
 import pt.isel.ls.handlers.GetUserDetailsHandler;
 import pt.isel.ls.handlers.GetUserReviewHandler;
+import pt.isel.ls.handlers.OptionHandler;
 import pt.isel.ls.handlers.RateMovieHandler;
 import pt.isel.ls.utils.Method;
 import pt.isel.ls.utils.Path;
@@ -81,6 +82,7 @@ public class AppConfig {
         this.router.addHandler(Method.GET, new Path("tops/ratings"), new GetTopRatingsHandler());
 
         this.router.addHandler(Method.EXIT, new Path("/"), new ExitHandler());
+        this.router.addHandler(Method.OPTION, new Path("/"), new OptionHandler());
     }
 
     private AppConfig() {
