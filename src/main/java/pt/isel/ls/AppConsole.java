@@ -59,7 +59,7 @@ public class AppConsole {
     }
 
     private static Command setCommand(String[] args) throws RouterException {
-        Method method = Method.getMethod(args[0]);
+        Method method = Method.getMethod(args[0].toUpperCase());
         Path path = new Path(args[1]);
         Parameters params = new Parameters();
         if (args.length == 3) {

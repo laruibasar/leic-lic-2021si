@@ -1,6 +1,5 @@
 package pt.isel.ls.handlers;
 
-import pt.isel.ls.data.common.DataConnectionException;
 import pt.isel.ls.handlers.common.Handler;
 import pt.isel.ls.handlers.common.HandlerException;
 import pt.isel.ls.handlers.common.IHandler;
@@ -14,7 +13,7 @@ public class ExitHandler extends Handler implements IHandler {
     }
 
     @Override
-    public CommandResult execute(Command cmd) throws DataConnectionException, HandlerException {
+    public CommandResult execute(Command cmd) throws HandlerException {
         return new CommandResult(null, 0);
     }
 }
