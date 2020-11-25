@@ -19,6 +19,9 @@ public class GetMovieAllReviewsHandler extends Handler implements IHandler {
     public GetMovieAllReviewsHandler() {
         super();
         reviewData = new MovieReviewData();
+        description = "Return the reviews identified by mid";
+
+        validValues.add("mid");
     }
 
     public void setReviewDataConnection(IMovieReviewData reviewData) {
@@ -27,7 +30,19 @@ public class GetMovieAllReviewsHandler extends Handler implements IHandler {
 
     @Override
     public CommandResult execute(Command cmd) throws HandlerException {
-        final int movie = Integer.parseInt(cmd.getPath().getValue(1));
+        String check = checkNeededValues(cmd);
+        if (check.length() > 0) {
+            throw new HandlerException("Handler missing parameters: "
+                    + check);
+        }
+
+        int movie;
+        try {
+            movie = Integer.parseInt(cmd.getValue("mid"));
+        } catch (NumberFormatException e) {
+            throw new HandlerException("Handler invalid format for mid: "
+                    + cmd.getValue("mid"));
+        }
 
         try {
             return reviewData.getAllMovieReviews(movie);

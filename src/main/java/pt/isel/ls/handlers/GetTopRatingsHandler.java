@@ -8,7 +8,6 @@ import pt.isel.ls.handlers.common.HandlerException;
 import pt.isel.ls.handlers.common.IHandler;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
-import pt.isel.ls.utils.Parameters;
 
 /**
  * GET /tops/ratings - returns a list with the movies, given the following parameters:
@@ -25,7 +24,11 @@ public class GetTopRatingsHandler extends Handler implements IHandler {
     public GetTopRatingsHandler() {
         super();
         topData = new TopRatingData();
-        template.setParameters(new Parameters(new String[]{"n", "average", "min"}));
+        description = "Return a list with top movies by ratings";
+
+        validValues.add("n");
+        validValues.add("average");
+        validValues.add("min");
     }
 
     public void setTopDataConnection(ITopRatingData topData) {
@@ -34,21 +37,21 @@ public class GetTopRatingsHandler extends Handler implements IHandler {
 
     @Override
     public CommandResult execute(Command cmd) throws HandlerException {
-        if (!template.getParameters().isValid(cmd.getParameters())) {
-            StringBuilder keys = new StringBuilder("Missing ");
-            for (String str : template.getParameters()) {
-                if (cmd.getParameters().getValue(str) == null) {
-                    keys.append("\"").append(str).append("\" ");
-                }
-            }
-            throw new HandlerException("Handler: missing parameters: "
-                    + keys.toString());
+        String check = checkNeededValues(cmd);
+        if (check.length() > 0) {
+            throw new HandlerException("Handler missing parameters: "
+                    + check);
         }
 
-        final int number = Integer.parseInt(cmd.getParameters().getValue("n"));
-        final int min = Integer.parseInt(cmd.getParameters().getValue("min"));
+        int number;
+        try {
+            number = Integer.parseInt(cmd.getValue("n"));
+        } catch (NumberFormatException e) {
+            throw new HandlerException("Handler invalid format for number: "
+                    + cmd.getValue("n"));
+        }
 
-        final String avg = cmd.getParameters().getValue("average");
+        final String avg = cmd.getValue("average");
         int average;
         switch (avg) {
             case "highest":
@@ -59,7 +62,15 @@ public class GetTopRatingsHandler extends Handler implements IHandler {
                 break;
             default:
                 throw new HandlerException("Handler: parameter average only allow: "
-                    + "highest or lowest, sent: " + avg);
+                        + "highest or lowest, sent: " + avg);
+        }
+
+        int min;
+        try {
+            min = Integer.parseInt(cmd.getValue("min"));
+        } catch (NumberFormatException e) {
+            throw new HandlerException("Handler invalid format for number: "
+                    + cmd.getValue("min"));
         }
 
         try {

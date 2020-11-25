@@ -18,6 +18,9 @@ public class GetUserAllReviewsHandler extends Handler implements IHandler {
     public GetUserAllReviewsHandler() {
         super();
         reviewData = new UserReviewData();
+        description = "Return all reviews from the user identified by uid";
+
+        validValues.add("uid");
     }
 
     public void setReviewDataConnection(IUserReviewData reviewData) {
@@ -26,7 +29,19 @@ public class GetUserAllReviewsHandler extends Handler implements IHandler {
 
     @Override
     public CommandResult execute(Command cmd) throws HandlerException {
-        final int user = Integer.parseInt(cmd.getPath().getValue(1));
+        String check = checkNeededValues(cmd);
+        if (check.length() > 0) {
+            throw new HandlerException("Handler missing parameters: "
+                    + check);
+        }
+
+        int user;
+        try {
+            user = Integer.parseInt(cmd.getValue("uid"));
+        } catch (NumberFormatException e) {
+            throw new HandlerException("Handler invalid format for uid: "
+                    + cmd.getValue("uid"));
+        }
 
         try {
             return reviewData.getUserAllReview(user);
