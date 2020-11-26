@@ -2,10 +2,10 @@ package pt.isel.ls.view.html.body;
 
 public class Bullets extends Body {
 
-    public String [] items;
+    public String [] bullets;
 
-    public Bullets(String[] items) {
-        this.items = items;
+    public Bullets(String[] bullets) {
+        this.bullets = bullets;
     }
 
     @Override
