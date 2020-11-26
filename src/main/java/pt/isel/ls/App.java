@@ -9,7 +9,7 @@ public class App {
         if (args.length != 0 && args.length != 2 && args.length != 3) {
             System.out.println("Error: Invalid number of arguments provided");
             System.out.print("Usage:\t");
-            System.out.println("java pt.isel.ls.App [method path "
+            System.out.println("java -cp \"build/classes/java/main:vender/main/*\" pt.isel.ls.App [method path "
                     + "[parameters]]");
             return;
         }

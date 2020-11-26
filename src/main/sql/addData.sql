@@ -8,7 +8,11 @@ insert into users(name, email ) values
 insert into movies(title, year) values
 ('Gladiator', 2000),
 ('The Fast and the Furious', 2001),
-('Finding Nemo', 2003);
+('Finding Nemo', 2003),
+('The Godfather', 1972);
+
+insert into movie_details (mid, genre, director, actors) values
+(4, 'drama', 'Francis Ford Coppola', 'Marlon Brandon, Al Pacino, James Caan');
 
 insert into reviews(summary, completeReview, rating, movie, movieCritic) values
 ('Edge of Your Seat Fun!','Great Story! Great Writing! Great Acting! Great Directing! This movie has it all.',5, 1, 1),
