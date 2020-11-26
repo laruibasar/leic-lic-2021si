@@ -8,8 +8,6 @@ import pt.isel.ls.handlers.common.IHandler;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
 
-import java.util.Iterator;
-
 public class OptionHandler extends Handler implements IHandler {
     public OptionHandler() {
         super();
@@ -22,7 +20,7 @@ public class OptionHandler extends Handler implements IHandler {
 
         for (Command c : router) {
             System.out.println("Command: " + c.toString() + "\n"
-                    + router.getHandler(c).getDescription()+ "\n");
+                    + router.getHandler(c).getDescription() + "\n");
         }
         return null;
     }
