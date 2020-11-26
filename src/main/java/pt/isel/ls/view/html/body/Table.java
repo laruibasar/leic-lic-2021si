@@ -1,14 +1,14 @@
-package pt.isel.ls.view.html.Body;
+package pt.isel.ls.view.html.body;
 
 import java.util.ArrayList;
 
-public class table extends body {
+public class Table extends Body {
 
     private ArrayList<String[]> rows;
 
-    public table () {}
+    public Table() {}
 
-    public table(ArrayList<String[]> rows) {
+    public Table(ArrayList<String[]> rows) {
         this.rows = rows;
     }
 
@@ -16,7 +16,7 @@ public class table extends body {
     public String toString() {
         StringBuilder sb = new StringBuilder("\t\t<table>");
         for (String[] r : rows) {
-            sb.append("\n" + new row(r));
+            sb.append("\n" + new Row(r));
         }
         sb.append("\n\t\t</table>");
         return sb.toString();

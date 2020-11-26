@@ -1,17 +1,17 @@
-package pt.isel.ls.view.html.Body;
+package pt.isel.ls.view.html.body;
 
-public class row extends table{
+public class Row extends Table {
 
     private String[] columns;
 
-    public row (String[] columns) {
+    public Row(String[] columns) {
         this.columns = columns;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("\t\t\t<tr>");
-        for(String c: columns) {
+        for (String c: columns) {
             sb.append("\n\t\t\t\t<td>"
                     + c
                     + "</td>");
