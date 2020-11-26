@@ -19,8 +19,8 @@ public class OptionHandler extends Handler implements IHandler {
         Router router = AppConfig.getRouter();
 
         for (Command c : router) {
-            System.out.println("Command: " + c.toString() + "\n"
-                    + router.getHandler(c).getDescription() + "\n");
+            System.out.println(router.getHandler(c).getDescription() + "\n"
+                    + "Command: " + c.toString() + "\n");
         }
         return null;
     }

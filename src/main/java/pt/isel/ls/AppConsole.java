@@ -48,7 +48,7 @@ public class AppConsole {
 
         try {
             Command cmd = setCommand(args);
-            System.out.println("Running command: " + cmd.toString());
+            //System.out.println("Running command: " + cmd.toString());
 
             /* temporary fix, later we use a special CommandResult */
             if (cmd.getMethod() == Method.EXIT) {
