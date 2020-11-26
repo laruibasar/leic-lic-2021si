@@ -60,7 +60,7 @@ public class AppConsole {
     }
 
     private static Command setCommand(String[] args) throws RouterException {
-        Method method = Method.getMethod(args[0]);
+        Method method = Method.getMethod(args[0].toUpperCase());
         if (method == null) {
             throw new RouterException("Command method invalid: " + args[0]);
         }
@@ -80,6 +80,12 @@ public class AppConsole {
             params.setValues(args[3]);
         }
         Command cmd = new Command(method, path, header, params);
+
+        try {
+            cmd.setTemplate(AppConfig.getRouter().findTemplate(cmd));
+        } catch (RouterException e) {
+            throw new RouterException(e.getMessage());
+        }
 
         return cmd;
     }
