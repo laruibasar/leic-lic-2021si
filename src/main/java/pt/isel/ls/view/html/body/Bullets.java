@@ -12,10 +12,11 @@ public class Bullets extends Body {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("\t\t<ul>\n");
-        for (String i: items) {
-            sb.append("\t\t\t<li>" + i + "</li>\n");
+        for (String b: bullets) {
+            sb.append("\t\t\t<li>" + b + "</li>\n");
         }
         sb.append("\t\t</ul>");
         return sb.toString();
     }
 }
+
