@@ -87,6 +87,12 @@ public class AppConsole {
         }
         Command cmd = new Command(method, path, header, params);
 
+        try {
+            cmd.setTemplate(AppConfig.getRouter().findTemplate(cmd));
+        } catch (RouterException e) {
+            throw new RouterException(e.getMessage());
+        }
+
         return cmd;
     }
 
