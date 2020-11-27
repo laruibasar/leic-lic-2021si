@@ -68,7 +68,6 @@ public class AppConsole {
         Method method = Method.getMethod(args[0].toUpperCase());
         if (method == null) {
             throw new RouterException("Command method invalid " + args[0]);
-
         }
 
         Path path = new Path(args[1]);
@@ -98,7 +97,6 @@ public class AppConsole {
 
     private static CommandResult runCommand(Command cmd) throws RouterException,
             HandlerException {
-
         Handler handler = AppConfig.getRouter().findHandler(cmd);
         return handler.execute(cmd);
     }
