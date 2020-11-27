@@ -25,9 +25,34 @@ public class MovieRating extends Model {
         return average;
     }
 
+    public int getMovieId() {
+        return movieId;
+    }
+
+    public int getVotesOne() {
+        return votesOne;
+    }
+
+    public int getVotesTwo() {
+        return votesTwo;
+    }
+
+    public int getVotesThree() {
+        return votesThree;
+    }
+
+    public int getVotesFour() {
+        return votesFour;
+    }
+
+    public int getVotesFive() {
+        return votesFive;
+    }
+
     @Override
     public String toString() {
-        return "Average Rating = " + average
+        return    "Movie id =" + movieId
+                + "Average Rating = " + average
                 + "\nNumber of votes: "
                 + "\n\t1 = " + votesOne
                 + "\n\t2 = " + votesTwo

@@ -64,15 +64,17 @@ public class Review extends Model {
     @Override
     public String toString() {
         if (completeReview == null) {
-            return "Stars =" + rating
-                    + "\nMovieCritic = " + movieCritic
-                    + "\nSummary = " + summary;
+            return "ReviewID = " + rid
+                    + "\nSummary = " + summary
+                    + "\nStars =" + rating
+                    + "\nMovieID = " + movie
+                    + "\nMovieCritic = " + movieCritic;
         }
-        return "Stars = " + rating
+        return  "ReviewID = " + rid
                 + "\nSummary = " + summary
-                + "\nMovie Critic = " + movieCritic
-                + "\n\nComplete Review = " + completeReview
+                + "\nComplete Review = " + completeReview
+                + "\nStars = " + rating
                 + "\nMovieID = " + movie
-                + "\nReviewID = " + rid;
+                + "\nMovie Critic = " + movieCritic;
     }
 }

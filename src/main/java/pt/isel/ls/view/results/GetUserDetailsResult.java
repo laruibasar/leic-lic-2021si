@@ -27,10 +27,10 @@ public class GetUserDetailsResult extends CommandResult {
     public String printHTML() {
         ArrayList<String[]> rows = new ArrayList<>();
         rows.add(new String[] {
-                "" + user.getId(),
-                "" + user.getName(),
-                "" + user.getEmail()});
-        //StringBuilder sb = new StringBuilder();
+                String.valueOf(user.getId()),
+                user.getName(),
+                user.getEmail()});
+
         Html h = new Html(
                 new Head(
                         new Title("User details")

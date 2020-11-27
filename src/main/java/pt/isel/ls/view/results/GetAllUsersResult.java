@@ -31,6 +31,7 @@ public class GetAllUsersResult extends CommandResult {
             User u = (User) m;
             rows.add(
                     new String[] {
+                            String.valueOf(u.getId()),
                             u.getName()
                     }
             );

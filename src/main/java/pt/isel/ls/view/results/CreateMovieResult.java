@@ -29,8 +29,9 @@ public class CreateMovieResult extends CommandResult{
         ArrayList<String[]> rows = new ArrayList<>();
         rows.add(
                 new String[] {
-                        "" + movie.getTitle(),
-                        "" + movie.getYear()
+                        String.valueOf(movie.getMid()),
+                        movie.getTitle(),
+                        String.valueOf(movie.getYear())
                 }
         );
         Html h = new Html(

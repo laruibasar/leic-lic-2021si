@@ -28,9 +28,9 @@ public class RateMovieResult extends CommandResult{
         ArrayList<String[]> rows = new ArrayList<>();
         rows.add(
                 new String[] {
-                        "" + rating.getRatingId(),
-                        "" + rating.getMovieId(),
-                        "" + rating.getRating()
+                        String.valueOf(rating.getRatingId()),
+                        String.valueOf(rating.getMovieId()),
+                        String.valueOf(rating.getRating())
                 }
         );
         Html h = new Html(

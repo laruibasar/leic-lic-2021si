@@ -27,10 +27,10 @@ public class GetMovieDetailsResult extends CommandResult{
     public String printHTML() {
         ArrayList<String[]> rows = new ArrayList<>();
         rows.add(new String[] {
-                "" + movie.getMid(),
-                "" + movie.getTitle(),
-                "" + movie.getYear()});
-        //StringBuilder sb = new StringBuilder();
+                String.valueOf(movie.getMid()),
+                movie.getTitle(),
+                String.valueOf(movie.getYear())});
+
         Html h = new Html(
                 new Head(
                         new Title("Movie details")

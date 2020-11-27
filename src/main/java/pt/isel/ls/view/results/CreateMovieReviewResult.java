@@ -28,12 +28,12 @@ public class CreateMovieReviewResult extends CommandResult {
         ArrayList<String[]> rows = new ArrayList<>();
         rows.add(
                 new String[] {
-                        "" + review.getId(),
-                        "" + review.getSummary(),
-                        "" + review.getCompleteReview(),
-                        "" + review.getMovie(),
-                        "" + review.getMovieCritic(),
-                        "" + review.getRating()
+                        String.valueOf(review.getId()),
+                        review.getSummary(),
+                        review.getCompleteReview(),
+                        String.valueOf(review.getMovie()),
+                        String.valueOf(review.getMovieCritic()),
+                        String.valueOf(review.getRating())
                 }
         );
         Html h = new Html(
