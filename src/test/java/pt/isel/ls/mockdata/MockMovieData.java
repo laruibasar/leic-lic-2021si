@@ -70,14 +70,16 @@ public class MockMovieData extends Data implements IMovieData {
     }
 
     @Override
-    public LinkedList<Model> getAllMovies(Connection connection) throws DataConnectionException {
+    public LinkedList<Model> getAllMovies(Connection connection, int top, int skip) throws DataConnectionException {
         LinkedList<Model> movies = new LinkedList<>();
 
         try {
             connection.setAutoCommit(false);
 
-            final String query = "select mid, title, year from movies;";
+            final String query = "select mid, title, year from movies limit ? offset ?;";
             PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setInt(1, top);
+            stmt.setInt(2, skip);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 movies.add(new Movie(
