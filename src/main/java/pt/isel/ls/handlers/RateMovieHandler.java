@@ -6,8 +6,11 @@ import pt.isel.ls.data.common.DataConnectionException;
 import pt.isel.ls.handlers.common.Handler;
 import pt.isel.ls.handlers.common.HandlerException;
 import pt.isel.ls.handlers.common.IHandler;
+import pt.isel.ls.model.Model;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
+
+import java.util.LinkedList;
 
 /**
  * POST /movies/{mid}/ratings - submits a new rating for the movie identified
@@ -56,7 +59,11 @@ public class RateMovieHandler extends Handler implements IHandler {
         }
 
         try {
-            return ratingData.createRating(movie, rate);
+            LinkedList<Model> result = ts.executeTransaction((connection) -> {
+                return ratingData.createRating(connection, movie, rate);
+            });
+
+            return new CommandResult(result, result.size());
         } catch (DataConnectionException e) {
             throw new HandlerException(e.getMessage(), e);
         }
