@@ -51,8 +51,8 @@ public class CreateMovieReviewHandler extends Handler implements IHandler {
                     cmd.getValue("summary"),
                     cmd.getValue("reviewSummary"),
                     Integer.parseInt(cmd.getValue("mid")),
-                    Integer.parseInt(cmd.getValue("uid")),
-                    Integer.parseInt(cmd.getValue("rating"))
+                    Integer.parseInt(cmd.getValue("rating")),
+                    Integer.parseInt(cmd.getValue("uid"))
             );
         } catch (Exception e) {
             throw new HandlerException("Handler invalid format in values"
