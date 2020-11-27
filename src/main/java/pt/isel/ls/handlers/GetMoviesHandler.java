@@ -31,9 +31,24 @@ public class GetMoviesHandler extends Handler implements IHandler {
 
     @Override
     public CommandResult execute(Command cmd) throws HandlerException {
+        String check = checkNeededValues(cmd);
+        if (check.length() > 0) {
+            throw new HandlerException("Handler missing parameters: "
+                    + check);
+        }
+
+        int top, skip;
+        try {
+            top = Integer.parseInt(cmd.getValue("top"));
+            skip = Integer.parseInt(cmd.getValue("skip"));
+        } catch (NumberFormatException e) {
+            throw new HandlerException("Handler invalid format for mid: "
+                    + cmd.getValue("mid"));
+        }
+
         try {
             LinkedList<Model> result = ts.executeTransaction((connection) -> {
-                return movieData.getAllMovies(connection);
+                return movieData.getAllMovies(connection, top, skip);
             });
 
             return new CommandResult(result, result.size());
