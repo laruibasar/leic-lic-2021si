@@ -14,17 +14,14 @@ import java.util.LinkedList;
 
 public class UserData extends Data implements IUserData {
     @Override
-    public CommandResult createUser(String name, String email)
+    public LinkedList<Model> createUser(Connection connection, String name, String email)
             throws DataConnectionException {
-        Connection conn = null;
         LinkedList<Model> users = new LinkedList<>();
-        CommandResult result;
 
         try {
-            conn = getDataConnection().getConnection();
             final String query = "insert into users(name, email) values(?, ?)";
 
-            PreparedStatement stmt = conn.prepareStatement(
+            PreparedStatement stmt = connection.prepareStatement(
                     query,
                     Statement.RETURN_GENERATED_KEYS);
 
@@ -33,35 +30,28 @@ public class UserData extends Data implements IUserData {
 
             final int status = stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
-            rs.next();
-            User user = new User(rs.getInt(1), name, email);
-            users.add(user);
+            if (rs.next()) {
+                User user = new User(rs.getInt(1), name, email);
+                users.add(user);
+            }
 
-            rs.close();
             stmt.close();
-            result = new CommandResult(users, status);
-            conn.commit();
         } catch (Exception e) {
-            rollbackConnection(conn);
             throw new DataConnectionException("Unable to add User\n"
                     + e.getMessage());
-        } finally {
-            closeConnection(conn);
         }
 
-        return result;
+        return users;
     }
 
     @Override
-    public CommandResult getAllUsers() throws DataConnectionException {
-        Connection conn = null;
+    public LinkedList<Model> getAllUsers(Connection connection)
+            throws DataConnectionException {
         LinkedList<Model> users = new LinkedList<>();
-        CommandResult result;
 
         try {
-            conn = getDataConnection().getConnection();
             final String query = "select uid, name from users;";
-            PreparedStatement stmt = conn.prepareStatement(query);
+            PreparedStatement stmt = connection.prepareStatement(query);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 users.add(
@@ -69,31 +59,23 @@ public class UserData extends Data implements IUserData {
                 );
             }
 
-            rs.close();
             stmt.close();
-            result = new CommandResult(users, users.size());
-            conn.commit();
         } catch (Exception e) {
-            rollbackConnection(conn);
             throw new DataConnectionException("Unable to get a list of all the users\n"
                     + e.getMessage());
-        } finally {
-            closeConnection(conn);
         }
 
-        return result;
+        return users;
     }
 
     @Override
-    public CommandResult getUser(int id) throws DataConnectionException {
-        Connection conn = null;
+    public LinkedList<Model> getUser(Connection connection, int id)
+            throws DataConnectionException {
         LinkedList<Model> users = new LinkedList<>();
-        CommandResult result;
 
         try {
-            conn = getDataConnection().getConnection();
             final String query = "select uid, name, email from users where uid = ?;";
-            PreparedStatement stmt = conn.prepareStatement(query);
+            PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -103,18 +85,12 @@ public class UserData extends Data implements IUserData {
                         rs.getString(3)));
             }
 
-            rs.close();
             stmt.close();
-            result = new CommandResult(users, users.size());
-            conn.commit();
         } catch (Exception e) {
-            rollbackConnection(conn);
             throw new DataConnectionException("Unable to get details for user: "
                     + id + "\n" + e.getMessage());
-        } finally {
-            closeConnection(conn);
         }
 
-        return result;
+        return users;
     }
 }
