@@ -1,7 +1,7 @@
 package pt.isel.ls.data;
 
 import pt.isel.ls.data.common.DataConnectionException;
-import pt.isel.ls.utils.CommandResult;
+import pt.isel.ls.view.results.CommandResult;
 
 public interface IMovieData {
     public CommandResult createMovie(String title, int year) throws DataConnectionException;

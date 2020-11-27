@@ -7,8 +7,8 @@ import pt.isel.ls.handlers.common.Handler;
 import pt.isel.ls.handlers.common.HandlerException;
 import pt.isel.ls.handlers.common.IHandler;
 import pt.isel.ls.utils.Command;
-import pt.isel.ls.utils.CommandResult;
 import pt.isel.ls.utils.Parameters;
+import pt.isel.ls.view.results.CommandResult;
 
 /**
  * POST /movies - creates a new movie, given the following parameters
