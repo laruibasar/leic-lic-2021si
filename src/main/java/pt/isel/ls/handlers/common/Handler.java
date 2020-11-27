@@ -30,14 +30,14 @@ public abstract class Handler implements IHandler {
     }
 
     protected String checkNeededValues(Command cmd) throws HandlerException {
-        StringBuilder keys = new StringBuilder();
+        StringBuilder needed = new StringBuilder();
         for (String key : validValues) {
             if (cmd.getValue(key) == null) {
-                keys.append("\"").append(key).append("\" ");
+                needed.append("\"").append(key).append("\" ");
             }
         }
 
-        return keys.toString();
+        return needed.toString();
     }
 
     @Override

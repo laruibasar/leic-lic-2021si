@@ -6,8 +6,11 @@ import pt.isel.ls.data.common.DataConnectionException;
 import pt.isel.ls.handlers.common.Handler;
 import pt.isel.ls.handlers.common.HandlerException;
 import pt.isel.ls.handlers.common.IHandler;
+import pt.isel.ls.model.Model;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
+
+import java.util.LinkedList;
 
 /**
  * GET /tops/ratings - returns a list with the movies, given the following parameters:
@@ -39,8 +42,7 @@ public class GetTopRatingsHandler extends Handler implements IHandler {
     public CommandResult execute(Command cmd) throws HandlerException {
         String check = checkNeededValues(cmd);
         if (check.length() > 0) {
-            throw new HandlerException("Handler missing parameters: "
-                    + check);
+            throw new HandlerException("Handler missing parameters: " + check);
         }
 
         int number;
@@ -74,7 +76,11 @@ public class GetTopRatingsHandler extends Handler implements IHandler {
         }
 
         try {
-            return topData.getTopRating(number, average, min);
+            LinkedList<Model> result = ts.executeTransaction((connection) -> {
+                return topData.getTopRating(connection, number, average, min);
+            });
+
+            return new CommandResult(result, result.size());
         } catch (DataConnectionException e) {
             throw new HandlerException(e.getMessage(), e);
         }
