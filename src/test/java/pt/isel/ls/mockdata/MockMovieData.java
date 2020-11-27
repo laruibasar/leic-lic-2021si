@@ -5,7 +5,6 @@ import pt.isel.ls.data.common.Data;
 import pt.isel.ls.data.common.DataConnectionException;
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Movie;
-import pt.isel.ls.utils.CommandResult;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

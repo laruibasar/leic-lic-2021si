@@ -10,7 +10,9 @@ public class Movie extends Model {
     private String directors;
     private String actors;
 
-    public Movie() { }
+    public Movie() {
+
+    }
 
     public Movie(int mid, String title) {
         this.mid = mid;

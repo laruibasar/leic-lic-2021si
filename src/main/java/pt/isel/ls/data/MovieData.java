@@ -26,11 +26,12 @@ public class MovieData extends Data implements IMovieData {
             stmt.setString(1, title);
             stmt.setInt(2, year);
 
-            final int status = stmt.executeUpdate();
+            stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
-            rs.next(); // move to column
-            movie.setId(rs.getInt(1));
-            movies.add(movie);
+            if (rs.next()) {
+                movie.setId(rs.getInt(1));
+                movies.add(movie);
+            }
 
             stmt.close();
         } catch (Exception e) {
@@ -63,15 +64,16 @@ public class MovieData extends Data implements IMovieData {
             stmt.setString(3, directors);
             stmt.setString(4, actors);
 
-            final int status = stmt.executeUpdate();
+            stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
-            rs.next(); // move to column
-            movie.setId(rs.getInt(1));
-            movie.setGenre(genre);
-            movie.setDirectors(directors);
-            movie.setActors(actors);
+            if (rs.next()) {
+                movie.setId(rs.getInt(1));
+                movie.setGenre(genre);
+                movie.setDirectors(directors);
+                movie.setActors(actors);
 
-            movies.add(movie);
+                movies.add(movie);
+            }
 
             stmt.close();
         } catch (Exception e) {

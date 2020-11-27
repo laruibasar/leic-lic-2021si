@@ -3,12 +3,15 @@ package pt.isel.ls.handlers;
 import pt.isel.ls.data.IMovieReviewData;
 import pt.isel.ls.data.MovieReviewData;
 import pt.isel.ls.data.common.DataConnectionException;
+import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Review;
 import pt.isel.ls.handlers.common.Handler;
 import pt.isel.ls.handlers.common.HandlerException;
 import pt.isel.ls.handlers.common.IHandler;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
+
+import java.util.LinkedList;
 
 /**
  * POST /movies/{mid}/reviews - creates a new review for the movie identified by mid, given the following parameters
@@ -48,8 +51,8 @@ public class CreateMovieReviewHandler extends Handler implements IHandler {
         Review review;
         try {
             review = new Review(
-                    cmd.getValue("summary"),
                     cmd.getValue("reviewSummary"),
+                    cmd.getValue("review"),
                     Integer.parseInt(cmd.getValue("mid")),
                     Integer.parseInt(cmd.getValue("rating")),
                     Integer.parseInt(cmd.getValue("uid"))
@@ -60,7 +63,11 @@ public class CreateMovieReviewHandler extends Handler implements IHandler {
         }
 
         try {
-            return reviewData.createMovieReview(review);
+            LinkedList<Model> result = ts.executeTransaction((connection) -> {
+                return reviewData.createMovieReview(connection, review);
+            });
+
+            return new CommandResult(result, result.size());
         } catch (DataConnectionException e) {
             throw new HandlerException(e.getMessage(), e);
         }

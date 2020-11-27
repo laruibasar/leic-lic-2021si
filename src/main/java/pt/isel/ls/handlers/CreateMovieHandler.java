@@ -3,8 +3,6 @@ package pt.isel.ls.handlers;
 import pt.isel.ls.data.IMovieData;
 import pt.isel.ls.data.MovieData;
 import pt.isel.ls.data.common.DataConnectionException;
-import pt.isel.ls.data.transaction.DataTransaction;
-import pt.isel.ls.data.transaction.IDataTransaction;
 import pt.isel.ls.model.Model;
 import pt.isel.ls.handlers.common.Handler;
 import pt.isel.ls.handlers.common.HandlerException;
