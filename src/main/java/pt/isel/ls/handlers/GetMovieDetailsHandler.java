@@ -23,6 +23,9 @@ public class GetMovieDetailsHandler extends Handler implements IHandler {
     public GetMovieDetailsHandler() {
         super();
         movieData = new MovieData();
+        description = "Return the detailed information for the movie identified by mid";
+
+        validValues.add("mid");
     }
 
     public void setMovieDataConnection(IMovieData movieData) {
@@ -31,16 +34,23 @@ public class GetMovieDetailsHandler extends Handler implements IHandler {
 
     @Override
     public CommandResult execute(Command cmd) throws HandlerException {
+        String check = checkNeededValues(cmd);
+        if (check.length() > 0) {
+            throw new HandlerException("Handler missing parameters: "
+                    + check);
+        }
+
+        int movie;
         try {
-            final int mid = Integer.parseInt(cmd.getPath().getValue(1));
+            movie = Integer.parseInt(cmd.getValue("mid"));
         } catch (NumberFormatException e) {
-            throw new HandlerException("Handler: movie ID invalid " + cmd.getPath().getValue(1)
-                + "\n" + e.getMessage());
+            throw new HandlerException("Handler invalid format for mid: "
+                    + cmd.getValue("mid"));
         }
 
         try {
             LinkedList<Model> result = ts.executeTransaction((connection) -> {
-                return movieData.getMovie(connection, Integer.parseInt(cmd.getPath().getValue(1)));
+                return movieData.getMovie(connection, movie);
             });
 
             return new CommandResult(result, result.size());

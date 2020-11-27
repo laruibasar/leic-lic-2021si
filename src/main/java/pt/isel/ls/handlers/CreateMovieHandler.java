@@ -11,7 +11,6 @@ import pt.isel.ls.handlers.common.HandlerException;
 import pt.isel.ls.handlers.common.IHandler;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
-import pt.isel.ls.utils.Parameters;
 
 import java.util.LinkedList;
 
@@ -26,8 +25,10 @@ public class CreateMovieHandler extends Handler implements IHandler {
     public CreateMovieHandler() {
         super();
         movieData = new MovieData();
-        template.setParameters(
-                new Parameters(new String[]{"title", "releaseYear"}));
+        description = "Create a new movie";
+
+        validValues.add("title");
+        validValues.add("releaseYear");
     }
 
     // good for testing
@@ -37,23 +38,21 @@ public class CreateMovieHandler extends Handler implements IHandler {
 
     @Override
     public CommandResult execute(Command cmd) throws HandlerException {
-        if (!template.getParameters().isValid(cmd.getParameters())) {
-            StringBuilder keys = new StringBuilder("Missing ");
-            for (String str : template.getParameters()) {
-                if (cmd.getParameters().getValue(str) == null) {
-                    keys.append("\"").append(str).append("\" ");
-                }
-            }
-            throw new HandlerException("Handler: missing parameters: "
-                    + keys.toString());
+        String check = checkNeededValues(cmd);
+        if (check.length() > 0) {
+            throw new HandlerException("Handler missing parameters: "
+                    + check);
         }
 
-        final String title = cmd
-                .getParameters()
-                .getValue("title")
-                .replace("+", " ");
+        String title = cmd.getValue("title");
 
-        final int year = Integer.parseInt(cmd.getParameters().getValue("releaseYear"));
+        int year;
+        try {
+            year = Integer.parseInt(cmd.getValue("releaseYear"));
+        } catch (NumberFormatException e) {
+            throw new HandlerException("Handler invalid format for releaseYear "
+                + cmd.getValue("releaseYear"));
+        }
 
         try {
             LinkedList<Model> result = ts.executeTransaction((connection) -> {

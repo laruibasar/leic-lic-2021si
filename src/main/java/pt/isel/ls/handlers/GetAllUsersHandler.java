@@ -18,6 +18,7 @@ public class GetAllUsersHandler extends Handler implements IHandler {
     public GetAllUsersHandler() {
         super();
         userData = new UserData();
+        description = "Returns the list of users";
     }
 
     // to use for testing mainly

@@ -9,7 +9,6 @@ import pt.isel.ls.handlers.common.HandlerException;
 import pt.isel.ls.handlers.common.IHandler;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
-import pt.isel.ls.utils.Parameters;
 
 /**
  * POST /movies/{mid}/reviews - creates a new review for the movie identified by mid, given the following parameters
@@ -25,8 +24,13 @@ public class CreateMovieReviewHandler extends Handler implements IHandler {
     public CreateMovieReviewHandler() {
         super();
         reviewData = new MovieReviewData();
-        template.setParameters(
-                new Parameters(new String[]{"uid", "reviewSummary", "review", "rating"}));
+        description = "Creates a new review for the movie identified by mid";
+
+        validValues.add("uid");
+        validValues.add("reviewSummary");
+        validValues.add("mid");
+        validValues.add("review");
+        validValues.add("rating");
     }
 
     public void setReviewDataConnection(IMovieReviewData reviewData) {
@@ -35,24 +39,25 @@ public class CreateMovieReviewHandler extends Handler implements IHandler {
 
     @Override
     public CommandResult execute(Command cmd) throws HandlerException {
-        if (!template.getParameters().isValid(cmd.getParameters())) {
-            StringBuilder keys = new StringBuilder("Missing ");
-            for (String str : template.getParameters()) {
-                if (cmd.getParameters().getValue(str) == null) {
-                    keys.append("\"").append(str).append("\" ");
-                }
-            }
-            throw new HandlerException("Handler: missing parameters: "
-                    + keys.toString());
+        String check = checkNeededValues(cmd);
+        if (check.length() > 0) {
+            throw new HandlerException("Handler missing parameters: "
+                    + check);
         }
 
-        Review review = new Review(
-                template.getParameters().getValue("summary").replace("+", " "),
-                template.getParameters().getValue("reviewSummary").replace("+", " "),
-                Integer.parseInt(template.getPath().getValue(1)),
-                Integer.parseInt(template.getParameters().getValue("uid")),
-                Integer.parseInt(template.getParameters().getValue("rating"))
-        );
+        Review review;
+        try {
+            review = new Review(
+                    cmd.getValue("summary"),
+                    cmd.getValue("reviewSummary"),
+                    Integer.parseInt(cmd.getValue("mid")),
+                    Integer.parseInt(cmd.getValue("uid")),
+                    Integer.parseInt(cmd.getValue("rating"))
+            );
+        } catch (Exception e) {
+            throw new HandlerException("Handler invalid format in values"
+                    + e.getMessage());
+        }
 
         try {
             return reviewData.createMovieReview(review);

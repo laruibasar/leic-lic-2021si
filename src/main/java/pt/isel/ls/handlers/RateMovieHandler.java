@@ -8,7 +8,6 @@ import pt.isel.ls.handlers.common.HandlerException;
 import pt.isel.ls.handlers.common.IHandler;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
-import pt.isel.ls.utils.Parameters;
 
 /**
  * POST /movies/{mid}/ratings - submits a new rating for the movie identified
@@ -22,7 +21,10 @@ public class RateMovieHandler extends Handler implements IHandler {
     public RateMovieHandler() {
         super();
         ratingData = new RatingData();
-        template.setParameters(new Parameters(new String[]{"rating"}));
+        description = "Submit a new rating for the movie identified by mid";
+
+        validValues.add("mid");
+        validValues.add("rating");
     }
 
     public void setRatingDataConnection(IRatingData ratingData) {
@@ -31,19 +33,27 @@ public class RateMovieHandler extends Handler implements IHandler {
 
     @Override
     public CommandResult execute(Command cmd) throws HandlerException {
-        if (!template.getParameters().isValid(cmd.getParameters())) {
-            StringBuilder keys = new StringBuilder("Missing ");
-            for (String str : template.getParameters()) {
-                if (cmd.getParameters().getValue(str) == null) {
-                    keys.append("\"").append(str).append("\" ");
-                }
-            }
-            throw new HandlerException("Handler: missing parameters:\n"
-                + keys.toString());
+        String check = checkNeededValues(cmd);
+        if (check.length() > 0) {
+            throw new HandlerException("Handler missing parameters: "
+                    + check);
         }
 
-        final int movie = Integer.parseInt(cmd.getPath().getValue(1));
-        final int rate = Integer.parseInt(cmd.getParameters().getValue("rating"));
+        int movie;
+        try {
+            movie = Integer.parseInt(cmd.getValue("mid"));
+        } catch (NumberFormatException e) {
+            throw new HandlerException("Handler invalid format for mid: "
+                    + cmd.getValue("mid"));
+        }
+
+        int rate;
+        try {
+            rate = Integer.parseInt(cmd.getValue("rating"));
+        } catch (NumberFormatException e) {
+            throw new HandlerException("Handler invalid format for rating: "
+                    + cmd.getValue("rating"));
+        }
 
         try {
             return ratingData.createRating(movie, rate);

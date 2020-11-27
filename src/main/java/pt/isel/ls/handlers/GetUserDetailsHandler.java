@@ -18,6 +18,9 @@ public class GetUserDetailsHandler extends Handler implements IHandler {
     public GetUserDetailsHandler() {
         super();
         userData = new UserData();
+        description = "Return the details for the user identified by uid";
+
+        validValues.add("uid");
     }
 
     public void setUserDataConnection(IUserData userData) {
@@ -26,8 +29,22 @@ public class GetUserDetailsHandler extends Handler implements IHandler {
 
     @Override
     public CommandResult execute(Command cmd) throws HandlerException {
+        String check = checkNeededValues(cmd);
+        if (check.length() > 0) {
+            throw new HandlerException("Handler missing parameters: "
+                    + check);
+        }
+
+        int user;
         try {
-            return userData.getUser(Integer.parseInt(cmd.getPath().getValue(1)));
+            user = Integer.parseInt(cmd.getValue("uid"));
+        } catch (NumberFormatException e) {
+            throw new HandlerException("Handler invalid format for uid: "
+                    + cmd.getValue("uid"));
+        }
+
+        try {
+            return userData.getUser(user);
         } catch (DataConnectionException e) {
             throw new HandlerException(e.getMessage(), e);
         }

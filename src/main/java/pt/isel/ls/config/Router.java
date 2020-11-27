@@ -5,10 +5,11 @@ import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.Method;
 import pt.isel.ls.utils.Path;
 
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class Router {
+public class Router implements Iterable<Command> {
 
     private final Map<Command, Handler> handlers;
 
@@ -34,5 +35,14 @@ public class Router {
             }
         }
         throw new RouterException("Invalid command " + command.toString());
+    }
+
+    public Handler getHandler(Command template) {
+        return handlers.get(template);
+    }
+
+    @Override
+    public Iterator<Command> iterator() {
+        return handlers.keySet().iterator();
     }
 }
