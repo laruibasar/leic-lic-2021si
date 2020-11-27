@@ -2,7 +2,7 @@ package pt.isel.ls.handlers.common;
 
 import pt.isel.ls.data.common.DataConnectionException;
 import pt.isel.ls.utils.Command;
-import pt.isel.ls.view.results.CommandResult;
+import pt.isel.ls.utils.CommandResult;
 
 public interface IHandler {
     public CommandResult execute(Command cmd) throws DataConnectionException,

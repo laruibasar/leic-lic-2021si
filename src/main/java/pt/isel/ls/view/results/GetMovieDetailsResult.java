@@ -1,39 +1,39 @@
 package pt.isel.ls.view.results;
 
 import pt.isel.ls.model.Model;
-import pt.isel.ls.model.User;
+import pt.isel.ls.model.Movie;
+import pt.isel.ls.view.html.Html;
 import pt.isel.ls.view.html.body.Body;
 import pt.isel.ls.view.html.body.Table;
 import pt.isel.ls.view.html.head.Head;
 import pt.isel.ls.view.html.head.Title;
-import pt.isel.ls.view.html.Html;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreateUserResult extends CommandResult {
+public class GetMovieDetailsResult extends CommandResult{
 
-    private User user;
+    private Movie movie;
 
-    public CreateUserResult(List<Model> user) {
-        if(user.size() != 1 || !(user instanceof User)){
+    public GetMovieDetailsResult(List<Model> movie){
+        if(movie.size() != 1 || !(movie instanceof Movie)){
             //create exception
         }
 
-        this.user = (User) user.get(0);
+        this.movie = (Movie) movie.get(0);
     }
 
     @Override
     public String printHTML() {
         ArrayList<String[]> rows = new ArrayList<>();
         rows.add(new String[] {
-                "" + user.getId(),
-                "" + user.getName(),
-                "" + user.getEmail()});
+                "" + movie.getMid(),
+                "" + movie.getTitle(),
+                "" + movie.getYear()});
         //StringBuilder sb = new StringBuilder();
         Html h = new Html(
                 new Head(
-                        new Title("Created User")
+                        new Title("Movie details")
                 ),
                 new Body(
                         new Table(
@@ -46,7 +46,7 @@ public class CreateUserResult extends CommandResult {
 
     @Override
     public String printPlainText() {
-        return "Created User -> " +
-                user.toString();
+        return "Movie Details -> " +
+                movie.toString();
     }
 }

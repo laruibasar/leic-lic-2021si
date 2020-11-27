@@ -11,16 +11,16 @@ import pt.isel.ls.view.html.Html;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDetailsResult extends CommandResult {
+public class GetUserDetailsResult extends CommandResult {
 
     private User user;
 
-    public UserDetailsResult(List<Model> user) {
-        if(user.size() != 1 || !(user instanceof User)){
+    public GetUserDetailsResult(List<Model> users) {
+        if(users.size() != 1 || !(users instanceof User)){
             //create exception
         }
 
-        this.user = (User) user.get(0);
+        this.user = (User) users.get(0);
     }
 
     @Override
@@ -46,11 +46,7 @@ public class UserDetailsResult extends CommandResult {
 
     @Override
     public String printPlainText() {
-        return "" +
-                user.getId() +
-                " " +
-                user.getName() +
-                " " +
-                user.getEmail();
+        return "User details -> " +
+                user.toString();
     }
 }
