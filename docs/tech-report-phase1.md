@@ -147,11 +147,23 @@ a camada aplicacional correta, relacionada com o acesso e tratamento de acesso �
 ##### Retorno dos resultados
 
 Os _handlers_ retornam os resultados da execução do comando através de uma 
-instância da classe `CommandResult` que é constituída por um conjunto de 
-informação que representa:
-*  Estado: 0 - sem resultados, > 0 - número afetações de resultados
-*  Lista modelos: representa o resultado dos modelos do domain que agregam a 
-informação-alvo da interação com a base de dados.
+instância da classe `CommandResult`. Cada classe CommandResult implementa dois métodos
+responsáveis por retornar uma String com o resultado em `html` ou `plaintext`.
+
+A estrutura de código responsável por gerar programaticamente código HTML têm um 
+design orientado a objetos e assemelha-se muito ao formato em árvore do html. 
+Por exemplo, cada linha têm na sua representação um certo número de colunas.
+E uma linha deriva de tabela, a qual por sua vez têm as representações das diversas 
+linhas desse resultado. A estrutura é representada da seguinte forma:
+
+HEAD 
+* Title
+
+BODY
+* Bullets 
+* Table
+  * Row
+
 
 ### Acesso a dados
 
