@@ -3,10 +3,7 @@ package pt.isel.ls.handlers;
 import org.junit.Test;
 
 import pt.isel.ls.config.AppConfig;
-import pt.isel.ls.data.IMovieData;
-import pt.isel.ls.data.MovieData;
 import pt.isel.ls.mockdata.MockDataTransaction;
-import pt.isel.ls.mockdata.MockMovieData;
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Movie;
 import pt.isel.ls.handlers.common.HandlerException;
@@ -49,7 +46,7 @@ public class CreateMovieTest {
         Command cmd = new Command(Method.POST, new Path("/movies"), params);
 
         CreateMovieHandler handler = new CreateMovieHandler();
-        handler.setMovieDataConnection(new MockMovieData());
+        handler.setDataTransaction(new MockDataTransaction());
         CommandResult rs = handler.execute(cmd);
 
         assertEquals(1, rs.getStatus());
@@ -63,12 +60,13 @@ public class CreateMovieTest {
     @Test (expected = HandlerException.class)
     public void insert_duplicate_year_title_fail() throws HandlerException {
         AppConfig.setup();
-        IMovieData mock = new MovieData();
 
         Parameters params = new Parameters();
         params.setValues("title=The+Godfather&releaseYear=1972");
         Command cmd = new Command(Method.POST, new Path("/movies"), params);
+
         CreateMovieHandler handler = new CreateMovieHandler();
+        handler.setDataTransaction(new MockDataTransaction());
 
         CommandResult rs = handler.execute(cmd); // expect fail here
     }
@@ -76,13 +74,13 @@ public class CreateMovieTest {
     @Test (expected = HandlerException.class)
     public void missing_parameters() throws HandlerException {
         AppConfig.setup();
-        IMovieData mock = new MovieData();
 
         Parameters params = new Parameters();
         params.setValues("title=The+Godfather:+part+II");
         Command cmd = new Command(Method.POST, new Path("/movies"), params);
+
         CreateMovieHandler handler = new CreateMovieHandler();
-        handler.setMovieDataConnection(mock);
+        handler.setDataTransaction(new MockDataTransaction());
         CommandResult rs = handler.execute(cmd); // expect fail here
     }
 }

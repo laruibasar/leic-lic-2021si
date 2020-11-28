@@ -13,13 +13,12 @@ public class Head {
 
     @Override
     public String toString() {
-        if (title == null) {
-            return "\t<head>"
-                    + "\n"
-                    + "\t</head>";
+        StringBuilder sb = new StringBuilder("\t<head>\n");
+        if (title != null) {
+            sb.append(title
+                    + "\n");
         }
-        return "\t<head>\n"
-                + title
-                + "\n\t</head>";
+        sb.append("\t</head>");
+        return sb.toString();
     }
 }

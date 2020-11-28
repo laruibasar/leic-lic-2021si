@@ -3,6 +3,7 @@ package pt.isel.ls.utils;
 import org.junit.Test;
 import pt.isel.ls.config.AppConfig;
 import pt.isel.ls.data.common.DataConnectionException;
+import pt.isel.ls.mockdata.MockDataTransaction;
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Movie;
 import pt.isel.ls.model.MovieRating;
@@ -34,9 +35,13 @@ public class CommandResultTest {
 
 
     @Test
-    public void get_movie_details() throws DataConnectionException, HandlerException {
+    public void get_movie_details() throws HandlerException {
         Handler handler = new GetMovieDetailsHandler();
         Command cmd = new Command(Method.GET, new Path("/movies/1"));
+
+        // Setup template to get mid out
+        cmd.setTemplate(new Command(Method.GET, new Path("/movies/{mid}")));
+
         CommandResult cr = handler.execute(cmd);
 
         Model movie = new Movie(1, "Gladiator", 2000);
@@ -44,10 +49,14 @@ public class CommandResultTest {
     }
 
     @Test
-    public void get_movie_rating() throws DataConnectionException, HandlerException {
+    public void get_movie_rating() throws HandlerException {
 
         Handler handler = new GetMovieRatingHandler();
         Command cmd = new Command(Method.GET, new Path("/movies/1/ratings"));
+
+        // Setup template to get mid out
+        cmd.setTemplate(new Command(Method.GET, new Path("/movies/{mid}/ratings")));
+
         CommandResult cr = handler.execute(cmd);
 
         Model rating = new MovieRating(1, 4.5f, 0, 0, 0, 2, 2);
@@ -56,7 +65,7 @@ public class CommandResultTest {
     }
 
     @Test
-    public void get_movie_review() throws DataConnectionException, HandlerException {
+    public void get_movie_review() throws HandlerException {
         Handler handler = new GetMovieReviewHandler();
         Command cmd = new Command(Method.GET, new Path("/movies/1/reviews/2"));
         CommandResult cr = handler.execute(cmd);
@@ -68,27 +77,31 @@ public class CommandResultTest {
     }
 
     @Test
-    public void get_movies() throws DataConnectionException, HandlerException {
+    public void get_movies() throws HandlerException {
         Handler handler = new GetMoviesHandler();
         Command cmd = new Command(Method.GET, new Path("/movies"));
 
         LinkedList<Model> movies = new LinkedList<>();
-        movies.add(new Movie(1, "Gladiator"));
-        movies.add(new Movie(2, "The Fast and the Furious"));
-        movies.add(new Movie(3, "Finding Nemo"));
+        movies.add(new Movie(1, "Gladiator", 2000));
+        movies.add(new Movie(2, "The Fast and the Furious", 2001));
+        movies.add(new Movie(3, "Finding Nemo", 2003));
         int n = 0;
         CommandResult cr = handler.execute(cmd);
         for (Model model : cr) {
             assertEquals(movies.get(n++).toString(), model.toString());
+            if (n == 3) {
+                return;
+            }
         }
     }
 
     @Test
-    public void get_top_ratings() throws DataConnectionException, HandlerException {
+    public void get_top_ratings() throws HandlerException {
         Handler handler = new GetTopRatingsHandler();
         Parameters parameters = new Parameters();
         parameters.setValues("n=10&average=highest&min=2");
         Command cmd = new Command(Method.GET, new Path("tops/ratings"),parameters);
+
         CommandResult cr = handler.execute(cmd);
 
         LinkedList<Model> movies = new LinkedList<>();
@@ -98,26 +111,40 @@ public class CommandResultTest {
 
         for (Model model : cr) {
             assertEquals(movies.get(n++).toString(), model.toString());
+            if (n == 2) {
+                return;
+            }
         }
 
     }
 
     @Test
-    public void get_user_all_reviews() throws DataConnectionException, HandlerException {
+    public void get_user_all_reviews() throws HandlerException {
         Handler handler = new GetUserAllReviewsHandler();
         Command cmd = new Command(Method.GET, new Path("/users/1/reviews"));
+
+        // Setup template to get mid out
+        cmd.setTemplate(new Command(Method.GET, new Path("/users/{uid}/reviews")));
+
         CommandResult cr = handler.execute(cmd);
 
+        Review review = new Review("Edge of Your Seat Fun!",
+                "Great Story! Great Writing! Great Acting! Great Directing! This movie has it all.",
+                1,5, 1);
+        review.setId(1);
 
-        Review review = new Review(1,"Edge of Your Seat Fun!",1,5);
         assertEquals(review.toString(), cr.iterator().next().toString());
 
     }
 
     @Test
-    public void get_user_details() throws DataConnectionException, HandlerException {
+    public void get_user_details() throws HandlerException {
         Handler handler = new GetUserDetailsHandler();
         Command cmd = new Command(Method.GET, new Path("/users/1/"));
+
+        // Setup template to get mid out
+        cmd.setTemplate(new Command(Method.GET, new Path("/users/{uid}")));
+
         CommandResult cr = handler.execute(cmd);
 
         User user = new User(1,"Mike Albuquerque","Mike-Alb@gmail.com");
@@ -129,6 +156,10 @@ public class CommandResultTest {
     public void get_user_review() throws DataConnectionException, HandlerException {
         Handler handler = new GetUserReviewHandler();
         Command cmd = new Command(Method.GET, new Path("/users/1/reviews/1234"));
+
+        // Setup template to get mid out
+        cmd.setTemplate(new Command(Method.GET, new Path("/users/{uid}/reviews/{rid}")));
+
         CommandResult cr = handler.execute(cmd);
 
         Review review = new Review(1234,"Edge of Your Seat Fun!",
@@ -140,11 +171,16 @@ public class CommandResultTest {
     }
 
     @Test
-    public void rate_movie_handler() throws DataConnectionException, HandlerException {
+    public void rate_movie_handler() throws HandlerException {
         Handler handler = new RateMovieHandler();
         Parameters parameters = new Parameters();
         parameters.setValues("rating=3");
-        Command cmd = new Command(Method.GET, new Path("/movies/1/ratings"),parameters);
+        Command cmd = new Command(Method.POST, new Path("/movies/1/ratings"),parameters);
+
+        // Setup template to get mid out
+        cmd.setTemplate(new Command(Method.POST, new Path("/movies/{mid}/ratings")));
+        handler.setDataTransaction(new MockDataTransaction());
+
         CommandResult cr = handler.execute(cmd);
 
         Rating rating = new Rating(6,3,1);
