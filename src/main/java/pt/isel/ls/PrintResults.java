@@ -41,7 +41,7 @@ public class PrintResults {
         FileWriter fw = null;
         try {
             fw = new FileWriter(file, true);
-            if (textType.equals("HTML")) {
+            if (textType.equals("text/html")) {
                 fw.write(commandResult.printHtml()
                         + "\n\n");
             } else {
