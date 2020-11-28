@@ -6,8 +6,11 @@ import pt.isel.ls.data.common.DataConnectionException;
 import pt.isel.ls.handlers.common.Handler;
 import pt.isel.ls.handlers.common.HandlerException;
 import pt.isel.ls.handlers.common.IHandler;
+import pt.isel.ls.model.Model;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
+
+import java.util.LinkedList;
 
 /**
  * GET /movies/{mid}/reviews/{rid} - returns the full information for the
@@ -19,6 +22,10 @@ public class GetMovieReviewHandler extends Handler implements IHandler {
     public GetMovieReviewHandler() {
         super();
         reviewData = new MovieReviewData();
+        description = "Return the rating information for the movie identified by mid";
+
+        validValues.add("mid");
+        validValues.add("rid");
     }
 
     public void setReviewDataConnection(IMovieReviewData reviewData) {
@@ -27,11 +34,35 @@ public class GetMovieReviewHandler extends Handler implements IHandler {
 
     @Override
     public CommandResult execute(Command cmd) throws HandlerException {
-        final int movie = Integer.parseInt(cmd.getPath().getValue(1));
-        final int review = Integer.parseInt(cmd.getPath().getValue(2));
+        String check = checkNeededValues(cmd);
+        if (check.length() > 0) {
+            throw new HandlerException("Handler missing parameters: "
+                    + check);
+        }
+
+        int movie;
+        try {
+            movie = Integer.parseInt(cmd.getValue("mid"));
+        } catch (NumberFormatException e) {
+            throw new HandlerException("Handler invalid format for mid: "
+                    + cmd.getValue("mid"));
+        }
+
+
+        int review;
+        try {
+            review = Integer.parseInt(cmd.getValue("rid"));
+        } catch (NumberFormatException e) {
+            throw new HandlerException("Handler invalid format for rid: "
+                    + cmd.getValue("rid"));
+        }
 
         try {
-            return reviewData.getMovieReview(movie, review);
+            LinkedList<Model> result = ts.executeTransaction((connection) -> {
+                return reviewData.getMovieReview(connection, movie, review);
+            });
+
+            return new CommandResult(result, result.size());
         } catch (DataConnectionException e) {
             throw new HandlerException(e.getMessage(), e);
         }

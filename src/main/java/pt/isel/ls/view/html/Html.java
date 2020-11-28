@@ -25,20 +25,17 @@ public class Html {
 
     @Override
     public String toString() {
+        StringBuilder sb = new StringBuilder("<html>\n");
         if (head == null) {
-            return "<html>\n"
-                    + body
-                    + "\n</html>";
+            sb.append(body);
         } else if (body == null) {
-            return "<html>\n"
-                    + head
-                    + "\n</html>";
+            sb.append(head);
         } else {
-            return "<html>\n"
-                    + head
+            sb.append(head
                     + "\n"
-                    + body
-                    + "\n</html>";
+                    + body);
         }
+        sb.append("\n</html>");
+        return sb.toString();
     }
 }

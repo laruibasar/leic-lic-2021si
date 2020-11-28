@@ -21,7 +21,7 @@ create table movie_details (
     id serial primary key,
     mid int references movies(mid),
     genre varchar(50),
-    director text,
+    directors text,
     actors text
 );
 

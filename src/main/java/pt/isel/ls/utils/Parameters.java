@@ -1,28 +1,14 @@
 package pt.isel.ls.utils;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 
-public class Parameters implements Iterable<String> {
-    /* store valid parameters for the command */
-    /* DEPRECATED */
-    private ArrayList<String> validParameters;
-
+public class Parameters {
     /* to store user sent parameters */
     private LinkedHashMap<String, String> userParameters;
 
     public Parameters() {
-        validParameters = new ArrayList<>();
         userParameters = new LinkedHashMap<>();
-    }
-
-    /* To receive the acceptable parameters from the method */
-    public Parameters(String[] params) {
-        this();
-        for (int i = 0; i < params.length; i++) {
-            validParameters.add(params[i]);
-        }
     }
 
     public void setValues(String params) {
@@ -31,7 +17,7 @@ public class Parameters implements Iterable<String> {
             String[] pair = param[i].split("=");
             userParameters.put(
                     pair[0],
-                    pair.length < 2 ? "" : pair[1]);
+                    pair.length < 2 ? "" : pair[1].replace("+", " "));
         }
     }
 
@@ -41,16 +27,6 @@ public class Parameters implements Iterable<String> {
 
     public LinkedHashMap<String, String> getParameters() {
         return userParameters;
-    }
-
-    /* DEPRECATED */
-    public boolean isValid(Parameters params) {
-        for (String str : validParameters) {
-            if (!params.getParameters().containsKey(str)) {
-                return false;
-            }
-        }
-        return true;
     }
 
     public boolean isValid(ArrayList<String> checklist) {
@@ -83,10 +59,5 @@ public class Parameters implements Iterable<String> {
         str.deleteCharAt(str.length() - 1); // cut last "&"
 
         return str.toString();
-    }
-
-    @Override
-    public Iterator<String> iterator() {
-        return validParameters.iterator();
     }
 }

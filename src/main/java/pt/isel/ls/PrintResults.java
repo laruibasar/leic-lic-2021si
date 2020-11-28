@@ -44,7 +44,6 @@ public class PrintResults {
             if (textType.equals("HTML")) {
                 fw.write(commandResult.printHTML()
                         + "\n\n");
-
             } else {
                 fw.write(commandResult.printPlainText()
                         + "\n\n");

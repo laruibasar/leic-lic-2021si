@@ -1,4 +1,4 @@
-package pt.isel.ls.data.common;
+package pt.isel.ls.data.connectors;
 
 import pt.isel.ls.config.AppConfig;
 import pt.isel.ls.config.DataBaseConfig;

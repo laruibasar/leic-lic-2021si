@@ -2,8 +2,7 @@ package pt.isel.ls.handlers;
 
 import org.junit.Test;
 import pt.isel.ls.config.AppConfig;
-import pt.isel.ls.data.IUserData;
-import pt.isel.ls.mockdata.MockUserData;
+import pt.isel.ls.mockdata.MockDataTransaction;
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.User;
 import pt.isel.ls.handlers.common.HandlerException;
@@ -20,13 +19,13 @@ public class CreateUserTest {
     @Test
     public void insert_user_test() throws HandlerException {
         AppConfig.setup();
-        IUserData mock = new MockUserData();
 
         Parameters params = new Parameters();
         params.setValues("name=John+Smith&email=hi@example.com");
         Command cmd = new Command(Method.POST, new Path("/users/"), params);
+
         CreateUserHandler handler = new CreateUserHandler();
-        handler.setUserDataConnection(mock);
+        handler.setDataTransaction(new MockDataTransaction());
         CommandResult rs = handler.execute(cmd);
 
         assertEquals(1, rs.getStatus());
@@ -40,13 +39,13 @@ public class CreateUserTest {
     @Test
     public void insert_user_with_empty_name() throws HandlerException {
         AppConfig.setup();
-        IUserData mock = new MockUserData();
         
         Parameters params = new Parameters();
         params.setValues("name=&email=hi@example.net");
         Command cmd = new Command(Method.POST, new Path("/users/"), params);
+
         CreateUserHandler handler = new CreateUserHandler();
-        handler.setUserDataConnection(mock);
+        handler.setDataTransaction(new MockDataTransaction());
         CommandResult rs = handler.execute(cmd);
 
         assertEquals(1, rs.getStatus());

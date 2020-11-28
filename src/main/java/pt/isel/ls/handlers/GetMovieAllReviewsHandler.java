@@ -6,8 +6,11 @@ import pt.isel.ls.data.common.DataConnectionException;
 import pt.isel.ls.handlers.common.Handler;
 import pt.isel.ls.handlers.common.HandlerException;
 import pt.isel.ls.handlers.common.IHandler;
+import pt.isel.ls.model.Model;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
+
+import java.util.LinkedList;
 
 /**
  * GET /movies/{mid}/reviews - returns the reviews identified by mid.
@@ -19,6 +22,9 @@ public class GetMovieAllReviewsHandler extends Handler implements IHandler {
     public GetMovieAllReviewsHandler() {
         super();
         reviewData = new MovieReviewData();
+        description = "Return the reviews identified by mid";
+
+        validValues.add("mid");
     }
 
     public void setReviewDataConnection(IMovieReviewData reviewData) {
@@ -27,10 +33,26 @@ public class GetMovieAllReviewsHandler extends Handler implements IHandler {
 
     @Override
     public CommandResult execute(Command cmd) throws HandlerException {
-        final int movie = Integer.parseInt(cmd.getPath().getValue(1));
+        String check = checkNeededValues(cmd);
+        if (check.length() > 0) {
+            throw new HandlerException("Handler missing parameters: "
+                    + check);
+        }
+
+        int movie;
+        try {
+            movie = Integer.parseInt(cmd.getValue("mid"));
+        } catch (NumberFormatException e) {
+            throw new HandlerException("Handler invalid format for mid: "
+                    + cmd.getValue("mid"));
+        }
 
         try {
-            return reviewData.getAllMovieReviews(movie);
+            LinkedList<Model> result = ts.executeTransaction((connection) -> {
+                return reviewData.getAllMovieReviews(connection, movie);
+            });
+
+            return new CommandResult(result, result.size());
         } catch (DataConnectionException e) {
             throw new HandlerException(e.getMessage(), e);
         }

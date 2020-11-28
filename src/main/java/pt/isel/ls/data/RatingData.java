@@ -5,7 +5,6 @@ import pt.isel.ls.data.common.DataConnectionException;
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.MovieRating;
 import pt.isel.ls.model.Rating;
-import pt.isel.ls.utils.CommandResult;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,18 +14,14 @@ import java.util.LinkedList;
 
 public class RatingData extends Data implements IRatingData {
     @Override
-    public CommandResult createRating(int movie, int rate)
+    public LinkedList<Model> createRating(Connection connection, int movie, int rate)
             throws DataConnectionException {
-        CommandResult result = null;
-        Connection conn = null;
         LinkedList<Model> ratings = new LinkedList<>();
 
         try {
-            conn = getDataConnection().getConnection();
-
             final String query = "insert into ratings(mid, rating) values (?, ?)";
 
-            PreparedStatement stmt = conn.prepareStatement(
+            PreparedStatement stmt = connection.prepareStatement(
                     query,
                     Statement.RETURN_GENERATED_KEYS);
             stmt.setInt(1, movie);
@@ -34,35 +29,26 @@ public class RatingData extends Data implements IRatingData {
 
             final int status = stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
-            if (rs.first()) {
+            if (rs.next()) {
                 ratings.add(new Rating(rs.getInt(1), movie, rate));
             }
 
-            rs.close();
             stmt.close();
-            conn.commit();
-            result = new CommandResult(ratings, status);
         } catch (Exception e) {
-            rollbackConnection(conn);
             throw new DataConnectionException("Unable to add rating: " + rate
                 + " to movie " + movie + "\n"
                 + e.getMessage(), e);
-        } finally {
-            closeConnection(conn);
         }
 
-        return result;
+        return ratings;
     }
 
     @Override
-    public CommandResult getRatings(int movie) throws DataConnectionException {
-        CommandResult result = null;
-        Connection conn = null;
+    public LinkedList<Model> getRatings(Connection connection, int movie)
+            throws DataConnectionException {
         LinkedList<Model> ratings = new LinkedList<>();
 
         try {
-            conn = getDataConnection().getConnection();
-
             final String query = "select\n"
                     + "\tavg(rating)::numeric(3,2) as average,\n"
                     + "\t(select count(rating) from(select rating\n"
@@ -107,11 +93,11 @@ public class RatingData extends Data implements IRatingData {
                     + "\t  select rating\n"
                     + "\t  from reviews\n"
                     + "\t  where movie = ?) as rating;";
-            PreparedStatement stmt = conn.prepareStatement(query);
+            PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setInt(1, movie);
 
             ResultSet rs = stmt.executeQuery();
-            if (rs.first()) {
+            if (rs.next()) {
                 ratings.add(new MovieRating(
                         movie,
                         rs.getFloat(1),
@@ -122,19 +108,13 @@ public class RatingData extends Data implements IRatingData {
                         rs.getInt(6)));
             }
 
-            rs.close();
             stmt.close();
-            conn.commit();
-            result = new CommandResult(ratings, ratings.size());
         } catch (Exception e) {
-            rollbackConnection(conn);
             throw new DataConnectionException("Unable to get ratings "
                     + " to movie " + movie + "\n"
                     + e.getMessage(), e);
-        } finally {
-            closeConnection(conn);
         }
 
-        return result;
+        return ratings;
     }
 }

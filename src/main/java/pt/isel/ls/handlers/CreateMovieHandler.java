@@ -3,12 +3,14 @@ package pt.isel.ls.handlers;
 import pt.isel.ls.data.IMovieData;
 import pt.isel.ls.data.MovieData;
 import pt.isel.ls.data.common.DataConnectionException;
+import pt.isel.ls.model.Model;
 import pt.isel.ls.handlers.common.Handler;
 import pt.isel.ls.handlers.common.HandlerException;
 import pt.isel.ls.handlers.common.IHandler;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
-import pt.isel.ls.utils.Parameters;
+
+import java.util.LinkedList;
 
 /**
  * POST /movies - creates a new movie, given the following parameters
@@ -21,8 +23,10 @@ public class CreateMovieHandler extends Handler implements IHandler {
     public CreateMovieHandler() {
         super();
         movieData = new MovieData();
-        template.setParameters(
-                new Parameters(new String[]{"title", "releaseYear"}));
+        description = "Create a new movie";
+
+        validValues.add("title");
+        validValues.add("releaseYear");
     }
 
     // good for testing
@@ -32,25 +36,28 @@ public class CreateMovieHandler extends Handler implements IHandler {
 
     @Override
     public CommandResult execute(Command cmd) throws HandlerException {
-        if (!template.getParameters().isValid(cmd.getParameters())) {
-            StringBuilder keys = new StringBuilder("Missing ");
-            for (String str : template.getParameters()) {
-                if (cmd.getParameters().getValue(str) == null) {
-                    keys.append("\"").append(str).append("\" ");
-                }
-            }
-            throw new HandlerException("Handler: missing parameters: "
-                    + keys.toString());
+        String check = checkNeededValues(cmd);
+        if (check.length() > 0) {
+            throw new HandlerException("Handler missing parameters: "
+                    + check);
         }
 
-        final String title = cmd
-                .getParameters()
-                .getValue("title")
-                .replace("+", " ");
-        final int year = Integer.parseInt(cmd.getParameters().getValue("releaseYear"));
+        String title = cmd.getValue("title");
+
+        int year;
+        try {
+            year = Integer.parseInt(cmd.getValue("releaseYear"));
+        } catch (NumberFormatException e) {
+            throw new HandlerException("Handler invalid format for releaseYear "
+                + cmd.getValue("releaseYear"));
+        }
 
         try {
-            return movieData.createMovie(title, year);
+            LinkedList<Model> result = ts.executeTransaction((connection) -> {
+                return movieData.createMovie(connection, title, year);
+            });
+
+            return new CommandResult(result, result.size());
         } catch (DataConnectionException e) {
             throw new HandlerException(e.getMessage(), e);
         }
