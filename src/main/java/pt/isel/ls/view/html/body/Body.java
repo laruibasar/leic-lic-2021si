@@ -19,18 +19,15 @@ public class Body {
 
     @Override
     public String toString() {
+        StringBuilder sb = new StringBuilder("\t<body>\n");
         if (table != null) {
-            return "\t<body>\n"
-                    + table
-                    + "\n\t</body>";
+            sb.append(table
+                    + "\n");
         } else if (bullets != null) {
-            return "\t<body>\n"
-                    + bullets
-                    + "\n\t</body>";
-        } else {
-            return "\t<body>\n"
-                    + "\t</body>";
+            sb.append(bullets
+                    + "\n");
         }
-
+        sb.append("\t</body>");
+        return sb.toString();
     }
 }

@@ -68,7 +68,7 @@ public class HtmlTest {
         );
         final String comp = "<html>\n"
                 + "\t<head>\n"
-                + "\t\t<h1>User details</h1>\n"
+                + "\t\t<title>User details</title>\n"
                 + "\t</head>\n"
                 + "</html>";
         assertEquals(comp, h.toString());
