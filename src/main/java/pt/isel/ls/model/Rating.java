@@ -12,6 +12,19 @@ public class Rating extends Model {
         this.rating = rating;
     }
 
+    public int getRatingId() {
+        return ratingId;
+    }
+
+    public int getMovieId() {
+        return movieId;
+    }
+
+    public int getRating() {
+        return rating;
+
+    }
+
     @Override
     public String toString() {
         return "Rating = " + rating + "\nRating id = "

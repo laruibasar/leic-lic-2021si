@@ -38,6 +38,10 @@ public class Movie extends Model {
         return year;
     }
 
+    public int getMid() {
+        return mid;
+    }
+
     public void setId(int id) {
         mid = id;
     }

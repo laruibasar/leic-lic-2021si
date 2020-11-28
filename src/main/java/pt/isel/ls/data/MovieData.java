@@ -85,12 +85,21 @@ public class MovieData extends Data implements IMovieData {
     }
 
     @Override
-    public LinkedList<Model> getAllMovies(Connection connection) throws DataConnectionException {
+    public LinkedList<Model> getAllMovies(Connection connection, int top, int skip) throws DataConnectionException {
         LinkedList<Model> movies = new LinkedList<>();
 
+        //limit é o numero de resultados a apresentar => top
+        //offset n é o valor do ponteiro onde começa a apresentar => skip
+
         try {
-            final String query = "select mid, title, year from movies;";
+            String query = "select mid, title, year from movies order by mid limit ? offset ?;";
             PreparedStatement stmt = connection.prepareStatement(query);
+            if (top > 0) {
+                stmt.setInt(1, top);
+            } else {
+                stmt.setString(1, "ALL");
+            }
+            stmt.setInt(2, skip);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 movies.add(new Movie(
