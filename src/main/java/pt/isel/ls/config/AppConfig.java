@@ -88,8 +88,6 @@ public class AppConfig {
         router.addHandler(Method.OPTION, new Path("/"), new OptionHandler());
 
         router.addHandler(Method.DELETE, new Path("/movies/{mid}/review/{rid}"), new DeleteMovieReviewHandler());
-
-
     }
 
     private AppConfig() {

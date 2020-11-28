@@ -103,9 +103,9 @@ public class MovieReviewData extends Data implements IMovieReviewData {
                                 rs.getInt(1),
                                 rs.getString(2),
                                 null, //rs.getString(3), we don't need
+                                rs.getInt(3),
                                 rs.getInt(4),
-                                rs.getInt(5),
-                                rs.getInt(6)));
+                                rs.getInt(5)));
             }
 
             stmt.close();
@@ -125,8 +125,7 @@ public class MovieReviewData extends Data implements IMovieReviewData {
         LinkedList<Model> reviews = new LinkedList<>();
 
         try {
-
-            final String query = "delect from reviews where movie = ? and rid = ?;";
+            final String query = "delete from reviews where movie = ? and rid = ?;";
 
             PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setInt(1, movie);
