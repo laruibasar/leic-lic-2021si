@@ -55,7 +55,7 @@ public class MovieReviewData extends Data implements IMovieReviewData {
         try {
 
             final String query = "select rid, summary, completeReview, rating, "
-                    + "movie, movieCritic from reviews where movie = ? and rid = ?";
+                    + "movie, movieCritic from reviews where movie = ? and rid = ?;";
 
             PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setInt(1, movie);
@@ -91,7 +91,7 @@ public class MovieReviewData extends Data implements IMovieReviewData {
         try {
 
             final String query = "select rid, summary, rating, "
-                    + "movie, movieCritic from reviews where movie = ?";
+                    + "movie, movieCritic from reviews where movie = ?;";
 
             PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setInt(1, movie);
@@ -113,6 +113,35 @@ public class MovieReviewData extends Data implements IMovieReviewData {
             throw new DataConnectionException("Unable to get reviews "
                     + " for movie: " + movie + "\n"
                     + e.getMessage(), e);
+        }
+
+        return reviews;
+    }
+
+    @Override
+    public LinkedList<Model> DeleteMovieReview(Connection connection, int movie, int review)
+            throws DataConnectionException {
+
+        LinkedList<Model> reviews = new LinkedList<>();
+
+        try {
+
+            final String query = "delect from reviews where movie = ? and rid = ?;";
+
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setInt(1, movie);
+            stmt.setInt(2, review);
+
+            int rs = stmt.executeUpdate();
+
+            if (rs == 1) reviews.add(new Review(review,movie));
+
+            stmt.close();
+        } catch (Exception e) {
+            throw new DataConnectionException("Unable to delete review "
+                    + review
+                    + " of movie"
+                    + movie + "\n" + e.getMessage(), e);
         }
 
         return reviews;

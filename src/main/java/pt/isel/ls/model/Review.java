@@ -9,6 +9,11 @@ public class Review extends Model {
     private int movie;
     private int movieCritic;
 
+    public Review(int rid, int movie){
+        this.rid = rid;
+        this.movie = movie;
+    }
+
     public Review(String summary, String completeReview, int movie, int rating, int critic) {
         this.summary = summary;
         this.completeReview = completeReview;
