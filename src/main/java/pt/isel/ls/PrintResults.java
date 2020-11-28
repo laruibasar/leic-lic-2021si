@@ -20,8 +20,8 @@ public class PrintResults {
     @Override
     public String toString() {
         String printType, textType;
-        printType = header.headerValues.get("file-name");
-        textType = header.headerValues.get("accept");
+        printType = header.getHeaders().get("file-name");
+        textType = header.getHeaders().get("accept");
         if (printType.equals("standard output")) {
             return consolePrint(textType);
         }

@@ -1,12 +1,11 @@
 package pt.isel.ls;
 
-import pt.isel.ls.model.Model;
-import pt.isel.ls.handlers.common.Handler;
-import pt.isel.ls.handlers.common.HandlerException;
-import pt.isel.ls.utils.Command;
 import pt.isel.ls.config.AppConfig;
 import pt.isel.ls.config.RouterException;
 import pt.isel.ls.data.common.DataConnectionException;
+import pt.isel.ls.handlers.common.Handler;
+import pt.isel.ls.handlers.common.HandlerException;
+import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
 import pt.isel.ls.utils.Header;
 import pt.isel.ls.utils.Method;
@@ -51,7 +50,7 @@ public class AppConsole {
             }
 
             CommandResult result = runCommand(cmd);
-            showResults(result);
+            showResults(result, cmd.getHeader());
         } catch (RouterException | DataConnectionException | HandlerException e) {
             System.out.println("ERROR " + e.getMessage() + "\n");
         }
@@ -97,9 +96,7 @@ public class AppConsole {
         return handler.execute(cmd);
     }
 
-    private static void showResults(CommandResult cr) {
-        for (Model model : cr) {
-            System.out.println(model.toString());
-        }
+    private static void showResults(CommandResult cr, Header hd) {
+        System.out.println(new PrintResults(cr, hd));
     }
 }
