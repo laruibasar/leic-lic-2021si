@@ -41,13 +41,20 @@ public class PrintResults {
         FileWriter fw = null;
         try {
             fw = new FileWriter(file);
+            if (textType.equals("HTML")) {
+                fw.write(commandResult.printHTML()
+                        + "\n",
+                        true);
+
+            } else {
+                fw.write(commandResult.printPlainText()
+                        + "\n",
+                        true);
+            }
+            fw.flush();
+            fw.close();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        if (textType.equals("HTML")) {
-            fw.write(commandResult.printHTML());
-        } else {
-            fw.write(commandResult.printPlainText());
         }
         return "File "
                 + fileName
