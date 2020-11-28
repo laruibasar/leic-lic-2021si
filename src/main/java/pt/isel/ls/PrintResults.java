@@ -1,7 +1,7 @@
 package pt.isel.ls;
 
-import pt.isel.ls.utils.CommandResult;
 import pt.isel.ls.utils.Header;
+import pt.isel.ls.view.results.CommandResult;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -30,7 +30,7 @@ public class PrintResults {
 
     public String consolePrint(String textType) {
         if (textType.equals("text/html")) {
-            return commandResult.printHTML();
+            return commandResult.printHtml();
         }
         return commandResult.printPlainText();
     }
@@ -42,7 +42,7 @@ public class PrintResults {
         try {
             fw = new FileWriter(file, true);
             if (textType.equals("HTML")) {
-                fw.write(commandResult.printHTML()
+                fw.write(commandResult.printHtml()
                         + "\n\n");
             } else {
                 fw.write(commandResult.printPlainText()
