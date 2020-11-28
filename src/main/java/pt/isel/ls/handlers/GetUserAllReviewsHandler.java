@@ -8,7 +8,8 @@ import pt.isel.ls.handlers.common.HandlerException;
 import pt.isel.ls.handlers.common.IHandler;
 import pt.isel.ls.model.Model;
 import pt.isel.ls.utils.Command;
-import pt.isel.ls.utils.CommandResult;
+import pt.isel.ls.view.results.CommandResult;
+import pt.isel.ls.view.results.GetUserAllReviewsResult;
 
 import java.util.LinkedList;
 
@@ -51,7 +52,7 @@ public class GetUserAllReviewsHandler extends Handler implements IHandler {
                 return reviewData.getUserAllReview(connection, user);
             });
 
-            return new CommandResult(result, result.size());
+            return new GetUserAllReviewsResult(result);
         } catch (DataConnectionException e) {
             throw new HandlerException(e.getMessage(), e);
         }

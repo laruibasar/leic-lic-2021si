@@ -6,7 +6,8 @@ import pt.isel.ls.handlers.common.Handler;
 import pt.isel.ls.handlers.common.HandlerException;
 import pt.isel.ls.handlers.common.IHandler;
 import pt.isel.ls.utils.Command;
-import pt.isel.ls.utils.CommandResult;
+import pt.isel.ls.view.results.CommandResult;
+import pt.isel.ls.view.results.OptionResult;
 
 public class OptionHandler extends Handler implements IHandler {
     public OptionHandler() {
@@ -18,10 +19,6 @@ public class OptionHandler extends Handler implements IHandler {
     public CommandResult execute(Command cmd) throws HandlerException {
         Router router = AppConfig.getRouter();
 
-        for (Command c : router) {
-            System.out.println(router.getHandler(c).getDescription() + "\n"
-                    + "Command: " + c.toString() + "\n");
-        }
-        return null;
+        return new OptionResult(router);
     }
 }
