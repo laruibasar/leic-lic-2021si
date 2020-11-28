@@ -23,7 +23,7 @@ public class GetMovieReviewResult extends CommandResult {
     }
 
     @Override
-    public String printHTML() {
+    public String printHtml() {
         ArrayList<String[]> rows = new ArrayList<>();
 
         if (review == null) {

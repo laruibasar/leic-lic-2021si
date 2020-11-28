@@ -16,7 +16,7 @@ public class CreateUserResult extends CommandResult {
     private User user;
 
     public CreateUserResult(List<Model> users) {
-        if(users.size() != 0){
+        if (users.size() != 0) {
             this.user = (User) users.get(0);
         }
 
@@ -24,12 +24,12 @@ public class CreateUserResult extends CommandResult {
     }
 
     @Override
-    public String printHTML() {
+    public String printHtml() {
         ArrayList<String[]> rows = new ArrayList<>();
         String title = "Created user";
 
         if (user == null) {
-            title = "User not created" ;
+            title = "User not created";
         } else {
             rows.add(new String[] {
                     String.valueOf(user.getId()),

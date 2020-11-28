@@ -2,7 +2,6 @@ package pt.isel.ls.view.results;
 
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Review;
-import pt.isel.ls.model.User;
 import pt.isel.ls.view.html.Html;
 import pt.isel.ls.view.html.body.Body;
 import pt.isel.ls.view.html.body.Table;
@@ -16,17 +15,17 @@ public class CreateMovieReviewResult extends CommandResult {
     private Review review;
 
     public CreateMovieReviewResult(List<Model> reviews) {
-        if(reviews.size() != 0){
+        if (reviews.size() != 0) {
             this.review = (Review) reviews.get(0);
         }
 
     }
 
     @Override
-    public String printHTML() {
+    public String printHtml() {
         ArrayList<String[]> rows = new ArrayList<>();
         String title = "Created Review";
-        if (review == null){
+        if (review == null) {
             title = "Review not created";
         } else {
             rows.add(

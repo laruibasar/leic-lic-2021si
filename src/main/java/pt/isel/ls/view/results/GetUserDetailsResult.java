@@ -16,13 +16,13 @@ public class GetUserDetailsResult extends CommandResult {
     private User user;
 
     public GetUserDetailsResult(List<Model> users) {
-        if (users.size() != 0){
+        if (users.size() != 0) {
             this.user = (User) users.get(0);
         }
     }
 
     @Override
-    public String printHTML() {
+    public String printHtml() {
         ArrayList<String[]> rows = new ArrayList<>();
 
         if (user == null) {
@@ -49,6 +49,6 @@ public class GetUserDetailsResult extends CommandResult {
 
     @Override
     public String printPlainText() {
-        return user==null ? "User details not available" : "User details -> " + user.toString();
+        return user == null ? "User details not available" : "User details -> " + user.toString();
     }
 }

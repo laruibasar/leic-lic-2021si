@@ -22,9 +22,9 @@ public class GetAllUsersResult extends CommandResult {
 
 
     @Override
-    public String printHTML() {
+    public String printHtml() {
         ArrayList<String[]> rows = new ArrayList<>();
-        for(Model m: users) {
+        for (Model m: users) {
             User u = (User) m;
             rows.add(
                     new String[] {

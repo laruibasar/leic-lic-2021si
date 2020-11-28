@@ -11,7 +11,7 @@ import pt.isel.ls.view.html.head.Title;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GetTopRatingResult extends CommandResult{
+public class GetTopRatingResult extends CommandResult {
 
     private final List<Model> movies;
 
@@ -21,9 +21,9 @@ public class GetTopRatingResult extends CommandResult{
     }
 
     @Override
-    public String printHTML() {
+    public String printHtml() {
         ArrayList<String[]> rows = new ArrayList<>();
-        for(Model m: movies) {
+        for (Model m: movies) {
             Movie movie = (Movie) m;
             rows.add(
                     new String[] {

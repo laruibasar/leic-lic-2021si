@@ -15,16 +15,16 @@ public class GetMoviesResult extends CommandResult {
 
     private final List<Model> movies;
 
-    public GetMoviesResult(List<Model> movies){
+    public GetMoviesResult(List<Model> movies) {
 
         this.movies = movies;
     }
 
     @Override
-    public String printHTML() {
+    public String printHtml() {
         ArrayList<String[]> rows = new ArrayList<>();
 
-        for(Model m: movies) {
+        for (Model m: movies) {
             Movie movie = (Movie) m;
             rows.add(
                     new String[] {

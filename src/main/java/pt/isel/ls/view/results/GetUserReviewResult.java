@@ -11,18 +11,23 @@ import pt.isel.ls.view.html.head.Title;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GetUserReviewResult extends CommandResult{
+public class GetUserReviewResult extends CommandResult {
 
     private Review review;
 
     public GetUserReviewResult(List<Model> reviews) {
+        if (reviews.size() != 0) {
+            this.review = (Review) reviews.get(0);
+        }
 
-        this.review = (Review) reviews.get(0);
     }
 
     @Override
-    public String printHTML() {
+    public String printHtml() {
         ArrayList<String[]> rows = new ArrayList<>();
+        if (review == null) {
+            rows.add(new String[]{ "User review not available" });
+        } else {
             rows.add(
                     new String[] {
                             String.valueOf(review.getId()),
@@ -33,6 +38,7 @@ public class GetUserReviewResult extends CommandResult{
                             String.valueOf(review.getMovieCritic())
                     }
             );
+        }
 
         Html h = new Html(
                 new Head(
@@ -49,7 +55,6 @@ public class GetUserReviewResult extends CommandResult{
 
     @Override
     public String printPlainText() {
-        return "User Review -> " +
-                review.toString();
+        return review == null ? "User Review not available" : "User Review -> " + review.toString();
     }
 }

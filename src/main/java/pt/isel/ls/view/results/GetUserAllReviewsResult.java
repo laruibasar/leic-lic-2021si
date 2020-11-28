@@ -10,7 +10,7 @@ import pt.isel.ls.view.html.head.Title;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GetUserAllReviewsResult extends CommandResult{
+public class GetUserAllReviewsResult extends CommandResult {
 
     private final List<Model> reviews;
 
@@ -19,9 +19,9 @@ public class GetUserAllReviewsResult extends CommandResult{
     }
 
     @Override
-    public String printHTML() {
+    public String printHtml() {
         ArrayList<String[]> rows = new ArrayList<>();
-        for(Model r: reviews) {
+        for (Model r: reviews) {
             Review review = (Review) r;
             rows.add(
                     new String[] {

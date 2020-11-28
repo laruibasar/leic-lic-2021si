@@ -1,9 +1,7 @@
 package pt.isel.ls.view.results;
 
 import pt.isel.ls.model.Model;
-import pt.isel.ls.model.Movie;
 import pt.isel.ls.model.MovieRating;
-import pt.isel.ls.model.Review;
 import pt.isel.ls.view.html.Html;
 import pt.isel.ls.view.html.body.Body;
 import pt.isel.ls.view.html.body.Table;
@@ -24,10 +22,10 @@ public class GetMovieRatingResult extends CommandResult {
     }
 
     @Override
-    public String printHTML() {
+    public String printHtml() {
         ArrayList<String[]> rows = new ArrayList<>();
 
-        if (movieRating == null){
+        if (movieRating == null) {
             rows.add(new String[]{"No movie rating available"});
         } else {
             rows.add(
@@ -58,6 +56,6 @@ public class GetMovieRatingResult extends CommandResult {
 
     @Override
     public String printPlainText() {
-        return movieRating == null ? "No movie rating available" :"Movie Rating -> " + movieRating.toString();
+        return movieRating == null ? "No movie rating available" : "Movie Rating -> " + movieRating.toString();
     }
 }

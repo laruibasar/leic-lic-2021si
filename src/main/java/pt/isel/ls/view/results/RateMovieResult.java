@@ -11,7 +11,7 @@ import pt.isel.ls.view.html.head.Title;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RateMovieResult extends CommandResult{
+public class RateMovieResult extends CommandResult {
 
     private Rating rating;
 
@@ -23,7 +23,7 @@ public class RateMovieResult extends CommandResult{
     }
 
     @Override
-    public String printHTML() {
+    public String printHtml() {
         ArrayList<String[]> rows = new ArrayList<>();
         String title = "Created Rating";
         if (rating == null) {
