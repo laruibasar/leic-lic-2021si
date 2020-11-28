@@ -6,6 +6,14 @@ public class Movie extends Model {
     private String title;
     private int year;
 
+    private String genre;
+    private String directors;
+    private String actors;
+
+    public Movie() {
+
+    }
+
     public Movie(int mid, String title) {
         this.mid = mid;
         this.title = title;
@@ -32,6 +40,30 @@ public class Movie extends Model {
 
     public void setId(int id) {
         mid = id;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public String getDirectors() {
+        return directors;
+    }
+
+    public void setDirectors(String directors) {
+        this.directors = directors;
+    }
+
+    public String getActors() {
+        return actors;
+    }
+
+    public void setActors(String actors) {
+        this.actors = actors;
     }
 
     @Override

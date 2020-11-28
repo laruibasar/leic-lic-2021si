@@ -4,7 +4,6 @@ import pt.isel.ls.data.common.Data;
 import pt.isel.ls.data.common.DataConnectionException;
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Movie;
-import pt.isel.ls.utils.CommandResult;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,15 +12,11 @@ import java.util.LinkedList;
 
 public class TopRatingData extends Data implements ITopRatingData {
     @Override
-    public CommandResult getTopRating(int number, int average, int min)
+    public LinkedList<Model> getTopRating(Connection connection, int number, int average, int min)
             throws DataConnectionException {
-        CommandResult result = null;
-        Connection conn = null;
         LinkedList<Model> top = new LinkedList<>();
 
         try {
-            conn = getDataConnection().getConnection();
-
             final String query = "select mid, title, year\n"
                     + "from (movies join "
                     + "(select rating, movie from ratings union all select rating, movie from reviews) as rates "
@@ -31,7 +26,7 @@ public class TopRatingData extends Data implements ITopRatingData {
                     + "ORDER BY (CASE WHEN 1=? THEN avg(rating) END) DESC,\n"
                     + "\t\t (CASE WHEN 2=2 THEN avg(rating) END) ASC\n"
                     + "FETCH FIRST ? ROWS ONLY;";
-            PreparedStatement stmt = conn.prepareStatement(query);
+            PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setInt(1, min);
             stmt.setInt(2, average);
             stmt.setInt(3, number);
@@ -45,18 +40,12 @@ public class TopRatingData extends Data implements ITopRatingData {
                 ));
             }
 
-            rs.close();
             stmt.close();
-            conn.commit();
-            result = new CommandResult(top, top.size());
         } catch (Exception e) {
-            rollbackConnection(conn);
             throw new DataConnectionException("Unable to list top movies!\n"
                     + e.getMessage());
-        } finally {
-            closeConnection(conn);
         }
 
-        return null;
+        return top;
     }
 }

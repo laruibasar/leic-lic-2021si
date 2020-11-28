@@ -4,7 +4,6 @@ import pt.isel.ls.data.common.Data;
 import pt.isel.ls.data.common.DataConnectionException;
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Review;
-import pt.isel.ls.utils.CommandResult;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,20 +13,16 @@ import java.util.LinkedList;
 
 public class MovieReviewData extends Data implements IMovieReviewData {
     @Override
-    public CommandResult createMovieReview(Review review)
+    public LinkedList<Model> createMovieReview(Connection connection, Review review)
             throws DataConnectionException {
-        CommandResult result = null;
-        Connection conn = null;
         LinkedList<Model> reviews = new LinkedList<>();
 
         try {
-            conn = getDataConnection().getConnection();
-
             final String query = "insert into reviews "
                     + "(summary, completeReview, rating, movie, movieCritic) "
                     + "values(?, ?, ?, ?, ?)";
 
-            PreparedStatement stmt = conn.prepareStatement(
+            PreparedStatement stmt = connection.prepareStatement(
                     query,
                     Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, review.getSummary());
@@ -36,47 +31,38 @@ public class MovieReviewData extends Data implements IMovieReviewData {
             stmt.setInt(4, review.getRating());
             stmt.setInt(5, review.getMovieCritic());
 
-            final int status = stmt.executeUpdate();
+            stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
-            if (rs.first()) {
+            if (rs.next()) {
                 review.setId(rs.getInt(1));
+                reviews.add(review);
             }
-            reviews.add(review);
 
-            rs.close();
             stmt.close();
-            conn.commit();
-            result = new CommandResult(reviews, status);
         } catch (Exception e) {
-            rollbackConnection(conn);
             throw new DataConnectionException("Unable to add review to movie"
                 + review.getMovie() + "\n" + e.getMessage(), e);
-        } finally {
-            closeConnection(conn);
         }
 
-        return result;
+        return reviews;
     }
 
     @Override
-    public CommandResult getMovieReview(int movie, int review)
+    public LinkedList<Model> getMovieReview(Connection connection, int movie, int review)
             throws DataConnectionException {
-        CommandResult result = null;
-        Connection conn = null;
         LinkedList<Model> reviews = new LinkedList<>();
 
         try {
-            conn = getDataConnection().getConnection();
 
             final String query = "select rid, summary, completeReview, rating, "
                     + "movie, movieCritic from reviews where movie = ? and rid = ?";
 
-            PreparedStatement stmt = conn.prepareStatement(query);
+            PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setInt(1, movie);
             stmt.setInt(2, review);
 
             ResultSet rs = stmt.executeQuery();
-            if (rs.first()) {
+            if (rs.next()) {
                 reviews.add(
                         new Review(
                             rs.getInt(1),
@@ -87,36 +73,27 @@ public class MovieReviewData extends Data implements IMovieReviewData {
                             rs.getInt(6)));
             }
 
-            rs.close();
             stmt.close();
-            conn.commit();
-            result = new CommandResult(reviews, reviews.size());
         } catch (Exception e) {
-            rollbackConnection(conn);
             throw new DataConnectionException("Unable to get the review:"
                     + review + " for movie: " + movie + "\n"
                     + e.getMessage(), e);
-        } finally {
-            closeConnection(conn);
         }
 
-        return result;
+        return reviews;
     }
 
     @Override
-    public CommandResult getAllMovieReviews(int movie)
+    public LinkedList<Model> getAllMovieReviews(Connection connection, int movie)
             throws DataConnectionException {
-        CommandResult result = null;
-        Connection conn = null;
         LinkedList<Model> reviews = new LinkedList<>();
 
         try {
-            conn = getDataConnection().getConnection();
 
             final String query = "select rid, summary, rating, "
                     + "movie, movieCritic from reviews where movie = ?";
 
-            PreparedStatement stmt = conn.prepareStatement(query);
+            PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setInt(1, movie);
 
             ResultSet rs = stmt.executeQuery();
@@ -131,19 +108,13 @@ public class MovieReviewData extends Data implements IMovieReviewData {
                                 rs.getInt(6)));
             }
 
-            rs.close();
             stmt.close();
-            conn.commit();
-            result = new CommandResult(reviews, reviews.size());
         } catch (Exception e) {
-            rollbackConnection(conn);
             throw new DataConnectionException("Unable to get reviews "
                     + " for movie: " + movie + "\n"
                     + e.getMessage(), e);
-        } finally {
-            closeConnection(conn);
         }
 
-        return result;
+        return reviews;
     }
 }

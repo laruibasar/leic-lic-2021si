@@ -6,8 +6,11 @@ import pt.isel.ls.data.common.DataConnectionException;
 import pt.isel.ls.handlers.common.Handler;
 import pt.isel.ls.handlers.common.HandlerException;
 import pt.isel.ls.handlers.common.IHandler;
+import pt.isel.ls.model.Model;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
+
+import java.util.LinkedList;
 
 /**
  * GET /users/{uid}/reviews - returns all reviews from the user identified by uid. Must not include the full review.
@@ -44,7 +47,11 @@ public class GetUserAllReviewsHandler extends Handler implements IHandler {
         }
 
         try {
-            return reviewData.getUserAllReview(user);
+            LinkedList<Model> result = ts.executeTransaction((connection) -> {
+                return reviewData.getUserAllReview(connection, user);
+            });
+
+            return new CommandResult(result, result.size());
         } catch (DataConnectionException e) {
             throw new HandlerException(e.getMessage(), e);
         }
