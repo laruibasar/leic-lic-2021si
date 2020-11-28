@@ -37,6 +37,10 @@ public class Command {
         extractValuesHeaders();
     }
 
+    public Command(Method method, Path path, Header header) {
+        this(method, path, header, new Parameters());
+    }
+
     public Method getMethod() {
         return this.method;
     }

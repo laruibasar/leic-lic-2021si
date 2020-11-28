@@ -102,6 +102,6 @@ public class AppConsole {
     }
 
     private static void showResults(CommandResult cr, Header hd) {
-        System.out.println(new PrintResults(cr, hd));
+        System.out.println(new PrintResults(cr, hd).toString());
     }
 }
