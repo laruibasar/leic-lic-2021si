@@ -34,9 +34,13 @@ public class CommandResultTest {
 
 
     @Test
-    public void get_movie_details() throws DataConnectionException, HandlerException {
+    public void get_movie_details() throws HandlerException {
         Handler handler = new GetMovieDetailsHandler();
         Command cmd = new Command(Method.GET, new Path("/movies/1"));
+
+        // Setup template to get mid out
+        cmd.setTemplate(new Command(Method.GET, new Path("/movies/{mid}")));
+
         CommandResult cr = handler.execute(cmd);
 
         Model movie = new Movie(1, "Gladiator", 2000);
@@ -44,10 +48,14 @@ public class CommandResultTest {
     }
 
     @Test
-    public void get_movie_rating() throws DataConnectionException, HandlerException {
+    public void get_movie_rating() throws HandlerException {
 
         Handler handler = new GetMovieRatingHandler();
         Command cmd = new Command(Method.GET, new Path("/movies/1/ratings"));
+
+        // Setup template to get mid out
+        cmd.setTemplate(new Command(Method.GET, new Path("/movies/{mid}/ratings")));
+
         CommandResult cr = handler.execute(cmd);
 
         Model rating = new MovieRating(1, 4.5f, 0, 0, 0, 2, 2);

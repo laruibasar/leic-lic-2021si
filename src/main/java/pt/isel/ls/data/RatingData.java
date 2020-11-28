@@ -95,6 +95,17 @@ public class RatingData extends Data implements IRatingData {
                     + "\t  where movie = ?) as rating;";
             PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setInt(1, movie);
+            stmt.setInt(2, movie);
+            stmt.setInt(3, movie);
+            stmt.setInt(4, movie);
+            stmt.setInt(5, movie);
+            stmt.setInt(6, movie);
+            stmt.setInt(7, movie);
+            stmt.setInt(8, movie);
+            stmt.setInt(9, movie);
+            stmt.setInt(10, movie);
+            stmt.setInt(11, movie);
+            stmt.setInt(12, movie);
 
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
