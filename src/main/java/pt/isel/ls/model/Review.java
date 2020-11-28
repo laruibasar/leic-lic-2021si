@@ -61,6 +61,10 @@ public class Review extends Model {
         return movieCritic;
     }
 
+    public void setMovieCritic(int movieCritic) {
+        this.movieCritic = movieCritic;
+    }
+
     @Override
     public String toString() {
         if (completeReview == null) {

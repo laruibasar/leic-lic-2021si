@@ -7,7 +7,6 @@ public class Table extends Body {
     private ArrayList<String[]> rows;
 
     public Table() {
-
     }
 
     public Table(ArrayList<String[]> rows) {

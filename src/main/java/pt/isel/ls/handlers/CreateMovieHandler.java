@@ -10,6 +10,8 @@ import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.Parameters;
 import pt.isel.ls.utils.CommandResult;
 
+import java.util.LinkedList;
+
 /**
  * POST /movies - creates a new movie, given the following parameters
  *  title - the movie's name.
