@@ -18,6 +18,6 @@ public class OptionHandlerTest {
         Command test = new Command(Method.OPTION, new Path("/"), new Parameters());
         Handler handler = new OptionHandler();
         CommandResult rs = handler.execute(test);
-        // print list of commands, we need the dev of different CommandResult
+        // TODO: how to test a print list of commands?
     }
 }
