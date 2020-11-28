@@ -8,7 +8,8 @@ import pt.isel.ls.handlers.common.Handler;
 import pt.isel.ls.handlers.common.HandlerException;
 import pt.isel.ls.handlers.common.IHandler;
 import pt.isel.ls.utils.Command;
-import pt.isel.ls.utils.CommandResult;
+import pt.isel.ls.view.results.CommandResult;
+import pt.isel.ls.view.results.GetMovieDetailsResult;
 
 import java.util.LinkedList;
 
@@ -51,7 +52,7 @@ public class GetMovieDetailsHandler extends Handler implements IHandler {
                 return movieData.getMovie(connection, movie);
             });
 
-            return new CommandResult(result, result.size());
+            return new GetMovieDetailsResult(result);
         } catch (DataConnectionException e) {
             throw new HandlerException(e.getMessage(), e);
         }
