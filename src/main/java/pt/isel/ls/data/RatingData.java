@@ -19,7 +19,7 @@ public class RatingData extends Data implements IRatingData {
         LinkedList<Model> ratings = new LinkedList<>();
 
         try {
-            final String query = "insert into ratings(mid, rating) values (?, ?)";
+            final String query = "insert into ratings(movie, rating) values (?, ?)";
 
             PreparedStatement stmt = connection.prepareStatement(
                     query,
