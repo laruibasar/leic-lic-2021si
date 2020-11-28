@@ -11,11 +11,11 @@ import pt.isel.ls.view.html.head.Title;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GetMovieAllReviews extends CommandResult {
+public class GetMovieAllReviewsResult extends CommandResult {
 
     private final List<Model> reviews;
 
-    public GetMovieAllReviews(List<Model> reviews) {
+    public GetMovieAllReviewsResult(List<Model> reviews) {
 
         this.reviews = reviews;
     }
