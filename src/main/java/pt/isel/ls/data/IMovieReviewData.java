@@ -16,4 +16,7 @@ public interface IMovieReviewData {
 
     public LinkedList<Model> getAllMovieReviews(Connection connection, int movie)
             throws DataConnectionException;
+
+    public LinkedList<Model> deleteMovieReview(Connection connection, int movie, int review)
+            throws DataConnectionException;
 }
