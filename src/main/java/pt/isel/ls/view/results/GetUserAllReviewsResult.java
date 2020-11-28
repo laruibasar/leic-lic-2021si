@@ -15,10 +15,6 @@ public class GetUserAllReviewsResult extends CommandResult{
     private final List<Model> reviews;
 
     public GetUserAllReviewsResult(List<Model> reviews) {
-        if(reviews.size() != 1 || !(reviews instanceof Review)){
-            //create exception
-        }
-
         this.reviews = reviews;
     }
 

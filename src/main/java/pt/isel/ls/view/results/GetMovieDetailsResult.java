@@ -15,21 +15,23 @@ public class GetMovieDetailsResult extends CommandResult{
 
     private Movie movie;
 
-    public GetMovieDetailsResult(List<Model> movie){
-        if(movie.size() != 1 || !(movie instanceof Movie)){
-            //create exception
+    public GetMovieDetailsResult(List<Model> movies){
+        if(movies.size() != 0 ){
+            this.movie = (Movie) movies.get(0);
         }
-
-        this.movie = (Movie) movie.get(0);
     }
 
     @Override
     public String printHTML() {
         ArrayList<String[]> rows = new ArrayList<>();
-        rows.add(new String[] {
-                String.valueOf(movie.getMid()),
-                movie.getTitle(),
-                String.valueOf(movie.getYear())});
+        if (movie == null) {
+            rows.add(new String[]{ "Movie details not available" });
+        } else {
+            rows.add(new String[] {
+                    String.valueOf(movie.getMid()),
+                    movie.getTitle(),
+                    String.valueOf(movie.getYear())});
+        }
 
         Html h = new Html(
                 new Head(
@@ -46,7 +48,6 @@ public class GetMovieDetailsResult extends CommandResult{
 
     @Override
     public String printPlainText() {
-        return "Movie Details -> " +
-                movie.toString();
+        return movie == null ? "Movie details not available" : "Movie Details -> " + movie.toString();
     }
 }

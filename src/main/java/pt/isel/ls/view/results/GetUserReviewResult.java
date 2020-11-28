@@ -16,11 +16,8 @@ public class GetUserReviewResult extends CommandResult{
     private Review review;
 
     public GetUserReviewResult(List<Model> reviews) {
-        if(reviews.size() != 1 || !(reviews instanceof Review)){
-            //create exception
-        }
 
-        this.review = (Review) reviews;
+        this.review = (Review) reviews.get(0);
     }
 
     @Override

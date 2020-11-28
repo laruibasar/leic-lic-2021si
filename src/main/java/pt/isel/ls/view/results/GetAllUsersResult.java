@@ -16,9 +16,6 @@ public class GetAllUsersResult extends CommandResult {
     private final List<Model> users;
 
     public GetAllUsersResult(List<Model> users) {
-        if(!(users.get(0) instanceof User)){
-            //create exception
-        }
 
         this.users = users;
     }

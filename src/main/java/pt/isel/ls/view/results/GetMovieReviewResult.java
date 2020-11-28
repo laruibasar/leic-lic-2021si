@@ -16,26 +16,30 @@ public class GetMovieReviewResult extends CommandResult {
     private Review review;
 
     public GetMovieReviewResult(List<Model> reviews) {
-        if(reviews.size() != 1 || !(reviews instanceof Review)){
-            //create exception
+        if (reviews.size() != 0) {
+            this.review = (Review) reviews.get(0);
         }
 
-        this.review = (Review) reviews;
     }
 
     @Override
     public String printHTML() {
         ArrayList<String[]> rows = new ArrayList<>();
-        rows.add(
-                new String[] {
-                        String.valueOf(review.getId()),
-                        review.getSummary(),
-                        review.getCompleteReview(),
-                        String.valueOf(review.getRating()),
-                        String.valueOf(review.getMovie()),
-                        String.valueOf(review.getMovieCritic())
-                }
-        );
+
+        if (review == null) {
+            rows.add(new String[] {"Review not available"});
+        } else {
+            rows.add(
+                    new String[] {
+                            String.valueOf(review.getId()),
+                            review.getSummary(),
+                            review.getCompleteReview(),
+                            String.valueOf(review.getRating()),
+                            String.valueOf(review.getMovie()),
+                            String.valueOf(review.getMovieCritic())
+                    }
+            );
+        }
 
         Html h = new Html(
                 new Head(
@@ -52,7 +56,6 @@ public class GetMovieReviewResult extends CommandResult {
 
     @Override
     public String printPlainText() {
-        return "Movie Review -> " +
-                review.toString();
+        return review == null ? "Review not available" : "Movie Review -> " + review.toString();
     }
 }

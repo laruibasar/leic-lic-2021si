@@ -16,9 +16,6 @@ public class GetTopRatingResult extends CommandResult{
     private final List<Model> movies;
 
     public GetTopRatingResult(List<Model> movies) {
-        if(movies.size() != 1 || !(movies instanceof Movie)){
-            //create exception
-        }
 
         this.movies = movies;
     }

@@ -16,9 +16,6 @@ public class GetMoviesResult extends CommandResult {
     private final List<Model> movies;
 
     public GetMoviesResult(List<Model> movies){
-        if(movies.size() != 1 || !(movies instanceof Movie)){
-            //create exception
-        }
 
         this.movies = movies;
     }
@@ -26,6 +23,7 @@ public class GetMoviesResult extends CommandResult {
     @Override
     public String printHTML() {
         ArrayList<String[]> rows = new ArrayList<>();
+
         for(Model m: movies) {
             Movie movie = (Movie) m;
             rows.add(

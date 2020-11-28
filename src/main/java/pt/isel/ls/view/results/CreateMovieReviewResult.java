@@ -15,30 +15,35 @@ import java.util.List;
 public class CreateMovieReviewResult extends CommandResult {
     private Review review;
 
-    public CreateMovieReviewResult(List<Model> review) {
-        if(review.size() != 1 || !(review instanceof User)){
-            //create exception
+    public CreateMovieReviewResult(List<Model> reviews) {
+        if(reviews.size() != 0){
+            this.review = (Review) reviews.get(0);
         }
 
-        this.review = (Review) review.get(0);
     }
 
     @Override
     public String printHTML() {
         ArrayList<String[]> rows = new ArrayList<>();
-        rows.add(
-                new String[] {
-                        String.valueOf(review.getId()),
-                        review.getSummary(),
-                        review.getCompleteReview(),
-                        String.valueOf(review.getMovie()),
-                        String.valueOf(review.getMovieCritic()),
-                        String.valueOf(review.getRating())
-                }
-        );
+        String title = "Created Review";
+        if (review == null){
+            title = "Review not created";
+        } else {
+            rows.add(
+                    new String[] {
+                            String.valueOf(review.getId()),
+                            review.getSummary(),
+                            review.getCompleteReview(),
+                            String.valueOf(review.getMovie()),
+                            String.valueOf(review.getMovieCritic()),
+                            String.valueOf(review.getRating())
+                    }
+            );
+        }
+
         Html h = new Html(
                 new Head(
-                        new Title("Created Review")
+                        new Title(title)
                 ),
                 new Body(
                         new Table(
@@ -52,7 +57,6 @@ public class CreateMovieReviewResult extends CommandResult {
 
     @Override
     public String printPlainText() {
-        return "Created Review -> " +
-                review.toString();
+        return review == null ? "Review not created" : "Created Review -> " + review.toString();
     }
 }

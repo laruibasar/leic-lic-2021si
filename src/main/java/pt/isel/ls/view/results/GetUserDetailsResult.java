@@ -16,20 +16,23 @@ public class GetUserDetailsResult extends CommandResult {
     private User user;
 
     public GetUserDetailsResult(List<Model> users) {
-        if(users.size() != 1 || !(users instanceof User)){
-            //create exception
+        if (users.size() != 0){
+            this.user = (User) users.get(0);
         }
-
-        this.user = (User) users.get(0);
     }
 
     @Override
     public String printHTML() {
         ArrayList<String[]> rows = new ArrayList<>();
-        rows.add(new String[] {
-                String.valueOf(user.getId()),
-                user.getName(),
-                user.getEmail()});
+
+        if (user == null) {
+            rows.add(new String[]{ "User details not available" });
+        } else {
+            rows.add(new String[] {
+                    String.valueOf(user.getId()),
+                    user.getName(),
+                    user.getEmail()});
+        }
 
         Html h = new Html(
                 new Head(
@@ -46,7 +49,6 @@ public class GetUserDetailsResult extends CommandResult {
 
     @Override
     public String printPlainText() {
-        return "User details -> " +
-                user.toString();
+        return user==null ? "User details not available" : "User details -> " + user.toString();
     }
 }

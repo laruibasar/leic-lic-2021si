@@ -17,26 +17,31 @@ public class CreateMovieResult extends CommandResult{
     private Movie movie;
 
     public CreateMovieResult(List<Model> movies) {
-        if(movies.size() != 1 || !(movies instanceof Movie)){
-            //create exception
+        if(movies.size() != 0){
+            this.movie = (Movie) movies.get(0);
         }
-
-        this.movie = (Movie) movies.get(0);
     }
 
     @Override
     public String printHTML() {
         ArrayList<String[]> rows = new ArrayList<>();
-        rows.add(
-                new String[] {
-                        String.valueOf(movie.getMid()),
-                        movie.getTitle(),
-                        String.valueOf(movie.getYear())
-                }
-        );
+        String title = "Created Movie";
+
+        if (movie == null) {
+            title = "Movie not created";
+        } else {
+            rows.add(
+                    new String[] {
+                            String.valueOf(movie.getMid()),
+                            movie.getTitle(),
+                            String.valueOf(movie.getYear())
+                    }
+            );
+        }
+
         Html h = new Html(
                 new Head(
-                        new Title("Created Movie")
+                        new Title(title)
                 ),
                 new Body(
                         new Table(
@@ -50,7 +55,6 @@ public class CreateMovieResult extends CommandResult{
 
     @Override
     public String printPlainText() {
-        return "Created Movie -> " +
-                movie.toString();
+        return movie == null ? "Movie not created" : "Created Movie -> " + movie.toString();
     }
 }
