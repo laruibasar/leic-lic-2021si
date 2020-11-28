@@ -10,6 +10,7 @@ import pt.isel.ls.utils.Header;
 import pt.isel.ls.utils.Method;
 import pt.isel.ls.utils.Parameters;
 import pt.isel.ls.utils.Path;
+import pt.isel.ls.view.PrintResults;
 
 import java.util.Scanner;
 
@@ -55,7 +56,7 @@ public class AppConsole {
             }
 
             CommandResult result = runCommand(cmd);
-            showResults(result);
+            showResults(result, cmd.getHeader());
         } catch (RouterException | HandlerException e) {
             System.out.println("ERROR " + e.getMessage() + "\n");
         }
@@ -100,9 +101,7 @@ public class AppConsole {
         return handler.execute(cmd);
     }
 
-    private static void showResults(CommandResult cr) {
-       /* for (Model model : cr) {
-            System.out.println(model.toString());
-        }*/
+    private static void showResults(CommandResult cr, Header hd) {
+        System.out.println(new PrintResults(cr, hd).toString());
     }
 }
