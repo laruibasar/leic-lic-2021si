@@ -1,15 +1,15 @@
 package pt.isel.ls;
 
-import pt.isel.ls.model.Model;
+import pt.isel.ls.config.AppConfig;
+import pt.isel.ls.config.RouterException;
 import pt.isel.ls.handlers.common.Handler;
 import pt.isel.ls.handlers.common.HandlerException;
 import pt.isel.ls.utils.Command;
-import pt.isel.ls.config.AppConfig;
-import pt.isel.ls.config.RouterException;
 import pt.isel.ls.utils.Header;
 import pt.isel.ls.utils.Method;
 import pt.isel.ls.utils.Parameters;
 import pt.isel.ls.utils.Path;
+import pt.isel.ls.view.PrintResults;
 import pt.isel.ls.view.results.CommandResult;
 
 import java.util.Scanner;

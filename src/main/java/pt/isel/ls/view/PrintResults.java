@@ -1,4 +1,4 @@
-package pt.isel.ls;
+package pt.isel.ls.view;
 
 import pt.isel.ls.utils.Header;
 import pt.isel.ls.view.results.CommandResult;
@@ -19,7 +19,8 @@ public class PrintResults {
 
     @Override
     public String toString() {
-        String printType, textType;
+        String printType;
+        String textType;
         printType = header.getHeaders().get("file-name");
         textType = header.getHeaders().get("accept");
         if (printType.equals("standard output")) {
@@ -35,7 +36,7 @@ public class PrintResults {
         return commandResult.printPlainText();
     }
 
-    //TODO: create correct exception
+    //TODO: a informação é acrescentada no mesmo ficheiro e não apaga a anterior
     public String filePrint(String fileName, String textType) {
         File file = new File(fileName);
         FileWriter fw = null;
@@ -55,6 +56,6 @@ public class PrintResults {
         }
         return "File "
                 + fileName
-                + "created";
+                + " created";
     }
 }
