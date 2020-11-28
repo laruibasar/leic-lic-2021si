@@ -14,7 +14,7 @@ public interface IMovieData {
                                                String genre, String directors, String actors)
             throws DataConnectionException;
 
-    public LinkedList<Model> getAllMovies(Connection connection) throws DataConnectionException;
+    public LinkedList<Model> getAllMovies(Connection connection, int top, int skip) throws DataConnectionException;
 
     public LinkedList<Model> getMovie(Connection connection, int id) throws DataConnectionException;
 
