@@ -9,7 +9,7 @@ public class Review extends Model {
     private int movie;
     private int movieCritic;
 
-    public Review(int rid, int movie){
+    public Review(int rid, int movie) {
         this.rid = rid;
         this.movie = movie;
     }

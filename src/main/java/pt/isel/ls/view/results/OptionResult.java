@@ -5,7 +5,6 @@ import pt.isel.ls.utils.Command;
 import pt.isel.ls.view.html.Html;
 import pt.isel.ls.view.html.body.Body;
 import pt.isel.ls.view.html.body.Bullets;
-import pt.isel.ls.view.html.body.Table;
 import pt.isel.ls.view.html.head.Head;
 import pt.isel.ls.view.html.head.Title;
 

@@ -16,7 +16,7 @@ import java.util.LinkedList;
 public class DeleteMovieReviewHandler extends Handler implements IHandler {
     IMovieReviewData reviewData;
 
-    public DeleteMovieReviewHandler(){
+    public DeleteMovieReviewHandler() {
         super();
         reviewData = new MovieReviewData();
         description = "Deletes the review with rid made to the movie with mid";
@@ -56,7 +56,7 @@ public class DeleteMovieReviewHandler extends Handler implements IHandler {
 
         try {
             LinkedList<Model> result = ts.executeTransaction((connection) -> {
-                return reviewData.DeleteMovieReview(connection, movie, review);
+                return reviewData.deleteMovieReview(connection, movie, review);
             });
 
             return new DeleteMovieReviewResult(result);

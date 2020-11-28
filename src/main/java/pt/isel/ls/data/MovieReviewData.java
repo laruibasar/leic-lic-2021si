@@ -119,7 +119,7 @@ public class MovieReviewData extends Data implements IMovieReviewData {
     }
 
     @Override
-    public LinkedList<Model> DeleteMovieReview(Connection connection, int movie, int review)
+    public LinkedList<Model> deleteMovieReview(Connection connection, int movie, int review)
             throws DataConnectionException {
 
         LinkedList<Model> reviews = new LinkedList<>();
@@ -134,7 +134,9 @@ public class MovieReviewData extends Data implements IMovieReviewData {
 
             int rs = stmt.executeUpdate();
 
-            if (rs == 1) reviews.add(new Review(review,movie));
+            if (rs == 1) {
+                reviews.add(new Review(review,movie));
+            }
 
             stmt.close();
         } catch (Exception e) {

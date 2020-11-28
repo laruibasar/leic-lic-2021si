@@ -1,6 +1,5 @@
 package pt.isel.ls;
 
-import pt.isel.ls.model.Model;
 import pt.isel.ls.handlers.common.Handler;
 import pt.isel.ls.handlers.common.HandlerException;
 import pt.isel.ls.utils.Command;
