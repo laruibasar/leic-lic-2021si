@@ -1,13 +1,19 @@
 package pt.isel.ls.data;
 
 import pt.isel.ls.data.common.DataConnectionException;
+import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Review;
-import pt.isel.ls.utils.CommandResult;
+
+import java.sql.Connection;
+import java.util.LinkedList;
 
 public interface IMovieReviewData {
-    public CommandResult createMovieReview(Review review) throws DataConnectionException;
+    public LinkedList<Model> createMovieReview(Connection connection, Review review)
+            throws DataConnectionException;
 
-    public CommandResult getMovieReview(int movie, int review) throws DataConnectionException;
+    public LinkedList<Model> getMovieReview(Connection connection, int movie, int review)
+            throws DataConnectionException;
 
-    public CommandResult getAllMovieReviews(int movie) throws DataConnectionException;
+    public LinkedList<Model> getAllMovieReviews(Connection connection, int movie)
+            throws DataConnectionException;
 }

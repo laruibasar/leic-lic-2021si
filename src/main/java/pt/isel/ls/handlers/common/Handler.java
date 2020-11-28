@@ -1,5 +1,7 @@
 package pt.isel.ls.handlers.common;
 
+import pt.isel.ls.data.transaction.DataTransaction;
+import pt.isel.ls.data.transaction.IDataTransaction;
 import pt.isel.ls.utils.Command;
 
 import java.util.ArrayList;
@@ -8,9 +10,15 @@ import java.util.List;
 public abstract class Handler implements IHandler {
     protected String description;
     protected List<String> validValues;
+    protected IDataTransaction ts;
 
     public Handler() {
+        ts = new DataTransaction();
         validValues = new ArrayList<>();
+    }
+
+    public void setDataTransaction(IDataTransaction ts) {
+        this.ts = ts;
     }
 
     public void setDescription(String description) {
@@ -22,14 +30,14 @@ public abstract class Handler implements IHandler {
     }
 
     protected String checkNeededValues(Command cmd) throws HandlerException {
-        StringBuilder keys = new StringBuilder();
+        StringBuilder needed = new StringBuilder();
         for (String key : validValues) {
             if (cmd.getValue(key) == null) {
-                keys.append("\"").append(key).append("\" ");
+                needed.append("\"").append(key).append("\" ");
             }
         }
 
-        return keys.toString();
+        return needed.toString();
     }
 
     @Override

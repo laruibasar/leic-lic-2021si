@@ -3,11 +3,14 @@ package pt.isel.ls.handlers;
 import pt.isel.ls.data.IMovieData;
 import pt.isel.ls.data.MovieData;
 import pt.isel.ls.data.common.DataConnectionException;
+import pt.isel.ls.model.Model;
 import pt.isel.ls.handlers.common.Handler;
 import pt.isel.ls.handlers.common.HandlerException;
 import pt.isel.ls.handlers.common.IHandler;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
+
+import java.util.LinkedList;
 
 /**
  * POST /movies - creates a new movie, given the following parameters
@@ -40,8 +43,8 @@ public class CreateMovieHandler extends Handler implements IHandler {
         }
 
         String title = cmd.getValue("title");
-        int year;
 
+        int year;
         try {
             year = Integer.parseInt(cmd.getValue("releaseYear"));
         } catch (NumberFormatException e) {
@@ -50,7 +53,11 @@ public class CreateMovieHandler extends Handler implements IHandler {
         }
 
         try {
-            return movieData.createMovie(title, year);
+            LinkedList<Model> result = ts.executeTransaction((connection) -> {
+                return movieData.createMovie(connection, title, year);
+            });
+
+            return new CommandResult(result, result.size());
         } catch (DataConnectionException e) {
             throw new HandlerException(e.getMessage(), e);
         }

@@ -6,8 +6,11 @@ import pt.isel.ls.data.common.DataConnectionException;
 import pt.isel.ls.handlers.common.Handler;
 import pt.isel.ls.handlers.common.HandlerException;
 import pt.isel.ls.handlers.common.IHandler;
+import pt.isel.ls.model.Model;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
+
+import java.util.LinkedList;
 
 /**
  * GET /users/{uid}/reviews/{rid} - returns the full information for the
@@ -50,12 +53,16 @@ public class GetUserReviewHandler extends Handler implements IHandler {
         try {
             review = Integer.parseInt(cmd.getValue("rid"));
         } catch (NumberFormatException e) {
-            throw new HandlerException("Handler invalid format for uid: "
-                    + cmd.getValue("uid"));
+            throw new HandlerException("Handler invalid format for rid: "
+                    + cmd.getValue("rid"));
         }
 
         try {
-            return reviewData.getUserReview(user, review);
+            LinkedList<Model> result = ts.executeTransaction(connection -> {
+                return reviewData.getUserReview(connection, user, review);
+            });
+
+            return new CommandResult(result, result.size());
         } catch (DataConnectionException e) {
             throw new HandlerException(e.getMessage(), e);
         }

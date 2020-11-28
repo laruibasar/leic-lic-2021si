@@ -6,8 +6,11 @@ import pt.isel.ls.data.common.DataConnectionException;
 import pt.isel.ls.handlers.common.Handler;
 import pt.isel.ls.handlers.common.HandlerException;
 import pt.isel.ls.handlers.common.IHandler;
+import pt.isel.ls.model.Model;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.CommandResult;
+
+import java.util.LinkedList;
 
 /**
  * GET /movies/{mid}/ratings - returns the rating information for the movie
@@ -47,7 +50,11 @@ public class GetMovieRatingHandler extends Handler implements IHandler {
         }
 
         try {
-            return ratingData.getRatings(movie);
+            LinkedList<Model> result = ts.executeTransaction((connection) -> {
+                return ratingData.getRatings(connection, movie);
+            });
+
+            return new CommandResult(result, result.size());
         } catch (DataConnectionException e) {
             throw new HandlerException(e.getMessage(), e);
         }
