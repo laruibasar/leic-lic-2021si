@@ -92,9 +92,13 @@ public class MovieData extends Data implements IMovieData {
         //offset n é o valor do ponteiro onde começa a apresentar => skip
 
         try {
-            final String query = "select mid, title, year from movies limit ? offset ?;";
+            String query = "select mid, title, year from movies order by mid limit ? offset ?;";
             PreparedStatement stmt = connection.prepareStatement(query);
-            stmt.setInt(1, top);
+            if (top > 0) {
+                stmt.setInt(1, top);
+            } else {
+                stmt.setString(1, "ALL");
+            }
             stmt.setInt(2, skip);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {

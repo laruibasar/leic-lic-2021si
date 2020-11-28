@@ -23,6 +23,8 @@ public class GetMoviesHandler extends Handler implements IHandler {
         movieData = new MovieData();
         description = "Return list with all movies";
 
+        validValues.add("top");
+        validValues.add("skip");
     }
 
     public void setMovieDataConnection(IMovieData movieData) {
@@ -31,24 +33,32 @@ public class GetMoviesHandler extends Handler implements IHandler {
 
     @Override
     public CommandResult execute(Command cmd) throws HandlerException {
-        String check = checkNeededValues(cmd);
-        if (check.length() > 0) {
-            throw new HandlerException("Handler missing parameters: "
-                    + check);
-        }
-
-        int top, skip;
+        int top = 10;
+        int skip = 0;
         try {
-            top = Integer.parseInt(cmd.getValue("top"));
-            skip = Integer.parseInt(cmd.getValue("skip"));
+            if (cmd.getValue("top") != null) {
+                top = Integer.parseInt(cmd.getValue("top"));
+                if (top <= 0) {
+                    throw new NumberFormatException("Top cannot be negative or zero: " + top);
+                }
+            }
+
+            if (cmd.getValue("skip") != null) {
+                skip = Integer.parseInt(cmd.getValue("skip"));
+                if (skip < 0) {
+                    throw new NumberFormatException("Skip cannot be negative: " + skip);
+                }
+            }
         } catch (NumberFormatException e) {
-            throw new HandlerException("Handler invalid format for mid: "
-                    + cmd.getValue("mid"));
+            throw new HandlerException("Handler invalid format: "
+                    + e.getMessage());
         }
 
         try {
+            int finalTop = top;
+            int finalSkip = skip;
             LinkedList<Model> result = ts.executeTransaction((connection) -> {
-                return movieData.getAllMovies(connection, top, skip);
+                return movieData.getAllMovies(connection, finalTop, finalSkip);
             });
 
             return new CommandResult(result, result.size());
