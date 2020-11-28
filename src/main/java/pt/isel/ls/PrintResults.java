@@ -40,16 +40,14 @@ public class PrintResults {
         File file = new File(fileName);
         FileWriter fw = null;
         try {
-            fw = new FileWriter(file);
+            fw = new FileWriter(file, true);
             if (textType.equals("HTML")) {
                 fw.write(commandResult.printHTML()
-                        + "\n",
-                        true);
+                        + "\n\n");
 
             } else {
                 fw.write(commandResult.printPlainText()
-                        + "\n",
-                        true);
+                        + "\n\n");
             }
             fw.flush();
             fw.close();
