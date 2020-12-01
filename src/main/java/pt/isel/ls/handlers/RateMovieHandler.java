@@ -59,6 +59,12 @@ public class RateMovieHandler extends Handler implements IHandler {
                     + cmd.getValue("rating"));
         }
 
+        /* bug: #53 */
+        if (rate < 1 || rate > 5) {
+            throw new HandlerException("Rating value must be between 1" 
+                + " and 5. Sent: " + rate);
+        }
+
         try {
             LinkedList<Model> result = ts.executeTransaction((connection) -> {
                 return ratingData.createRating(connection, movie, rate);
