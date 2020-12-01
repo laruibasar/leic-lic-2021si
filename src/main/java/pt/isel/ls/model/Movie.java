@@ -73,9 +73,9 @@ public class Movie extends Model {
     @Override
     public String toString() {
         if (year == 0) {
-            return "MovieID = " + mid + "   Title = " + title;
+            return "MovieID = " + mid + "\tTitle = " + title;
         }
-        return "MovieID = " + mid + "   Title = " + title + " Year = " + year;
+        return "MovieID = " + mid + "\tTitle = " + title + "\tYear = " + year;
     }
 
 }
