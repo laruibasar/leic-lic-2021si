@@ -37,7 +37,7 @@ public class GetMoviesResult extends CommandResult {
 
         Html h = new Html(
                 new Head(
-                        new Title("Top Ratings")
+                        new Title("Movies List:")
                 ),
                 new Body(
                         new Table(
@@ -50,7 +50,7 @@ public class GetMoviesResult extends CommandResult {
 
     @Override
     public String printPlainText() {
-        StringBuilder sb = new StringBuilder("Top Ratings -> \n");
+        StringBuilder sb = new StringBuilder("Movies list: \n");
         for (Model m : movies) {
             sb.append(m.toString());
             sb.append('\n');
