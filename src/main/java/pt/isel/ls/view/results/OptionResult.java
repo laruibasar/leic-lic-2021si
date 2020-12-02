@@ -32,7 +32,7 @@ public class OptionResult extends CommandResult {
 
         Html h = new Html(
                 new Head(
-                        new Title("User All Reviews")
+                        new Title("All Commands")
                 ),
                 new Body(
                         new Bullets(
@@ -48,7 +48,7 @@ public class OptionResult extends CommandResult {
         StringBuilder sb = new StringBuilder();
         for (Command c : router) {
             sb.append(router.getHandler(c).getDescription() + "\n"
-                    + "Command: " + c.toString() + "\n");
+                    + "Command: " + c.toString() + "\n\n");
         }
         return sb.toString();
     }
