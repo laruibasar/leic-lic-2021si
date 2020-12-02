@@ -6,7 +6,7 @@ public class Rating extends Model {
     private int movieId;
     private int rating;
 
-    public Rating(int ratingId, int rating, int movieId) {
+    public Rating(int ratingId, int movieId, int rating) {
         this.ratingId = ratingId;
         this.movieId = movieId;
         this.rating = rating;
