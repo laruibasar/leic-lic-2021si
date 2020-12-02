@@ -52,7 +52,7 @@ public class MovieRating extends Model {
     @Override
     public String toString() {
         return    "Movie id =" + movieId
-                + "Average Rating = " + average
+                + "\tAverage Rating = " + average
                 + "\nNumber of votes: "
                 + "\n\t1 = " + votesOne
                 + "\n\t2 = " + votesTwo
