@@ -35,18 +35,13 @@ public class PrintResultsTest {
         handler.setDataTransaction(new MockDataTransaction());
         CommandResult cr = handler.execute(cmd);
         PrintResults pr = new PrintResults(cr, cmd.getHeader());
-        final String aux = "Top Ratings -> \n"
-                + "MovieID = 1   Title = Gladiator Year = 2000\n"
-                + "MovieID = 2   Title = The Fast and the Furious Year = 2001\n"
-                + "MovieID = 3   Title = Finding Nemo Year = 2003\n"
-                + "MovieID = 4   Title = The Godfather: part III Year = 1990\n"
-                + "MovieID = 5   Title = The Godfather Year = 1972\n";
-        assertEquals(pr.toString(), aux);
+        final String aux = "Movies list: \n";
+        assertEquals(aux,pr.toString());
     }
 
     @Test
     public void file_hmtl_print() throws HandlerException, IOException {
-        byte[] path = Files.readAllBytes(Paths.get("//test.txt"));
+        byte[] path = Files.readAllBytes(Paths.get("test.txt"));
         Handler handler = new GetMoviesHandler();
         Command cmd = new Command(Method.GET,
                 new Path("/movies/1"),
