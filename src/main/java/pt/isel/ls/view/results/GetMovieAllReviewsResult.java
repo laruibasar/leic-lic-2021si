@@ -55,7 +55,7 @@ public class GetMovieAllReviewsResult extends CommandResult {
         StringBuilder sb = new StringBuilder("User All Reviews -> \n");
         for (Model r : reviews) {
             sb.append(r.toString());
-            sb.append('\n');
+            sb.append("\n\n");
         }
         return sb.toString();
     }
