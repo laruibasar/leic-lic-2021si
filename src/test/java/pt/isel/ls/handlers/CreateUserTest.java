@@ -19,12 +19,14 @@ public class CreateUserTest {
         AppConfig.setup();
 
         Parameters params = new Parameters();
-        params.setValues("name=John+Smith&email=hi@example.com");
+        params.setValues("name=John+Smith&email=hi2@example.com");
         Command cmd = new Command(Method.POST, new Path("/users/"), params);
 
         CreateUserHandler handler = new CreateUserHandler();
         handler.setDataTransaction(new MockDataTransaction());
         CommandResult rs = handler.execute(cmd);
+
+
 
         /*assertEquals(1, rs.getStatus());
         for (Model test : rs) {
@@ -39,7 +41,7 @@ public class CreateUserTest {
         AppConfig.setup();
         
         Parameters params = new Parameters();
-        params.setValues("name=&email=hi@example.net");
+        params.setValues("name=&email=hi2@example.net");
         Command cmd = new Command(Method.POST, new Path("/users/"), params);
 
         CreateUserHandler handler = new CreateUserHandler();

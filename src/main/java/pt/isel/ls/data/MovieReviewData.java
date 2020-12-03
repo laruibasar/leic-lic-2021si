@@ -27,8 +27,8 @@ public class MovieReviewData extends Data implements IMovieReviewData {
                     Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, review.getSummary());
             stmt.setString(2, review.getCompleteReview());
-            stmt.setInt(3, review.getMovie());
-            stmt.setInt(4, review.getRating());
+            stmt.setInt(3, review.getRating());
+            stmt.setInt(4, review.getMovie());
             stmt.setInt(5, review.getMovieCritic());
 
             stmt.executeUpdate();
