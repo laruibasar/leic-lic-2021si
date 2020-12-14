@@ -40,7 +40,11 @@ public class PrintResults {
 
     //TODO: a informação é acrescentada no mesmo ficheiro e não apaga a anterior
     public String filePrint(String fileName, String textType) {
-        File file = new File(fileName);
+        /* validate file name */
+        String validFilename = fileName
+                .replaceAll("[\\\\/:*?\"<>| ]", "_");
+
+        File file = new File(validFilename);
         FileWriter fw = null;
         try {
             fw = new FileWriter(file, true);
@@ -55,6 +59,6 @@ public class PrintResults {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "File " + fileName + " created";
+        return "File " + validFilename + " created";
     }
 }
