@@ -21,11 +21,13 @@ public class PrintResults {
     public String toString() {
         String printType;
         String textType;
-        printType = header.getHeaders().get("file-name");
-        textType = header.getHeaders().get("accept");
-        if (printType.equals("standard output")) {
+        printType = header.getValue("file-name");
+        textType = header.getValue("accept");
+
+        if (printType.isEmpty()) {
             return consolePrint(textType);
         }
+
         return filePrint(printType, textType);
     }
 
@@ -43,19 +45,16 @@ public class PrintResults {
         try {
             fw = new FileWriter(file, true);
             if (textType.equals("text/html")) {
-                fw.write(commandResult.printHtml()
-                        + "\n\n");
+                fw.write(commandResult.printHtml() + "\n\n");
             } else {
-                fw.write(commandResult.printPlainText()
-                        + "\n\n");
+                fw.write(commandResult.printPlainText() + "\n\n");
             }
+
             fw.flush();
             fw.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "File "
-                + fileName
-                + " created";
+        return "File " + fileName + " created";
     }
 }
