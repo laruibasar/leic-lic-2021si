@@ -57,6 +57,12 @@ public class DeleteMovieReviewResult extends CommandResult {
 
     @Override
     public String printPlainText() {
-        return review == null ? "Review not deleted" : "Deleted Review -> " + review.toString();
+        return review == null ? "Review not deleted" : "Deleted Review -> "
+                + "ReviewID = " + review.getId()
+                + "\nSummary = " + review.getSummary()
+                + "\nComplete Review = " + review.getCompleteReview()
+                + "\nStars = " + review.getRating()
+                + "\nMovieID = " + review.getMovie()
+                + "\nMovie Critic = " + review.getMovieCritic();
     }
 }

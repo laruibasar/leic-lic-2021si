@@ -51,7 +51,10 @@ public class GetAllUsersResult extends CommandResult {
     public String printPlainText() {
         StringBuilder sb = new StringBuilder("All users -> \n");
         for (Model u : users) {
-            sb.append(u.toString());
+            sb.append("UserId = "
+                    + ((User)u).getId()
+                    + "\nName = "
+                    + ((User)u).getName());
             sb.append('\n');
         }
         return sb.toString();

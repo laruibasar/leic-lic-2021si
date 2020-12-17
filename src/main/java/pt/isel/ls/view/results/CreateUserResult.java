@@ -53,6 +53,12 @@ public class CreateUserResult extends CommandResult {
 
     @Override
     public String printPlainText() {
-        return user == null ? "User not created" : "Created User -> " + user.toString();
+        return user == null ? "User not created" : "Created User -> "
+                + "\nUserid = "
+                + user.getId()
+                + "\nName = "
+                + user.getName()
+                + "\nEmail ="
+                + user.getEmail();
     }
 }

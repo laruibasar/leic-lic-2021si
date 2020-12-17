@@ -56,6 +56,21 @@ public class GetMovieRatingResult extends CommandResult {
 
     @Override
     public String printPlainText() {
-        return movieRating == null ? "No movie rating available" : "Movie Rating -> " + movieRating.toString();
+        return movieRating == null ? "No movie rating available" : "Movie Rating -> "
+                + "Movie id ="
+                + movieRating.getMovieId()
+                + "\tAverage Rating = "
+                + movieRating.getAverage()
+                + "\nNumber of votes: "
+                + "\n\t1 = "
+                + movieRating.getVotesOne()
+                + "\n\t2 = "
+                + movieRating.getVotesTwo()
+                + "\n\t3 = "
+                + movieRating.getVotesThree()
+                + "\n\t4 = "
+                + movieRating.getVotesFour()
+                + "\n\t5 = "
+                + movieRating.getVotesFive();
     }
 }
