@@ -4,10 +4,12 @@ import pt.isel.ls.data.IMovieReviewData;
 import pt.isel.ls.data.MovieReviewData;
 import pt.isel.ls.data.common.DataConnectionException;
 import pt.isel.ls.model.Model;
+import pt.isel.ls.model.Movie;
 import pt.isel.ls.model.Review;
 import pt.isel.ls.handlers.common.Handler;
 import pt.isel.ls.handlers.common.HandlerException;
 import pt.isel.ls.handlers.common.IHandler;
+import pt.isel.ls.model.User;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.view.results.CommandResult;
 import pt.isel.ls.view.results.CreateMovieReviewResult;
@@ -51,12 +53,16 @@ public class CreateMovieReviewHandler extends Handler implements IHandler {
 
         Review review;
         try {
+            User user = new User();
+            Movie movie = new Movie();
+            movie.setId(Integer.parseInt(cmd.getValue("mid")));
+            user.setId(Integer.parseInt(cmd.getValue("uid")));
             review = new Review(
                     cmd.getValue("reviewSummary"),
                     cmd.getValue("review"),
-                    Integer.parseInt(cmd.getValue("mid")),
+                    movie,
                     Integer.parseInt(cmd.getValue("rating")),
-                    Integer.parseInt(cmd.getValue("uid"))
+                    user
             );
         } catch (Exception e) {
             throw new HandlerException("Handler invalid format in values"
