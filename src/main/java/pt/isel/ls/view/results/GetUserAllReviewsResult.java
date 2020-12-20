@@ -20,6 +20,14 @@ public class GetUserAllReviewsResult extends CommandResult {
 
     @Override
     public String printHtml() {
+        ArrayList<String> header = new ArrayList<>();
+        header.add("Review Id");
+        header.add("Summary");
+        header.add("Review");
+        header.add("Rating");
+        header.add("Movie Id");
+        header.add("User Id");
+
         ArrayList<String[]> rows = new ArrayList<>();
         for (Model r: reviews) {
             Review review = (Review) r;
@@ -41,6 +49,7 @@ public class GetUserAllReviewsResult extends CommandResult {
                 ),
                 new Body(
                         new Table(
+                                header,
                                 rows
                         )
                 )

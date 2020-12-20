@@ -22,6 +22,11 @@ public class GetMoviesResult extends CommandResult {
 
     @Override
     public String printHtml() {
+        ArrayList<String> header = new ArrayList<>();
+        header.add("Movie Id");
+        header.add("Title");
+        header.add("Year");
+
         ArrayList<String[]> rows = new ArrayList<>();
 
         for (Model m: movies) {
@@ -41,6 +46,7 @@ public class GetMoviesResult extends CommandResult {
                 ),
                 new Body(
                         new Table(
+                                header,
                                 rows
                         )
                 )

@@ -24,6 +24,14 @@ public class GetUserReviewResult extends CommandResult {
 
     @Override
     public String printHtml() {
+        ArrayList<String> header = new ArrayList<>();
+        header.add("Review Id");
+        header.add("Summary");
+        header.add("Review");
+        header.add("Rating");
+        header.add("Movie Id");
+        header.add("User Id");
+
         ArrayList<String[]> rows = new ArrayList<>();
         if (review == null) {
             rows.add(new String[]{ "User review not available" });
@@ -46,6 +54,7 @@ public class GetUserReviewResult extends CommandResult {
                 ),
                 new Body(
                         new Table(
+                                header,
                                 rows
                         )
                 )
