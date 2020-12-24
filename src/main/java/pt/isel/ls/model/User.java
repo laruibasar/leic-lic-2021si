@@ -5,6 +5,10 @@ public class User extends Model {
     private String name;
     private String email;
 
+    public User(){
+
+    }
+
     public User(int id, String name, String email) {
         this.id = id;
         this.name = name;
@@ -27,6 +31,19 @@ public class User extends Model {
     public int getId() {
         return id;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
 
     @Override
     public String toString() {
