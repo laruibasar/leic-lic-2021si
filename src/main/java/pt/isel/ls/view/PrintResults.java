@@ -1,7 +1,7 @@
 package pt.isel.ls.view;
 
 import pt.isel.ls.utils.Header;
-import pt.isel.ls.view.results.CommandResult;
+import pt.isel.ls.results.CommandResult;
 
 import java.io.File;
 import java.io.FileWriter;

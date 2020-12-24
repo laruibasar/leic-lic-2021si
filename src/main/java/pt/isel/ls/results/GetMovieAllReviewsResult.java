@@ -1,4 +1,4 @@
-package pt.isel.ls.view.results;
+package pt.isel.ls.results;
 
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Review;
@@ -11,31 +11,27 @@ import pt.isel.ls.view.html.head.Title;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GetUserReviewResult extends CommandResult {
+public class GetMovieAllReviewsResult extends CommandResult {
 
-    private Review review;
+    private final List<Model> reviews;
 
-    public GetUserReviewResult(List<Model> reviews) {
-        if (reviews.size() != 0) {
-            this.review = (Review) reviews.get(0);
-        }
+    public GetMovieAllReviewsResult(List<Model> reviews) {
 
+        this.reviews = reviews;
     }
 
     @Override
     public String printHtml() {
         ArrayList<String> header = new ArrayList<>();
-        header.add("Review Id");
+        header.add("Id");
         header.add("Summary");
-        header.add("Review");
+        header.add("Complete Review");
         header.add("Rating");
         header.add("Movie Id");
         header.add("User Id");
-
         ArrayList<String[]> rows = new ArrayList<>();
-        if (review == null) {
-            rows.add(new String[]{ "User review not available" });
-        } else {
+        for (Model r: reviews) {
+            Review review = (Review) r;
             rows.add(
                     new String[] {
                             String.valueOf(review.getId()),
@@ -50,7 +46,7 @@ public class GetUserReviewResult extends CommandResult {
 
         Html h = new Html(
                 new Head(
-                        new Title("User Review")
+                        new Title("User All Reviews")
                 ),
                 new Body(
                         new Table(
@@ -64,6 +60,11 @@ public class GetUserReviewResult extends CommandResult {
 
     @Override
     public String printPlainText() {
-        return review == null ? "User Review not available" : "User Review -> " + review.toString();
+        StringBuilder sb = new StringBuilder("User All Reviews -> \n");
+        for (Model r : reviews) {
+            sb.append(r.toString());
+            sb.append("\n\n");
+        }
+        return sb.toString();
     }
 }

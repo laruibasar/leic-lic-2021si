@@ -28,4 +28,8 @@ public class AppHttpServlet {
     public void stop() throws Exception {
         server.stop();
     }
+
+    public boolean isStarted() {
+        return server.isStarted();
+    }
 }

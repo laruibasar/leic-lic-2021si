@@ -1,4 +1,4 @@
-package pt.isel.ls.view.results;
+package pt.isel.ls.results;
 
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Review;
@@ -11,10 +11,11 @@ import pt.isel.ls.view.html.head.Title;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreateMovieReviewResult extends CommandResult {
+public class GetMovieReviewResult extends CommandResult {
+
     private Review review;
 
-    public CreateMovieReviewResult(List<Model> reviews) {
+    public GetMovieReviewResult(List<Model> reviews) {
         if (reviews.size() != 0) {
             this.review = (Review) reviews.get(0);
         }
@@ -27,30 +28,29 @@ public class CreateMovieReviewResult extends CommandResult {
         header.add("Id");
         header.add("Summary");
         header.add("Review");
+        header.add("Rating");
         header.add("Movie Id");
         header.add("User Id");
-        header.add("Rating");
-
         ArrayList<String[]> rows = new ArrayList<>();
-        String title = "Created Review";
+
         if (review == null) {
-            title = "Review not created";
+            rows.add(new String[] {"Review not available"});
         } else {
             rows.add(
                     new String[] {
                             String.valueOf(review.getId()),
                             review.getSummary(),
                             review.getCompleteReview(),
+                            String.valueOf(review.getRating()),
                             String.valueOf(review.getMovie()),
-                            String.valueOf(review.getMovieCritic()),
-                            String.valueOf(review.getRating())
+                            String.valueOf(review.getMovieCritic())
                     }
             );
         }
 
         Html h = new Html(
                 new Head(
-                        new Title(title)
+                        new Title("Movie Review")
                 ),
                 new Body(
                         new Table(
@@ -58,13 +58,12 @@ public class CreateMovieReviewResult extends CommandResult {
                                 rows
                         )
                 )
-
         );
         return h.toString();
     }
 
     @Override
     public String printPlainText() {
-        return review == null ? "Review not created" : "Created Review -> " + review.toString();
+        return review == null ? "Review not available" : "Movie Review -> " + review.toString();
     }
 }

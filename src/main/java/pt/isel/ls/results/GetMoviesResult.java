@@ -1,7 +1,7 @@
-package pt.isel.ls.view.results;
+package pt.isel.ls.results;
 
 import pt.isel.ls.model.Model;
-import pt.isel.ls.model.Rating;
+import pt.isel.ls.model.Movie;
 import pt.isel.ls.view.html.Html;
 import pt.isel.ls.view.html.body.Body;
 import pt.isel.ls.view.html.body.Table;
@@ -11,41 +11,38 @@ import pt.isel.ls.view.html.head.Title;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RateMovieResult extends CommandResult {
+public class GetMoviesResult extends CommandResult {
 
-    private Rating rating;
+    private final List<Model> movies;
 
-    public RateMovieResult(List<Model> ratings) {
-        if (ratings.size() != 0) {
-            this.rating = (Rating) ratings.get(0);
-        }
+    public GetMoviesResult(List<Model> movies) {
 
+        this.movies = movies;
     }
 
     @Override
     public String printHtml() {
         ArrayList<String> header = new ArrayList<>();
-        header.add("Review Id");
         header.add("Movie Id");
-        header.add("Rating");
+        header.add("Title");
+        header.add("Year");
 
         ArrayList<String[]> rows = new ArrayList<>();
-        String title = "Created Rating";
-        if (rating == null) {
-            title = "Rating not created";
-        } else {
+
+        for (Model m: movies) {
+            Movie movie = (Movie) m;
             rows.add(
                     new String[] {
-                            String.valueOf(rating.getRatingId()),
-                            String.valueOf(rating.getMovieId()),
-                            String.valueOf(rating.getRating())
+                            String.valueOf(movie.getMid()),
+                            movie.getTitle(),
+                            String.valueOf(movie.getYear())
                     }
             );
         }
 
         Html h = new Html(
                 new Head(
-                        new Title(title)
+                        new Title("Movies List:")
                 ),
                 new Body(
                         new Table(
@@ -53,13 +50,17 @@ public class RateMovieResult extends CommandResult {
                                 rows
                         )
                 )
-
         );
         return h.toString();
     }
 
     @Override
     public String printPlainText() {
-        return rating == null ? "Rating not created" : "Created Rating -> " + rating.toString();
+        StringBuilder sb = new StringBuilder("Movies list: \n");
+        for (Model m : movies) {
+            sb.append(m.toString());
+            sb.append('\n');
+        }
+        return sb.toString();
     }
 }
