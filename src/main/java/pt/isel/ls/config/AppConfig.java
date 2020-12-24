@@ -53,14 +53,17 @@ public class AppConfig {
         return router;
     }
 
+    /* store http config */
+    private static HttpServletConfig http;
+
+    public static HttpServletConfig getHttpServletConfig() {
+        return http;
+    }
+
     private static AppConfig config;
 
     public static void setup() {
         config = new AppConfig();
-    }
-
-    public static AppConfig getInstance() {
-        return config;
     }
 
     private void loadRouter() {
@@ -96,6 +99,8 @@ public class AppConfig {
 
             router = new Router();
             loadRouter();
+
+            http = new HttpServletConfig();
 
             loadConfig = true;
             loadMessage = "OK";
