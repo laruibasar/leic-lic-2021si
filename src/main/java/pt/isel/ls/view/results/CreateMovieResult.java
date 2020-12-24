@@ -23,6 +23,11 @@ public class CreateMovieResult extends CommandResult {
 
     @Override
     public String printHtml() {
+        ArrayList<String> header = new ArrayList<>();
+        header.add("Movie Id");
+        header.add("Title");
+        header.add("Year");
+
         ArrayList<String[]> rows = new ArrayList<>();
         String title = "Created Movie";
 
@@ -44,6 +49,7 @@ public class CreateMovieResult extends CommandResult {
                 ),
                 new Body(
                         new Table(
+                                header,
                                 rows
                         )
                 )

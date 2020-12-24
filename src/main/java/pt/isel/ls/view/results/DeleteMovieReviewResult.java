@@ -24,6 +24,14 @@ public class DeleteMovieReviewResult extends CommandResult {
 
     @Override
     public String printHtml() {
+        ArrayList<String> header = new ArrayList<>();
+        header.add("Id");
+        header.add("Summary");
+        header.add("Review");
+        header.add("Movie Id");
+        header.add("User Id");
+        header.add("Rating");
+
         ArrayList<String[]> rows = new ArrayList<>();
         String title = "Deleted Review";
         if (review == null) {

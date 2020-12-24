@@ -25,6 +25,11 @@ public class CreateUserResult extends CommandResult {
 
     @Override
     public String printHtml() {
+        ArrayList<String> header = new ArrayList<>();
+        header.add("User Id");
+        header.add("Name");
+        header.add("Email");
+
         ArrayList<String[]> rows = new ArrayList<>();
         String title = "Created user";
 
@@ -44,6 +49,7 @@ public class CreateUserResult extends CommandResult {
                 ),
                 new Body(
                         new Table(
+                                header,
                                 rows
                         )
                 )

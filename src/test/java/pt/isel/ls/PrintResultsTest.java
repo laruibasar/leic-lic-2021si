@@ -40,7 +40,7 @@ public class PrintResultsTest {
     }
 
     @Test
-    public void file_hmtl_print() throws HandlerException, IOException {
+    public void file_html_print() throws HandlerException, IOException {
         byte[] path = Files.readAllBytes(Paths.get("test.txt"));
         Handler handler = new GetMoviesHandler();
         Command cmd = new Command(Method.GET,
