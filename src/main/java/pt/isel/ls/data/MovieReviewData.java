@@ -3,7 +3,9 @@ package pt.isel.ls.data;
 import pt.isel.ls.data.common.Data;
 import pt.isel.ls.data.common.DataConnectionException;
 import pt.isel.ls.model.Model;
+import pt.isel.ls.model.Movie;
 import pt.isel.ls.model.Review;
+import pt.isel.ls.model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -28,8 +30,8 @@ public class MovieReviewData extends Data implements IMovieReviewData {
             stmt.setString(1, review.getSummary());
             stmt.setString(2, review.getCompleteReview());
             stmt.setInt(3, review.getRating());
-            stmt.setInt(4, review.getMovie());
-            stmt.setInt(5, review.getMovieCritic());
+            stmt.setInt(4, review.getMovie().getMid());
+            stmt.setInt(5, review.getMovieCritic().getId());
 
             stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
@@ -48,7 +50,7 @@ public class MovieReviewData extends Data implements IMovieReviewData {
     }
 
     @Override
-    public LinkedList<Model> getMovieReview(Connection connection, int movie, int review)
+    public LinkedList<Model> getMovieReview(Connection connection, int movieId, int review)
             throws DataConnectionException {
         LinkedList<Model> reviews = new LinkedList<>();
 
@@ -58,25 +60,30 @@ public class MovieReviewData extends Data implements IMovieReviewData {
                     + "movie, movieCritic from reviews where movie = ? and rid = ?;";
 
             PreparedStatement stmt = connection.prepareStatement(query);
-            stmt.setInt(1, movie);
+            stmt.setInt(1, movieId);
             stmt.setInt(2, review);
 
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
+                User user = new User();
+                Movie movie = new Movie();
+                movie.setId(movieId);
+                user.setId(rs.getInt(6));
                 reviews.add(
                         new Review(
                             rs.getInt(1),
                             rs.getString(2),
                             rs.getString(3),
                             rs.getInt(4),
-                            rs.getInt(5),
-                            rs.getInt(6)));
+                            movie,
+                            user
+                            ));
             }
 
             stmt.close();
         } catch (Exception e) {
             throw new DataConnectionException("Unable to get the review:"
-                    + review + " for movie: " + movie + "\n"
+                    + review + " for movie: " + movieId + "\n"
                     + e.getMessage(), e);
         }
 
@@ -84,7 +91,7 @@ public class MovieReviewData extends Data implements IMovieReviewData {
     }
 
     @Override
-    public LinkedList<Model> getAllMovieReviews(Connection connection, int movie)
+    public LinkedList<Model> getAllMovieReviews(Connection connection, int movieId)
             throws DataConnectionException {
         LinkedList<Model> reviews = new LinkedList<>();
 
@@ -94,24 +101,28 @@ public class MovieReviewData extends Data implements IMovieReviewData {
                     + "movie, movieCritic from reviews where movie = ?;";
 
             PreparedStatement stmt = connection.prepareStatement(query);
-            stmt.setInt(1, movie);
+            stmt.setInt(1, movieId);
 
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
+                User user = new User();
+                Movie movie = new Movie();
+                movie.setId(movieId);
+                user.setId(rs.getInt(5));
                 reviews.add(
                         new Review(
                                 rs.getInt(1),
                                 rs.getString(2),
                                 null, //rs.getString(3), we don't need
                                 rs.getInt(3),
-                                rs.getInt(4),
-                                rs.getInt(5)));
+                                movie,
+                                user));
             }
 
             stmt.close();
         } catch (Exception e) {
             throw new DataConnectionException("Unable to get reviews "
-                    + " for movie: " + movie + "\n"
+                    + " for movie: " + movieId + "\n"
                     + e.getMessage(), e);
         }
 
@@ -119,7 +130,7 @@ public class MovieReviewData extends Data implements IMovieReviewData {
     }
 
     @Override
-    public LinkedList<Model> deleteMovieReview(Connection connection, int movie, int review)
+    public LinkedList<Model> deleteMovieReview(Connection connection, int movieId, int review)
             throws DataConnectionException {
 
         LinkedList<Model> reviews = new LinkedList<>();
@@ -128,10 +139,12 @@ public class MovieReviewData extends Data implements IMovieReviewData {
             final String query = "delete from reviews where movie = ? and rid = ?;";
 
             PreparedStatement stmt = connection.prepareStatement(query);
-            stmt.setInt(1, movie);
+            stmt.setInt(1, movieId);
             stmt.setInt(2, review);
 
             int rs = stmt.executeUpdate();
+            Movie movie = new Movie();
+            movie.setId(movieId);
 
             if (rs == 1) {
                 reviews.add(new Review(review,movie));
@@ -142,7 +155,7 @@ public class MovieReviewData extends Data implements IMovieReviewData {
             throw new DataConnectionException("Unable to delete review "
                     + review
                     + " of movie"
-                    + movie + "\n" + e.getMessage(), e);
+                    + movieId + "\n" + e.getMessage(), e);
         }
 
         return reviews;
