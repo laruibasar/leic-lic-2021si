@@ -13,6 +13,7 @@ import pt.isel.ls.handlers.GetUserAllReviewsHandler;
 import pt.isel.ls.handlers.GetUserReviewHandler;
 import pt.isel.ls.handlers.OptionHandler;
 import pt.isel.ls.handlers.RateMovieHandler;
+import pt.isel.ls.http.AppHttpServlet;
 import pt.isel.ls.utils.Path;
 import pt.isel.ls.handlers.CreateUserHandler;
 import pt.isel.ls.handlers.DeleteMovieReviewHandler;
@@ -54,9 +55,15 @@ public class AppConfig {
     }
 
     /* store http config */
-    private static HttpServletConfig http;
+    private static HttpServletConfig httpConfig;
 
     public static HttpServletConfig getHttpServletConfig() {
+        return httpConfig;
+    }
+
+    private static AppHttpServlet http;
+
+    public static AppHttpServlet getHttp() {
         return http;
     }
 
@@ -100,7 +107,8 @@ public class AppConfig {
             router = new Router();
             loadRouter();
 
-            http = new HttpServletConfig();
+            httpConfig = new HttpServletConfig();
+            http = new AppHttpServlet();
 
             loadConfig = true;
             loadMessage = "OK";

@@ -12,4 +12,8 @@ public class HttpServletConfig {
             port = Integer.getInteger(getPort);
         }
     }
+
+    public int getPort() {
+        return port;
+    }
 }
