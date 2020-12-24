@@ -11,6 +11,7 @@ import pt.isel.ls.handlers.GetMoviesHandler;
 import pt.isel.ls.handlers.GetTopRatingsHandler;
 import pt.isel.ls.handlers.GetUserAllReviewsHandler;
 import pt.isel.ls.handlers.GetUserReviewHandler;
+import pt.isel.ls.handlers.ListenHandler;
 import pt.isel.ls.handlers.OptionHandler;
 import pt.isel.ls.handlers.RateMovieHandler;
 import pt.isel.ls.http.AppHttpServlet;
@@ -98,6 +99,7 @@ public class AppConfig {
         router.addHandler(Method.OPTION, new Path("/"), new OptionHandler());
 
         router.addHandler(Method.DELETE, new Path("/movies/{mid}/review/{rid}"), new DeleteMovieReviewHandler());
+        router.addHandler(Method.LISTEN, new Path("/"), new ListenHandler());
     }
 
     private AppConfig() {
