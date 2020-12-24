@@ -47,9 +47,25 @@ public class OptionResult extends CommandResult {
     public String printPlainText() {
         StringBuilder sb = new StringBuilder();
         for (Command c : router) {
-            sb.append(router.getHandler(c).getDescription() + "\n"
-                    + "Command: " + c.toString() + "\n\n");
+            sb.append("COMMAND: ")
+                    .append(router.getHandler(c).getDescription())
+                    .append("\n")
+                    .append(c.toString())
+                    .append("\n");
+            ArrayList<String> params = (ArrayList<String>) router.getHandler(c).getValidValues();
+
+            if (params.size() > 0) {
+                sb.append("Parâmetros aceites:\n");
+                for (String s : params) {
+                    sb.append("\t")
+                            .append(s)
+                            .append("\n");
+                }
+            }
+
+            sb.append("\n");
         }
+
         return sb.toString();
     }
 }
