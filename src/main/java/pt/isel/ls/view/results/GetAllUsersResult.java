@@ -23,6 +23,10 @@ public class GetAllUsersResult extends CommandResult {
 
     @Override
     public String printHtml() {
+        ArrayList<String> header = new ArrayList<>();
+        header.add("User ID");
+        header.add("Name");
+
         ArrayList<String[]> rows = new ArrayList<>();
         for (Model m: users) {
             User u = (User) m;
@@ -39,6 +43,7 @@ public class GetAllUsersResult extends CommandResult {
                 ),
                 new Body(
                         new Table(
+                                header,
                                 rows
                         )
                 )

@@ -41,7 +41,7 @@ public class CreateMovieTest {
         AppConfig.setup();
 
         Parameters params = new Parameters();
-        params.setValues("title=The+Godfather&releaseYear=1972");
+        params.setValues("title=The+Godfather:+Part+III&releaseYear=1990");
         Command cmd = new Command(Method.POST, new Path("/movies"), params);
 
         CreateMovieHandler handler = new CreateMovieHandler();

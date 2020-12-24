@@ -16,7 +16,7 @@ public class Header {
 
         //Default values
         userHeader.put("accept","text/plain");
-        userHeader.put("file-name","standard output");
+        userHeader.put("file-name", "");
 
     }
 
@@ -36,7 +36,7 @@ public class Header {
                 case "file-name":
                     userHeader.replace(
                             pair[0],
-                            pair.length < 2 ? "standard output" : pair[1]);
+                            pair.length < 2 ? "" : pair[1]);
                     break;
                 default:
                     // non used header elements

@@ -23,6 +23,15 @@ public class GetMovieRatingResult extends CommandResult {
 
     @Override
     public String printHtml() {
+        ArrayList<String> header = new ArrayList<>();
+        header.add("Movie Id");
+        header.add("Average Rating");
+        header.add("1");
+        header.add("2");
+        header.add("3");
+        header.add("4");
+        header.add("5");
+
         ArrayList<String[]> rows = new ArrayList<>();
 
         if (movieRating == null) {
@@ -47,6 +56,7 @@ public class GetMovieRatingResult extends CommandResult {
                 ),
                 new Body(
                         new Table(
+                                header,
                                 rows
                         )
                 )

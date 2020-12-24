@@ -23,6 +23,10 @@ public class GetMovieDetailsResult extends CommandResult {
 
     @Override
     public String printHtml() {
+        ArrayList<String> header = new ArrayList<>();
+        header.add("Id");
+        header.add("Title");
+        header.add("Year");
         ArrayList<String[]> rows = new ArrayList<>();
         if (movie == null) {
             rows.add(new String[]{ "Movie details not available" });
@@ -39,6 +43,7 @@ public class GetMovieDetailsResult extends CommandResult {
                 ),
                 new Body(
                         new Table(
+                                header,
                                 rows
                         )
                 )
