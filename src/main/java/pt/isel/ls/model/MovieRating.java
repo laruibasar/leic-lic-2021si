@@ -2,7 +2,7 @@ package pt.isel.ls.model;
 
 public class MovieRating extends Model {
 
-    private int movieId;
+    private Movie movie;
     private float average;
     private int votesOne;
     private int votesTwo;
@@ -10,9 +10,9 @@ public class MovieRating extends Model {
     private int votesFour;
     private int votesFive;
 
-    public MovieRating(int mid, float avg, int one,
+    public MovieRating(Movie movie, float avg, int one,
                        int two, int three, int four, int five) {
-        this.movieId = mid;
+        this.movie = movie;
         this.average = avg;
         this.votesOne = one;
         this.votesTwo = two;
@@ -26,7 +26,7 @@ public class MovieRating extends Model {
     }
 
     public int getMovieId() {
-        return movieId;
+        return movie.getMid();
     }
 
     public int getVotesOne() {
@@ -51,7 +51,7 @@ public class MovieRating extends Model {
 
     @Override
     public String toString() {
-        return    "Movie id =" + movieId
+        return    "Movie id =" + movie.getMid()
                 + "\tAverage Rating = " + average
                 + "\nNumber of votes: "
                 + "\n\t1 = " + votesOne
