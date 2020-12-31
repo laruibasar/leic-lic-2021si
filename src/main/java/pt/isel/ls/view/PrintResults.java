@@ -1,5 +1,6 @@
 package pt.isel.ls.view;
 
+import pt.isel.ls.config.RouterException;
 import pt.isel.ls.utils.Header;
 import pt.isel.ls.view.results.CommandResult;
 
@@ -25,13 +26,22 @@ public class PrintResults {
         textType = header.getValue("accept");
 
         if (printType.isEmpty()) {
-            return consolePrint(textType);
+            try {
+                return consolePrint(textType);
+            } catch (RouterException e) {
+                e.printStackTrace();
+            }
         }
 
-        return filePrint(printType, textType);
+        try {
+            return filePrint(printType, textType);
+        } catch (RouterException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
-    public String consolePrint(String textType) {
+    public String consolePrint(String textType) throws RouterException {
         if (textType.equals("text/html")) {
             return commandResult.printHtml();
         }
@@ -39,7 +49,7 @@ public class PrintResults {
     }
 
     //TODO: a informação é acrescentada no mesmo ficheiro e não apaga a anterior
-    public String filePrint(String fileName, String textType) {
+    public String filePrint(String fileName, String textType) throws RouterException {
         /* validate file name */
         String validFilename = fileName
                 .replaceAll("[\\\\/:*?\"<>| ]", "_");

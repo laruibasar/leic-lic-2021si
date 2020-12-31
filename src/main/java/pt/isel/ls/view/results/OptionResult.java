@@ -1,6 +1,7 @@
 package pt.isel.ls.view.results;
 
 import pt.isel.ls.config.Router;
+import pt.isel.ls.config.RouterException;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.view.html.Html;
 import pt.isel.ls.view.html.body.Body;
@@ -19,10 +20,10 @@ public class OptionResult extends CommandResult {
     }
 
     @Override
-    public String printHtml() {
+    public String printHtml() throws RouterException {
         ArrayList<String> arrayList = new ArrayList<>();
 
-        for (Command c : router) {
+        for (Command c : router.getTree().getAllCommands()) {
             arrayList.add(router.getHandler(c).getDescription() + "\n"
                     + "Command: " + c.toString() + "\n");
         }
@@ -44,9 +45,9 @@ public class OptionResult extends CommandResult {
     }
 
     @Override
-    public String printPlainText() {
+    public String printPlainText() throws RouterException {
         StringBuilder sb = new StringBuilder();
-        for (Command c : router) {
+        for (Command c : router.getTree().getAllCommands()) {
             sb.append("COMMAND: ")
                     .append(router.getHandler(c).getDescription())
                     .append("\n")

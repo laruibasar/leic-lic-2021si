@@ -2,47 +2,37 @@ package pt.isel.ls.config;
 
 import pt.isel.ls.handlers.common.Handler;
 import pt.isel.ls.utils.Command;
-import pt.isel.ls.utils.Method;
-import pt.isel.ls.utils.Path;
 
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map;
+public class Router {
 
-public class Router implements Iterable<Command> {
+    private final Tree tree;
 
-    private final Map<Command, Handler> handlers;
-
-    public Router() {
-        handlers = new LinkedHashMap<>();
-    }
-
-    public void addHandler(Method method, Path path, Handler handler) {
-        handlers.put(new Command(method, path), handler);
+    public Router(Tree tree) {
+        this.tree = tree;
     }
 
     public Handler findHandler(Command command) throws RouterException {
+        Handler handler = tree.lookForHandler(tree.getRoot(), command);
         if (command.getTemplate() == null) {
             throw new RouterException("Invalid command " + command.toString());
         }
-        return handlers.get(command.getTemplate());
+        return handler;
     }
 
     public Command findTemplate(Command command) throws RouterException {
-        for (Command template : handlers.keySet()) {
-            if (template.matches(command)) {
-                return template;
-            }
+        Command cmd = tree.findCommand(tree.getRoot(), command);
+        if (cmd.getTemplate() == null) {
+            throw new RouterException("Invalid command " + command.toString());
         }
-        throw new RouterException("Invalid command " + command.toString());
+        return cmd.getTemplate();
     }
 
-    public Handler getHandler(Command template) {
-        return handlers.get(template);
+    public Handler getHandler(Command template) throws RouterException {
+        return findHandler(template);
     }
 
-    @Override
-    public Iterator<Command> iterator() {
-        return handlers.keySet().iterator();
+    public Tree getTree() {
+        return tree;
     }
+
 }

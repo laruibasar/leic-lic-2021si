@@ -13,6 +13,7 @@ import pt.isel.ls.handlers.GetUserAllReviewsHandler;
 import pt.isel.ls.handlers.GetUserReviewHandler;
 import pt.isel.ls.handlers.OptionHandler;
 import pt.isel.ls.handlers.RateMovieHandler;
+import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.Path;
 import pt.isel.ls.handlers.CreateUserHandler;
 import pt.isel.ls.handlers.DeleteMovieReviewHandler;
@@ -20,6 +21,7 @@ import pt.isel.ls.handlers.GetAllUsersHandler;
 import pt.isel.ls.utils.Method;
 import pt.isel.ls.handlers.GetUserDetailsHandler;
 
+import java.util.ArrayList;
 
 
 /**
@@ -63,39 +65,44 @@ public class AppConfig {
         return config;
     }
 
+    private Tree tree;
+    private ArrayList<Node> nodes = new ArrayList<>();
+
     private void loadRouter() {
+        tree = new Tree();
+        nodes.add(new Node(new Command(Method.POST, new Path("/users")), new CreateUserHandler()));
         /* List all handler to load into Router */
-        router.addHandler(Method.POST, new Path("/users"), new CreateUserHandler());
-        router.addHandler(Method.GET, new Path("/users"), new GetAllUsersHandler());
-        router.addHandler(Method.GET, new Path("/users/{uid}"), new GetUserDetailsHandler());
+        nodes.add(new Node(new Command(Method.POST, new Path("/users")), new CreateUserHandler()));
+        nodes.add(new Node(new Command(Method.GET, new Path("/users")), new GetAllUsersHandler()));
 
-        router.addHandler(Method.POST, new Path("/movies"), new CreateMovieHandler());
-        router.addHandler(Method.GET, new Path("/movies"), new GetMoviesHandler());
-        router.addHandler(Method.GET, new Path("/movies/{mid}"), new GetMovieDetailsHandler());
+        nodes.add(new Node(new Command(Method.POST, new Path("/movies")), new CreateMovieHandler()));
+        nodes.add(new Node(new Command(Method.POST, new Path("/movies/{mid}/ratings")), new RateMovieHandler()));
 
-        router.addHandler(Method.POST, new Path("/movies/{mid}/ratings"), new RateMovieHandler());
-        router.addHandler(Method.GET, new Path("/movies/{mid}/ratings"), new GetMovieRatingHandler());
+        nodes.add(new Node(new Command(Method.GET, new Path("/users/{uid}")), new GetUserDetailsHandler()));
+        nodes.add(new Node(new Command(Method.GET, new Path("/movies")), new GetMoviesHandler()));
 
-        router.addHandler(Method.POST, new Path("/movies/{mid}/reviews"), new CreateMovieReviewHandler());
-        router.addHandler(Method.GET, new Path("/movies/{mid}/reviews"), new GetMovieAllReviewsHandler());
+        nodes.add(new Node(new Command(Method.POST, new Path("/movies/{mid}/reviews")), new CreateMovieReviewHandler()));
+        nodes.add(new Node(new Command(Method.EXIT, new Path("/")), new ExitHandler()));
+        nodes.add(new Node(new Command(Method.OPTION, new Path("/")), new OptionHandler()));
+        nodes.add(new Node(new Command(Method.DELETE, new Path("/movies/{mid}/review/{rid}")), new DeleteMovieReviewHandler()));
 
-        router.addHandler(Method.GET, new Path("/movies/{mid}/reviews/{rid}"), new GetMovieReviewHandler());
-        router.addHandler(Method.GET, new Path("/users/{uid}/reviews"), new GetUserAllReviewsHandler());
-        router.addHandler(Method.GET, new Path("/users/{uid}/reviews/{rid}"), new GetUserReviewHandler());
-        router.addHandler(Method.GET, new Path("tops/ratings"), new GetTopRatingsHandler());
+        nodes.add(new Node(new Command(Method.GET, new Path("/movies/{mid}")), new GetMovieDetailsHandler()));
+        nodes.add(new Node(new Command(Method.GET, new Path("/movies/{mid}/ratings")), new GetMovieRatingHandler()));
+        nodes.add(new Node(new Command(Method.GET, new Path("/movies/{mid}/reviews")), new GetMovieAllReviewsHandler()));
+        nodes.add(new Node(new Command(Method.GET, new Path("/movies/{mid}/reviews/{rid}")), new GetMovieReviewHandler()));
 
-        router.addHandler(Method.EXIT, new Path("/"), new ExitHandler());
-        router.addHandler(Method.OPTION, new Path("/"), new OptionHandler());
+        nodes.add(new Node(new Command(Method.GET, new Path("/users/{uid}/reviews")), new GetUserAllReviewsHandler()));
+        nodes.add(new Node(new Command(Method.GET, new Path("/users/{uid}/reviews/{rid}")), new GetUserReviewHandler()));
+        nodes.add(new Node(new Command(Method.GET, new Path("tops/ratings")), new GetTopRatingsHandler()));
+        tree.buildTree(nodes);
 
-        router.addHandler(Method.DELETE, new Path("/movies/{mid}/review/{rid}"), new DeleteMovieReviewHandler());
     }
 
     private AppConfig() {
         try {
             database = new DataBaseConfig();
-
-            router = new Router();
             loadRouter();
+            router = new Router(tree);
 
             loadConfig = true;
             loadMessage = "OK";
