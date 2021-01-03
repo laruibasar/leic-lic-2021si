@@ -14,6 +14,7 @@ public class ExitResult extends CommandResult {
             throw new Exception("HTTP Servlet: " + e.getMessage(), e);
         }
     }
+
     @Override
     public String printHtml() {
         return null;
