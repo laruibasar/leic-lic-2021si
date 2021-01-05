@@ -2,14 +2,11 @@ package pt.isel.ls.http;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pt.isel.ls.config.AppConfig;
+import pt.isel.ls.AppCommand;
 import pt.isel.ls.config.RouterException;
-import pt.isel.ls.handlers.common.Handler;
 import pt.isel.ls.handlers.common.HandlerException;
 import pt.isel.ls.results.CommandResult;
 import pt.isel.ls.utils.Command;
-import pt.isel.ls.utils.Method;
-import pt.isel.ls.utils.Path;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -32,15 +29,15 @@ public class ListenHttpServlet extends HttpServlet {
                 req.getRequestURI(),
                 req.getHeader("Accept"));
 
-        Method method = Method.getMethod(req.getMethod());
-        Path path = new Path(req.getRequestURI());
-        Command cmd = new Command(method,path);
         try {
-            Handler handler = AppConfig.getRouter().findHandler(cmd);
-            CommandResult commandResult = handler.execute(cmd);
-        } catch (RouterException e) {
-            e.printStackTrace();
-        } catch (HandlerException e) {
+            Command cmd = AppCommand.setCommand(new String[] {
+                req.getMethod(),
+                req.getRequestURI(),
+                "accept:text/html"
+            });
+
+            CommandResult cr = AppCommand.runCommand(cmd);
+        } catch (RouterException | HandlerException e) {
             e.printStackTrace();
         }
 
