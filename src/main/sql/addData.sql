@@ -9,7 +9,8 @@ insert into movies(title, year) values
 ('Gladiator', 2000),
 ('The Fast and the Furious', 2001),
 ('Finding Nemo', 2003),
-('The Godfather', 1972);
+('The Godfather', 1972),
+('The friends', 1994);
 
 insert into movie_details (mid, genre, director, actors) values
 (4, 'drama', 'Francis Ford Coppola', 'Marlon Brandon, Al Pacino, James Caan');
