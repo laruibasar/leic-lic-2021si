@@ -51,12 +51,13 @@ public class GetTopRatingResult extends CommandResult {
     public String printPlainText() {
         StringBuilder sb = new StringBuilder("Top Ratings -> \n");
         for (Model m : movies) {
+            Movie movie = (Movie) m;
             sb.append("MovieID = "
-                    + ((Movie)m).getMid()
+                    + movie.getMid()
                     + "\tTitle = "
-                    + ((Movie)m).getTitle()
+                    + movie.getTitle()
                     + "\tYear = "
-                    + ((Movie)m).getYear());
+                    + movie.getYear());
             sb.append('\n');
         }
         return sb.toString();

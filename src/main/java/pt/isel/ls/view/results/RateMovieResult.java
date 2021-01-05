@@ -54,6 +54,12 @@ public class RateMovieResult extends CommandResult {
 
     @Override
     public String printPlainText() {
-        return rating == null ? "Rating not created" : "Created Rating -> " + rating.toString();
+        return rating == null ? "Rating not created" : "Created Rating -> "
+                + "\nRating = "
+                + rating
+                + "\nRating id = "
+                + rating.getRatingId()
+                + "\nMovie id = "
+                + rating.getMovieId();
     }
 }

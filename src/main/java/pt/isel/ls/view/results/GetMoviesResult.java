@@ -52,10 +52,11 @@ public class GetMoviesResult extends CommandResult {
     public String printPlainText() {
         StringBuilder sb = new StringBuilder("Movies list: \n");
         for (Model m : movies) {
+            Movie movie = (Movie) m;
             sb.append("MovieID = "
-                    + ((Movie) m).getMid()
+                    + movie.getMid()
                     + "\tTitle = "
-                    + ((Movie) m).getTitle());
+                    + movie.getTitle());
             sb.append('\n');
         }
         return sb.toString();

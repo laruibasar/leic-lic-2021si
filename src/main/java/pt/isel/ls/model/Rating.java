@@ -24,10 +24,4 @@ public class Rating extends Model {
         return rating;
 
     }
-
-    @Override
-    public String toString() {
-        return "Rating = " + rating + "\nRating id = "
-                + ratingId + "\nMovie id = " + movieId;
-    }
 }

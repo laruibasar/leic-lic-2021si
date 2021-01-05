@@ -55,6 +55,13 @@ public class GetUserReviewResult extends CommandResult {
 
     @Override
     public String printPlainText() {
-        return review == null ? "User Review not available" : "User Review -> " + review.toString();
+        StringBuilder sb = new StringBuilder("\nReviewID = " + review.getId()
+                + "\nSummary = " + review.getSummary()
+                + "\nComplete Review = " + review.getCompleteReview()
+                + "\nStars = " + review.getRating()
+                + "\nMovieID = " + review.getMovie()
+                + "\nMovie Critic = " + review.getMovieCritic()
+                + "\n");
+        return review == null ? "User Review not available" : "User Review -> " + sb.toString();
     }
 }
