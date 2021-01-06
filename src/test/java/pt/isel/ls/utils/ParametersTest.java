@@ -9,7 +9,7 @@ public class ParametersTest {
     public void parameters_equals() {
         Parameters params = new Parameters();
         params.setValues("name=First+Last&email=example@email.com");
-        assertEquals("name=First+Last&email=example@email.com",
+        assertEquals("name=First Last&email=example@email.com",
                 params.toString());
     }
 }

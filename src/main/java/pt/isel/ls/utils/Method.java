@@ -6,7 +6,8 @@ public enum Method {
     POST("POST"),
     EXIT("EXIT"),
     OPTION("OPTION"),
-    DELETE("DELETE");
+    DELETE("DELETE"),
+    LISTEN("LISTEN");
 
     private final String method;
 

@@ -1,4 +1,4 @@
-package pt.isel.ls.view.results;
+package pt.isel.ls.results;
 
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Movie;
@@ -22,6 +22,11 @@ public class GetTopRatingResult extends CommandResult {
 
     @Override
     public String printHtml() {
+        ArrayList<String> header = new ArrayList<>();
+        header.add("Movie Id");
+        header.add("Title");
+        header.add("Year");
+
         ArrayList<String[]> rows = new ArrayList<>();
         for (Model m: movies) {
             Movie movie = (Movie) m;
@@ -40,6 +45,7 @@ public class GetTopRatingResult extends CommandResult {
                 ),
                 new Body(
                         new Table(
+                                header,
                                 rows
                         )
                 )

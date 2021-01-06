@@ -22,7 +22,7 @@ public class TopRatingData extends Data implements ITopRatingData {
                     + "(select rating, movie from ratings union all select rating, movie from reviews) as rates "
                     + "on(movies.mid = rates.movie))\n"
                     + "group by mid, title, year\n"
-                    + "having count(rating) > ?\n"
+                    + "having count(rating) >= ?\n"
                     + "ORDER BY (CASE WHEN 1=? THEN avg(rating) END) DESC,\n"
                     + "\t\t (CASE WHEN 2=2 THEN avg(rating) END) ASC\n"
                     + "FETCH FIRST ? ROWS ONLY;";

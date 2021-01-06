@@ -29,6 +29,10 @@ public abstract class Handler implements IHandler {
         return description;
     }
 
+    public List<String> getValidValues() {
+        return validValues;
+    }
+
     protected String checkNeededValues(Command cmd) throws HandlerException {
         StringBuilder needed = new StringBuilder();
         for (String key : validValues) {

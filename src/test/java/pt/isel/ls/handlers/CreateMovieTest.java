@@ -6,7 +6,7 @@ import pt.isel.ls.config.AppConfig;
 import pt.isel.ls.mockdata.MockDataTransaction;
 import pt.isel.ls.handlers.common.HandlerException;
 import pt.isel.ls.utils.Command;
-import pt.isel.ls.view.results.CommandResult;
+import pt.isel.ls.results.CommandResult;
 import pt.isel.ls.utils.Method;
 import pt.isel.ls.utils.Parameters;
 import pt.isel.ls.utils.Path;
@@ -41,7 +41,7 @@ public class CreateMovieTest {
         AppConfig.setup();
 
         Parameters params = new Parameters();
-        params.setValues("title=The+Godfather:+part+II&releaseYear=1974");
+        params.setValues("title=The+Godfather:+Part+III&releaseYear=1990");
         Command cmd = new Command(Method.POST, new Path("/movies"), params);
 
         CreateMovieHandler handler = new CreateMovieHandler();
@@ -54,20 +54,6 @@ public class CreateMovieTest {
             assertEquals("The Godfather: part II", testMovie.getTitle());
             assertEquals(1974, testMovie.getYear());
         }*/
-    }
-
-    @Test (expected = HandlerException.class)
-    public void insert_duplicate_year_title_fail() throws HandlerException {
-        AppConfig.setup();
-
-        Parameters params = new Parameters();
-        params.setValues("title=The+Godfather&releaseYear=1972");
-        Command cmd = new Command(Method.POST, new Path("/movies"), params);
-
-        CreateMovieHandler handler = new CreateMovieHandler();
-        handler.setDataTransaction(new MockDataTransaction());
-
-        CommandResult rs = handler.execute(cmd); // expect fail here
     }
 
     @Test (expected = HandlerException.class)

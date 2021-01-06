@@ -3,12 +3,12 @@ package pt.isel.ls.model;
 public class Rating extends Model {
 
     private int ratingId;
-    private int movieId;
+    private Movie movie;
     private int rating;
 
-    public Rating(int ratingId, int movieId, int rating) {
+    public Rating(int ratingId, Movie movie, int rating) {
         this.ratingId = ratingId;
-        this.movieId = movieId;
+        this.movie = movie;
         this.rating = rating;
     }
 
@@ -16,8 +16,8 @@ public class Rating extends Model {
         return ratingId;
     }
 
-    public int getMovieId() {
-        return movieId;
+    public Movie getMovieId() {
+        return movie;
     }
 
     public int getRating() {

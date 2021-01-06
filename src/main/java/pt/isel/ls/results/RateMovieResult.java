@@ -1,4 +1,4 @@
-package pt.isel.ls.view.results;
+package pt.isel.ls.results;
 
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Rating;
@@ -24,6 +24,11 @@ public class RateMovieResult extends CommandResult {
 
     @Override
     public String printHtml() {
+        ArrayList<String> header = new ArrayList<>();
+        header.add("Review Id");
+        header.add("Movie Id");
+        header.add("Rating");
+
         ArrayList<String[]> rows = new ArrayList<>();
         String title = "Created Rating";
         if (rating == null) {
@@ -44,6 +49,7 @@ public class RateMovieResult extends CommandResult {
                 ),
                 new Body(
                         new Table(
+                                header,
                                 rows
                         )
                 )

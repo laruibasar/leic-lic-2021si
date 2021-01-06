@@ -1,4 +1,4 @@
-package pt.isel.ls.view.results;
+package pt.isel.ls.results;
 
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Review;
@@ -7,21 +7,27 @@ import pt.isel.ls.view.html.body.Body;
 import pt.isel.ls.view.html.body.Table;
 import pt.isel.ls.view.html.head.Head;
 import pt.isel.ls.view.html.head.Title;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class GetMovieAllReviewsResult extends CommandResult {
+public class GetUserAllReviewsResult extends CommandResult {
 
     private final List<Model> reviews;
 
-    public GetMovieAllReviewsResult(List<Model> reviews) {
-
+    public GetUserAllReviewsResult(List<Model> reviews) {
         this.reviews = reviews;
     }
 
     @Override
     public String printHtml() {
+        ArrayList<String> header = new ArrayList<>();
+        header.add("Review Id");
+        header.add("Summary");
+        header.add("Review");
+        header.add("Rating");
+        header.add("Movie Id");
+        header.add("User Id");
+
         ArrayList<String[]> rows = new ArrayList<>();
         for (Model r: reviews) {
             Review review = (Review) r;
@@ -43,6 +49,7 @@ public class GetMovieAllReviewsResult extends CommandResult {
                 ),
                 new Body(
                         new Table(
+                                header,
                                 rows
                         )
                 )
@@ -55,17 +62,12 @@ public class GetMovieAllReviewsResult extends CommandResult {
         StringBuilder sb = new StringBuilder("User All Reviews -> \n");
         for (Model r : reviews) {
             Review review = (Review) r;
-            sb.append("ReviewID = "
-                    + review.getId()
-                    + "\nSummary = "
-                    + review.getSummary()
-                    + "\nStars ="
-                    + review.getRating()
-                    + "\nMovieID = "
-                    + review.getMovie()
-                    + "\nMovieCritic = "
-                    + review.getMovieCritic());
-            sb.append("\n\n");
+            sb.append("ReviewID = " + review.getId()
+                    + "\nSummary = " + review.getSummary()
+                    + "\nStars = " + review.getRating()
+                    + "\nMovieID = " + review.getMovie()
+                    + "\nMovie Critic = " + review.getMovieCritic()
+                    + "\n");
         }
         return sb.toString();
     }

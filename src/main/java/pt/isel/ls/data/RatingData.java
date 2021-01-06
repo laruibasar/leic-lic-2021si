@@ -3,9 +3,9 @@ package pt.isel.ls.data;
 import pt.isel.ls.data.common.Data;
 import pt.isel.ls.data.common.DataConnectionException;
 import pt.isel.ls.model.Model;
+import pt.isel.ls.model.Movie;
 import pt.isel.ls.model.MovieRating;
 import pt.isel.ls.model.Rating;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,7 +14,7 @@ import java.util.LinkedList;
 
 public class RatingData extends Data implements IRatingData {
     @Override
-    public LinkedList<Model> createRating(Connection connection, int movie, int rate)
+    public LinkedList<Model> createRating(Connection connection, int movieId, int rate)
             throws DataConnectionException {
         LinkedList<Model> ratings = new LinkedList<>();
 
@@ -24,19 +24,21 @@ public class RatingData extends Data implements IRatingData {
             PreparedStatement stmt = connection.prepareStatement(
                     query,
                     Statement.RETURN_GENERATED_KEYS);
-            stmt.setInt(1, movie);
+            stmt.setInt(1, movieId);
             stmt.setInt(2, rate);
 
             final int status = stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
             if (rs.next()) {
+                Movie movie = new Movie();
+                movie.setId(movieId);
                 ratings.add(new Rating(rs.getInt(1), movie, rate));
             }
 
             stmt.close();
         } catch (Exception e) {
             throw new DataConnectionException("Unable to add rating: " + rate
-                + " to movie " + movie + "\n"
+                + " to movie " + movieId + "\n"
                 + e.getMessage(), e);
         }
 
@@ -44,7 +46,7 @@ public class RatingData extends Data implements IRatingData {
     }
 
     @Override
-    public LinkedList<Model> getRatings(Connection connection, int movie)
+    public LinkedList<Model> getRatings(Connection connection, int movieId)
             throws DataConnectionException {
         LinkedList<Model> ratings = new LinkedList<>();
 
@@ -94,21 +96,23 @@ public class RatingData extends Data implements IRatingData {
                     + "\t  from reviews\n"
                     + "\t  where movie = ?) as rating;";
             PreparedStatement stmt = connection.prepareStatement(query);
-            stmt.setInt(1, movie);
-            stmt.setInt(2, movie);
-            stmt.setInt(3, movie);
-            stmt.setInt(4, movie);
-            stmt.setInt(5, movie);
-            stmt.setInt(6, movie);
-            stmt.setInt(7, movie);
-            stmt.setInt(8, movie);
-            stmt.setInt(9, movie);
-            stmt.setInt(10, movie);
-            stmt.setInt(11, movie);
-            stmt.setInt(12, movie);
+            stmt.setInt(1, movieId);
+            stmt.setInt(2, movieId);
+            stmt.setInt(3, movieId);
+            stmt.setInt(4, movieId);
+            stmt.setInt(5, movieId);
+            stmt.setInt(6, movieId);
+            stmt.setInt(7, movieId);
+            stmt.setInt(8, movieId);
+            stmt.setInt(9, movieId);
+            stmt.setInt(10, movieId);
+            stmt.setInt(11, movieId);
+            stmt.setInt(12, movieId);
 
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
+                Movie movie = new Movie();
+                movie.setId(movieId);
                 ratings.add(new MovieRating(
                         movie,
                         rs.getFloat(1),
@@ -122,7 +126,7 @@ public class RatingData extends Data implements IRatingData {
             stmt.close();
         } catch (Exception e) {
             throw new DataConnectionException("Unable to get ratings "
-                    + " to movie " + movie + "\n"
+                    + " to movie " + movieId + "\n"
                     + e.getMessage(), e);
         }
 

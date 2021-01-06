@@ -1,4 +1,4 @@
-package pt.isel.ls.view.results;
+package pt.isel.ls.results;
 
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.User;
@@ -23,6 +23,11 @@ public class GetUserDetailsResult extends CommandResult {
 
     @Override
     public String printHtml() {
+        ArrayList<String> header = new ArrayList<>();
+        header.add("User Id");
+        header.add("Name");
+        header.add("Email");
+
         ArrayList<String[]> rows = new ArrayList<>();
 
         if (user == null) {
@@ -40,6 +45,7 @@ public class GetUserDetailsResult extends CommandResult {
                 ),
                 new Body(
                         new Table(
+                                header,
                                 rows
                         )
                 )

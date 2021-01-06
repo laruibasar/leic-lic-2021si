@@ -6,15 +6,15 @@ public class Review extends Model {
     private String summary;
     private String completeReview;
     private int rating;
-    private int movie;
-    private int movieCritic;
+    private Movie movie;
+    private User movieCritic;
 
-    public Review(int rid, int movie) {
+    public Review(int rid, Movie movie) {
         this.rid = rid;
         this.movie = movie;
     }
 
-    public Review(String summary, String completeReview, int movie, int rating, int critic) {
+    public Review(String summary, String completeReview, Movie movie, int rating, User critic) {
         this.summary = summary;
         this.completeReview = completeReview;
         this.rating = rating;
@@ -22,14 +22,14 @@ public class Review extends Model {
         movieCritic = critic;
     }
 
-    public Review(int rid, String summary, int movie, int rating) {
+    public Review(int rid, String summary, Movie movie, int rating) {
         this.rid = rid;
         this.summary = summary;
         this.rating = rating;
         this.movie = movie;
     }
 
-    public Review(int rid, String summary, String completeReview, int rating, int movie, int critic) {
+    public Review(int rid, String summary, String completeReview, int rating, Movie movie, User critic) {
         this.rid = rid;
         this.completeReview = completeReview;
         this.summary = summary;
@@ -58,15 +58,15 @@ public class Review extends Model {
         return rating;
     }
 
-    public int getMovie() {
+    public Movie getMovie() {
         return movie;
     }
 
-    public int getMovieCritic() {
+    public User getMovieCritic() {
         return movieCritic;
     }
 
-    public void setMovieCritic(int movieCritic) {
+    public void setMovieCritic(User movieCritic) {
         this.movieCritic = movieCritic;
     }
 

@@ -11,8 +11,10 @@ import pt.isel.ls.handlers.GetMoviesHandler;
 import pt.isel.ls.handlers.GetTopRatingsHandler;
 import pt.isel.ls.handlers.GetUserAllReviewsHandler;
 import pt.isel.ls.handlers.GetUserReviewHandler;
+import pt.isel.ls.handlers.ListenHandler;
 import pt.isel.ls.handlers.OptionHandler;
 import pt.isel.ls.handlers.RateMovieHandler;
+import pt.isel.ls.http.AppHttpServlet;
 import pt.isel.ls.utils.Path;
 import pt.isel.ls.handlers.CreateUserHandler;
 import pt.isel.ls.handlers.DeleteMovieReviewHandler;
@@ -53,14 +55,23 @@ public class AppConfig {
         return router;
     }
 
+    /* store http config */
+    private static HttpServletConfig httpConfig;
+
+    public static HttpServletConfig getHttpServletConfig() {
+        return httpConfig;
+    }
+
+    private static AppHttpServlet http;
+
+    public static AppHttpServlet getHttp() {
+        return http;
+    }
+
     private static AppConfig config;
 
     public static void setup() {
         config = new AppConfig();
-    }
-
-    public static AppConfig getInstance() {
-        return config;
     }
 
     private void loadRouter() {
@@ -88,6 +99,7 @@ public class AppConfig {
         router.addHandler(Method.OPTION, new Path("/"), new OptionHandler());
 
         router.addHandler(Method.DELETE, new Path("/movies/{mid}/review/{rid}"), new DeleteMovieReviewHandler());
+        router.addHandler(Method.LISTEN, new Path("/"), new ListenHandler());
     }
 
     private AppConfig() {
@@ -96,6 +108,9 @@ public class AppConfig {
 
             router = new Router();
             loadRouter();
+
+            httpConfig = new HttpServletConfig();
+            http = new AppHttpServlet();
 
             loadConfig = true;
             loadMessage = "OK";

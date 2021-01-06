@@ -27,6 +27,6 @@ public class CommandTest {
     @Test
     public void command_to_string() {
         Command cmd = new Command(Method.GET, new Path("/movies/{mid}/ratings"));
-        assertEquals("GET /movies/{mid}/ratings", cmd.toString());
+        assertEquals("GET /movies/{mid}/ratings accept:text/plain|file-name:", cmd.toString());
     }
 }
