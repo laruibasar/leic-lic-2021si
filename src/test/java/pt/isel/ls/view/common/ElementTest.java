@@ -73,12 +73,12 @@ public class ElementTest {
                 new Body()
         );
 
-        assertEquals("<!DOCTYPE html>\n" +
-                "<html>\n" +
-                "<head>\n" +
-                "</head>\n" +
-                "<body>\n" +
-                "</body>\n" +
-                "</html>", html.print());
+        assertEquals("<!DOCTYPE html>\n"
+                + "<html>\n"
+                + "<head>\n"
+                + "</head>\n"
+                + "<body>\n"
+                + "</body>\n"
+                + "</html>", html.print());
     }
 }
