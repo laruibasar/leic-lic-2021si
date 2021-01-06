@@ -81,4 +81,40 @@ public class ElementTest {
                 + "</body>\n"
                 + "</html>", html.print());
     }
+
+    @Test
+    public void print_element_li_string() {
+        Element test = new Li("One list");
+        assertEquals("<li>One list</li>\n", test.print());
+    }
+
+    @Test
+    public void print_element_li_element() {
+        Element link = new A("Link");
+        Element test = new Li(link);
+        assertEquals("<li><a href=\"\">Link</a>\n</li>\n", test.print());
+    }
+
+    @Test
+    public void print_element_li_elements() {
+        Element link = new A("Link", "www.isel.pt");
+        Element text = new Text(" for isel");
+        Element test = new Li(link, text);
+        assertEquals("<li><a href=\"www.isel.pt\">Link</a>\n for isel</li>\n", test.print());
+    }
+
+    @Test
+    public void print_element_ul() {
+        Element link = new A("Link", "www.isel.pt");
+        Element text = new Text(" for isel");
+        Element li1 = new Li(link, text);
+        Element li2 = new Li("two link");
+        Element test = new Ul((Li) li1, (Li) li2);
+        assertEquals(
+                "<ul>\n"
+                + "<li><a href=\"www.isel.pt\">Link</a>\n for isel</li>\n"
+                + "<li>two link</li>\n"
+                + "</ul>\n",
+                test.print());
+    }
 }

@@ -1,7 +1,6 @@
 package pt.isel.ls.view.common;
 
 public class A implements Element {
-    private final String tag = "a";
     private String content = "";
     private String href = "";
 
@@ -22,14 +21,12 @@ public class A implements Element {
     @Override
     public String print() {
         StringBuilder sb = new StringBuilder();
-        sb.append("<")
-                .append(tag).append(" ")
-                .append("href=\"")
+        sb.append("<a href=\"")
                 .append(href)
                 .append("\"")
                 .append(">");
         sb.append(content);
-        sb.append("</").append(tag).append(">\n");
+        sb.append("</a>\n");
 
         return sb.toString();
     }
