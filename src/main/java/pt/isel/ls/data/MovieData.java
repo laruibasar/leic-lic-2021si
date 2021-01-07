@@ -2,10 +2,7 @@ package pt.isel.ls.data;
 
 import pt.isel.ls.data.common.Data;
 import pt.isel.ls.data.common.DataConnectionException;
-import pt.isel.ls.model.Model;
-import pt.isel.ls.model.Movie;
-import pt.isel.ls.model.Review;
-import pt.isel.ls.model.User;
+import pt.isel.ls.model.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -104,6 +101,9 @@ public class MovieData extends Data implements IMovieData {
             stmt.setInt(2, skip);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
+                if (rs.isFirst()) {
+                    movies.add(new PageSettings(top, skip));
+                }
                 movies.add(new Movie(
                         rs.getInt(1),
                         rs.getString(2),
@@ -148,7 +148,7 @@ public class MovieData extends Data implements IMovieData {
 
             Movie movie = null;
             while (rs.next()) {
-                if (rs.first()) {
+                if (rs.isFirst()) {
                     movie = new Movie(rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getInt(9));
                 }
                 reviews.add(new Review(rs.getInt(4),rs.getString(5),
