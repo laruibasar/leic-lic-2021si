@@ -70,20 +70,4 @@ public class Review extends Model {
         this.movieCritic = movieCritic;
     }
 
-    @Override
-    public String toString() {
-        if (completeReview == null) {
-            return "ReviewID = " + rid
-                    + "\nSummary = " + summary
-                    + "\nStars =" + rating
-                    + "\nMovieID = " + movie
-                    + "\nMovieCritic = " + movieCritic;
-        }
-        return  "ReviewID = " + rid
-                + "\nSummary = " + summary
-                + "\nComplete Review = " + completeReview
-                + "\nStars = " + rating
-                + "\nMovieID = " + movie
-                + "\nMovie Critic = " + movieCritic;
-    }
 }
