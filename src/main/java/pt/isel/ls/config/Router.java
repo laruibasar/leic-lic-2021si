@@ -20,11 +20,11 @@ public class Router {
     }
 
     public Command findTemplate(Command command) throws RouterException {
-        Command cmd = tree.findCommand(tree.getRoot(), command);
-        if (cmd.getTemplate() == null) {
+        Command template = tree.findCommand(tree.getRoot(), command);
+        if (template == null) {
             throw new RouterException("Invalid command " + command.toString());
         }
-        return cmd.getTemplate();
+        return template;
     }
 
     public Handler getHandler(Command template) throws RouterException {
