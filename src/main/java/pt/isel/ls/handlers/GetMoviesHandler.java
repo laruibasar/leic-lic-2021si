@@ -34,7 +34,7 @@ public class GetMoviesHandler extends Handler implements IHandler {
 
     @Override
     public CommandResult execute(Command cmd) throws HandlerException {
-        int top = 10;
+        int top = 5;
         int skip = 0;
         try {
             if (cmd.getValue("top") != null) {
