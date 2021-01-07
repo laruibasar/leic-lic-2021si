@@ -1,4 +1,4 @@
-package pt.isel.ls.view.results;
+package pt.isel.ls.results;
 
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Review;
@@ -11,11 +11,10 @@ import pt.isel.ls.view.html.head.Title;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GetMovieReviewResult extends CommandResult {
-
+public class CreateMovieReviewResult extends CommandResult {
     private Review review;
 
-    public GetMovieReviewResult(List<Model> reviews) {
+    public CreateMovieReviewResult(List<Model> reviews) {
         if (reviews.size() != 0) {
             this.review = (Review) reviews.get(0);
         }
@@ -28,29 +27,30 @@ public class GetMovieReviewResult extends CommandResult {
         header.add("Id");
         header.add("Summary");
         header.add("Review");
-        header.add("Rating");
         header.add("Movie Id");
         header.add("User Id");
-        ArrayList<String[]> rows = new ArrayList<>();
+        header.add("Rating");
 
+        ArrayList<String[]> rows = new ArrayList<>();
+        String title = "Created Review";
         if (review == null) {
-            rows.add(new String[] {"Review not available"});
+            title = "Review not created";
         } else {
             rows.add(
                     new String[] {
                             String.valueOf(review.getId()),
                             review.getSummary(),
                             review.getCompleteReview(),
-                            String.valueOf(review.getRating()),
                             String.valueOf(review.getMovie()),
-                            String.valueOf(review.getMovieCritic())
+                            String.valueOf(review.getMovieCritic()),
+                            String.valueOf(review.getRating())
                     }
             );
         }
 
         Html h = new Html(
                 new Head(
-                        new Title("Movie Review")
+                        new Title(title)
                 ),
                 new Body(
                         new Table(
@@ -58,12 +58,13 @@ public class GetMovieReviewResult extends CommandResult {
                                 rows
                         )
                 )
+
         );
         return h.toString();
     }
 
     @Override
     public String printPlainText() {
-        return review == null ? "Review not available" : "Movie Review -> " + review.toString();
+        return review == null ? "Review not created" : "Created Review -> " + review.toString();
     }
 }

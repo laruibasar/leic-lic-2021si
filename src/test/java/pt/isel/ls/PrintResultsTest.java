@@ -12,7 +12,7 @@ import pt.isel.ls.utils.Header;
 import pt.isel.ls.utils.Method;
 import pt.isel.ls.utils.Path;
 import pt.isel.ls.view.PrintResults;
-import pt.isel.ls.view.results.CommandResult;
+import pt.isel.ls.results.CommandResult;
 
 import java.io.IOException;
 import java.nio.file.Files;

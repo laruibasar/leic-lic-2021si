@@ -1,47 +1,45 @@
-package pt.isel.ls.view.results;
+package pt.isel.ls.results;
 
 import pt.isel.ls.model.Model;
-import pt.isel.ls.model.Movie;
+import pt.isel.ls.model.User;
+
+import java.util.ArrayList;
+import java.util.List;
 import pt.isel.ls.view.html.Html;
 import pt.isel.ls.view.html.body.Body;
 import pt.isel.ls.view.html.body.Table;
 import pt.isel.ls.view.html.head.Head;
 import pt.isel.ls.view.html.head.Title;
 
-import java.util.ArrayList;
-import java.util.List;
+public class GetAllUsersResult extends CommandResult {
 
-public class GetTopRatingResult extends CommandResult {
+    private final List<Model> users;
 
-    private final List<Model> movies;
+    public GetAllUsersResult(List<Model> users) {
 
-    public GetTopRatingResult(List<Model> movies) {
-
-        this.movies = movies;
+        this.users = users;
     }
+
 
     @Override
     public String printHtml() {
         ArrayList<String> header = new ArrayList<>();
-        header.add("Movie Id");
-        header.add("Title");
-        header.add("Year");
+        header.add("User ID");
+        header.add("Name");
 
         ArrayList<String[]> rows = new ArrayList<>();
-        for (Model m: movies) {
-            Movie movie = (Movie) m;
+        for (Model m: users) {
+            User u = (User) m;
             rows.add(
                     new String[] {
-                            String.valueOf(movie.getMid()),
-                            movie.getTitle(),
-                            String.valueOf(movie.getYear())
+                            String.valueOf(u.getId()),
+                            u.getName()
                     }
             );
         }
-
         Html h = new Html(
                 new Head(
-                        new Title("Top Ratings")
+                        new Title("Users List")
                 ),
                 new Body(
                         new Table(
@@ -49,15 +47,16 @@ public class GetTopRatingResult extends CommandResult {
                                 rows
                         )
                 )
+
         );
         return h.toString();
     }
 
     @Override
     public String printPlainText() {
-        StringBuilder sb = new StringBuilder("Top Ratings -> \n");
-        for (Model m : movies) {
-            sb.append(m.toString());
+        StringBuilder sb = new StringBuilder("All users -> \n");
+        for (Model u : users) {
+            sb.append(u.toString());
             sb.append('\n');
         }
         return sb.toString();

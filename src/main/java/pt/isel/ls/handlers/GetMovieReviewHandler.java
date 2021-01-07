@@ -8,8 +8,8 @@ import pt.isel.ls.handlers.common.HandlerException;
 import pt.isel.ls.handlers.common.IHandler;
 import pt.isel.ls.model.Model;
 import pt.isel.ls.utils.Command;
-import pt.isel.ls.view.results.CommandResult;
-import pt.isel.ls.view.results.GetMovieReviewResult;
+import pt.isel.ls.results.CommandResult;
+import pt.isel.ls.results.GetMovieReviewResult;
 
 import java.util.LinkedList;
 

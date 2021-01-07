@@ -2,10 +2,11 @@ package pt.isel.ls;
 
 import pt.isel.ls.handlers.common.Handler;
 import pt.isel.ls.handlers.common.HandlerException;
+import pt.isel.ls.results.ExitResult;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.config.AppConfig;
 import pt.isel.ls.config.RouterException;
-import pt.isel.ls.view.results.CommandResult;
+import pt.isel.ls.results.CommandResult;
 import pt.isel.ls.utils.Header;
 import pt.isel.ls.utils.Method;
 import pt.isel.ls.utils.Parameters;
@@ -48,14 +49,12 @@ public class AppConsole {
 
         try {
             Command cmd = setCommand(args);
-            //System.out.println("Running command: " + cmd.toString());
 
-            /* temporary fix, later we use a special CommandResult */
-            if (cmd.getMethod() == Method.EXIT) {
+            CommandResult result = runCommand(cmd);
+            if (result.getClass() == ExitResult.class) {
                 return false;
             }
 
-            CommandResult result = runCommand(cmd);
             showResults(result, cmd.getHeader());
         } catch (RouterException | HandlerException e) {
             System.out.println("ERROR " + e.getMessage() + "\n");

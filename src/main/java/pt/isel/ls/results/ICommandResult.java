@@ -1,4 +1,4 @@
-package pt.isel.ls.view.results;
+package pt.isel.ls.results;
 
 import pt.isel.ls.config.RouterException;
 
