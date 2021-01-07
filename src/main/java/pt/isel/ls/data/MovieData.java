@@ -5,6 +5,7 @@ import pt.isel.ls.data.common.DataConnectionException;
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Movie;
 import pt.isel.ls.model.Review;
+import pt.isel.ls.model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -125,7 +126,8 @@ public class MovieData extends Data implements IMovieData {
 
         try {
             final String query = "select movies.mid, movies.title, movies.year," +
-                    "reviews.rid, reviews.summary, reviews.rating, reviews.movieCritic, \n" +
+                    "reviews.rid, reviews.summary, reviews.rating, " +
+                    "users.uid, users.name \n" +
                     "(select avg(rating) ::numeric(3,2) as average\n" +
                     "from (select rating\n" +
                     "from ratings\n" +
@@ -135,6 +137,7 @@ public class MovieData extends Data implements IMovieData {
                     "from reviews\n" +
                     "where movie = ?) as rating)\n" +
                     "from movies join reviews on(movies.mid = reviews.movie)\n" +
+                    "join users on(reviews.movieCritic = users.uid)\n" +
                     "where mid = ?;";
 
             PreparedStatement stmt = connection.prepareStatement(query);
@@ -146,9 +149,10 @@ public class MovieData extends Data implements IMovieData {
             Movie movie = null;
             while (rs.next()) {
                 if (rs.first()) {
-                    movie = new Movie(rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getInt(8));
+                    movie = new Movie(rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getInt(9));
                 }
-                reviews.add(new Review(rs.getInt(4),rs.getString(5),rs.getInt(6),rs.getInt(7)));
+                reviews.add(new Review(rs.getInt(4),rs.getString(5),
+                        rs.getInt(6),new User(rs.getInt(7),rs.getString(8))));
             }
             if (movie != null) {
                 movie.setReviews(reviews);

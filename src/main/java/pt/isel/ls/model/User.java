@@ -20,10 +20,6 @@ public class User extends Model {
         this.name = name;
     }
 
-    public User(int id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
