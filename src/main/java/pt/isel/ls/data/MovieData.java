@@ -4,6 +4,7 @@ import pt.isel.ls.data.common.Data;
 import pt.isel.ls.data.common.DataConnectionException;
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Movie;
+import pt.isel.ls.model.Review;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -120,25 +121,40 @@ public class MovieData extends Data implements IMovieData {
     @Override
     public LinkedList<Model> getMovie(Connection connection, int id) throws DataConnectionException {
         LinkedList<Model> movies = new LinkedList<>();
+        LinkedList<Review> reviews = new LinkedList<>();
 
         try {
-            final String query = "select mid, title, year from movies where mid = ?";
+            final String query = "select movies.mid, movies.title, movies.year," +
+                    "reviews.rid, reviews.summary, reviews.rating, reviews.movieCritic, \n" +
+                    "(select avg(rating) ::numeric(3,2) as average\n" +
+                    "from (select rating\n" +
+                    "from ratings\n" +
+                    "where movie = ?\n" +
+                    "union all\n" +
+                    "select rating\n" +
+                    "from reviews\n" +
+                    "where movie = ?) as rating)\n" +
+                    "from movies join reviews on(movies.mid = reviews.movie)\n" +
+                    "where mid = ?;";
+
             PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setInt(1, id);
+            stmt.setInt(2, id);
+            stmt.setInt(3, id);
             ResultSet rs = stmt.executeQuery();
 
             Movie movie = null;
-            if (rs.next()) {
-                movie = new Movie(
-                        rs.getInt(1),
-                        rs.getString(2),
-                        rs.getInt(3));
+            while (rs.next()) {
+                if (rs.first()) {
+                    movie = new Movie(rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getInt(8));
+                }
+                reviews.add(new Review(rs.getInt(4),rs.getString(5),rs.getInt(6),rs.getInt(7)));
             }
-
-            stmt.close();
             if (movie != null) {
+                movie.setReviews(reviews);
                 movies.add(movie);
             }
+            stmt.close();
         } catch (Exception e) {
             throw new DataConnectionException("Unable to get details from movie "
                     + id + "\n" + e.getMessage(), e);

@@ -29,6 +29,14 @@ public class Review extends Model {
         this.movie = movie;
     }
 
+    public Review(int rid, String summary, int rating, int user) {
+        this.rid = rid;
+        this.summary = summary;
+        this.rating = rating;
+        //MovieCritic should be again a int
+        this.movieCritic = new User(user);
+    }
+
     public Review(int rid, String summary, String completeReview, int rating, Movie movie, User critic) {
         this.rid = rid;
         this.completeReview = completeReview;
