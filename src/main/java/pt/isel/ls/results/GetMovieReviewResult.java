@@ -69,7 +69,7 @@ public class GetMovieReviewResult extends CommandResult {
                 + "\nSummary = " + review.getSummary()
                 + "\nComplete Review = " + review.getCompleteReview()
                 + "\nStars = " + review.getRating()
-                + "\nMovieID = " + review.getMovie()
-                + "\nMovie Critic = " + review.getMovieCritic();
+                + "\nMovieID = " + review.getMovie().getMid()
+                + "\nMovie Critic = " + review.getMovieCritic().getName();
     }
 }

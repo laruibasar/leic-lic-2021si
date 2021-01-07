@@ -22,6 +22,5 @@ public class Rating extends Model {
 
     public int getRating() {
         return rating;
-
     }
 }

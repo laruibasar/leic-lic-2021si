@@ -65,8 +65,8 @@ public class GetUserAllReviewsResult extends CommandResult {
             sb.append("ReviewID = " + review.getId()
                     + "\nSummary = " + review.getSummary()
                     + "\nStars = " + review.getRating()
-                    + "\nMovieID = " + review.getMovie()
-                    + "\nMovie Critic = " + review.getMovieCritic()
+                    + "\nMovieID = " + review.getMovie().getMid()
+                    + "\nMovie Critic = " + review.getMovieCritic().getName()
                     + "\n");
         }
         return sb.toString();

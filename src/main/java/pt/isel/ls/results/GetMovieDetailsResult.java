@@ -54,7 +54,7 @@ public class GetMovieDetailsResult extends CommandResult {
     @Override
     public String printPlainText() {
         return movie == null ? "Movie details not available" : "Movie Details -> "
-                +"MovieID = "
+                + "MovieID = "
                 + movie.getMid()
                 + "\tTitle = "
                 + movie.getTitle()
