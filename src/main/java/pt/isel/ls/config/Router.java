@@ -13,7 +13,7 @@ public class Router {
 
     public Handler findHandler(Command command) throws RouterException {
         Handler handler = tree.lookForHandler(tree.getRoot(), command);
-        if (command.getTemplate() == null) {
+        if (handler == null) {
             throw new RouterException("Invalid command " + command.toString());
         }
         return handler;
@@ -25,10 +25,6 @@ public class Router {
             throw new RouterException("Invalid command " + command.toString());
         }
         return template;
-    }
-
-    public Handler getHandler(Command template) throws RouterException {
-        return findHandler(template);
     }
 
     public Tree getTree() {

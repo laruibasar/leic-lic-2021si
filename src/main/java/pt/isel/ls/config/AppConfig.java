@@ -22,6 +22,7 @@ import pt.isel.ls.utils.Method;
 import pt.isel.ls.handlers.GetUserDetailsHandler;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 /**
@@ -66,34 +67,36 @@ public class AppConfig {
     }
 
     private Tree tree;
-    private ArrayList<Node> nodes = new ArrayList<>();
+    private ArrayList<Node> nodes;
 
     private void loadRouter() {
         tree = new Tree();
-        nodes.add(new Node(new Command(Method.POST, new Path("/users")), new CreateUserHandler()));
-        /* List all handler to load into Router */
-        nodes.add(new Node(new Command(Method.POST, new Path("/users")), new CreateUserHandler()));
-        nodes.add(new Node(new Command(Method.GET, new Path("/users")), new GetAllUsersHandler()));
+        nodes = new ArrayList<>(Arrays.asList(
+                new Node(new Command(Method.POST, new Path("/users")), new CreateUserHandler()),
 
-        nodes.add(new Node(new Command(Method.POST, new Path("/movies")), new CreateMovieHandler()));
-        nodes.add(new Node(new Command(Method.POST, new Path("/movies/{mid}/ratings")), new RateMovieHandler()));
+                new Node(new Command(Method.POST, new Path("/users")), new CreateUserHandler()),
+                new Node(new Command(Method.GET, new Path("/users")), new GetAllUsersHandler()),
 
-        nodes.add(new Node(new Command(Method.GET, new Path("/users/{uid}")), new GetUserDetailsHandler()));
-        nodes.add(new Node(new Command(Method.GET, new Path("/movies")), new GetMoviesHandler()));
+                new Node(new Command(Method.POST, new Path("/movies")), new CreateMovieHandler()),
+                new Node(new Command(Method.POST, new Path("/movies/{mid}/ratings")), new RateMovieHandler()),
 
-        nodes.add(new Node(new Command(Method.POST, new Path("/movies/{mid}/reviews")), new CreateMovieReviewHandler()));
-        nodes.add(new Node(new Command(Method.EXIT, new Path("/")), new ExitHandler()));
-        nodes.add(new Node(new Command(Method.OPTION, new Path("/")), new OptionHandler()));
-        nodes.add(new Node(new Command(Method.DELETE, new Path("/movies/{mid}/review/{rid}")), new DeleteMovieReviewHandler()));
+                new Node(new Command(Method.GET, new Path("/users/{uid}")), new GetUserDetailsHandler()),
+                new Node(new Command(Method.GET, new Path("/movies")), new GetMoviesHandler()),
+                new Node(new Command(Method.POST, new Path("/movies/{mid}/reviews")), new CreateMovieReviewHandler()),
+                new Node(new Command(Method.EXIT, new Path("/")), new ExitHandler()),
 
-        nodes.add(new Node(new Command(Method.GET, new Path("/movies/{mid}")), new GetMovieDetailsHandler()));
-        nodes.add(new Node(new Command(Method.GET, new Path("/movies/{mid}/ratings")), new GetMovieRatingHandler()));
-        nodes.add(new Node(new Command(Method.GET, new Path("/movies/{mid}/reviews")), new GetMovieAllReviewsHandler()));
-        nodes.add(new Node(new Command(Method.GET, new Path("/movies/{mid}/reviews/{rid}")), new GetMovieReviewHandler()));
+                new Node(new Command(Method.OPTION, new Path("/")), new OptionHandler()),
+                new Node(new Command(Method.DELETE, new Path("/movies/{mid}/review/{rid}")),
+                        new DeleteMovieReviewHandler()),
+                new Node(new Command(Method.GET, new Path("/movies/{mid}")), new GetMovieDetailsHandler()),
+                new Node(new Command(Method.GET, new Path("/movies/{mid}/ratings")), new GetMovieRatingHandler()),
 
-        nodes.add(new Node(new Command(Method.GET, new Path("/users/{uid}/reviews")), new GetUserAllReviewsHandler()));
-        nodes.add(new Node(new Command(Method.GET, new Path("/users/{uid}/reviews/{rid}")), new GetUserReviewHandler()));
-        nodes.add(new Node(new Command(Method.GET, new Path("tops/ratings")), new GetTopRatingsHandler()));
+                new Node(new Command(Method.GET, new Path("/movies/{mid}/reviews")), new GetMovieAllReviewsHandler()),
+                new Node(new Command(Method.GET, new Path("/movies/{mid}/reviews/{rid}")), new GetMovieReviewHandler()),
+                new Node(new Command(Method.GET, new Path("/users/{uid}/reviews")), new GetUserAllReviewsHandler()),
+                new Node(new Command(Method.GET, new Path("/users/{uid}/reviews/{rid}")), new GetUserReviewHandler()),
+                new Node(new Command(Method.GET, new Path("tops/ratings")), new GetTopRatingsHandler())
+        ));
         tree.buildTree(nodes);
 
     }
