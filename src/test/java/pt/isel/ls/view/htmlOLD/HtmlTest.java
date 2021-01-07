@@ -1,11 +1,11 @@
-package pt.isel.ls.view.html;
+package pt.isel.ls.view.htmlOLD;
 
 import org.junit.Test;
-import pt.isel.ls.view.html.body.Body;
-import pt.isel.ls.view.html.body.Bullets;
-import pt.isel.ls.view.html.body.Table;
-import pt.isel.ls.view.html.head.Head;
-import pt.isel.ls.view.html.head.Title;
+import pt.isel.ls.view.htmlOLD.body.Body;
+import pt.isel.ls.view.htmlOLD.body.Bullets;
+import pt.isel.ls.view.htmlOLD.body.Table;
+import pt.isel.ls.view.htmlOLD.head.Head;
+import pt.isel.ls.view.htmlOLD.head.Title;
 
 import java.util.ArrayList;
 

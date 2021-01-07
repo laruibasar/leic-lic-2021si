@@ -2,11 +2,11 @@ package pt.isel.ls.results;
 
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Movie;
-import pt.isel.ls.view.html.Html;
-import pt.isel.ls.view.html.body.Body;
-import pt.isel.ls.view.html.body.Table;
-import pt.isel.ls.view.html.head.Head;
-import pt.isel.ls.view.html.head.Title;
+import pt.isel.ls.view.htmlOLD.Html;
+import pt.isel.ls.view.htmlOLD.body.Body;
+import pt.isel.ls.view.htmlOLD.body.Table;
+import pt.isel.ls.view.htmlOLD.head.Head;
+import pt.isel.ls.view.htmlOLD.head.Title;
 
 import java.util.ArrayList;
 import java.util.List;

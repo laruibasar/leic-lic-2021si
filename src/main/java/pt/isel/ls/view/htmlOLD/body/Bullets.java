@@ -1,4 +1,4 @@
-package pt.isel.ls.view.html.body;
+package pt.isel.ls.view.htmlOLD.body;
 
 public class Bullets extends Body {
 

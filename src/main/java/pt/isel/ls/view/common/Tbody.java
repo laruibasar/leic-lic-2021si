@@ -10,6 +10,10 @@ public class Tbody implements Element {
         content.addAll(Arrays.asList(rows));
     }
 
+    public Tbody(ArrayList<Element> content) {
+        this.content = content;
+    }
+
     @Override
     public String print() {
         StringBuilder sb = new StringBuilder("<tbody>\n");
