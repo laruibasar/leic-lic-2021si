@@ -85,6 +85,14 @@ public class Movie extends Model {
         this.reviews = reviews;
     }
 
+    public int getRating() {
+        return rating;
+    }
+
+    public LinkedList<Review> getReviews() {
+        return reviews;
+    }
+
     @Override
     public String toString() {
         if (year == 0) {

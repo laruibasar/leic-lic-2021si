@@ -101,9 +101,6 @@ public class MovieData extends Data implements IMovieData {
             stmt.setInt(2, skip);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                if (rs.isFirst()) {
-                    movies.add(new PageSettings(top, skip));
-                }
                 movies.add(new Movie(
                         rs.getInt(1),
                         rs.getString(2),

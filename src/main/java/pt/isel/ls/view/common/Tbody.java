@@ -6,8 +6,8 @@ import java.util.Arrays;
 public class Tbody implements Element {
     public ArrayList<Element> content = new ArrayList<>();
 
-    public Tbody(Tr... rows) {
-        content.addAll(Arrays.asList(rows));
+    public Tbody(ArrayList<Element> rows) {
+        this.content = rows;
     }
 
     @Override
