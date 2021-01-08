@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,11 +32,9 @@ public class ListenHttpServlet extends HttpServlet {
         CommandResult cr;
 
         try {
-            Command cmd = AppCommand.setCommand(new String[] {
-                req.getMethod(),
-                req.getRequestURI(),
-                "accept:text/html"
-            });
+            Command cmd = AppCommand.setCommand(
+                    setString(req.getMethod(), req.getRequestURI()
+            ));
 
             cr = AppCommand.runCommand(cmd);
 
@@ -71,5 +71,18 @@ public class ListenHttpServlet extends HttpServlet {
                 req.getRequestURI(),
                 resp.getStatus(),
                 resp.getHeader("Content-Type"));
+    }
+
+    private String[] setString(String method, String uri) {
+        String[] splitUri = uri.split("&", 2);
+        List<String> list = new ArrayList<String>();
+        list.add(method);
+        list.add(splitUri[0]);
+        list.add("accept:text/html");
+        if (splitUri.length > 1) {
+            list.add(splitUri[1]);
+        }
+
+        return list.toArray(new String[0]);
     }
 }
