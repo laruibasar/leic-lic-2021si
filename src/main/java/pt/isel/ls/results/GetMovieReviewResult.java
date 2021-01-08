@@ -34,9 +34,8 @@ public class GetMovieReviewResult extends CommandResult {
                         new A("Back", "http://localhost/users/" + review.getMovieCritic().getId()),
                         new A(review.getMovie().getTitle() + " " + review.getMovie().getYear(), "http://localhost/movies/"
                                 + review.getMovie().getMid()),
-                        new A("All reviews", "http://localhost/movies/"
-                                + review.getMovie().getMid() + "/reviews/"
-                                + review.getRid()),
+                        new A("Show movie reviews", "http://localhost/movies/"
+                                + review.getMovie().getMid() + "/reviews"),
                         new Ul(
                                 new Li(new Text(String.valueOf(review.getMovieCritic().getName()))),
                                 new Li(new Text("Rate " + review.getRating())),
