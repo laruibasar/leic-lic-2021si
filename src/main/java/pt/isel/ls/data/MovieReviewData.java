@@ -98,7 +98,7 @@ public class MovieReviewData extends Data implements IMovieReviewData {
         try {
 
             final String query = "select rid, summary, rating,"
-                    + "movies.mid, movies.name, movies.year,users.uid, users.name "
+                    + "movies.mid, movies.title, users.name "
                     + "from reviews join movies on(reviews.movie = movies.mid) "
                     + "join users on(reviews.movieCritic = users.uid)"
                     + "where movie = ?;";
@@ -108,8 +108,8 @@ public class MovieReviewData extends Data implements IMovieReviewData {
 
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                User user = new User(rs.getInt(7),rs.getString(8));
-                Movie movie = new Movie(rs.getInt(4),rs.getString(5),rs.getInt(6));
+                User user = new User(rs.getString(6));
+                Movie movie = new Movie(rs.getInt(4),rs.getString(5));
                 reviews.add(
                         new Review(
                                 rs.getInt(1),

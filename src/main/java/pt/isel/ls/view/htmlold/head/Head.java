@@ -1,4 +1,4 @@
-package pt.isel.ls.view.htmlOLD.head;
+package pt.isel.ls.view.htmlold.head;
 
 public class Head {
 

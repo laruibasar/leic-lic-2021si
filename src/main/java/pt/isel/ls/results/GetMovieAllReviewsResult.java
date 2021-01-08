@@ -1,12 +1,20 @@
 package pt.isel.ls.results;
 
 import pt.isel.ls.model.Model;
+import pt.isel.ls.model.Movie;
 import pt.isel.ls.model.Review;
-import pt.isel.ls.view.htmlOLD.Html;
-import pt.isel.ls.view.htmlOLD.body.Body;
-import pt.isel.ls.view.htmlOLD.body.Table;
-import pt.isel.ls.view.htmlOLD.head.Head;
-import pt.isel.ls.view.htmlOLD.head.Title;
+import pt.isel.ls.view.common.A;
+import pt.isel.ls.view.common.Body;
+import pt.isel.ls.view.common.Element;
+import pt.isel.ls.view.common.Head;
+import pt.isel.ls.view.common.Html;
+import pt.isel.ls.view.common.Table;
+import pt.isel.ls.view.common.Tbody;
+import pt.isel.ls.view.common.Td;
+import pt.isel.ls.view.common.Text;
+import pt.isel.ls.view.common.Th;
+import pt.isel.ls.view.common.Thead;
+import pt.isel.ls.view.common.Tr;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,40 +30,37 @@ public class GetMovieAllReviewsResult extends CommandResult {
 
     @Override
     public String printHtml() {
-        ArrayList<String> header = new ArrayList<>();
-        header.add("Id");
-        header.add("Summary");
-        header.add("Complete Review");
-        header.add("Rating");
-        header.add("Movie Id");
-        header.add("User Id");
-        ArrayList<String[]> rows = new ArrayList<>();
+
+        ArrayList<Element> rows = new ArrayList<>();
+        Review review;
+        Movie movie = ((Review ) reviews.get(0)).getMovie();
         for (Model r: reviews) {
-            Review review = (Review) r;
+            review = (Review) r;
             rows.add(
-                    new String[] {
-                            String.valueOf(review.getId()),
-                            review.getSummary(),
-                            review.getCompleteReview(),
-                            String.valueOf(review.getRating()),
-                            String.valueOf(review.getMovie()),
-                            String.valueOf(review.getMovieCritic())
-                    }
-            );
+                    new Tr(
+                            new Td(new A(review.getSummary(),"http://localhost/movies/" + movie.getMid() + "/reviews/" + review.getId())),
+                            new Td(String.valueOf(review.getRating())),
+                            new Td(review.getMovieCritic().getName())
+                    ));
         }
 
-        Html h = new Html(
+        pt.isel.ls.view.common.Html h = new Html(
                 new Head(
-                        new Title("User All Reviews")
+                        new pt.isel.ls.view.common.Title("Movie details")
                 ),
                 new Body(
+                        new A("Return root","http://localhost/"),
+                        new Text("&nbsp;"),
+                        new Text("List of reviews of movie "),
+                        new A(movie.getTitle(),"http://localhost/movies/" + movie.getMid()),
                         new Table(
-                                header,
-                                rows
+                                new Thead(new Tr(new Th("Summary"),new Th("Rating"),new Th("Movie Critic"))),
+                                new Tbody(rows)
                         )
+
                 )
         );
-        return h.toString();
+        return h.print();
     }
 
     @Override

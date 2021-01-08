@@ -2,7 +2,10 @@ package pt.isel.ls.data;
 
 import pt.isel.ls.data.common.Data;
 import pt.isel.ls.data.common.DataConnectionException;
-import pt.isel.ls.model.*;
+import pt.isel.ls.model.Model;
+import pt.isel.ls.model.Movie;
+import pt.isel.ls.model.Review;
+import pt.isel.ls.model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -122,20 +125,20 @@ public class MovieData extends Data implements IMovieData {
         LinkedList<Review> reviews = new LinkedList<>();
 
         try {
-            final String query = "select movies.mid, movies.title, movies.year," +
-                    "reviews.rid, reviews.summary, reviews.rating, " +
-                    "users.uid, users.name \n" +
-                    "(select avg(rating) ::numeric(3,2) as average\n" +
-                    "from (select rating\n" +
-                    "from ratings\n" +
-                    "where movie = ?\n" +
-                    "union all\n" +
-                    "select rating\n" +
-                    "from reviews\n" +
-                    "where movie = ?) as rating)\n" +
-                    "from movies join reviews on(movies.mid = reviews.movie)\n" +
-                    "join users on(reviews.movieCritic = users.uid)\n" +
-                    "where mid = ?;";
+            final String query = "select movies.mid, movies.title, movies.year, "
+                   + "reviews.rid, reviews.summary, reviews.rating, "
+                   + "users.uid, users.name, "
+                   + "(select avg(rating) ::numeric(3,2) as average "
+                   + "from (select rating "
+                   + "from ratings "
+                   + "where movie = ? "
+                   + "union all "
+                   + "select rating "
+                   + "from reviews "
+                   + "where movie = ?) as rating) "
+                   + "from movies join reviews on(movies.mid = reviews.movie) "
+                   + "join users on(reviews.movieCritic = users.uid) "
+                   + "where mid = ?;";
 
             PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setInt(1, id);

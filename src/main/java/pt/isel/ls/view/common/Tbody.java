@@ -1,7 +1,6 @@
 package pt.isel.ls.view.common;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Tbody implements Element {
     public ArrayList<Element> content = new ArrayList<>();

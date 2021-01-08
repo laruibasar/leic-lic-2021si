@@ -2,11 +2,11 @@ package pt.isel.ls.results;
 
 import pt.isel.ls.config.Router;
 import pt.isel.ls.utils.Command;
-import pt.isel.ls.view.htmlOLD.Html;
-import pt.isel.ls.view.htmlOLD.body.Body;
-import pt.isel.ls.view.htmlOLD.body.Bullets;
-import pt.isel.ls.view.htmlOLD.head.Head;
-import pt.isel.ls.view.htmlOLD.head.Title;
+import pt.isel.ls.view.htmlold.Html;
+import pt.isel.ls.view.htmlold.body.Body;
+import pt.isel.ls.view.htmlold.body.Bullets;
+import pt.isel.ls.view.htmlold.head.Head;
+import pt.isel.ls.view.htmlold.head.Title;
 
 import java.util.ArrayList;
 

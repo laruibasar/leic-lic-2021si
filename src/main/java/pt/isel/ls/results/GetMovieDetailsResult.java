@@ -41,9 +41,9 @@ public class GetMovieDetailsResult extends CommandResult {
 
             rows.add(
                     new Tr(
-                            new A(r.getSummary(),"https://localhost/movies/"+movie.getMid()+"/reviews/"+r.getId()),
+                            new Td(new A(r.getSummary(),"http://localhost/movies/" + movie.getMid() + "/reviews/" + r.getId())),
                             new Td(String.valueOf(r.getRating())),
-                            new A(r.getMovieCritic().getName(),"https://localhost/user/"+r.getMovieCritic().getId())
+                            new Td(new A(r.getMovieCritic().getName(),"http://localhost/user/" + r.getMovieCritic().getId()))
             ));
         }
 
@@ -52,19 +52,22 @@ public class GetMovieDetailsResult extends CommandResult {
                         new Title("Movie details")
                 ),
                 new Body(
-                        new Ul(new Li(new Text("Title: "+movie.getTitle()))),
-                        new Ul(new Li(new Text("Year: "+movie.getYear()))),
-                        new Ul(new Li(new A("Stars: "+movie.getRating(),"https://localhost/movies/"+movie.getMid()+"/ratings"))),
-                        new A(new Title("List of reviews"),"https://localhost/movies/"+movie.getMid()+"/reviews"),
+                        new A("Return root","http://localhost/"),
+                        new Text("&nbsp;"),
+                        new A("See all movies","http://localhost/movies"),
+                        new Ul(new Li(new Text("Title: " + movie.getTitle())),
+                                new Li(new Text("Year: " + movie.getYear())),
+                                new Li(new A("Stars: " + movie.getRating(),"http://localhost/movies/" + movie.getMid() + "/ratings"))
+                        ),
+                        new A(new Title("List of reviews"),"http://localhost/movies/" + movie.getMid() + "/reviews"),
                         new Table(
                                 new Thead(new Tr(new Th("Summary"),new Th("Rating"),new Th("Movie Critic"))),
                                 new Tbody(rows)
-                        ),
-                        new A("Return root","https://localhost/"),
-                        new A("See all movies","https://localhost/movies")
+                        )
+
                 )
         );
-        return h.toString();
+        return h.print();
     }
 
     @Override

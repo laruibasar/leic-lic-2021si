@@ -5,11 +5,11 @@ import pt.isel.ls.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
-import pt.isel.ls.view.htmlOLD.Html;
-import pt.isel.ls.view.htmlOLD.body.Body;
-import pt.isel.ls.view.htmlOLD.body.Table;
-import pt.isel.ls.view.htmlOLD.head.Head;
-import pt.isel.ls.view.htmlOLD.head.Title;
+import pt.isel.ls.view.htmlold.Html;
+import pt.isel.ls.view.htmlold.body.Body;
+import pt.isel.ls.view.htmlold.body.Table;
+import pt.isel.ls.view.htmlold.head.Head;
+import pt.isel.ls.view.htmlold.head.Title;
 
 public class GetAllUsersResult extends CommandResult {
 

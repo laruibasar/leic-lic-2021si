@@ -1,4 +1,4 @@
-package pt.isel.ls.view.htmlOLD.body;
+package pt.isel.ls.view.htmlold.body;
 
 public class Row extends Table {
 
