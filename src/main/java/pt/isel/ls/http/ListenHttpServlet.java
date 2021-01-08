@@ -24,15 +24,16 @@ public class ListenHttpServlet extends HttpServlet {
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         int statusCode = 200;
         String respBody = "";
+        Command cmd = new Command();
+        CommandResult cr;
 
         log.info("incoming request: method={}, uri={}, accept={}",
                 req.getMethod(),
                 req.getRequestURI(),
                 req.getHeader("Accept"));
-        CommandResult cr;
 
         try {
-            Command cmd = AppCommand.setCommand(
+            cmd = AppCommand.setCommand(
                     setString(req.getMethod(), req.getRequestURI()
             ));
 
@@ -42,13 +43,13 @@ public class ListenHttpServlet extends HttpServlet {
                 statusCode = 404;
                 respBody = "Resource not found";
             } else {
-                //View view = View.findView(comandResult);
+                // TODO: add separate views from CommandResult
+                //View view = View.findView(cr);
                 respBody = cr.printHtml();
             }
         } catch (RouterException e) {
             statusCode = 400;
             respBody = "Bad request";
-            e.printStackTrace();
         } catch (HandlerException e) {
             statusCode = 500;
             respBody = "Internal Error";
@@ -57,7 +58,6 @@ public class ListenHttpServlet extends HttpServlet {
         //Format response body to submit the View of the CommandResult
         Charset utf8 = StandardCharsets.UTF_8;
         resp.setContentType(String.format("text/html; charset=%s", utf8.name()));
-
 
         //No need to change
         byte[] respBodyBytes = respBody.getBytes(utf8);
