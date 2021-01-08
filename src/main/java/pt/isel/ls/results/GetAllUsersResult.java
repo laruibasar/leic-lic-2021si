@@ -34,7 +34,8 @@ public class GetAllUsersResult extends CommandResult {
             User u = (User) m;
             rows.add(
                     new Tr(
-                        new Td(new A(String.valueOf(u.getId()), "https://localhost/users/" + u.getId()), new Text(u.getName()))
+                        new Td(new A(String.valueOf(u.getId()), "http://localhost/users/" + u.getId()),
+                        new Td(new Text(u.getName())))
                     )
             );
         }
@@ -43,19 +44,16 @@ public class GetAllUsersResult extends CommandResult {
                         new Title("Users List")
                 ),
                 new Body(
+                        new A("Start", "http://localhost/"),
                         new Table(
-                                new Tr(
-                                        new Thead(
-                                                new Tr(
-                                                        new Th("User ID"),
-                                                        new Th("Name")
-                                                )
+                                new Thead(
+                                        new Tr(
+                                                new Th("User ID"),
+                                                new Th("Name")
                                         )
                                 ),
-                                new Tr(
-                                        new Tbody(
-                                                rows
-                                        )
+                                new Tbody(
+                                        rows
                                 )
                         )
                 )

@@ -1,12 +1,23 @@
 package pt.isel.ls.results;
 
 import pt.isel.ls.model.Model;
+import pt.isel.ls.model.Review;
 import pt.isel.ls.model.User;
-import pt.isel.ls.view.htmlOLD.body.Body;
-import pt.isel.ls.view.htmlOLD.body.Table;
-import pt.isel.ls.view.htmlOLD.head.Head;
-import pt.isel.ls.view.htmlOLD.head.Title;
-import pt.isel.ls.view.htmlOLD.Html;
+import pt.isel.ls.view.common.A;
+import pt.isel.ls.view.common.Body;
+import pt.isel.ls.view.common.Element;
+import pt.isel.ls.view.common.Head;
+import pt.isel.ls.view.common.Html;
+import pt.isel.ls.view.common.Li;
+import pt.isel.ls.view.common.Table;
+import pt.isel.ls.view.common.Tbody;
+import pt.isel.ls.view.common.Td;
+import pt.isel.ls.view.common.Text;
+import pt.isel.ls.view.common.Th;
+import pt.isel.ls.view.common.Thead;
+import pt.isel.ls.view.common.Title;
+import pt.isel.ls.view.common.Tr;
+import pt.isel.ls.view.common.Ul;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,34 +34,46 @@ public class GetUserDetailsResult extends CommandResult {
 
     @Override
     public String printHtml() {
-        ArrayList<String> header = new ArrayList<>();
-        header.add("User Id");
-        header.add("Name");
-        header.add("Email");
-
-        ArrayList<String[]> rows = new ArrayList<>();
-
-        if (user == null) {
-            rows.add(new String[]{ "User details not available" });
-        } else {
-            rows.add(new String[] {
-                    String.valueOf(user.getId()),
-                    user.getName(),
-                    user.getEmail()});
+        ArrayList<Review> reviews = user.getReviews();
+        ArrayList<Element> rows = new ArrayList<>();
+        for (Review r: reviews) {
+            rows.add(
+                new Tr(
+                    new Td(new A(r.getSummary(), "http://localhost/users/" + r.getMid())),
+                    new Td(new Text(String.valueOf(r.getRating()))),
+                    new Td(new Text(r.getTitle())),
+                    new Td(new Text(r.getYear()))
+                )
+            );
         }
-
         Html h = new Html(
                 new Head(
-                        new Title("User details")
+                        new Title("User Details")
                 ),
                 new Body(
+                        new A("Start", "http://localhost/"),
+                        new A("Users", "http://localhost/users/"),
+                        new Ul(
+                                new Li(new Text(user.getName())),
+                                new Li(new Text(user.getEmail()))
+                        ),
                         new Table(
-                                header,
-                                rows
+                                new Thead(
+                                        new Tr(
+                                                new Th("Summary"),
+                                                new Th("Rating"),
+                                                new Th("Title"),
+                                                new Th("Year")
+                                        )
+                                ),
+                                new Tbody(
+                                        rows
+                                )
                         )
+
                 )
         );
-        return h.toString();
+        return h.print();
     }
 
     @Override

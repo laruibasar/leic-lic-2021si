@@ -2,13 +2,15 @@ package pt.isel.ls.results;
 
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Review;
-import pt.isel.ls.view.htmlOLD.Html;
-import pt.isel.ls.view.htmlOLD.body.Body;
-import pt.isel.ls.view.htmlOLD.body.Table;
-import pt.isel.ls.view.htmlOLD.head.Head;
-import pt.isel.ls.view.htmlOLD.head.Title;
+import pt.isel.ls.view.common.A;
+import pt.isel.ls.view.common.Body;
+import pt.isel.ls.view.common.Head;
+import pt.isel.ls.view.common.Html;
+import pt.isel.ls.view.common.Li;
+import pt.isel.ls.view.common.Text;
+import pt.isel.ls.view.common.Title;
+import pt.isel.ls.view.common.Ul;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class GetMovieReviewResult extends CommandResult {
@@ -24,42 +26,26 @@ public class GetMovieReviewResult extends CommandResult {
 
     @Override
     public String printHtml() {
-        ArrayList<String> header = new ArrayList<>();
-        header.add("Id");
-        header.add("Summary");
-        header.add("Review");
-        header.add("Rating");
-        header.add("Movie Id");
-        header.add("User Id");
-        ArrayList<String[]> rows = new ArrayList<>();
-
-        if (review == null) {
-            rows.add(new String[] {"Review not available"});
-        } else {
-            rows.add(
-                    new String[] {
-                            String.valueOf(review.getId()),
-                            review.getSummary(),
-                            review.getCompleteReview(),
-                            String.valueOf(review.getRating()),
-                            String.valueOf(review.getMovie()),
-                            String.valueOf(review.getMovieCritic())
-                    }
-            );
-        }
-
         Html h = new Html(
                 new Head(
-                        new Title("Movie Review")
+                        new Title("User Review")
                 ),
                 new Body(
-                        new Table(
-                                header,
-                                rows
+                        new A("Back", "http://localhost/users/" + review.getMovieCritic().getId()),
+                        new A(review.getMovie().getTitle() + " " + review.getMovie().getYear(), "http://localhost/movies/"
+                                + review.getMovie().getMid()),
+                        new A("All reviews", "http://localhost/movies/"
+                                + review.getMovie().getMid() + "/reviews/"
+                                + review.getRid()),
+                        new Ul(
+                                new Li(new Text(String.valueOf(review.getMovieCritic().getName()))),
+                                new Li(new Text("Rate " + review.getRating())),
+                                new Li(new Text(review.getSummary())),
+                                new Li(new Text(review.getCompleteReview()))
                         )
                 )
         );
-        return h.toString();
+        return h.print();
     }
 
     @Override

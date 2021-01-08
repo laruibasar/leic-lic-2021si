@@ -3,12 +3,14 @@ package pt.isel.ls.data;
 import pt.isel.ls.data.common.Data;
 import pt.isel.ls.data.common.DataConnectionException;
 import pt.isel.ls.model.Model;
+import pt.isel.ls.model.Review;
 import pt.isel.ls.model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class UserData extends Data implements IUserData {
@@ -70,18 +72,39 @@ public class UserData extends Data implements IUserData {
     @Override
     public LinkedList<Model> getUser(Connection connection, int id)
             throws DataConnectionException {
-        LinkedList<Model> users = new LinkedList<>();
+        LinkedList<Model> userInformation = new LinkedList<>();
 
         try {
-            final String query = "select uid, name, email from users where uid = ?;";
+            final String query =
+                    "select users.uid, users.name, users.email, reviews.rid, reviews.summary,"
+                            + " reviews.rating, movies.mid, movies.title, movies.year\n"
+                            + "from users\n"
+                            + "    inner join reviews on users.uid = reviews.movieCritic\n"
+                            + "     inner join movies on reviews.movie = movies.mid\n"
+                            + "         where uid = ?;";
             PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                users.add(new User(
-                        rs.getInt(1),
-                        rs.getString(2),
-                        rs.getString(3)));
+            if(rs.next()) {
+                ArrayList<Review> reviews = new ArrayList<>();
+                userInformation.add(
+                        new User(
+                            rs.getInt(1),
+                            rs.getString(2),
+                            rs.getString(3))
+                );
+                do {
+                    reviews.add(
+                            new Review(
+                                    rs.getInt(4),
+                                    rs.getString(5),
+                                    rs.getInt(6),
+                                    rs.getInt(7),
+                                    rs.getString(8),
+                                    rs.getString(9))
+                    );
+                } while (rs.next());
+                ((User) userInformation.get(0)).setReviews(reviews);
             }
 
             stmt.close();
@@ -90,6 +113,6 @@ public class UserData extends Data implements IUserData {
                     + id + "\n" + e.getMessage());
         }
 
-        return users;
+        return userInformation;
     }
 }
