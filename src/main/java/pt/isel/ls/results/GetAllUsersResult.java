@@ -65,4 +65,9 @@ public class GetAllUsersResult extends CommandResult {
         }
         return sb.toString();
     }
+
+    @Override
+    public int size() {
+        return users.size();
+    }
 }

@@ -1,0 +1,84 @@
+Movies list: 
+MovieID = 1	Title = Gladiator	Year = 2000
+MovieID = 2	Title = The Fast and the Furious	Year = 2001
+MovieID = 3	Title = Finding Nemo	Year = 2003
+MovieID = 4	Title = The Godfather	Year = 1972
+
+
+Movies list: 
+MovieID = 1	Title = Gladiator	Year = 2000
+MovieID = 2	Title = The Fast and the Furious	Year = 2001
+MovieID = 3	Title = Finding Nemo	Year = 2003
+MovieID = 4	Title = The Godfather	Year = 1972
+
+
+Movies list: 
+MovieID = 1	Title = Gladiator	Year = 2000
+MovieID = 2	Title = The Fast and the Furious	Year = 2001
+MovieID = 3	Title = Finding Nemo	Year = 2003
+MovieID = 4	Title = The Godfather	Year = 1972
+
+
+Movies list: 
+MovieID = 1	Title = Gladiator	Year = 2000
+MovieID = 2	Title = The Fast and the Furious	Year = 2001
+MovieID = 3	Title = Finding Nemo	Year = 2003
+MovieID = 4	Title = The Godfather	Year = 1972
+
+
+Movies list: 
+MovieID = 1	Title = Gladiator	Year = 2000
+MovieID = 2	Title = The Fast and the Furious	Year = 2001
+MovieID = 3	Title = Finding Nemo	Year = 2003
+MovieID = 4	Title = The Godfather	Year = 1972
+
+
+Movies list: 
+MovieID = 1	Title = Gladiator	Year = 2000
+MovieID = 2	Title = The Fast and the Furious	Year = 2001
+MovieID = 3	Title = Finding Nemo	Year = 2003
+MovieID = 4	Title = The Godfather	Year = 1972
+
+
+Movies list: 
+MovieID = 1	Title = Gladiator	Year = 2000
+MovieID = 2	Title = The Fast and the Furious	Year = 2001
+MovieID = 3	Title = Finding Nemo	Year = 2003
+MovieID = 4	Title = The Godfather	Year = 1972
+
+
+Movies list: 
+MovieID = 1	Title = Gladiator	Year = 2000
+MovieID = 2	Title = The Fast and the Furious	Year = 2001
+MovieID = 3	Title = Finding Nemo	Year = 2003
+MovieID = 4	Title = The Godfather	Year = 1972
+
+
+Movies list: 
+MovieID = 1	Title = Gladiator	Year = 2000
+MovieID = 2	Title = The Fast and the Furious	Year = 2001
+MovieID = 3	Title = Finding Nemo	Year = 2003
+MovieID = 4	Title = The Godfather	Year = 1972
+
+
+Movies list: 
+MovieID = 1	Title = Gladiator	Year = 2000
+MovieID = 2	Title = The Fast and the Furious	Year = 2001
+MovieID = 3	Title = Finding Nemo	Year = 2003
+MovieID = 4	Title = The Godfather	Year = 1972
+
+
+Movies list: 
+MovieID = 1	Title = Gladiator	Year = 2000
+MovieID = 2	Title = The Fast and the Furious	Year = 2001
+MovieID = 3	Title = Finding Nemo	Year = 2003
+MovieID = 4	Title = The Godfather	Year = 1972
+
+
+Movies list: 
+MovieID = 1	Title = Gladiator	Year = 2000
+MovieID = 2	Title = The Fast and the Furious	Year = 2001
+MovieID = 3	Title = Finding Nemo	Year = 2003
+MovieID = 4	Title = The Godfather	Year = 1972
+
+

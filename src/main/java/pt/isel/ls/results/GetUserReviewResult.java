@@ -73,4 +73,9 @@ public class GetUserReviewResult extends CommandResult {
                 + "\n");
         return review == null ? "User Review not available" : "User Review -> " + sb.toString();
     }
+
+    @Override
+    public int size() {
+        return review != null ? 1 : 0;
+    }
 }

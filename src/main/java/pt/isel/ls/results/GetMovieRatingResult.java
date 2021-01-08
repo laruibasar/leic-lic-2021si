@@ -83,4 +83,9 @@ public class GetMovieRatingResult extends CommandResult {
                 + "\n\t5 = "
                 + movieRating.getVotesFive();
     }
+
+    @Override
+    public int size() {
+        return 1;
+    }
 }

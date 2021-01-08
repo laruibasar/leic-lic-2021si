@@ -5,4 +5,6 @@ public interface ICommandResult {
     public String printHtml();
 
     public String printPlainText();
+
+    public int size();
 }

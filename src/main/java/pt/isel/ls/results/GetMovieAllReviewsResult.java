@@ -77,4 +77,9 @@ public class GetMovieAllReviewsResult extends CommandResult {
         }
         return sb.toString();
     }
+
+    @Override
+    public int size() {
+        return reviews.size();
+    }
 }

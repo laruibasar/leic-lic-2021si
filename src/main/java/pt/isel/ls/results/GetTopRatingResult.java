@@ -68,4 +68,9 @@ public class GetTopRatingResult extends CommandResult {
         }
         return sb.toString();
     }
+
+    @Override
+    public int size() {
+        return movies.size();
+    }
 }

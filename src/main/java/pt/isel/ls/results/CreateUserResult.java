@@ -67,4 +67,9 @@ public class CreateUserResult extends CommandResult {
                 + "\nEmail ="
                 + user.getEmail();
     }
+
+    @Override
+    public int size() {
+        return 1;
+    }
 }

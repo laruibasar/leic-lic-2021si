@@ -61,4 +61,9 @@ public class GetMovieDetailsResult extends CommandResult {
                 + "\tYear = "
                 + movie.getYear();
     }
+
+    @Override
+    public int size() {
+        return 1;
+    }
 }

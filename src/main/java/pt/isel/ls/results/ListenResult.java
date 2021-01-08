@@ -22,4 +22,9 @@ public class ListenResult extends CommandResult {
     public String printPlainText() {
         return null;
     }
+
+    @Override
+    public int size() {
+        return 0;
+    }
 }
