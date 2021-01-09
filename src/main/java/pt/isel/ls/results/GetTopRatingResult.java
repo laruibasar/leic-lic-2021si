@@ -35,8 +35,9 @@ public class GetTopRatingResult extends CommandResult {
             Movie movie = (Movie) m;
             rows.add(
                     new Tr(
-                            new Td(new A(String.valueOf(movie.getMid()), "/movies/" + movie.getMid())),
-                            new Td(movie.getTitle()),
+                            new Td(
+                                    new A(movie.getTitle(), "/movies/" + movie.getMid())
+                            ),
                             new Td(String.valueOf(movie.getYear()))
                     )
             );
@@ -53,7 +54,6 @@ public class GetTopRatingResult extends CommandResult {
                         new Table(
                                 new Thead(
                                         new Tr(
-                                                new Th("Id"),
                                                 new Th("Title"),
                                                 new Th("Release Year")
                                         )
@@ -79,5 +79,10 @@ public class GetTopRatingResult extends CommandResult {
             sb.append('\n');
         }
         return sb.toString();
+    }
+
+    @Override
+    public boolean asResult() {
+        return !movies.isEmpty();
     }
 }

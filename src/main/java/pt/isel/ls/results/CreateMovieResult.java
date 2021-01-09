@@ -68,4 +68,9 @@ public class CreateMovieResult extends CommandResult {
                 + "\tYear = "
                 + movie.getYear();
     }
+
+    @Override
+    public boolean asResult() {
+        return movie != null;
+    }
 }

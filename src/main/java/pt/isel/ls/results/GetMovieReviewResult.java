@@ -65,4 +65,9 @@ public class GetMovieReviewResult extends CommandResult {
                 + "\nSummary     = " + review.getSummary()
                 + "\nFull review = " + review.getCompleteReview();
     }
+
+    @Override
+    public boolean asResult() {
+        return review != null;
+    }
 }

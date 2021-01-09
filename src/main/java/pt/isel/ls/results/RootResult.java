@@ -37,4 +37,9 @@ public class RootResult extends CommandResult {
     public String printPlainText() {
         return "Welcome to root page!";
     }
+
+    @Override
+    public boolean asResult() {
+        return true;
+    }
 }
