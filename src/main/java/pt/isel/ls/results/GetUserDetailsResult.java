@@ -40,7 +40,10 @@ public class GetUserDetailsResult extends CommandResult {
         for (Review r: reviews) {
             rows.add(
                 new Tr(
-                    new Td(new A(r.getSummary(), "http://localhost/users/" + r.getMovie().getMid())),
+                    new Td(new A(r.getSummary(), "http://localhost/movies/"
+                            + r.getMovie().getMid()
+                            + "/reviews/"
+                            + r.getId())),
                     new Td(new Text(String.valueOf(r.getRating()))),
                     new Td(new Text(r.getMovie().getTitle())),
                     new Td(new Text(String.valueOf(r.getMovie().getYear())))

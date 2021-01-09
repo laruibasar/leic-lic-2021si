@@ -34,8 +34,8 @@ public class GetAllUsersResult extends CommandResult {
             User u = (User) m;
             rows.add(
                     new Tr(
-                        new Td(new A(String.valueOf(u.getId()), "http://localhost/users/" + u.getId()),
-                        new Td(new Text(u.getName())))
+                        new Td(new Text(String.valueOf(u.getId()))),
+                        new Td(new A(u.getName(), "http://localhost/users/" + u.getId()))
                     )
             );
         }

@@ -2,11 +2,6 @@ package pt.isel.ls.results;
 
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Review;
-import pt.isel.ls.view.htmlOLD.Html;
-import pt.isel.ls.view.htmlOLD.body.Body;
-import pt.isel.ls.view.htmlOLD.body.Table;
-import pt.isel.ls.view.htmlOLD.head.Head;
-import pt.isel.ls.view.htmlOLD.head.Title;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,18 +44,19 @@ public class DeleteMovieReviewResult extends CommandResult {
             );
         }
 
-        Html h = new Html(
-                new Head(
-                        new Title(title)
-                ),
-                new Body(
-                        new Table(
-                                rows
-                        )
-                )
-
-        );
-        return h.toString();
+//        Html h = new Html(
+//                new Head(
+//                        new Title(title)
+//                ),
+//                new Body(
+//                        new Table(
+//                                rows
+//                        )
+//                )
+//
+//        );
+//        return h.toString();
+        return null;
     }
 
     @Override

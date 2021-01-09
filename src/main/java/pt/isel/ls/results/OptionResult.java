@@ -2,11 +2,6 @@ package pt.isel.ls.results;
 
 import pt.isel.ls.config.Router;
 import pt.isel.ls.utils.Command;
-import pt.isel.ls.view.htmlOLD.Html;
-import pt.isel.ls.view.htmlOLD.body.Body;
-import pt.isel.ls.view.htmlOLD.body.Bullets;
-import pt.isel.ls.view.htmlOLD.head.Head;
-import pt.isel.ls.view.htmlOLD.head.Title;
 
 import java.util.ArrayList;
 
@@ -30,17 +25,18 @@ public class OptionResult extends CommandResult {
         String[] bullets = new String[]{};
         arrayList.toArray(bullets);
 
-        Html h = new Html(
-                new Head(
-                        new Title("All Commands")
-                ),
-                new Body(
-                        new Bullets(
-                                bullets
-                        )
-                )
-        );
-        return h.toString();
+//        Html h = new Html(
+//                new Head(
+//                        new Title("All Commands")
+//                ),
+//                new Body(
+//                        new Bullets(
+//                                bullets
+//                        )
+//                )
+//        );
+//        return h.toString();
+        return null;
     }
 
     @Override
