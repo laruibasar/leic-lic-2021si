@@ -85,7 +85,7 @@ public class GetMovieRatingResult extends CommandResult {
     }
 
     @Override
-    public int size() {
-        return 1;
+    public boolean asResult() {
+        return movieRating != null;
     }
 }

@@ -67,7 +67,7 @@ public class GetAllUsersResult extends CommandResult {
     }
 
     @Override
-    public int size() {
-        return users.size();
+    public boolean asResult() {
+        return !users.isEmpty();
     }
 }

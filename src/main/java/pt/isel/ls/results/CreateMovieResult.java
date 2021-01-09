@@ -70,7 +70,7 @@ public class CreateMovieResult extends CommandResult {
     }
 
     @Override
-    public int size() {
-        return 1;
+    public boolean asResult() {
+        return movie != null;
     }
 }

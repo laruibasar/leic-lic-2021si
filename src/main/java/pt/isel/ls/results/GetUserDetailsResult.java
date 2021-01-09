@@ -63,7 +63,7 @@ public class GetUserDetailsResult extends CommandResult {
     }
 
     @Override
-    public int size() {
-        return user != null ? 1 : 0;
+    public boolean asResult() {
+        return user != null;
     }
 }

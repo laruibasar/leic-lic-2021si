@@ -79,7 +79,7 @@ public class GetMovieAllReviewsResult extends CommandResult {
     }
 
     @Override
-    public int size() {
-        return reviews.size();
+    public boolean asResult() {
+        return !reviews.isEmpty();
     }
 }

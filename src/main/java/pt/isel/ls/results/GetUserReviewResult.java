@@ -75,7 +75,7 @@ public class GetUserReviewResult extends CommandResult {
     }
 
     @Override
-    public int size() {
-        return review != null ? 1 : 0;
+    public boolean asResult() {
+        return review != null;
     }
 }

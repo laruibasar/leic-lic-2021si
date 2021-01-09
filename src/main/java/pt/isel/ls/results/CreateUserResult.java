@@ -69,7 +69,7 @@ public class CreateUserResult extends CommandResult {
     }
 
     @Override
-    public int size() {
-        return 1;
+    public boolean asResult() {
+        return user != null;
     }
 }

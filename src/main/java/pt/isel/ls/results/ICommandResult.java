@@ -6,5 +6,5 @@ public interface ICommandResult {
 
     public String printPlainText();
 
-    public int size();
+    public boolean asResult();
 }

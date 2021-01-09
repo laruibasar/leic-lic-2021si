@@ -70,7 +70,7 @@ public class GetTopRatingResult extends CommandResult {
     }
 
     @Override
-    public int size() {
-        return movies.size();
+    public boolean asResult() {
+        return !movies.isEmpty();
     }
 }

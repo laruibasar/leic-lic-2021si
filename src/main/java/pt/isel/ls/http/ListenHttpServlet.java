@@ -39,13 +39,13 @@ public class ListenHttpServlet extends HttpServlet {
 
             cr = AppCommand.runCommand(cmd);
 
-            if (cr.size() == 0) {
-                statusCode = 404;
-                respBody = "Resource not found";
-            } else {
+            if (cr.asResult()) {
                 // TODO: add separate views from CommandResult
                 //View view = View.findView(cr);
                 respBody = cr.printHtml();
+            } else {
+                statusCode = 404;
+                respBody = "Resource not found";
             }
         } catch (RouterException e) {
             statusCode = 400;

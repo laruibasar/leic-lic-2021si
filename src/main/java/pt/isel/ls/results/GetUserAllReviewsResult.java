@@ -73,7 +73,7 @@ public class GetUserAllReviewsResult extends CommandResult {
     }
 
     @Override
-    public int size() {
-        return reviews.size();
+    public boolean asResult() {
+        return !reviews.isEmpty();
     }
 }

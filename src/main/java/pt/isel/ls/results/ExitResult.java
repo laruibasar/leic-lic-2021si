@@ -26,7 +26,7 @@ public class ExitResult extends CommandResult {
     }
 
     @Override
-    public int size() {
-        return 0;
+    public boolean asResult() {
+        return false;
     }
 }
