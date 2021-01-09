@@ -11,7 +11,6 @@ import pt.isel.ls.view.common.Html;
 import pt.isel.ls.view.common.Table;
 import pt.isel.ls.view.common.Tbody;
 import pt.isel.ls.view.common.Td;
-import pt.isel.ls.view.common.Text;
 import pt.isel.ls.view.common.Th;
 import pt.isel.ls.view.common.Thead;
 import pt.isel.ls.view.common.Title;
