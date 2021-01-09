@@ -4,4 +4,4 @@ build
 out
 setup_env.sh
 gradle
-test1.txt
+*.txt
