@@ -19,11 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GetMoviesResult extends CommandResult {
-
     private final List<Model> movies;
 
     public GetMoviesResult(List<Model> movies) {
-
         this.movies = movies;
     }
 
@@ -37,9 +35,11 @@ public class GetMoviesResult extends CommandResult {
             Movie movie = (Movie) m;
             rows.add(
                     new Tr(
-                            new Td(String.valueOf(movie.getMid())),
-                            new Td(movie.getTitle()),
-                            new Td(String.valueOf(movie.getYear())))
+                            new Td(
+                                    new A(movie.getTitle(), "/movies/" + String.valueOf(movie.getMid())),
+                            new Td(String.valueOf(movie.getYear()))
+                            )
+                    )
             );
         }
 
@@ -55,10 +55,18 @@ public class GetMoviesResult extends CommandResult {
                 new Body(
                         new A("Return home","/"),
                         new Br(),
+                        new Br(),
                         new Table(
-                                new Thead(new Tr(new Th("Movie Id"),new Th("Title"),new Th("Year"))),
+                                new Thead(
+                                        new Tr(
+                                                new Th("Title"),
+                                                new Th("Year")
+                                        )
+                                ),
                                 new Tbody(rows)
                         ),
+                        new Br(),
+                        new Br(),
                         prevPage,
                         nextPage
                 )
@@ -71,10 +79,8 @@ public class GetMoviesResult extends CommandResult {
         StringBuilder sb = new StringBuilder("Movies list: \n");
         for (Model m : movies) {
             Movie movie = (Movie) m;
-            sb.append("MovieID = "
-                    + movie.getMid()
-                    + "\tTitle = "
-                    + movie.getTitle());
+            sb.append("MovieID = ").append(movie.getMid());
+            sb.append("\tTitle = ").append(movie.getTitle());
             sb.append('\n');
         }
         return sb.toString();
