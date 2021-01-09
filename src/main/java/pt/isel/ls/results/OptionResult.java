@@ -68,4 +68,9 @@ public class OptionResult extends CommandResult {
 
         return sb.toString();
     }
+
+    @Override
+    public boolean asResult() {
+        return false;
+    }
 }
