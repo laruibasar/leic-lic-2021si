@@ -44,7 +44,7 @@ public class GetMovieDetailsResult extends CommandResult {
                     new Tr(
                             new Td(new A(r.getSummary(),"/movies/" + movie.getMid() + "/reviews/" + r.getId())),
                             new Td(String.valueOf(r.getRating())),
-                            new Td(new A(r.getMovieCritic().getName(),"/user/" + r.getMovieCritic().getId()))
+                            new Td(new A(r.getMovieCritic().getName(),"/users/" + r.getMovieCritic().getId()))
             ));
         }
 
