@@ -1,12 +1,17 @@
 package pt.isel.ls.view.common;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Tbody implements Element {
     public ArrayList<Element> content = new ArrayList<>();
 
-    public Tbody(ArrayList<Element> rows) {
-        this.content = rows;
+    public Tbody(Element... elements) {
+        content.addAll(Arrays.asList(elements));
+    }
+
+    public Tbody(ArrayList<Element> childs) {
+        this.content = childs;
     }
 
     @Override

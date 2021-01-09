@@ -64,6 +64,12 @@ public class GetMovieReviewResult extends CommandResult {
 
     @Override
     public String printPlainText() {
-        return review == null ? "Review not available" : "Movie Review -> " + review.toString();
+        return review == null ? "Review not available" : "Movie Review -> "
+                + "ReviewID = " + review.getId()
+                + "\nSummary = " + review.getSummary()
+                + "\nComplete Review = " + review.getCompleteReview()
+                + "\nStars = " + review.getRating()
+                + "\nMovieID = " + review.getMovie().getMid()
+                + "\nMovie Critic = " + review.getMovieCritic().getName();
     }
 }
