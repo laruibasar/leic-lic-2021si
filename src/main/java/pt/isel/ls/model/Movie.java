@@ -1,10 +1,14 @@
 package pt.isel.ls.model;
 
+import java.util.LinkedList;
+
 public class Movie extends Model {
 
     private int mid;
     private String title;
     private int year;
+    private LinkedList<Review> reviews;
+    private int rating;
 
     private String genre;
     private String directors;
@@ -12,6 +16,13 @@ public class Movie extends Model {
 
     public Movie() {
 
+    }
+
+    public Movie(int mid, String title, int year, int rating) {
+        this.mid = mid;
+        this.title = title;
+        this.year = year;
+        this.rating = rating;
     }
 
     public Movie(int mid, String title) {
@@ -70,6 +81,17 @@ public class Movie extends Model {
         this.actors = actors;
     }
 
+    public void setReviews(LinkedList<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public LinkedList<Review> getReviews() {
+        return reviews;
+    }
 }
 
 
