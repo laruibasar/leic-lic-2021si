@@ -38,19 +38,18 @@ public class GetUserAllReviewsResult extends CommandResult {
             );
         }
 
-//        Html h = new Html(
-//                new Head(
-//                        new Title("User All Reviews")
-//                ),
-//                new Body(
-//                        new Table(
-//                                header,
-//                                rows
-//                        )
-//                )
-//        );
-//        return h.toString();
-        return null;
+        Html h = new Html(
+                new Head(
+                        new Title("User All Reviews")
+                ),
+                new Body(
+                        new Table(
+                                header,
+                                rows
+                        )
+                )
+        );
+        return h.toString();
     }
 
     @Override

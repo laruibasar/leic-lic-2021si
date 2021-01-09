@@ -25,18 +25,17 @@ public class OptionResult extends CommandResult {
         String[] bullets = new String[]{};
         arrayList.toArray(bullets);
 
-//        Html h = new Html(
-//                new Head(
-//                        new Title("All Commands")
-//                ),
-//                new Body(
-//                        new Bullets(
-//                                bullets
-//                        )
-//                )
-//        );
-//        return h.toString();
-        return null;
+        Html h = new Html(
+                new Head(
+                        new Title("All Commands")
+                ),
+                new Body(
+                        new Bullets(
+                                bullets
+                        )
+                )
+        );
+        return h.toString();
     }
 
     @Override

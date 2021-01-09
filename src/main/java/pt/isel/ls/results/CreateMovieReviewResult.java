@@ -43,20 +43,19 @@ public class CreateMovieReviewResult extends CommandResult {
             );
         }
 
-//        Html h = new Html(
-//                new Head(
-//                        new Title(title)
-//                ),
-//                new Body(
-//                        new Table(
-//                                header,
-//                                rows
-//                        )
-//                )
-//
-//        );
-//        return h.toString();
-        return null;
+        Html h = new Html(
+                new Head(
+                        new Title(title)
+                ),
+                new Body(
+                        new Table(
+                                header,
+                                rows
+                        )
+                )
+
+        );
+        return h.toString();
     }
 
     @Override

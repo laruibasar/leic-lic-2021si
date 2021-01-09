@@ -45,19 +45,18 @@ public class GetMovieRatingResult extends CommandResult {
             );
         }
 
-//        Html h = new Html(
-//                new Head(
-//                        new Title("Movie Rating")
-//                ),
-//                new Body(
-//                        new Table(
-//                                header,
-//                                rows
-//                        )
-//                )
-//        );
-//        return h.toString();
-        return null;
+        Html h = new Html(
+                new Head(
+                        new Title("Movie Rating")
+                ),
+                new Body(
+                        new Table(
+                                header,
+                                rows
+                        )
+                )
+        );
+        return h.toString();
     }
 
     @Override
