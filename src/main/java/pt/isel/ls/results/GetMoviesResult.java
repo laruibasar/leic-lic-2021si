@@ -2,12 +2,19 @@ package pt.isel.ls.results;
 
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Movie;
-import pt.isel.ls.view.html.Html;
-import pt.isel.ls.view.html.body.Body;
-import pt.isel.ls.view.html.body.Table;
-import pt.isel.ls.view.html.head.Head;
-import pt.isel.ls.view.html.head.Title;
-
+import pt.isel.ls.view.common.A;
+import pt.isel.ls.view.common.Body;
+import pt.isel.ls.view.common.Element;
+import pt.isel.ls.view.common.Head;
+import pt.isel.ls.view.common.Html;
+import pt.isel.ls.view.common.Table;
+import pt.isel.ls.view.common.Tbody;
+import pt.isel.ls.view.common.Td;
+import pt.isel.ls.view.common.Text;
+import pt.isel.ls.view.common.Th;
+import pt.isel.ls.view.common.Thead;
+import pt.isel.ls.view.common.Title;
+import pt.isel.ls.view.common.Tr;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,36 +29,41 @@ public class GetMoviesResult extends CommandResult {
 
     @Override
     public String printHtml() {
-        ArrayList<String> header = new ArrayList<>();
-        header.add("Movie Id");
-        header.add("Title");
-        header.add("Year");
 
-        ArrayList<String[]> rows = new ArrayList<>();
+        ArrayList<Element> rows = new ArrayList<>();
 
         for (Model m: movies) {
+
             Movie movie = (Movie) m;
             rows.add(
-                    new String[] {
-                            String.valueOf(movie.getMid()),
-                            movie.getTitle(),
-                            String.valueOf(movie.getYear())
-                    }
+                    new Tr(
+                            new Td(String.valueOf(movie.getMid())),
+                            new Td(movie.getTitle()),
+                            new Td(String.valueOf(movie.getYear())))
             );
         }
+
+        //If size minor than 5 must not add on body
+        A nextPage = movies.size() >= 5 ? new A("Next page ","https://localhost/movies?top=5&skip=") : new A("","");
+        //Verify in cmd View the field skip
+        A prevPage = new A("Previous page", "https://localhost/movies?top=5&skip=");
 
         Html h = new Html(
                 new Head(
                         new Title("Movies List:")
                 ),
                 new Body(
+                        new A("Return root","https://localhost/"),
+                        new Text("&nbsp;"),
                         new Table(
-                                header,
-                                rows
-                        )
+                                new Thead(new Tr(new Th("Movie Id"),new Th("Title"),new Th("Year"))),
+                                new Tbody(rows)
+                        ),
+                        prevPage,
+                        nextPage
                 )
         );
-        return h.toString();
+        return h.print();
     }
 
     @Override

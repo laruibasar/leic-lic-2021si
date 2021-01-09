@@ -1,4 +1,4 @@
-package pt.isel.ls.view.html.head;
+package pt.isel.ls.view.htmlold.head;
 
 public class Title extends Head {
 

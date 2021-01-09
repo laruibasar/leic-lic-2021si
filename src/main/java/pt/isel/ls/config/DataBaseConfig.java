@@ -22,10 +22,10 @@ public class DataBaseConfig {
         }
 
         String getPort = System.getenv("LS_DB_PORT");
-        if (getPort == null || Integer.getInteger(getPort) == 0) {
+        if (getPort == null || Integer.parseInt(getPort) == 0) {
             port = 5432; /* standard postgresql port */
         } else {
-            port = Integer.getInteger(getPort);
+            port = Integer.parseInt(getPort);
         }
 
         database = System.getenv("LS_DB_DATABASE");
