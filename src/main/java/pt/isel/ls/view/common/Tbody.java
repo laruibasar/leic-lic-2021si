@@ -10,8 +10,8 @@ public class Tbody implements Element {
         content.addAll(Arrays.asList(elements));
     }
 
-    public Tbody(ArrayList<Element> childs) {
-        this.content = childs;
+    public Tbody(ArrayList<Element> content) {
+        this.content = content;
     }
 
     @Override

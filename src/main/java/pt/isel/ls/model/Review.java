@@ -45,6 +45,13 @@ public class Review extends Model {
         this.movieCritic = critic;
     }
 
+    public Review(int rid, String summary, int rating, Movie movie) {
+        this.rid = rid;
+        this.summary = summary;
+        this.rating = rating;
+        this.movie = movie;
+    }
+
     public void setId(int rid) {
         this.rid = rid;
     }

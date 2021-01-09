@@ -2,13 +2,16 @@ package pt.isel.ls.results;
 
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Review;
-import pt.isel.ls.view.htmlold.Html;
-import pt.isel.ls.view.htmlold.body.Body;
-import pt.isel.ls.view.htmlold.body.Table;
-import pt.isel.ls.view.htmlold.head.Head;
-import pt.isel.ls.view.htmlold.head.Title;
+import pt.isel.ls.view.common.A;
+import pt.isel.ls.view.common.Body;
+import pt.isel.ls.view.common.Br;
+import pt.isel.ls.view.common.Head;
+import pt.isel.ls.view.common.Html;
+import pt.isel.ls.view.common.Li;
+import pt.isel.ls.view.common.Text;
+import pt.isel.ls.view.common.Title;
+import pt.isel.ls.view.common.Ul;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class GetMovieReviewResult extends CommandResult {
@@ -24,53 +27,43 @@ public class GetMovieReviewResult extends CommandResult {
 
     @Override
     public String printHtml() {
-        ArrayList<String> header = new ArrayList<>();
-        header.add("Id");
-        header.add("Summary");
-        header.add("Review");
-        header.add("Rating");
-        header.add("Movie Id");
-        header.add("User Id");
-        ArrayList<String[]> rows = new ArrayList<>();
-
-        if (review == null) {
-            rows.add(new String[] {"Review not available"});
-        } else {
-            rows.add(
-                    new String[] {
-                            String.valueOf(review.getId()),
-                            review.getSummary(),
-                            review.getCompleteReview(),
-                            String.valueOf(review.getRating()),
-                            String.valueOf(review.getMovie()),
-                            String.valueOf(review.getMovieCritic())
-                    }
-            );
-        }
-
         Html h = new Html(
                 new Head(
-                        new Title("Movie Review")
+                        new Title("User Review")
                 ),
                 new Body(
-                        new Table(
-                                header,
-                                rows
+                        new A("Home", "/" + review.getMovieCritic().getId()),
+                        new Br(),
+                        new A("Retroceder", "/users/" + review.getMovieCritic().getId()),
+                        new Br(),
+                        new Br(),
+                        new Br(),
+                        new A(review.getMovie().getTitle() + " " + review.getMovie().getYear(), "/movies/"
+                                + review.getMovie().getMid()),
+                        new Br(),
+                        new A(review.getMovie().getTitle() + " Reviews", "/movies/"
+                                + review.getMovie().getMid() + "/reviews"),
+                        new Br(),
+                        new Ul(
+                                new Li(new Text(String.valueOf(review.getMovieCritic().getName()))),
+                                new Li(new Text("Rate " + review.getRating())),
+                                new Li(new Text(review.getSummary())),
+                                new Li(new Text(review.getCompleteReview()))
                         )
                 )
         );
-        return h.toString();
+        return h.print();
     }
 
     @Override
     public String printPlainText() {
         return review == null ? "Review not available" : "Movie Review -> "
-                + "ReviewID = " + review.getId()
-                + "\nSummary = " + review.getSummary()
-                + "\nComplete Review = " + review.getCompleteReview()
-                + "\nStars = " + review.getRating()
-                + "\nMovieID = " + review.getMovie().getMid()
-                + "\nMovie Critic = " + review.getMovieCritic().getName();
+                + "\nCritic      = " + review.getMovieCritic().getName()
+                + "\nMovieID     = " + review.getMovie().getMid()
+                + "\nUserID      = " + review.getMovieCritic().getId()
+                + "\n\nScore       = " + review.getRating()
+                + "\nSummary     = " + review.getSummary()
+                + "\nFull review = " + review.getCompleteReview();
     }
 
     @Override

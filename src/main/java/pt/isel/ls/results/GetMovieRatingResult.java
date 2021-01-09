@@ -7,6 +7,7 @@ import pt.isel.ls.view.htmlold.body.Body;
 import pt.isel.ls.view.htmlold.body.Table;
 import pt.isel.ls.view.htmlold.head.Head;
 import pt.isel.ls.view.htmlold.head.Title;
+
 import java.util.ArrayList;
 import java.util.List;
 
