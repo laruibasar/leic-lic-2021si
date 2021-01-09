@@ -55,8 +55,10 @@ public class GetMovieAllReviewsResult extends CommandResult {
                 new Body(
                         new A("Return home","/"),
                         new Br(),
+                        new Br(),
                         new Text("List of reviews of movie "),
                         new A(movie.getTitle(),"/movies/" + movie.getMid()),
+                        new Br(),
                         new Table(
                                 new Thead(
                                         new Tr(
@@ -67,9 +69,9 @@ public class GetMovieAllReviewsResult extends CommandResult {
                                 ),
                                 new Tbody(rows)
                         )
-
                 )
         );
+
         return h.print();
     }
 
@@ -78,16 +80,11 @@ public class GetMovieAllReviewsResult extends CommandResult {
         StringBuilder sb = new StringBuilder("User All Reviews -> \n");
         for (Model r : reviews) {
             Review review = (Review) r;
-            sb.append("ReviewID = "
-                    + review.getId()
-                    + "\nSummary = "
-                    + review.getSummary()
-                    + "\nStars ="
-                    + review.getRating()
-                    + "\nMovieID = "
-                    + review.getMovie()
-                    + "\nMovieCritic = "
-                    + review.getMovieCritic());
+            sb.append("ReviewID = ").append(review.getId());
+            sb.append("\nSummary = ").append(review.getSummary());
+            sb.append("\nStars =").append(review.getRating());
+            sb.append("\nMovieID = ").append(review.getMovie());
+            sb.append("\nMovieCritic = ").append(review.getMovieCritic());
             sb.append("\n\n");
         }
         return sb.toString();

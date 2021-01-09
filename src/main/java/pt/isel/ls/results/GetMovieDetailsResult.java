@@ -55,7 +55,8 @@ public class GetMovieDetailsResult extends CommandResult {
                 new Body(
                         new A("Return home","/"),
                         new Br(),
-                        new A("See all movies","/movies"),
+                        new Br(),
+                        new A("Return to all movies","/movies"),
                         new Ul(new Li(new Text("Title: " + movie.getTitle())),
                                 new Li(new Text("Year: " + movie.getYear())),
                                 new Li(new A("Stars: " + movie.getRating(),"/movies/" + movie.getMid() + "/ratings"))
@@ -64,10 +65,12 @@ public class GetMovieDetailsResult extends CommandResult {
                         new Table(
                                 new Thead(new Tr(new Th("Summary"),new Th("Rating"),new Th("Movie Critic"))),
                                 new Tbody(rows)
-                        )
-
+                        ),
+                        new Br(),
+                        new A("All reviews", "/movies/" + movie.getMid() + "/reviews")
                 )
         );
+
         return h.print();
     }
 
