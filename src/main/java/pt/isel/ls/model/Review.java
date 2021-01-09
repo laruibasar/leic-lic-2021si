@@ -9,11 +9,6 @@ public class Review extends Model {
     private Movie movie;
     private User movieCritic;
 
-    //não há necessidade nesta situação de estar a carregar as reviews com objetos desnecessários =(
-    private int mid;
-    private String title;
-    private String year;
-
     public Review(int rid, Movie movie) {
         this.rid = rid;
         this.movie = movie;
@@ -43,13 +38,11 @@ public class Review extends Model {
         this.movieCritic = critic;
     }
 
-    public Review(int rid, String summary, int rating, int mid, String title, String year) {
+    public Review(int rid, String summary, int rating, Movie movie) {
         this.rid = rid;
         this.summary = summary;
         this.rating = rating;
-        this.mid = mid;
-        this.title = title;
-        this.year = year;
+        this.movie = movie;
     }
 
     public void setId(int rid) {
@@ -84,36 +77,4 @@ public class Review extends Model {
         this.movieCritic = movieCritic;
     }
 
-    public int getRid() {
-        return rid;
-    }
-
-    public int getMid() {
-        return mid;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getYear() {
-        return year;
-    }
-
-    @Override
-    public String toString() {
-        if (completeReview == null) {
-            return "ReviewID = " + rid
-                    + "\nSummary = " + summary
-                    + "\nStars =" + rating
-                    + "\nMovieID = " + movie
-                    + "\nMovieCritic = " + movieCritic;
-        }
-        return  "ReviewID = " + rid
-                + "\nSummary = " + summary
-                + "\nComplete Review = " + completeReview
-                + "\nStars = " + rating
-                + "\nMovieID = " + movie
-                + "\nMovie Critic = " + movieCritic;
-    }
 }

@@ -65,6 +65,12 @@ public class CreateMovieReviewResult extends CommandResult {
 
     @Override
     public String printPlainText() {
-        return review == null ? "Review not created" : "Created Review -> " + review.toString();
+        return review == null ? "Review not created" : "Created Review -> "
+                + "ReviewID = " + review.getId()
+                + "\nSummary = " + review.getSummary()
+                + "\nComplete Review = " + review.getCompleteReview()
+                + "\nStars = " + review.getRating()
+                + "\nMovieID = " + review.getMovie().getMid()
+                + "\nMovie Critic = " + review.getMovieCritic().getName();
     }
 }

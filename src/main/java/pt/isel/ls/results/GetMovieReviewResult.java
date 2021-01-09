@@ -34,7 +34,7 @@ public class GetMovieReviewResult extends CommandResult {
                         new A("Back", "http://localhost/users/" + review.getMovieCritic().getId()),
                         new A(review.getMovie().getTitle() + " " + review.getMovie().getYear(), "http://localhost/movies/"
                                 + review.getMovie().getMid()),
-                        new A("Show movie reviews", "http://localhost/movies/"
+                        new A(review.getMovie().getTitle() + " reviews", "http://localhost/movies/"
                                 + review.getMovie().getMid() + "/reviews"),
                         new Ul(
                                 new Li(new Text(String.valueOf(review.getMovieCritic().getName()))),
@@ -49,6 +49,12 @@ public class GetMovieReviewResult extends CommandResult {
 
     @Override
     public String printPlainText() {
-        return review == null ? "Review not available" : "Movie Review -> " + review.toString();
+        return review == null ? "Review not available" : "Movie Review -> "
+                + "\nCritic      = " + review.getMovieCritic().getName()
+                + "\nMovieID     = " + review.getMovie().getMid()
+                + "\nUserID      = " + review.getMovieCritic().getId()
+                + "\n\nScore       = " + review.getRating()
+                + "\nSummary     = " + review.getSummary()
+                + "\nFull review = " + review.getCompleteReview();
     }
 }

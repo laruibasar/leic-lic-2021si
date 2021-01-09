@@ -60,6 +60,12 @@ public class CreateMovieResult extends CommandResult {
 
     @Override
     public String printPlainText() {
-        return movie == null ? "Movie not created" : "Created Movie -> " + movie.toString();
+        return movie == null ? "Movie not created" : "Created Movie -> "
+                + "MovieID = "
+                + movie.getMid()
+                + "\tTitle = "
+                + movie.getTitle()
+                + "\tYear = "
+                + movie.getYear();
     }
 }

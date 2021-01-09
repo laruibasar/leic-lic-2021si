@@ -62,7 +62,17 @@ public class GetMovieAllReviewsResult extends CommandResult {
     public String printPlainText() {
         StringBuilder sb = new StringBuilder("User All Reviews -> \n");
         for (Model r : reviews) {
-            sb.append(r.toString());
+            Review review = (Review) r;
+            sb.append("ReviewID = "
+                    + review.getId()
+                    + "\nSummary = "
+                    + review.getSummary()
+                    + "\nStars ="
+                    + review.getRating()
+                    + "\nMovieID = "
+                    + review.getMovie()
+                    + "\nMovieCritic = "
+                    + review.getMovieCritic());
             sb.append("\n\n");
         }
         return sb.toString();

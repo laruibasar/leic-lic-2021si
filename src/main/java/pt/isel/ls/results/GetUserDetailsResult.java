@@ -25,24 +25,25 @@ import java.util.List;
 public class GetUserDetailsResult extends CommandResult {
 
     private User user;
+    private ArrayList<Review> reviews = new ArrayList<>();
 
     public GetUserDetailsResult(List<Model> users) {
         if (users.size() != 0) {
             this.user = (User) users.get(0);
+            reviews = user.getReviews();
         }
     }
 
     @Override
     public String printHtml() {
-        ArrayList<Review> reviews = user.getReviews();
         ArrayList<Element> rows = new ArrayList<>();
         for (Review r: reviews) {
             rows.add(
                 new Tr(
-                    new Td(new A(r.getSummary(), "http://localhost/users/" + r.getMid())),
+                    new Td(new A(r.getSummary(), "http://localhost/users/" + r.getMovie().getMid())),
                     new Td(new Text(String.valueOf(r.getRating()))),
-                    new Td(new Text(r.getTitle())),
-                    new Td(new Text(r.getYear()))
+                    new Td(new Text(r.getMovie().getTitle())),
+                    new Td(new Text(String.valueOf(r.getMovie().getYear())))
                 )
             );
         }
@@ -78,6 +79,24 @@ public class GetUserDetailsResult extends CommandResult {
 
     @Override
     public String printPlainText() {
-        return user == null ? "User details not available" : "User details -> " + user.toString();
+        StringBuilder str = new StringBuilder("\nUserId = " + user.getId() + "\nName   = " + user.getName());
+        if (user.getEmail() != null) {
+            str.append("\nEmail  = " + user.getEmail());
+        }
+        if(reviews != null) {
+            for (Review r: reviews) {
+                str.append("\n\nRating: "
+                        + r.getRating()
+                        + "\nTitle: "
+                        + r.getMovie().getTitle()
+                        + "\nYear: "
+                        + r.getMovie().getYear()
+                        + "\nSummary: "
+                        + r.getSummary());
+            }
+
+        }
+
+        return user == null ? "User details not available" : "User details -> " + str.toString();
     }
 }

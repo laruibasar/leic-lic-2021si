@@ -8,4 +8,4 @@ select reviews.rid, reviews.summary, reviews.completeReview, reviews.rating, mov
                     from reviews
                           inner join movies on reviews.movie = movies.mid
                           inner join users on reviews.movieCritic = users.uid
-                    where rid = 1 and movie = 3;
+                    where rid = 1 and movie = 1;

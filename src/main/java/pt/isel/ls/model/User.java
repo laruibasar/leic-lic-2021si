@@ -47,7 +47,7 @@ public class User extends Model {
         this.email = email;
     }
 
-    public ArrayList getReviews() {
+    public ArrayList<Review> getReviews() {
         return reviews;
     }
 
@@ -55,12 +55,4 @@ public class User extends Model {
         this.reviews = reviews;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder str = new StringBuilder("UserId = " + id + " Name = " + name);
-        if (email != null) {
-            str.append(" Email = " + email);
-        }
-        return str.toString();
-    }
 }

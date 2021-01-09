@@ -3,6 +3,7 @@ package pt.isel.ls.data;
 import pt.isel.ls.data.common.Data;
 import pt.isel.ls.data.common.DataConnectionException;
 import pt.isel.ls.model.Model;
+import pt.isel.ls.model.Movie;
 import pt.isel.ls.model.Review;
 import pt.isel.ls.model.User;
 
@@ -99,9 +100,10 @@ public class UserData extends Data implements IUserData {
                                     rs.getInt(4),
                                     rs.getString(5),
                                     rs.getInt(6),
-                                    rs.getInt(7),
-                                    rs.getString(8),
-                                    rs.getString(9))
+                                    new Movie(rs.getInt(7),
+                                            rs.getString(8),
+                                            rs.getInt(9)))
+
                     );
                 } while (rs.next());
                 ((User) userInformation.get(0)).setReviews(reviews);
