@@ -49,15 +49,4 @@ public class MovieRating extends Model {
         return votesFive;
     }
 
-    @Override
-    public String toString() {
-        return    "Movie id =" + movie.getMid()
-                + "\tAverage Rating = " + average
-                + "\nNumber of votes: "
-                + "\n\t1 = " + votesOne
-                + "\n\t2 = " + votesTwo
-                + "\n\t3 = " + votesThree
-                + "\n\t4 = " + votesFour
-                + "\n\t5 = " + votesFive;
-    }
 }

@@ -55,6 +55,10 @@ public class GetUserDetailsResult extends CommandResult {
 
     @Override
     public String printPlainText() {
-        return user == null ? "User details not available" : "User details -> " + user.toString();
+        StringBuilder str = new StringBuilder("UserId = " + user.getId() + " Name = " + user.getName());
+        if (user.getEmail() != null) {
+            str.append(" Email = " + user.getEmail());
+        }
+        return user == null ? "User details not available" : "User details -> " + str.toString();
     }
 }
