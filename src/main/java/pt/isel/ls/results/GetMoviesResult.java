@@ -4,6 +4,7 @@ import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Movie;
 import pt.isel.ls.view.common.A;
 import pt.isel.ls.view.common.Body;
+import pt.isel.ls.view.common.Br;
 import pt.isel.ls.view.common.Element;
 import pt.isel.ls.view.common.Head;
 import pt.isel.ls.view.common.Html;
@@ -44,17 +45,17 @@ public class GetMoviesResult extends CommandResult {
         }
 
         //If size minor than 5 must not add on body
-        A nextPage = movies.size() >= 5 ? new A("Next page ","https://localhost/movies?top=5&skip=") : new A("","");
+        A nextPage = movies.size() >= 5 ? new A("Next page ","/movies?top=5&skip=") : new A("","");
         //Verify in cmd View the field skip
-        A prevPage = new A("Previous page", "https://localhost/movies?top=5&skip=");
+        A prevPage = new A("Previous page", "/movies?top=5&skip=");
 
         Html h = new Html(
                 new Head(
                         new Title("Movies List:")
                 ),
                 new Body(
-                        new A("Return root","https://localhost/"),
-                        new Text("&nbsp;"),
+                        new A("Return home","/"),
+                        new Br(),
                         new Table(
                                 new Thead(new Tr(new Th("Movie Id"),new Th("Title"),new Th("Year"))),
                                 new Tbody(rows)

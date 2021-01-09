@@ -5,6 +5,7 @@ import pt.isel.ls.model.Movie;
 import pt.isel.ls.model.Review;
 import pt.isel.ls.view.common.A;
 import pt.isel.ls.view.common.Body;
+import pt.isel.ls.view.common.Br;
 import pt.isel.ls.view.common.Element;
 import pt.isel.ls.view.common.Head;
 import pt.isel.ls.view.common.Html;
@@ -41,9 +42,9 @@ public class GetMovieDetailsResult extends CommandResult {
 
             rows.add(
                     new Tr(
-                            new Td(new A(r.getSummary(),"http://localhost/movies/" + movie.getMid() + "/reviews/" + r.getId())),
+                            new Td(new A(r.getSummary(),"/movies/" + movie.getMid() + "/reviews/" + r.getId())),
                             new Td(String.valueOf(r.getRating())),
-                            new Td(new A(r.getMovieCritic().getName(),"http://localhost/user/" + r.getMovieCritic().getId()))
+                            new Td(new A(r.getMovieCritic().getName(),"/user/" + r.getMovieCritic().getId()))
             ));
         }
 
@@ -52,14 +53,14 @@ public class GetMovieDetailsResult extends CommandResult {
                         new Title("Movie details")
                 ),
                 new Body(
-                        new A("Return root","http://localhost/"),
-                        new Text("&nbsp;"),
-                        new A("See all movies","http://localhost/movies"),
+                        new A("Return home","/"),
+                        new Br(),
+                        new A("See all movies","/movies"),
                         new Ul(new Li(new Text("Title: " + movie.getTitle())),
                                 new Li(new Text("Year: " + movie.getYear())),
-                                new Li(new A("Stars: " + movie.getRating(),"http://localhost/movies/" + movie.getMid() + "/ratings"))
+                                new Li(new A("Stars: " + movie.getRating(),"/movies/" + movie.getMid() + "/ratings"))
                         ),
-                        new A(new Title("List of reviews"),"http://localhost/movies/" + movie.getMid() + "/reviews"),
+                        new A(new Title("List of reviews"),"/movies/" + movie.getMid() + "/reviews"),
                         new Table(
                                 new Thead(new Tr(new Th("Summary"),new Th("Rating"),new Th("Movie Critic"))),
                                 new Tbody(rows)
