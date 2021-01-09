@@ -56,8 +56,9 @@ public class MovieReviewData extends Data implements IMovieReviewData {
 
         try {
 
-            final String query = "select rid, summary, completeReview, rating, "
-                    + "movie, movieCritic from reviews where movie = ? and rid = ?;";
+            final String query = "select r.rid, r.summary, r.completeReview, r.rating, "
+                    + "r.movie, m.title, r.movieCritic from reviews r "
+                    + "inner join movies m on r.movie = m.mid where movie = ? and rid = ?;";
 
             PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setInt(1, movieId);
@@ -68,7 +69,8 @@ public class MovieReviewData extends Data implements IMovieReviewData {
                 User user = new User();
                 Movie movie = new Movie();
                 movie.setId(movieId);
-                user.setId(rs.getInt(6));
+                movie.setTitle(rs.getString(6));
+                user.setId(rs.getInt(7));
                 reviews.add(
                         new Review(
                             rs.getInt(1),
@@ -77,7 +79,8 @@ public class MovieReviewData extends Data implements IMovieReviewData {
                             rs.getInt(4),
                             movie,
                             user
-                            ));
+                        )
+                );
             }
 
             stmt.close();

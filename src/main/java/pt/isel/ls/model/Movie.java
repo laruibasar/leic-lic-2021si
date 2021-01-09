@@ -45,6 +45,10 @@ public class Movie extends Model {
         return title;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public int getYear() {
         return year;
     }
