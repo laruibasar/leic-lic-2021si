@@ -32,9 +32,9 @@ public class GetMovieReviewResult extends CommandResult {
                         new Title("User Review")
                 ),
                 new Body(
-                        new A("Home", "/" + review.getMovieCritic().getId()),
+                        new A("Return home", "/"),
                         new Br(),
-                        new A("Retroceder", "/users/" + review.getMovieCritic().getId()),
+                        new A("Back", "/users/" + review.getMovieCritic().getId()),
                         new Br(),
                         new Br(),
                         new Br(),
@@ -57,7 +57,7 @@ public class GetMovieReviewResult extends CommandResult {
 
     @Override
     public String printPlainText() {
-        return review == null ? "Review not available" : "Movie Review -> "
+        return review == null ? "Review not available" : "Movie Review: "
                 + "\nCritic      = " + review.getMovieCritic().getName()
                 + "\nMovieID     = " + review.getMovie().getMid()
                 + "\nUserID      = " + review.getMovieCritic().getId()
