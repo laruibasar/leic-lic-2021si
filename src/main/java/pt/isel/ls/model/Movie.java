@@ -70,14 +70,6 @@ public class Movie extends Model {
         this.actors = actors;
     }
 
-    @Override
-    public String toString() {
-        if (year == 0) {
-            return "MovieID = " + mid + "\tTitle = " + title;
-        }
-        return "MovieID = " + mid + "\tTitle = " + title + "\tYear = " + year;
-    }
-
 }
 
 

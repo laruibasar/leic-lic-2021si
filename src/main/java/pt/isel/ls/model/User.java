@@ -44,13 +44,4 @@ public class User extends Model {
         this.email = email;
     }
 
-
-    @Override
-    public String toString() {
-        StringBuilder str = new StringBuilder("UserId = " + id + " Name = " + name);
-        if (email != null) {
-            str.append(" Email = " + email);
-        }
-        return str.toString();
-    }
 }
