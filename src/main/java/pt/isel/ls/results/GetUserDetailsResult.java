@@ -88,7 +88,7 @@ public class GetUserDetailsResult extends CommandResult {
         if (user.getEmail() != null) {
             str.append("\nEmail  = " + user.getEmail());
         }
-        if(reviews != null) {
+        if (reviews != null) {
             for (Review r: reviews) {
                 str.append("\n\nRating: "
                         + r.getRating()

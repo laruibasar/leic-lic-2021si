@@ -86,7 +86,7 @@ public class UserData extends Data implements IUserData {
             PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
-            if(rs.next()) {
+            if (rs.next()) {
                 ArrayList<Review> reviews = new ArrayList<>();
                 userInformation.add(
                         new User(
