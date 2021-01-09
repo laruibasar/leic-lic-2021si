@@ -80,4 +80,9 @@ public class GetTopRatingResult extends CommandResult {
         }
         return sb.toString();
     }
+
+    @Override
+    public boolean asResult() {
+        return !movies.isEmpty();
+    }
 }

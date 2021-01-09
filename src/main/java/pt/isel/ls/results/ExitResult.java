@@ -10,4 +10,9 @@ public class ExitResult extends CommandResult {
     public String printPlainText() {
         return "Exit program";
     }
+
+    @Override
+    public boolean asResult() {
+        return false;
+    }
 }

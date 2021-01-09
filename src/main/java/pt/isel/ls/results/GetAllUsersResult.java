@@ -65,4 +65,9 @@ public class GetAllUsersResult extends CommandResult {
         }
         return sb.toString();
     }
+
+    @Override
+    public boolean asResult() {
+        return !users.isEmpty();
+    }
 }

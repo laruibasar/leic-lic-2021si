@@ -5,6 +5,7 @@ import pt.isel.ls.model.Movie;
 import pt.isel.ls.model.Review;
 import pt.isel.ls.view.common.A;
 import pt.isel.ls.view.common.Body;
+import pt.isel.ls.view.common.Br;
 import pt.isel.ls.view.common.Element;
 import pt.isel.ls.view.common.Head;
 import pt.isel.ls.view.common.Html;
@@ -38,7 +39,7 @@ public class GetMovieAllReviewsResult extends CommandResult {
             review = (Review) r;
             rows.add(
                     new Tr(
-                            new Td(new A(review.getSummary(),"http://localhost/movies/" + movie.getMid() + "/reviews/" + review.getId())),
+                            new Td(new A(review.getSummary(),"/movies/" + movie.getMid() + "/reviews/" + review.getId())),
                             new Td(String.valueOf(review.getRating())),
                             new Td(review.getMovieCritic().getName())
                     ));
@@ -49,10 +50,10 @@ public class GetMovieAllReviewsResult extends CommandResult {
                         new pt.isel.ls.view.common.Title("Movie details")
                 ),
                 new Body(
-                        new A("Return root","http://localhost/"),
-                        new Text("&nbsp;"),
+                        new A("Return home","/"),
+                        new Br(),
                         new Text("List of reviews of movie "),
-                        new A(movie.getTitle(),"http://localhost/movies/" + movie.getMid()),
+                        new A(movie.getTitle(),"/movies/" + movie.getMid()),
                         new Table(
                                 new Thead(new Tr(new Th("Summary"),new Th("Rating"),new Th("Movie Critic"))),
                                 new Tbody(rows)
@@ -81,5 +82,10 @@ public class GetMovieAllReviewsResult extends CommandResult {
             sb.append("\n\n");
         }
         return sb.toString();
+    }
+
+    @Override
+    public boolean asResult() {
+        return !reviews.isEmpty();
     }
 }

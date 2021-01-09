@@ -72,4 +72,9 @@ public class GetMovieReviewResult extends CommandResult {
                 + "\nMovieID = " + review.getMovie().getMid()
                 + "\nMovie Critic = " + review.getMovieCritic().getName();
     }
+
+    @Override
+    public boolean asResult() {
+        return review != null;
+    }
 }

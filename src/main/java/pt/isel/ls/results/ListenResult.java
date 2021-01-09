@@ -10,4 +10,9 @@ public class ListenResult extends CommandResult {
     public String printPlainText() {
         return "Server started";
     }
+
+    @Override
+    public boolean asResult() {
+        return false;
+    }
 }

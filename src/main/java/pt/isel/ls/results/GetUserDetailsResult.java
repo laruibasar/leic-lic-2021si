@@ -61,4 +61,9 @@ public class GetUserDetailsResult extends CommandResult {
         }
         return user == null ? "User details not available" : "User details -> " + str.toString();
     }
+
+    @Override
+    public boolean asResult() {
+        return user != null;
+    }
 }
