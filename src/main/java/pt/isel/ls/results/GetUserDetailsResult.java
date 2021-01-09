@@ -5,6 +5,7 @@ import pt.isel.ls.model.Review;
 import pt.isel.ls.model.User;
 import pt.isel.ls.view.common.A;
 import pt.isel.ls.view.common.Body;
+import pt.isel.ls.view.common.Br;
 import pt.isel.ls.view.common.Element;
 import pt.isel.ls.view.common.Head;
 import pt.isel.ls.view.common.Html;
@@ -40,7 +41,7 @@ public class GetUserDetailsResult extends CommandResult {
         for (Review r: reviews) {
             rows.add(
                 new Tr(
-                    new Td(new A(r.getSummary(), "http://localhost/movies/"
+                    new Td(new A(r.getSummary(), "/movies/"
                             + r.getMovie().getMid()
                             + "/reviews/"
                             + r.getId())),
@@ -55,8 +56,9 @@ public class GetUserDetailsResult extends CommandResult {
                         new Title("User Details")
                 ),
                 new Body(
-                        new A("Start", "http://localhost/"),
-                        new A("Users", "http://localhost/users/"),
+                        new A("Home", "/"),
+                        new Br(),
+                        new A("Users", "/users/"),
                         new Ul(
                                 new Li(new Text(user.getName())),
                                 new Li(new Text(user.getEmail()))

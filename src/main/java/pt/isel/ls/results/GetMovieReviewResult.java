@@ -4,6 +4,7 @@ import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Review;
 import pt.isel.ls.view.common.A;
 import pt.isel.ls.view.common.Body;
+import pt.isel.ls.view.common.Br;
 import pt.isel.ls.view.common.Head;
 import pt.isel.ls.view.common.Html;
 import pt.isel.ls.view.common.Li;
@@ -31,11 +32,18 @@ public class GetMovieReviewResult extends CommandResult {
                         new Title("User Review")
                 ),
                 new Body(
-                        new A("Back", "http://localhost/users/" + review.getMovieCritic().getId()),
-                        new A(review.getMovie().getTitle() + " " + review.getMovie().getYear(), "http://localhost/movies/"
+                        new A("Home", "/" + review.getMovieCritic().getId()),
+                        new Br(),
+                        new A("Retroceder", "/users/" + review.getMovieCritic().getId()),
+                        new Br(),
+                        new Br(),
+                        new Br(),
+                        new A(review.getMovie().getTitle() + " " + review.getMovie().getYear(), "/movies/"
                                 + review.getMovie().getMid()),
-                        new A(review.getMovie().getTitle() + " reviews", "http://localhost/movies/"
+                        new Br(),
+                        new A(review.getMovie().getTitle() + " Reviews", "/movies/"
                                 + review.getMovie().getMid() + "/reviews"),
+                        new Br(),
                         new Ul(
                                 new Li(new Text(String.valueOf(review.getMovieCritic().getName()))),
                                 new Li(new Text("Rate " + review.getRating())),

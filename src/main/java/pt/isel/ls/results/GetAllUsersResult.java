@@ -4,13 +4,13 @@ import pt.isel.ls.model.Model;
 import pt.isel.ls.model.User;
 import pt.isel.ls.view.common.A;
 import pt.isel.ls.view.common.Body;
+import pt.isel.ls.view.common.Br;
 import pt.isel.ls.view.common.Element;
 import pt.isel.ls.view.common.Head;
 import pt.isel.ls.view.common.Html;
 import pt.isel.ls.view.common.Table;
 import pt.isel.ls.view.common.Tbody;
 import pt.isel.ls.view.common.Td;
-import pt.isel.ls.view.common.Text;
 import pt.isel.ls.view.common.Th;
 import pt.isel.ls.view.common.Thead;
 import pt.isel.ls.view.common.Title;
@@ -34,8 +34,7 @@ public class GetAllUsersResult extends CommandResult {
             User u = (User) m;
             rows.add(
                     new Tr(
-                        new Td(new Text(String.valueOf(u.getId()))),
-                        new Td(new A(u.getName(), "http://localhost/users/" + u.getId()))
+                        new Td(new A(u.getName(), "/users/" + u.getId()))
                     )
             );
         }
@@ -44,11 +43,12 @@ public class GetAllUsersResult extends CommandResult {
                         new Title("Users List")
                 ),
                 new Body(
-                        new A("Start", "http://localhost/"),
+                        new A("Home", "/"),
+                        new Br(),
+                        new Br(),
                         new Table(
                                 new Thead(
                                         new Tr(
-                                                new Th("User ID"),
                                                 new Th("Name")
                                         )
                                 ),
