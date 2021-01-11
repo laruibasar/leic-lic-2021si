@@ -1,14 +1,13 @@
 package pt.isel.ls.view.common;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Ul implements Element {
     private ArrayList<Li> content = new ArrayList<>();
 
     public Ul(Li... elements) {
-        for (Li element : elements) {
-            this.content.add(element);
-        }
+        content.addAll(Arrays.asList(elements));
     }
 
     @Override
