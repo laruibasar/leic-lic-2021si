@@ -128,6 +128,8 @@ public class ElementTest {
                 new Input("text", "movie"),
                 new Label("Release Year", "year"),
                 new Input("number", "year"),
+                new Label("Summary", "story"),
+                new Textarea("story"),
                 new Input("submit", "submit")
         );
 
@@ -137,6 +139,10 @@ public class ElementTest {
                         + "<input type=\"text\" id=\"movie\" name=\"movie\">\n"
                         + "<label for=\"year\">Release Year</label>\n"
                         + "<input type=\"number\" id=\"year\" name=\"year\">\n"
+                        + "<label for=\"story\">Summary</label>\n"
+                        + "<textarea id=\"story\" name=\"story\" rows=\"5\" cols=\"33\">\n"
+                        + "\n"
+                        + "</textarea>\n"
                         + "<input type=\"submit\" id=\"submit\" name=\"submit\">\n"
                         + "</form>\n",
             form.print()
