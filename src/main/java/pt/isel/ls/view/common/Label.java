@@ -22,7 +22,7 @@ public class Label implements Element {
         sb.append(">");
 
         sb.append(content);
-        sb.append("<label>\n");
+        sb.append("</label>\n");
 
         return sb.toString();
     }
