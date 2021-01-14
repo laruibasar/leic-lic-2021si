@@ -1,4 +1,4 @@
-package pt.isel.ls.view.common;
+package pt.isel.ls.view.common.elements;
 
 public class A implements Element {
     private String content = "";

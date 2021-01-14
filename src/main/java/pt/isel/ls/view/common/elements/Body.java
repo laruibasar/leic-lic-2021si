@@ -1,11 +1,11 @@
-package pt.isel.ls.view.common;
+package pt.isel.ls.view.common.elements;
 
 import java.util.ArrayList;
 
-public class Head implements Element {
+public class Body implements Element {
     private ArrayList<Element> content = new ArrayList<>();
 
-    public Head(Element... elements) {
+    public Body(Element... elements) {
         for (Element element : elements) {
             content.add(element);
         }
@@ -13,11 +13,11 @@ public class Head implements Element {
 
     @Override
     public String print() {
-        StringBuilder sb = new StringBuilder("<head>\n");
+        StringBuilder sb = new StringBuilder("<body>\n");
         for (Element element : content) {
             sb.append(element.print());
         }
-        sb.append("</head>\n");
+        sb.append("</body>\n");
 
         return sb.toString();
     }

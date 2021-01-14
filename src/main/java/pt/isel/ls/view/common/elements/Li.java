@@ -1,17 +1,17 @@
-package pt.isel.ls.view.common;
+package pt.isel.ls.view.common.elements;
 
-public class Td implements Element {
+public class Li implements Element {
     private String content;
 
-    public Td(String content) {
+    public Li(String content) {
         this.content = content;
     }
 
-    public Td(Element content) {
+    public Li(Element content) {
         this.content = content.print();
     }
 
-    public Td(Element... contents) {
+    public Li(Element... contents) {
         StringBuilder aux = new StringBuilder();
         for (Element c : contents) {
             aux.append(c.print());
@@ -21,9 +21,9 @@ public class Td implements Element {
 
     @Override
     public String print() {
-        StringBuilder sb = new StringBuilder("<td>");
+        StringBuilder sb = new StringBuilder("<li>");
         sb.append(content);
-        sb.append("</td>\n");
+        sb.append("</li>\n");
 
         return sb.toString();
     }

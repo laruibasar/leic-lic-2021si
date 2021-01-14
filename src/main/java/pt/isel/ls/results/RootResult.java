@@ -1,12 +1,12 @@
 package pt.isel.ls.results;
 
-import pt.isel.ls.view.common.A;
-import pt.isel.ls.view.common.Body;
-import pt.isel.ls.view.common.Head;
-import pt.isel.ls.view.common.Html;
-import pt.isel.ls.view.common.Li;
-import pt.isel.ls.view.common.Title;
-import pt.isel.ls.view.common.Ul;
+import pt.isel.ls.view.common.elements.A;
+import pt.isel.ls.view.common.elements.Body;
+import pt.isel.ls.view.common.elements.Head;
+import pt.isel.ls.view.common.elements.Html;
+import pt.isel.ls.view.common.elements.Li;
+import pt.isel.ls.view.common.elements.Title;
+import pt.isel.ls.view.common.elements.Ul;
 
 public class RootResult extends CommandResult {
     @Override

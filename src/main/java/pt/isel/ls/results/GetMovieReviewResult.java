@@ -2,15 +2,15 @@ package pt.isel.ls.results;
 
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Review;
-import pt.isel.ls.view.common.A;
-import pt.isel.ls.view.common.Body;
-import pt.isel.ls.view.common.Br;
-import pt.isel.ls.view.common.Head;
-import pt.isel.ls.view.common.Html;
-import pt.isel.ls.view.common.Li;
-import pt.isel.ls.view.common.Text;
-import pt.isel.ls.view.common.Title;
-import pt.isel.ls.view.common.Ul;
+import pt.isel.ls.view.common.elements.A;
+import pt.isel.ls.view.common.elements.Body;
+import pt.isel.ls.view.common.elements.Br;
+import pt.isel.ls.view.common.elements.Head;
+import pt.isel.ls.view.common.elements.Html;
+import pt.isel.ls.view.common.elements.Li;
+import pt.isel.ls.view.common.elements.Text;
+import pt.isel.ls.view.common.elements.Title;
+import pt.isel.ls.view.common.elements.Ul;
 
 import java.util.List;
 

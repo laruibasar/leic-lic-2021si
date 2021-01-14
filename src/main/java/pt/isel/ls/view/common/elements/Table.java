@@ -1,4 +1,4 @@
-package pt.isel.ls.view.common;
+package pt.isel.ls.view.common.elements;
 
 import java.util.ArrayList;
 import java.util.Arrays;

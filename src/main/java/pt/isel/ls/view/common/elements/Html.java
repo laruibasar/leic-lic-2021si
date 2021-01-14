@@ -1,4 +1,4 @@
-package pt.isel.ls.view.common;
+package pt.isel.ls.view.common.elements;
 
 public class Html implements Element {
     private Head head;

@@ -1,6 +1,15 @@
 package pt.isel.ls.view.common;
 
 import org.junit.Test;
+import pt.isel.ls.view.common.elements.A;
+import pt.isel.ls.view.common.elements.Body;
+import pt.isel.ls.view.common.elements.Element;
+import pt.isel.ls.view.common.elements.Head;
+import pt.isel.ls.view.common.elements.Html;
+import pt.isel.ls.view.common.elements.Li;
+import pt.isel.ls.view.common.elements.Text;
+import pt.isel.ls.view.common.elements.Title;
+import pt.isel.ls.view.common.elements.Ul;
 
 import static org.junit.Assert.assertEquals;
 

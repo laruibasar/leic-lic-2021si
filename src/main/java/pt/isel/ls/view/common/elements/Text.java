@@ -1,4 +1,4 @@
-package pt.isel.ls.view.common;
+package pt.isel.ls.view.common.elements;
 
 public class Text implements Element {
     private String content;
