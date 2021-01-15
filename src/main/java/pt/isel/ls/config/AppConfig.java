@@ -16,6 +16,8 @@ import pt.isel.ls.handlers.OptionHandler;
 import pt.isel.ls.handlers.RateMovieHandler;
 import pt.isel.ls.handlers.RootHandler;
 import pt.isel.ls.http.AppHttpServlet;
+import pt.isel.ls.results.CreateMovieResult;
+import pt.isel.ls.results.ListenResult;
 import pt.isel.ls.results.RootResult;
 import pt.isel.ls.utils.Header;
 import pt.isel.ls.utils.Path;
@@ -26,6 +28,8 @@ import pt.isel.ls.utils.Method;
 import pt.isel.ls.handlers.GetUserDetailsHandler;
 import pt.isel.ls.view.common.ViewRouter;
 import pt.isel.ls.view.html.RootHtmlView;
+import pt.isel.ls.view.text.CreateMovieTextView;
+import pt.isel.ls.view.text.ListenTextView;
 import pt.isel.ls.view.text.RootTextView;
 
 
@@ -118,6 +122,10 @@ public class AppConfig {
     private void loadViewsRouter() {
         viewRouter.addView(new Header("accept:text/plain"), new RootResult(), new RootTextView());
         viewRouter.addView(new Header("accept:text/html"), new RootResult(), new RootHtmlView());
+
+        viewRouter.addView(new Header("accept:text/plain"), new CreateMovieResult(), new CreateMovieTextView());
+
+        viewRouter.addView(new Header("accept:text/plain"), new ListenResult(), new ListenTextView());
     }
 
     private AppConfig() {

@@ -21,6 +21,10 @@ public class CreateMovieResult extends CommandResult {
         }
     }
 
+    public Object getResult() {
+        return movie;
+    }
+
     @Override
     public String printHtml() {
         ArrayList<String> header = new ArrayList<>();
