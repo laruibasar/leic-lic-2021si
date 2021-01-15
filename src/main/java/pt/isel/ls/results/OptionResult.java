@@ -73,4 +73,9 @@ public class OptionResult extends CommandResult {
     public boolean asResult() {
         return false;
     }
+
+    @Override
+    public Object getResult() {
+        return router;
+    }
 }

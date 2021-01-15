@@ -90,4 +90,9 @@ public class GetMoviesResult extends CommandResult {
     public boolean asResult() {
         return !movies.isEmpty();
     }
+
+    @Override
+    public Object getResult() {
+        return movies;
+    }
 }

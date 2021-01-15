@@ -24,6 +24,7 @@ public class CreateMovieResult extends CommandResult {
         }
     }
 
+    @Override
     public Object getResult() {
         return movie;
     }

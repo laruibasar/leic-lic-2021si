@@ -77,4 +77,9 @@ public class GetUserAllReviewsResult extends CommandResult {
     public boolean asResult() {
         return !reviews.isEmpty();
     }
+
+    @Override
+    public Object getResult() {
+        return reviews;
+    }
 }

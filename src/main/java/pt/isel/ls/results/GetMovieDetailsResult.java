@@ -89,4 +89,9 @@ public class GetMovieDetailsResult extends CommandResult {
     public boolean asResult() {
         return movie != null;
     }
+
+    @Override
+    public Object getResult() {
+        return movie;
+    }
 }

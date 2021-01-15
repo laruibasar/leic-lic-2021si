@@ -109,4 +109,9 @@ public class GetUserDetailsResult extends CommandResult {
     public boolean asResult() {
         return user != null;
     }
+
+    @Override
+    public Object getResult() {
+        return user;
+    }
 }
