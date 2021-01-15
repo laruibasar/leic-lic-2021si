@@ -7,6 +7,6 @@ import pt.isel.ls.view.common.IView;
 public class RootTextView extends TextView implements IView {
     @Override
     public String print(Command cmd, CommandResult cr) {
-        return null;
+        return "Welcome to root page!";
     }
 }

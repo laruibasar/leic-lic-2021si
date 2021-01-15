@@ -16,13 +16,17 @@ import pt.isel.ls.handlers.OptionHandler;
 import pt.isel.ls.handlers.RateMovieHandler;
 import pt.isel.ls.handlers.RootHandler;
 import pt.isel.ls.http.AppHttpServlet;
+import pt.isel.ls.results.RootResult;
+import pt.isel.ls.utils.Header;
 import pt.isel.ls.utils.Path;
 import pt.isel.ls.handlers.CreateUserHandler;
 import pt.isel.ls.handlers.DeleteMovieReviewHandler;
 import pt.isel.ls.handlers.GetAllUsersHandler;
 import pt.isel.ls.utils.Method;
 import pt.isel.ls.handlers.GetUserDetailsHandler;
-
+import pt.isel.ls.view.common.ViewRouter;
+import pt.isel.ls.view.html.RootHtmlView;
+import pt.isel.ls.view.text.RootTextView;
 
 
 /**
@@ -54,6 +58,12 @@ public class AppConfig {
 
     public static Router getRouter() {
         return router;
+    }
+
+    private static ViewRouter viewRouter;
+
+    public static ViewRouter getViewRouter() {
+        return viewRouter;
     }
 
     /* store http config */
@@ -104,12 +114,22 @@ public class AppConfig {
         router.addHandler(Method.GET, new Path("/"), new RootHandler());
     }
 
+    /* load all views into view router */
+    private void loadViewsRouter() {
+        viewRouter.addView(new Header("accept:text/plain"), new RootResult(), new RootTextView());
+        viewRouter.addView(new Header("accept:text/html"), new RootResult(), new RootHtmlView());
+    }
+
     private AppConfig() {
         try {
             database = new DataBaseConfig();
 
             router = new Router();
+
             loadRouter();
+
+            viewRouter = new ViewRouter();
+            loadViewsRouter();
 
             httpConfig = new HttpServletConfig();
             http = new AppHttpServlet();
