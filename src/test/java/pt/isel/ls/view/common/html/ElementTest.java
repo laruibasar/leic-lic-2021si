@@ -1,4 +1,4 @@
-package pt.isel.ls.view.common;
+package pt.isel.ls.view.common.html;
 
 import org.junit.Test;
 import pt.isel.ls.view.common.elements.A;
