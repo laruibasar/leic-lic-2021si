@@ -15,6 +15,9 @@ public class CreateMovieResult extends CommandResult {
 
     private Movie movie;
 
+    public CreateMovieResult() {
+    }
+
     public CreateMovieResult(List<Model> movies) {
         if (movies.size() != 0) {
             this.movie = (Movie) movies.get(0);

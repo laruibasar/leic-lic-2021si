@@ -15,4 +15,9 @@ public class ListenResult extends CommandResult {
     public boolean asResult() {
         return false;
     }
+
+    @Override
+    public Object getResult() {
+        return null;
+    }
 }
