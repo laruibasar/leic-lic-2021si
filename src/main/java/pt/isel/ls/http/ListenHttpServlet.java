@@ -3,10 +3,15 @@ package pt.isel.ls.http;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pt.isel.ls.AppCommand;
+import pt.isel.ls.config.AppConfig;
 import pt.isel.ls.config.RouterException;
 import pt.isel.ls.handlers.common.HandlerException;
 import pt.isel.ls.results.CommandResult;
 import pt.isel.ls.utils.Command;
+import pt.isel.ls.utils.Header;
+import pt.isel.ls.view.common.IView;
+import pt.isel.ls.view.common.ViewRouter;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
@@ -27,9 +32,10 @@ public class ListenHttpServlet extends HttpServlet {
         Command cmd = new Command();
         CommandResult cr;
 
-        log.info("incoming request: method={}, uri={}, accept={}",
+        log.info("incoming request: method={}, uri={}, query={}, accept={}",
                 req.getMethod(),
                 req.getRequestURI(),
+                req.getQueryString(),
                 req.getHeader("Accept"));
 
         try {
@@ -40,9 +46,16 @@ public class ListenHttpServlet extends HttpServlet {
             cr = AppCommand.runCommand(cmd);
 
             if (cr.asResult()) {
-                // TODO: add separate views from CommandResult
-                //View view = View.findView(cr);
-                respBody = cr.printHtml();
+                try {
+                    ViewRouter viewRouter = AppConfig.getViewRouter();
+                    IView view = viewRouter.findView(
+                            new Header("accept:text/html"),
+                            cr);
+                    respBody = view.print(cmd, cr);
+                } catch (Exception e) {
+                    statusCode = 404;
+                    respBody = "Resource not found";
+                }
             } else {
                 statusCode = 404;
                 respBody = "Resource not found";
