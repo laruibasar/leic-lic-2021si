@@ -1,7 +1,10 @@
-package pt.isel.ls.results;
+package pt.isel.ls.view.html;
 
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Movie;
+import pt.isel.ls.results.CommandResult;
+import pt.isel.ls.utils.Command;
+import pt.isel.ls.view.common.IView;
 import pt.isel.ls.view.common.elements.A;
 import pt.isel.ls.view.common.elements.Body;
 import pt.isel.ls.view.common.elements.Br;
@@ -15,45 +18,37 @@ import pt.isel.ls.view.common.elements.Th;
 import pt.isel.ls.view.common.elements.Thead;
 import pt.isel.ls.view.common.elements.Title;
 import pt.isel.ls.view.common.elements.Tr;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
-public class GetMoviesResult extends CommandResult {
-    private List<Model> movies = new LinkedList<>();
-
-    public GetMoviesResult(List<Model> movies) {
-        this.movies = movies;
-    }
-
-    public GetMoviesResult() {
-
-    }
-
+public class GetAllMoviesHtmlView extends HtmlView implements IView {
     @Override
-    public String printHtml() {
-
+    public String print(Command cmd, CommandResult cr) {
+        LinkedList<Model> movies = (LinkedList<Model>) cr.getResult();
         ArrayList<Element> rows = new ArrayList<>();
 
         for (Model m: movies) {
-
             Movie movie = (Movie) m;
             rows.add(
-                    new Tr(
-                            new Td(
-                                    new A(movie.getTitle(), "/movies/" + String.valueOf(movie.getMid())),
-                            new Td(String.valueOf(movie.getYear()))
-                            )
-                    )
+                new Tr(
+                        new Td(
+                                new A(movie.getTitle(), "/movies/" + String.valueOf(movie.getMid())),
+                                new Td(String.valueOf(movie.getYear()))
+                        )
+                )
             );
         }
 
         //If size minor than 5 must not add on body
-        A nextPage = movies.size() >= 5 ? new A("Next page ","/movies?top=5&skip=") : new A("","");
+        A nextPage = movies.size() >= 5
+                ? new A("Next page ","/movies?top=5&skip=")
+                : new A("","");
+
         //Verify in cmd View the field skip
         A prevPage = new A("Previous page", "/movies?top=5&skip=");
 
-        Html h = new Html(
+        html = new Html(
                 new Head(
                         new Title("Movies List:")
                 ),
@@ -76,28 +71,7 @@ public class GetMoviesResult extends CommandResult {
                         nextPage
                 )
         );
-        return h.print();
-    }
 
-    @Override
-    public String printPlainText() {
-        StringBuilder sb = new StringBuilder("Movies list: \n");
-        for (Model m : movies) {
-            Movie movie = (Movie) m;
-            sb.append("MovieID = ").append(movie.getMid());
-            sb.append("\tTitle = ").append(movie.getTitle());
-            sb.append('\n');
-        }
-        return sb.toString();
-    }
-
-    @Override
-    public boolean asResult() {
-        return !movies.isEmpty();
-    }
-
-    @Override
-    public Object getResult() {
-        return movies;
+        return html.print();
     }
 }
