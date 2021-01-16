@@ -1,8 +1,10 @@
-package pt.isel.ls.results;
+package pt.isel.ls.view.html;
 
-import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Movie;
 import pt.isel.ls.model.Review;
+import pt.isel.ls.results.CommandResult;
+import pt.isel.ls.utils.Command;
+import pt.isel.ls.view.common.IView;
 import pt.isel.ls.view.common.elements.A;
 import pt.isel.ls.view.common.elements.Body;
 import pt.isel.ls.view.common.elements.Br;
@@ -15,34 +17,22 @@ import pt.isel.ls.view.common.elements.Td;
 import pt.isel.ls.view.common.elements.Text;
 import pt.isel.ls.view.common.elements.Th;
 import pt.isel.ls.view.common.elements.Thead;
-import pt.isel.ls.view.common.elements.Tr;
 import pt.isel.ls.view.common.elements.Title;
+import pt.isel.ls.view.common.elements.Tr;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
-public class GetMovieAllReviewsResult extends CommandResult {
-
-    private List<Model> reviews = new LinkedList<>();
-
-    public GetMovieAllReviewsResult() {
-
-    }
-
-    public GetMovieAllReviewsResult(List<Model> reviews) {
-
-        this.reviews = reviews;
-    }
-
+public class GetMovieAllReviewsHtmlView extends HtmlView implements IView {
     @Override
-    public String printHtml() {
+    public String print(Command cmd, CommandResult cr) {
+        LinkedList<Review> reviews = (LinkedList<Review>) cr.getResult();
 
         ArrayList<Element> rows = new ArrayList<>();
         Review review;
-        Movie movie = ((Review ) reviews.get(0)).getMovie();
-        for (Model r: reviews) {
-            review = (Review) r;
+        Movie movie = ((Review) reviews.get(0)).getMovie();
+        for (Review r: reviews) {
+            review = r;
             rows.add(
                     new Tr(
                             new Td(
@@ -54,7 +44,7 @@ public class GetMovieAllReviewsResult extends CommandResult {
                     ));
         }
 
-        Html h = new Html(
+        html = new Html(
                 new Head(
                         new Title("Movie details")
                 ),
@@ -78,31 +68,6 @@ public class GetMovieAllReviewsResult extends CommandResult {
                 )
         );
 
-        return h.print();
-    }
-
-    @Override
-    public String printPlainText() {
-        StringBuilder sb = new StringBuilder("User All Reviews -> \n");
-        for (Model r : reviews) {
-            Review review = (Review) r;
-            sb.append("ReviewID = ").append(review.getId());
-            sb.append("\nSummary = ").append(review.getSummary());
-            sb.append("\nStars =").append(review.getRating());
-            sb.append("\nMovieID = ").append(review.getMovie());
-            sb.append("\nMovieCritic = ").append(review.getMovieCritic());
-            sb.append("\n\n");
-        }
-        return sb.toString();
-    }
-
-    @Override
-    public boolean asResult() {
-        return !reviews.isEmpty();
-    }
-
-    @Override
-    public Object getResult() {
-        return reviews;
+        return html.print();
     }
 }

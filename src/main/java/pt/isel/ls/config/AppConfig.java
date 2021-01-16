@@ -18,6 +18,7 @@ import pt.isel.ls.handlers.RootHandler;
 import pt.isel.ls.http.AppHttpServlet;
 import pt.isel.ls.results.CreateMovieResult;
 import pt.isel.ls.results.GetAllUsersResult;
+import pt.isel.ls.results.GetMovieAllReviewsResult;
 import pt.isel.ls.results.GetMovieDetailsResult;
 import pt.isel.ls.results.GetMovieReviewResult;
 import pt.isel.ls.results.GetMoviesResult;
@@ -34,6 +35,7 @@ import pt.isel.ls.handlers.GetUserDetailsHandler;
 import pt.isel.ls.view.common.ViewRouter;
 import pt.isel.ls.view.html.GetAllMoviesHtmlView;
 import pt.isel.ls.view.html.GetAllUsersHtmlView;
+import pt.isel.ls.view.html.GetMovieAllReviewsHtmlView;
 import pt.isel.ls.view.html.GetMovieDetailsHtmlView;
 import pt.isel.ls.view.html.GetMovieReviewHtmlView;
 import pt.isel.ls.view.html.GetUserDetailHtmlView;
@@ -41,6 +43,7 @@ import pt.isel.ls.view.html.RootHtmlView;
 import pt.isel.ls.view.text.CreateMovieTextView;
 import pt.isel.ls.view.text.GetAllMoviesTextView;
 import pt.isel.ls.view.text.GetAllUsersTextView;
+import pt.isel.ls.view.text.GetMovieAllReviewsTextView;
 import pt.isel.ls.view.text.GetMovieDetailsTextView;
 import pt.isel.ls.view.text.GetMovieReviewTextView;
 import pt.isel.ls.view.text.GetUserDetailTextView;
@@ -154,6 +157,11 @@ public class AppConfig {
 
         viewRouter.addView(new Header("accept:text/plain"), new GetMovieReviewResult(), new GetMovieReviewTextView());
         viewRouter.addView(new Header("accept:text/html"), new GetMovieReviewResult(), new GetMovieReviewHtmlView());
+
+        viewRouter.addView(new Header("accept:text/plain"),
+                new GetMovieAllReviewsResult(), new GetMovieAllReviewsTextView());
+        viewRouter.addView(new Header("accept:text/html"),
+                new GetMovieAllReviewsResult(), new GetMovieAllReviewsHtmlView());
 
         viewRouter.addView(new Header("accept:text/plain"), new ListenResult(), new ListenTextView());
     }
