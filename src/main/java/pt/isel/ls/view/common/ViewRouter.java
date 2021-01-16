@@ -18,6 +18,8 @@ public class ViewRouter {
             case "text/html":
                 htmlRouter.put(cr.getClass(), view);
                 break;
+            default:
+                break;
         }
     }
 

@@ -37,7 +37,7 @@ public class GetAllUsersHtmlView extends HtmlView implements IView {
             );
         }
 
-        html= new Html(
+        html = new Html(
                 new Head(
                         new Title("Users List")
                 ),
