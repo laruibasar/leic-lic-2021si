@@ -1,7 +1,9 @@
-package pt.isel.ls.results;
+package pt.isel.ls.view.html;
 
-import pt.isel.ls.model.Model;
 import pt.isel.ls.model.MovieRating;
+import pt.isel.ls.results.CommandResult;
+import pt.isel.ls.utils.Command;
+import pt.isel.ls.view.common.IView;
 import pt.isel.ls.view.common.elements.A;
 import pt.isel.ls.view.common.elements.Body;
 import pt.isel.ls.view.common.elements.Br;
@@ -18,24 +20,12 @@ import pt.isel.ls.view.common.elements.Title;
 import pt.isel.ls.view.common.elements.Tr;
 import pt.isel.ls.view.common.elements.Ul;
 
-import java.util.List;
-
-public class GetMovieRatingResult extends CommandResult {
-    private MovieRating movieRating;
-
-    public GetMovieRatingResult() {
-
-    }
-
-    public GetMovieRatingResult(List<Model> ratings) {
-        if (ratings.size() != 0) {
-            this.movieRating = (MovieRating) ratings.get(0);
-        }
-    }
-
+public class GetMovieRatingsHtmlView extends HtmlView implements IView {
     @Override
-    public String printHtml() {
-        Html html = new Html(
+    public String print(Command cmd, CommandResult cr) {
+        MovieRating movieRating = (MovieRating) cr.getResult();
+
+        html = new Html(
                 new Head(
                         new Title(movieRating.getMovieTitle() + " Ratings")
                 ),
@@ -75,28 +65,5 @@ public class GetMovieRatingResult extends CommandResult {
         );
 
         return html.print();
-    }
-
-    @Override
-    public String printPlainText() {
-        return movieRating == null ? "No movie rating available" : "Movie Rating:\n"
-                + movieRating.getMovieTitle()
-                + "average = " + movieRating.getAverage() + "\n"
-                + "Rates:\t1 \t2\t3\t4\t5\n"
-                + "Votes:\t" + movieRating.getVotesOne()
-                + "\t" + movieRating.getVotesTwo()
-                + "\t" + movieRating.getVotesThree()
-                + "\t" + movieRating.getVotesFour()
-                + "\t" + movieRating.getVotesFive();
-    }
-
-    @Override
-    public boolean asResult() {
-        return movieRating != null;
-    }
-
-    @Override
-    public Object getResult() {
-        return movieRating;
     }
 }
