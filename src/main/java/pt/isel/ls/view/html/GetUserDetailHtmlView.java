@@ -1,8 +1,11 @@
-package pt.isel.ls.results;
+package pt.isel.ls.view.html;
 
-import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Review;
 import pt.isel.ls.model.User;
+import pt.isel.ls.results.CommandResult;
+import pt.isel.ls.results.GetUserDetailsResult;
+import pt.isel.ls.utils.Command;
+import pt.isel.ls.view.common.IView;
 import pt.isel.ls.view.common.elements.A;
 import pt.isel.ls.view.common.elements.Body;
 import pt.isel.ls.view.common.elements.Br;
@@ -21,41 +24,35 @@ import pt.isel.ls.view.common.elements.Tr;
 import pt.isel.ls.view.common.elements.Ul;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class GetUserDetailsResult extends CommandResult {
-
-    private User user;
-    private ArrayList<Review> reviews = new ArrayList<>();
-
-    public GetUserDetailsResult() {
-
-    }
-
-    public GetUserDetailsResult(List<Model> users) {
-        if (users.size() != 0) {
-            this.user = (User) users.get(0);
-            reviews = user.getReviews();
-        }
-    }
-
+public class GetUserDetailHtmlView extends HtmlView implements IView {
     @Override
-    public String printHtml() {
+    public String print(Command cmd, CommandResult cr) {
+        /*
+         * Due to the way CommandResult is defined, we need to cast it to access
+         * all information available
+         */
+        GetUserDetailsResult result = (GetUserDetailsResult) cr;
+
+        User user = (User) result.getResult();
+        ArrayList<Review> reviews = result.getReviews();
+
         ArrayList<Element> rows = new ArrayList<>();
         for (Review r: reviews) {
             rows.add(
-                new Tr(
-                    new Td(new A(r.getSummary(), "/movies/"
-                            + r.getMovie().getMid()
-                            + "/reviews/"
-                            + r.getId())),
-                    new Td(new Text(String.valueOf(r.getRating()))),
-                    new Td(new Text(r.getMovie().getTitle())),
-                    new Td(new Text(String.valueOf(r.getMovie().getYear())))
-                )
+                    new Tr(
+                            new Td(new A(r.getSummary(), "/movies/"
+                                    + r.getMovie().getMid()
+                                    + "/reviews/"
+                                    + r.getId())),
+                            new Td(new Text(String.valueOf(r.getRating()))),
+                            new Td(new Text(r.getMovie().getTitle())),
+                            new Td(new Text(String.valueOf(r.getMovie().getYear())))
+                    )
             );
         }
-        Html h = new Html(
+
+        html = new Html(
                 new Head(
                         new Title("User Details")
                 ),
@@ -83,43 +80,7 @@ public class GetUserDetailsResult extends CommandResult {
 
                 )
         );
-        return h.print();
-    }
 
-    @Override
-    public String printPlainText() {
-        StringBuilder str = new StringBuilder("\nUserId = " + user.getId() + "\nName   = " + user.getName());
-        if (user.getEmail() != null) {
-            str.append("\nEmail  = " + user.getEmail());
-        }
-        if (reviews != null) {
-            for (Review r: reviews) {
-                str.append("\n\nRating: "
-                        + r.getRating()
-                        + "\nTitle: "
-                        + r.getMovie().getTitle()
-                        + "\nYear: "
-                        + r.getMovie().getYear()
-                        + "\nSummary: "
-                        + r.getSummary());
-            }
-
-        }
-
-        return user == null ? "User details not available" : "User details -> " + str.toString();
-    }
-
-    @Override
-    public boolean asResult() {
-        return user != null;
-    }
-
-    @Override
-    public Object getResult() {
-        return user;
-    }
-
-    public ArrayList<Review> getReviews() {
-        return reviews;
+        return html.print();
     }
 }
