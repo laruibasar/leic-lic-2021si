@@ -23,6 +23,7 @@ import pt.isel.ls.results.GetMovieDetailsResult;
 import pt.isel.ls.results.GetMovieRatingResult;
 import pt.isel.ls.results.GetMovieReviewResult;
 import pt.isel.ls.results.GetMoviesResult;
+import pt.isel.ls.results.GetTopRatingResult;
 import pt.isel.ls.results.GetUserDetailsResult;
 import pt.isel.ls.results.ListenResult;
 import pt.isel.ls.results.RootResult;
@@ -40,6 +41,7 @@ import pt.isel.ls.view.html.GetMovieAllReviewsHtmlView;
 import pt.isel.ls.view.html.GetMovieDetailsHtmlView;
 import pt.isel.ls.view.html.GetMovieRatingsHtmlView;
 import pt.isel.ls.view.html.GetMovieReviewHtmlView;
+import pt.isel.ls.view.html.GetTopsRatingsHtmlView;
 import pt.isel.ls.view.html.GetUserDetailHtmlView;
 import pt.isel.ls.view.html.RootHtmlView;
 import pt.isel.ls.view.text.CreateMovieTextView;
@@ -49,6 +51,7 @@ import pt.isel.ls.view.text.GetMovieAllReviewsTextView;
 import pt.isel.ls.view.text.GetMovieDetailsTextView;
 import pt.isel.ls.view.text.GetMovieRatingsTextView;
 import pt.isel.ls.view.text.GetMovieReviewTextView;
+import pt.isel.ls.view.text.GetTopsRatingsTextView;
 import pt.isel.ls.view.text.GetUserDetailTextView;
 import pt.isel.ls.view.text.ListenTextView;
 import pt.isel.ls.view.text.RootTextView;
@@ -168,6 +171,9 @@ public class AppConfig {
 
         viewRouter.addView(new Header("accept:text/plain"), new GetMovieRatingResult(), new GetMovieRatingsTextView());
         viewRouter.addView(new Header("accept:text/html"), new GetMovieRatingResult(), new GetMovieRatingsHtmlView());
+
+        viewRouter.addView(new Header("accept:text/plain"), new GetTopRatingResult(), new GetTopsRatingsTextView());
+        viewRouter.addView(new Header("accept:text/html"), new GetTopRatingResult(), new GetTopsRatingsHtmlView());
 
         viewRouter.addView(new Header("accept:text/plain"), new ListenResult(), new ListenTextView());
     }
