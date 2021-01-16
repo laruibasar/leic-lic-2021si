@@ -14,7 +14,7 @@ public class GetMovieDetailsTextView extends TextView implements IView {
             return "Movie details not available";
         }
 
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder("Movie Details:\n");
         sb.append("MovieID = ").append(movie.getMid()).append("\t");
         sb.append("Title = ").append(movie.getTitle()).append("\t");
         sb.append("Year= ").append(movie.getYear());
