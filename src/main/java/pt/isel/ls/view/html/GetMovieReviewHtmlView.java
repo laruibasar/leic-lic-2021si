@@ -1,7 +1,9 @@
-package pt.isel.ls.results;
+package pt.isel.ls.view.html;
 
-import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Review;
+import pt.isel.ls.results.CommandResult;
+import pt.isel.ls.utils.Command;
+import pt.isel.ls.view.common.IView;
 import pt.isel.ls.view.common.elements.A;
 import pt.isel.ls.view.common.elements.Body;
 import pt.isel.ls.view.common.elements.Br;
@@ -12,26 +14,11 @@ import pt.isel.ls.view.common.elements.Text;
 import pt.isel.ls.view.common.elements.Title;
 import pt.isel.ls.view.common.elements.Ul;
 
-import java.util.List;
-
-public class GetMovieReviewResult extends CommandResult {
-
-    private Review review;
-
-    public GetMovieReviewResult() {
-
-    }
-
-    public GetMovieReviewResult(List<Model> reviews) {
-        if (reviews.size() != 0) {
-            this.review = (Review) reviews.get(0);
-        }
-
-    }
-
+public class GetMovieReviewHtmlView extends HtmlView implements IView {
     @Override
-    public String printHtml() {
-        Html h = new Html(
+    public String print(Command cmd, CommandResult cr) {
+        Review review = (Review) cr.getResult();
+        html = new Html(
                 new Head(
                         new Title("User Review")
                 ),
@@ -56,27 +43,7 @@ public class GetMovieReviewResult extends CommandResult {
                         )
                 )
         );
-        return h.print();
-    }
 
-    @Override
-    public String printPlainText() {
-        return review == null ? "Review not available" : "Movie Review: "
-                + "\nCritic      = " + review.getMovieCritic().getName()
-                + "\nMovieID     = " + review.getMovie().getMid()
-                + "\nUserID      = " + review.getMovieCritic().getId()
-                + "\n\nScore       = " + review.getRating()
-                + "\nSummary     = " + review.getSummary()
-                + "\nFull review = " + review.getCompleteReview();
-    }
-
-    @Override
-    public boolean asResult() {
-        return review != null;
-    }
-
-    @Override
-    public Object getResult() {
-        return review;
+        return html.print();
     }
 }
