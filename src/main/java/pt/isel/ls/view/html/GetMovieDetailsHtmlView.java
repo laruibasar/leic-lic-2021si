@@ -1,8 +1,10 @@
-package pt.isel.ls.results;
+package pt.isel.ls.view.html;
 
-import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Movie;
 import pt.isel.ls.model.Review;
+import pt.isel.ls.results.CommandResult;
+import pt.isel.ls.utils.Command;
+import pt.isel.ls.view.common.IView;
 import pt.isel.ls.view.common.elements.A;
 import pt.isel.ls.view.common.elements.Body;
 import pt.isel.ls.view.common.elements.Br;
@@ -21,38 +23,24 @@ import pt.isel.ls.view.common.elements.Tr;
 import pt.isel.ls.view.common.elements.Ul;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class GetMovieDetailsResult extends CommandResult {
-
-    private Movie movie;
-
-    public GetMovieDetailsResult() {
-
-    }
-
-    public GetMovieDetailsResult(List<Model> movies) {
-        if (movies.size() != 0) {
-            this.movie = (Movie) movies.get(0);
-        }
-    }
-
+public class GetMovieDetailsHtmlView extends HtmlView implements IView {
     @Override
-    public String printHtml() {
+    public String print(Command cmd, CommandResult cr) {
+        Movie movie = (Movie) cr.getResult();
 
         ArrayList<Element> rows = new ArrayList<>();
-
         for (Review r: movie.getReviews()) {
-
             rows.add(
                     new Tr(
                             new Td(new A(r.getSummary(),"/movies/" + movie.getMid() + "/reviews/" + r.getId())),
                             new Td(String.valueOf(r.getRating())),
                             new Td(new A(r.getMovieCritic().getName(),"/users/" + r.getMovieCritic().getId()))
-            ));
+                    )
+            );
         }
 
-        Html h = new Html(
+        html = new Html(
                 new Head(
                         new Title("Movie details")
                 ),
@@ -75,27 +63,6 @@ public class GetMovieDetailsResult extends CommandResult {
                 )
         );
 
-        return h.print();
-    }
-
-    @Override
-    public String printPlainText() {
-        return movie == null ? "Movie details not available" : "Movie Details -> "
-                + "MovieID = "
-                + movie.getMid()
-                + "\tTitle = "
-                + movie.getTitle()
-                + "\tYear = "
-                + movie.getYear();
-    }
-
-    @Override
-    public boolean asResult() {
-        return movie != null;
-    }
-
-    @Override
-    public Object getResult() {
-        return movie;
+        return html.print();
     }
 }
