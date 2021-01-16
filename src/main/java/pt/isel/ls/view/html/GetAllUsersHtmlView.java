@@ -1,7 +1,10 @@
-package pt.isel.ls.results;
+package pt.isel.ls.view.html;
 
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.User;
+import pt.isel.ls.results.CommandResult;
+import pt.isel.ls.utils.Command;
+import pt.isel.ls.view.common.IView;
 import pt.isel.ls.view.common.elements.A;
 import pt.isel.ls.view.common.elements.Body;
 import pt.isel.ls.view.common.elements.Br;
@@ -18,32 +21,23 @@ import pt.isel.ls.view.common.elements.Tr;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
-public class GetAllUsersResult extends CommandResult {
-
-    private List<Model> users = new LinkedList<>();
-
-    public GetAllUsersResult() {
-
-    }
-
-    public GetAllUsersResult(List<Model> users) {
-        this.users = users;
-    }
-
+public class GetAllUsersHtmlView extends HtmlView implements IView {
     @Override
-    public String printHtml() {
+    public String print(Command cmd, CommandResult cr) {
+        LinkedList<Model> users = (LinkedList<Model>) cr.getResult();
+
         ArrayList<Element> rows = new ArrayList<>();
         for (Model m: users) {
             User u = (User) m;
             rows.add(
                     new Tr(
-                        new Td(new A(u.getName(), "/users/" + u.getId()))
+                            new Td(new A(u.getName(), "/users/" + u.getId()))
                     )
             );
         }
-        Html h = new Html(
+
+        html= new Html(
                 new Head(
                         new Title("Users List")
                 ),
@@ -63,30 +57,7 @@ public class GetAllUsersResult extends CommandResult {
                         )
                 )
         );
-        return h.print();
-    }
 
-    @Override
-    public String printPlainText() {
-        StringBuilder sb = new StringBuilder("All users -> \n");
-        for (Model u : users) {
-            User user = (User) u;
-            sb.append("UserId = "
-                    + user.getId()
-                    + "\nName = "
-                    + user.getName());
-            sb.append('\n');
-        }
-        return sb.toString();
-    }
-
-    @Override
-    public boolean asResult() {
-        return !users.isEmpty();
-    }
-
-    @Override
-    public Object getResult() {
-        return users;
+        return html.print();
     }
 }

@@ -42,4 +42,9 @@ public class RootResult extends CommandResult {
     public boolean asResult() {
         return true;
     }
+
+    @Override
+    public Object getResult() {
+        return null;
+    }
 }
