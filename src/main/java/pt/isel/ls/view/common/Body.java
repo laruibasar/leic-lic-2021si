@@ -1,14 +1,13 @@
 package pt.isel.ls.view.common;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Body implements Element {
     private ArrayList<Element> content = new ArrayList<>();
 
     public Body(Element... elements) {
-        for (Element element : elements) {
-            content.add(element);
-        }
+        content.addAll(Arrays.asList(elements));
     }
 
     @Override
