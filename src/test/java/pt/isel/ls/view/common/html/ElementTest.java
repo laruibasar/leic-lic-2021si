@@ -1,13 +1,18 @@
 package pt.isel.ls.view.common.html;
 
 import org.junit.Test;
+import pt.isel.ls.utils.Method;
 import pt.isel.ls.view.common.elements.A;
 import pt.isel.ls.view.common.elements.Body;
 import pt.isel.ls.view.common.elements.Element;
+import pt.isel.ls.view.common.elements.Form;
 import pt.isel.ls.view.common.elements.Head;
 import pt.isel.ls.view.common.elements.Html;
+import pt.isel.ls.view.common.elements.Input;
+import pt.isel.ls.view.common.elements.Label;
 import pt.isel.ls.view.common.elements.Li;
 import pt.isel.ls.view.common.elements.Text;
+import pt.isel.ls.view.common.elements.Textarea;
 import pt.isel.ls.view.common.elements.Title;
 import pt.isel.ls.view.common.elements.Ul;
 
@@ -125,5 +130,35 @@ public class ElementTest {
                 + "<li>two link</li>\n"
                 + "</ul>\n",
                 test.print());
+    }
+
+    @Test
+    public void print_element_form() {
+        Element form = new Form(
+                Method.GET,
+                "#",
+                new Label("Title", "movie"),
+                new Input("text", "movie"),
+                new Label("Release Year", "year"),
+                new Input("number", "year"),
+                new Label("Summary", "story"),
+                new Textarea("story"),
+                new Input("submit", "submit")
+        );
+
+        assertEquals(
+                "<form action=\"#\" method=\"GET\">\n"
+                        + "<label for=\"movie\">Title</label>\n"
+                        + "<input type=\"text\" id=\"movie\" name=\"movie\">\n"
+                        + "<label for=\"year\">Release Year</label>\n"
+                        + "<input type=\"number\" id=\"year\" name=\"year\">\n"
+                        + "<label for=\"story\">Summary</label>\n"
+                        + "<textarea id=\"story\" name=\"story\" rows=\"5\" cols=\"33\">\n"
+                        + "\n"
+                        + "</textarea>\n"
+                        + "<input type=\"submit\" id=\"submit\" name=\"submit\">\n"
+                        + "</form>\n",
+            form.print()
+        );
     }
 }

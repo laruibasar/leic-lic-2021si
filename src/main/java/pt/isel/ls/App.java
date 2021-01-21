@@ -24,6 +24,8 @@ public class App {
         AppConfig.setup();
         if (AppConfig.getLoadConfig()) {
             if (args.length == 0) {
+                /* run LISTEN / command on start interactive mode */
+                runOnce(new String[] {"LISTEN", "/"});
                 run();
             } else {
                 runOnce(args);
