@@ -6,6 +6,7 @@ import pt.isel.ls.AppCommand;
 import pt.isel.ls.config.AppConfig;
 import pt.isel.ls.config.RouterException;
 import pt.isel.ls.handlers.common.HandlerException;
+import pt.isel.ls.model.Model;
 import pt.isel.ls.results.CommandResult;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.Header;
@@ -17,7 +18,12 @@ import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,16 +38,15 @@ public class ListenHttpServlet extends HttpServlet {
         Command cmd = new Command();
         CommandResult cr;
 
-        log.info("incoming request: method={}, uri={}, query={}, accept={}",
+        log.info("incoming request: method={}, uri={}, accept={}",
                 req.getMethod(),
                 req.getRequestURI(),
-                req.getQueryString(),
                 req.getHeader("Accept"));
 
         try {
             cmd = AppCommand.setCommand(
-                    setString(req.getMethod(), req.getRequestURI()
-            ));
+                    set(req.getMethod(), req.getRequestURI(), null)
+            );
 
             cr = AppCommand.runCommand(cmd);
 
@@ -61,8 +66,8 @@ public class ListenHttpServlet extends HttpServlet {
                 respBody = "Resource not found";
             }
         } catch (RouterException e) {
-            statusCode = 400;
-            respBody = "Bad request";
+            statusCode = 404;
+            respBody = "Resource not found";
         } catch (HandlerException e) {
             statusCode = 500;
             respBody = "Internal Error";
@@ -86,9 +91,50 @@ public class ListenHttpServlet extends HttpServlet {
                 resp.getHeader("Content-Type"));
     }
 
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int statusCode = 200;
+        String respBody = "";
+        Command cmd = new Command();
+        CommandResult cr;
+        Map<String, String[]> parameters = req.getParameterMap();
+
+        log.info("incoming request: method={}, uri={}, accept={}",
+                req.getMethod(),
+                req.getRequestURI(),
+                req.getHeader("Accept"));
+
+        try {
+            cmd = AppCommand.setCommand(
+                    set(req.getMethod(), req.getRequestURI(), parameters)
+            );
+
+            cr = AppCommand.runCommand(cmd);
+
+            if (cr.asResult()) {
+                int id = cr.getResultId();
+                resp.setStatus(303);
+                resp.setHeader("Location", req.getRequestURI() + "/" + id);
+            } else {
+                statusCode = 404;
+                respBody = "Resource not found";
+            }
+        } catch (RouterException e) {
+            statusCode = 404;
+            respBody = "Resource not found";
+        } catch (HandlerException e) {
+            statusCode = 500;
+            respBody = "Internal Error";
+        }
+
+        log.info("outgoing response: status={}, Location={}",
+                resp.getStatus(),
+                resp.getHeader("Location"));
+    }
+
     private String[] setString(String method, String uri) {
         String[] splitUri = uri.split("&", 2);
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         list.add(method);
         list.add(splitUri[0]);
         list.add("accept:text/html");
@@ -97,5 +143,31 @@ public class ListenHttpServlet extends HttpServlet {
         }
 
         return list.toArray(new String[0]);
+    }
+
+    private String[] set(String method, String uri, Map<String, String[]> parameters) {
+        if (parameters == null) {
+            return setString(method, uri);
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (String name : parameters.keySet()) {
+            sb.append(name);
+            sb.append("=");
+            String[] values = parameters.get(name);
+            sb.append(values[0]);
+            sb.append("&");
+        }
+        if (sb.length() > 0) {
+            sb.deleteCharAt(sb.length() - 1);
+        }
+
+        String[] command = setString(method, uri);
+        List<String> list = Arrays.asList(command);
+        ArrayList<String> result = new ArrayList<>();
+        result.addAll(list);
+        result.add(sb.toString());
+
+        return result.toArray(new String[0]);
     }
 }
