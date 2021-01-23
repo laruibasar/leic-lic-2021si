@@ -1,8 +1,6 @@
 
 package pt.isel.ls.data.common;
 
-import pt.isel.ls.data.connectors.DataConnection;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 
