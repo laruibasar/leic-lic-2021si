@@ -77,4 +77,9 @@ public class CreateUserResult extends CommandResult {
     public Object getResult() {
         return user;
     }
+
+    @Override
+    public int getResultId() {
+        return (user != null) ? user.getId() : 0;
+    }
 }

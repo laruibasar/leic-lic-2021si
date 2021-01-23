@@ -119,6 +119,11 @@ public class GetUserDetailsResult extends CommandResult {
         return user;
     }
 
+    @Override
+    public int getResultId() {
+        return 0;
+    }
+
     public ArrayList<Review> getReviews() {
         return reviews;
     }

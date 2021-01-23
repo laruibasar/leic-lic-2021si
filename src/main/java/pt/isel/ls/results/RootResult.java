@@ -47,4 +47,9 @@ public class RootResult extends CommandResult {
     public Object getResult() {
         return null;
     }
+
+    @Override
+    public int getResultId() {
+        return 0;
+    }
 }

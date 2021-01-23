@@ -82,4 +82,9 @@ public class GetUserAllReviewsResult extends CommandResult {
     public Object getResult() {
         return reviews;
     }
+
+    @Override
+    public int getResultId() {
+        return 0;
+    }
 }

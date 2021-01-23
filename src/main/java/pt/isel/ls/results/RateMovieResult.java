@@ -75,4 +75,9 @@ public class RateMovieResult extends CommandResult {
     public Object getResult() {
         return rating;
     }
+
+    @Override
+    public int getResultId() {
+        return (rating != null) ? rating.getRatingId() : 0;
+    }
 }

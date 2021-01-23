@@ -99,4 +99,9 @@ public class GetMovieRatingResult extends CommandResult {
     public Object getResult() {
         return movieRating;
     }
+
+    @Override
+    public int getResultId() {
+        return 0;
+    }
 }

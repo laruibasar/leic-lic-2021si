@@ -83,4 +83,9 @@ public class CreateMovieReviewResult extends CommandResult {
     public Object getResult() {
         return review;
     }
+
+    @Override
+    public int getResultId() {
+        return (review != null) ? review.getId() : 0;
+    }
 }

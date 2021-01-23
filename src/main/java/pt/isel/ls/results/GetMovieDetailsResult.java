@@ -98,4 +98,9 @@ public class GetMovieDetailsResult extends CommandResult {
     public Object getResult() {
         return movie;
     }
+
+    @Override
+    public int getResultId() {
+        return 0;
+    }
 }

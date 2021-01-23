@@ -78,4 +78,9 @@ public class OptionResult extends CommandResult {
     public Object getResult() {
         return router;
     }
+
+    @Override
+    public int getResultId() {
+        return 0;
+    }
 }

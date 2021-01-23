@@ -89,4 +89,9 @@ public class GetAllUsersResult extends CommandResult {
     public Object getResult() {
         return users;
     }
+
+    @Override
+    public int getResultId() {
+        return 0;
+    }
 }

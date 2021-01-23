@@ -94,4 +94,9 @@ public class GetTopRatingResult extends CommandResult {
     public Object getResult() {
         return movies;
     }
+
+    @Override
+    public int getResultId() {
+        return 0;
+    }
 }

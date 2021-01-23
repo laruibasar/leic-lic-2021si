@@ -30,6 +30,11 @@ public class CreateMovieResult extends CommandResult {
     }
 
     @Override
+    public int getResultId() {
+        return (movie != null) ? movie.getMid() : 0;
+    }
+
+    @Override
     public String printHtml() {
         ArrayList<String> header = new ArrayList<>();
         header.add("Movie Id");
