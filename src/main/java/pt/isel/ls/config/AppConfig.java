@@ -11,8 +11,10 @@ import pt.isel.ls.handlers.GetMoviesHandler;
 import pt.isel.ls.handlers.GetTopRatingsHandler;
 import pt.isel.ls.handlers.GetUserAllReviewsHandler;
 import pt.isel.ls.handlers.GetUserReviewHandler;
+import pt.isel.ls.handlers.ListenHandler;
 import pt.isel.ls.handlers.OptionHandler;
 import pt.isel.ls.handlers.RateMovieHandler;
+import pt.isel.ls.http.AppHttpServlet;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.Path;
 import pt.isel.ls.handlers.CreateUserHandler;
@@ -55,6 +57,19 @@ public class AppConfig {
         return router;
     }
 
+    /* store http config */
+    private static HttpServletConfig httpConfig;
+
+    public static HttpServletConfig getHttpServletConfig() {
+        return httpConfig;
+    }
+
+    private static AppHttpServlet http;
+
+    public static AppHttpServlet getHttp() {
+        return http;
+    }
+
     private static AppConfig config;
 
     public static void setup() {
@@ -94,7 +109,15 @@ public class AppConfig {
         nodes.add(new Node(new Command(Method.GET, new Path("/users/{uid}/reviews")), new GetUserAllReviewsHandler()));
         nodes.add(new Node(new Command(Method.GET, new Path("/users/{uid}/reviews/{rid}")), new GetUserReviewHandler()));
         nodes.add(new Node(new Command(Method.GET, new Path("tops/ratings")), new GetTopRatingsHandler()));
+
+        nodes.add(new Node(new Command(Method.EXIT, new Path("/")), new ExitHandler()));
+        nodes.add(new Node(new Command(Method.OPTION, new Path("/")), new OptionHandler()));
+
+        nodes.add(new Node(new Command(Method.LISTEN, new Path("/")), new ListenHandler()));
+        nodes.add(new Node(new Command(Method.GET, new Path("/")), new RootHandler()));
         tree.buildTree(nodes);
+
+
 
     }
 
@@ -103,6 +126,9 @@ public class AppConfig {
             database = new DataBaseConfig();
             loadRouter();
             router = new Router(tree);
+
+            httpConfig = new HttpServletConfig();
+            http = new AppHttpServlet();
 
             loadConfig = true;
             loadMessage = "OK";

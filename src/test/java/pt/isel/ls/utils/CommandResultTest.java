@@ -21,7 +21,7 @@
 //import pt.isel.ls.handlers.common.Handler;
 //import pt.isel.ls.handlers.common.HandlerException;
 //import pt.isel.ls.handlers.RateMovieHandler;
-//import pt.isel.ls.view.results.CommandResult;
+//import pt.isel.ls.results.CommandResult;
 //
 //import java.util.LinkedList;
 //
