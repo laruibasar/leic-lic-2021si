@@ -8,6 +8,8 @@ import pt.isel.ls.config.RouterException;
 import pt.isel.ls.handlers.common.HandlerException;
 import pt.isel.ls.model.Model;
 import pt.isel.ls.results.CommandResult;
+import pt.isel.ls.results.GetMovieRatingResult;
+import pt.isel.ls.results.RateMovieResult;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.Header;
 import pt.isel.ls.view.common.IView;
@@ -112,9 +114,15 @@ public class ListenHttpServlet extends HttpServlet {
             cr = AppCommand.runCommand(cmd);
 
             if (cr.asResult()) {
-                int id = cr.getResultId();
                 resp.setStatus(303);
-                resp.setHeader("Location", req.getRequestURI() + "/" + id);
+                /* This is a problem because on this special case, we don't go
+                 * to the rating ID.
+                 */
+                if (cr.getClass() == RateMovieResult.class) {
+                    resp.setHeader("Location", req.getRequestURI() + "/");
+                } else {
+                    resp.setHeader("Location", req.getRequestURI() + "/" + cr.getResultId());
+                }
             } else {
                 statusCode = 404;
                 respBody = "Resource not found";
