@@ -2,11 +2,23 @@ package pt.isel.ls.results;
 
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Movie;
-import pt.isel.ls.view.html.Html;
-import pt.isel.ls.view.html.body.Body;
-import pt.isel.ls.view.html.body.Table;
-import pt.isel.ls.view.html.head.Head;
-import pt.isel.ls.view.html.head.Title;
+import pt.isel.ls.model.Review;
+import pt.isel.ls.view.common.A;
+import pt.isel.ls.view.common.Body;
+import pt.isel.ls.view.common.Br;
+import pt.isel.ls.view.common.Element;
+import pt.isel.ls.view.common.Head;
+import pt.isel.ls.view.common.Html;
+import pt.isel.ls.view.common.Li;
+import pt.isel.ls.view.common.Table;
+import pt.isel.ls.view.common.Tbody;
+import pt.isel.ls.view.common.Td;
+import pt.isel.ls.view.common.Text;
+import pt.isel.ls.view.common.Th;
+import pt.isel.ls.view.common.Thead;
+import pt.isel.ls.view.common.Title;
+import pt.isel.ls.view.common.Tr;
+import pt.isel.ls.view.common.Ul;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,18 +35,17 @@ public class GetMovieDetailsResult extends CommandResult {
 
     @Override
     public String printHtml() {
-        ArrayList<String> header = new ArrayList<>();
-        header.add("Id");
-        header.add("Title");
-        header.add("Year");
-        ArrayList<String[]> rows = new ArrayList<>();
-        if (movie == null) {
-            rows.add(new String[]{ "Movie details not available" });
-        } else {
-            rows.add(new String[] {
-                    String.valueOf(movie.getMid()),
-                    movie.getTitle(),
-                    String.valueOf(movie.getYear())});
+
+        ArrayList<Element> rows = new ArrayList<>();
+
+        for (Review r: movie.getReviews()) {
+
+            rows.add(
+                    new Tr(
+                            new Td(new A(r.getSummary(),"/movies/" + movie.getMid() + "/reviews/" + r.getId())),
+                            new Td(String.valueOf(r.getRating())),
+                            new Td(new A(r.getMovieCritic().getName(),"/users/" + r.getMovieCritic().getId()))
+            ));
         }
 
         Html h = new Html(
@@ -42,13 +53,25 @@ public class GetMovieDetailsResult extends CommandResult {
                         new Title("Movie details")
                 ),
                 new Body(
+                        new A("Return home","/"),
+                        new Br(),
+                        new Br(),
+                        new A("Return to all movies","/movies"),
+                        new Ul(new Li(new Text("Title: " + movie.getTitle())),
+                                new Li(new Text("Year: " + movie.getYear())),
+                                new Li(new A("Stars: " + movie.getRating(),"/movies/" + movie.getMid() + "/ratings"))
+                        ),
+                        new A(new Title("List of reviews"),"/movies/" + movie.getMid() + "/reviews"),
                         new Table(
-                                header,
-                                rows
-                        )
+                                new Thead(new Tr(new Th("Summary"),new Th("Rating"),new Th("Movie Critic"))),
+                                new Tbody(rows)
+                        ),
+                        new Br(),
+                        new A("All reviews", "/movies/" + movie.getMid() + "/reviews")
                 )
         );
-        return h.toString();
+
+        return h.print();
     }
 
     @Override
@@ -60,5 +83,10 @@ public class GetMovieDetailsResult extends CommandResult {
                 + movie.getTitle()
                 + "\tYear = "
                 + movie.getYear();
+    }
+
+    @Override
+    public boolean asResult() {
+        return movie != null;
     }
 }

@@ -2,11 +2,11 @@ package pt.isel.ls.results;
 
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Review;
-import pt.isel.ls.view.html.Html;
-import pt.isel.ls.view.html.body.Body;
-import pt.isel.ls.view.html.body.Table;
-import pt.isel.ls.view.html.head.Head;
-import pt.isel.ls.view.html.head.Title;
+import pt.isel.ls.view.htmlold.Html;
+import pt.isel.ls.view.htmlold.body.Body;
+import pt.isel.ls.view.htmlold.body.Table;
+import pt.isel.ls.view.htmlold.head.Head;
+import pt.isel.ls.view.htmlold.head.Title;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,5 +72,10 @@ public class GetUserReviewResult extends CommandResult {
                 + "\nMovie Critic = " + review.getMovieCritic().getName()
                 + "\n");
         return review == null ? "User Review not available" : "User Review -> " + sb.toString();
+    }
+
+    @Override
+    public boolean asResult() {
+        return review != null;
     }
 }

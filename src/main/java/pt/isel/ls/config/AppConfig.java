@@ -14,6 +14,7 @@ import pt.isel.ls.handlers.GetUserReviewHandler;
 import pt.isel.ls.handlers.ListenHandler;
 import pt.isel.ls.handlers.OptionHandler;
 import pt.isel.ls.handlers.RateMovieHandler;
+import pt.isel.ls.handlers.RootHandler;
 import pt.isel.ls.http.AppHttpServlet;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.Path;
@@ -76,17 +77,12 @@ public class AppConfig {
         config = new AppConfig();
     }
 
-    public static AppConfig getInstance() {
-        return config;
-    }
-
     private Tree tree;
-    private ArrayList<Node> nodes;
+    private ArrayList<Node> nodes = new ArrayList<>();
 
     private void loadRouter() {
         tree = new Tree();
         nodes.add(new Node(new Command(Method.POST, new Path("/users")), new CreateUserHandler()));
-        /* List all handler to load into Router */
         nodes.add(new Node(new Command(Method.POST, new Path("/users")), new CreateUserHandler()));
         nodes.add(new Node(new Command(Method.GET, new Path("/users")), new GetAllUsersHandler()));
 

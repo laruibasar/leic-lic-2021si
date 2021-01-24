@@ -1,7 +1,8 @@
-package pt.isel.ls.view.html;
+package pt.isel.ls.view.htmlold;
 
-import pt.isel.ls.view.html.body.Body;
-import pt.isel.ls.view.html.head.Head;
+
+import pt.isel.ls.view.htmlold.body.Body;
+import pt.isel.ls.view.htmlold.head.Head;
 
 public class Html {
 

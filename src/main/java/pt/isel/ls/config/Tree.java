@@ -7,12 +7,21 @@ import java.util.ArrayList;
 
 public class Tree {
     private Node root;
+
+    /**Serve para listar os comandos disponíveis para o utilizador "OPTION /"*/
     private ArrayList<Command> commands = new ArrayList<>();
 
     public Node getRoot() {
         return root;
     }
 
+    /**
+                                1º
+                    2º                        9º
+              3º         6º             10º        13º
+           4º   5º    7º    8º      11º    12º  14º   15º
+
+     */
     public Handler lookForHandler(Node node, Command cmd) {
         if (node == null) {
             return null;
@@ -47,15 +56,20 @@ public class Tree {
         return null;
     }
 
-
+    /**
+     * Cada folha da árvore têm no máximo dois filhos próximos.
+     * A raíz da árvore é o primeiro elemento do arrayList.
+     *
+     * @param leaves arrayList of Router commands
+     */
     public void buildTree(ArrayList<Node> leaves) {
         this.root = leaves.get(0);
         commands.add(root.getCommand());
-        int children = 1;
+        int leaf = 1;
         for (Node l: leaves) {
-            for (int i = 0; i < 2 && children < leaves.size(); i++, children++) {
-                l.addChild(leaves.get(children));
-                commands.add(leaves.get(children).getCommand());
+            for (int i = 0; i < 2 && leaf < leaves.size(); i++, leaf++) {
+                l.addChild(leaves.get(leaf));
+                commands.add(leaves.get(leaf).getCommand());
             }
         }
     }

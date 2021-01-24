@@ -3,11 +3,12 @@ package pt.isel.ls.results;
 import pt.isel.ls.config.Router;
 import pt.isel.ls.config.RouterException;
 import pt.isel.ls.utils.Command;
-import pt.isel.ls.view.html.Html;
-import pt.isel.ls.view.html.body.Body;
-import pt.isel.ls.view.html.body.Bullets;
-import pt.isel.ls.view.html.head.Head;
-import pt.isel.ls.view.html.head.Title;
+import pt.isel.ls.view.htmlold.Html;
+import pt.isel.ls.view.htmlold.body.Body;
+import pt.isel.ls.view.htmlold.body.Bullets;
+import pt.isel.ls.view.htmlold.head.Head;
+import pt.isel.ls.view.htmlold.head.Title;
+
 
 import java.util.ArrayList;
 
@@ -68,5 +69,10 @@ public class OptionResult extends CommandResult {
         }
 
         return sb.toString();
+    }
+
+    @Override
+    public boolean asResult() {
+        return false;
     }
 }

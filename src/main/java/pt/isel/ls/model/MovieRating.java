@@ -29,6 +29,14 @@ public class MovieRating extends Model {
         return movie.getMid();
     }
 
+    public Movie getMovie() {
+        return movie;
+    }
+
+    public String getMovieTitle() {
+        return movie.getTitle();
+    }
+
     public int getVotesOne() {
         return votesOne;
     }

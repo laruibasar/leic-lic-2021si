@@ -7,4 +7,6 @@ public interface ICommandResult {
     public String printHtml() throws RouterException;
 
     public String printPlainText() throws RouterException;
+
+    public boolean asResult();
 }

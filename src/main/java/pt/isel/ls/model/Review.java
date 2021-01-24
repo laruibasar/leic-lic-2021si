@@ -29,6 +29,13 @@ public class Review extends Model {
         this.movie = movie;
     }
 
+    public Review(int rid, String summary, int rating, User user) {
+        this.rid = rid;
+        this.summary = summary;
+        this.rating = rating;
+        this.movieCritic = user;
+    }
+
     public Review(int rid, String summary, String completeReview, int rating, Movie movie, User critic) {
         this.rid = rid;
         this.completeReview = completeReview;
@@ -36,6 +43,13 @@ public class Review extends Model {
         this.rating = rating;
         this.movie = movie;
         this.movieCritic = critic;
+    }
+
+    public Review(int rid, String summary, int rating, Movie movie) {
+        this.rid = rid;
+        this.summary = summary;
+        this.rating = rating;
+        this.movie = movie;
     }
 
     public void setId(int rid) {

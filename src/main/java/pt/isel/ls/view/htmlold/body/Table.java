@@ -1,4 +1,4 @@
-package pt.isel.ls.view.html.body;
+package pt.isel.ls.view.htmlold.body;
 
 import java.util.ArrayList;
 
