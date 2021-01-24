@@ -3,12 +3,16 @@ package pt.isel.ls.view.html;
 import pt.isel.ls.model.MovieRating;
 import pt.isel.ls.results.CommandResult;
 import pt.isel.ls.utils.Command;
+import pt.isel.ls.utils.Method;
 import pt.isel.ls.view.common.IView;
 import pt.isel.ls.view.common.elements.A;
 import pt.isel.ls.view.common.elements.Body;
 import pt.isel.ls.view.common.elements.Br;
+import pt.isel.ls.view.common.elements.Form;
 import pt.isel.ls.view.common.elements.Head;
 import pt.isel.ls.view.common.elements.Html;
+import pt.isel.ls.view.common.elements.Input;
+import pt.isel.ls.view.common.elements.Label;
 import pt.isel.ls.view.common.elements.Li;
 import pt.isel.ls.view.common.elements.Table;
 import pt.isel.ls.view.common.elements.Tbody;
@@ -58,6 +62,25 @@ public class GetMovieRatingsHtmlView extends HtmlView implements IView {
                                                 new Td(String.valueOf(movieRating.getVotesFive()))
                                         )
                                 )
+                        ),
+                        new Br(),
+                        new Text("<p>Add new rating</p>"),
+                        new Form(
+                                Method.POST,
+                                "/movies/" + movieRating.getMovieId() + "/ratings",
+                                new Label("1"),
+                                new Input("radio", "rating", "value=\"1\" required"),
+                                new Label("2"),
+                                new Input("radio", "rating", "value=\"2\" required"),
+                                new Label("3"),
+                                new Input("radio", "rating", "value=\"3\" required"),
+                                new Label("4"),
+                                new Input("radio", "rating", "value=\"4\" required"),
+                                new Label("5"),
+                                new Input("radio", "rating", "value=\"5\" required"),
+                                new Br(),
+                                new Br(),
+                                new Input("submit", "submit")
                         ),
                         new Br(),
                         new A("Previous page", "/movies/" + movieRating.getMovieId())
