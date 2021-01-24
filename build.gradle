@@ -19,3 +19,8 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.+'
 }
 
+task copyRuntimeDependencies(type: Copy) {
+    into 'build/libs'
+    from configurations.runtime
+}
+
