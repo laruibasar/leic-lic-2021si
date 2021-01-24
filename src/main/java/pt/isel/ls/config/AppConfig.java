@@ -81,7 +81,7 @@ public class AppConfig {
     }
 
     private Tree tree;
-    private ArrayList<Node> nodes = new ArrayList<>();
+    private ArrayList<Node> nodes;
 
     private void loadRouter() {
         tree = new Tree();

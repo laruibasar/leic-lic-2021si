@@ -7,36 +7,42 @@ import java.util.ArrayList;
 
 public class Tree {
     private Node root;
-    private ArrayList<Command> cmds = new ArrayList<>();
+    private ArrayList<Command> commands = new ArrayList<>();
 
     public Node getRoot() {
         return root;
     }
 
     public Handler lookForHandler(Node node, Command cmd) {
-        if (node == null)
+        if (node == null) {
             return null;
-        if (node.equals(cmd))
+        }
+        if (node.equals(cmd)) {
             return node.getHandler();
-        else {
+        } else {
             Handler handler = null;
-            for (Node child : node.getChildren())
-                if ((handler = lookForHandler(child, cmd)) != null)
+            for (Node child : node.getChildren()) {
+                if ((handler = lookForHandler(child, cmd)) != null) {
                     return handler;
+                }
+            }
         }
         return null;
     }
 
     public Command findCommand(Node node, Command cmd) {
-        if (node == null)
+        if (node == null) {
             return null;
-        if (node.equals(cmd))
+        }
+        if (node.equals(cmd)) {
             return node.getCommand();
-        else {
+        } else {
             Command command = null;
-            for (Node child : node.getChildren())
-                if ((command = findCommand(child, cmd)) != null)
+            for (Node child : node.getChildren()) {
+                if ((command = findCommand(child, cmd)) != null) {
                     return command;
+                }
+            }
         }
         return null;
     }
@@ -44,17 +50,17 @@ public class Tree {
 
     public void buildTree(ArrayList<Node> leaves) {
         this.root = leaves.get(0);
-        cmds.add(root.getCommand());
+        commands.add(root.getCommand());
         int children = 1;
-        for(Node l: leaves) {
-            for(int i = 0; i < 2 && children < leaves.size(); i++, children++) {
+        for (Node l: leaves) {
+            for (int i = 0; i < 2 && children < leaves.size(); i++, children++) {
                 l.addChild(leaves.get(children));
-                cmds.add(leaves.get(children).getCommand());
+                commands.add(leaves.get(children).getCommand());
             }
         }
     }
 
     public ArrayList<Command> getAllCommands() {
-        return cmds;
+        return commands;
     }
 }

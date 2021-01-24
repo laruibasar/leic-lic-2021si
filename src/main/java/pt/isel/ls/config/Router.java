@@ -13,22 +13,18 @@ public class Router {
 
     public Handler findHandler(Command command) throws RouterException {
         Handler handler = tree.lookForHandler(tree.getRoot(), command);
-        if (command.getTemplate() == null) {
+        if (handler == null) {
             throw new RouterException("Invalid command " + command.toString());
         }
         return handler;
     }
 
     public Command findTemplate(Command command) throws RouterException {
-        Command cmd = tree.findCommand(tree.getRoot(), command);
-        if (cmd.getTemplate() == null) {
+        Command template = tree.findCommand(tree.getRoot(), command);
+        if (template == null) {
             throw new RouterException("Invalid command " + command.toString());
         }
-        return cmd.getTemplate();
-    }
-
-    public Handler getHandler(Command template) throws RouterException {
-        return findHandler(template);
+        return template;
     }
 
     public Tree getTree() {

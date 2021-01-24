@@ -24,7 +24,7 @@ public class OptionResult extends CommandResult {
         ArrayList<String> arrayList = new ArrayList<>();
 
         for (Command c : router.getTree().getAllCommands()) {
-            arrayList.add(router.getHandler(c).getDescription() + "\n"
+            arrayList.add(router.findHandler(c).getDescription() + "\n"
                     + "Command: " + c.toString() + "\n");
         }
 
@@ -49,11 +49,11 @@ public class OptionResult extends CommandResult {
         StringBuilder sb = new StringBuilder();
         for (Command c : router.getTree().getAllCommands()) {
             sb.append("COMMAND: ")
-                    .append(router.getHandler(c).getDescription())
+                    .append(router.findHandler(c).getDescription())
                     .append("\n")
                     .append(c.toString())
                     .append("\n");
-            ArrayList<String> params = (ArrayList<String>) router.getHandler(c).getValidValues();
+            ArrayList<String> params = (ArrayList<String>) router.findHandler(c).getValidValues();
 
             if (params.size() > 0) {
                 sb.append("Parâmetros aceites:\n");

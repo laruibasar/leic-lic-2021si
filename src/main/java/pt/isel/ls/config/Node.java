@@ -42,9 +42,13 @@ public class Node {
         if (null == cmd) {
             return false;
         }
-        if (cmd.toString().equals(this.command.toString())) {
-            return true;
+        if (!cmd.getMethod().equals(this.command.getMethod())) {
+            return false;
         }
-        return false;
+
+        if (!cmd.getPath().matches(this.command.getPath())) {
+            return false;
+        }
+        return true;
     }
 }
