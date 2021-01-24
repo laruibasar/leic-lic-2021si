@@ -1,45 +1,26 @@
 package pt.isel.ls.view;
 
+import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.Header;
-import pt.isel.ls.results.CommandResult;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
 public class PrintResults {
-
-    private final CommandResult commandResult;
-    private final Header header;
-
-    public PrintResults(CommandResult commandResult, Header header) {
-        this.commandResult = commandResult;
-        this.header = header;
-    }
-
-    @Override
-    public String toString() {
-        String printType;
-        String textType;
-        printType = header.getValue("file-name");
-        textType = header.getValue("accept");
+    public static void output(Command cmd, String output) {
+        Header header = cmd.getHeader();
+        String printType = header.getValue("file-name");
 
         if (printType.isEmpty()) {
-            return consolePrint(textType);
+            System.out.println(output);
+            return;
         }
-
-        return filePrint(printType, textType);
-    }
-
-    public String consolePrint(String textType) {
-        if (textType.equals("text/html")) {
-            return commandResult.printHtml();
-        }
-        return commandResult.printPlainText();
+        filePrint(printType, output);
     }
 
     //TODO: a informação é acrescentada no mesmo ficheiro e não apaga a anterior
-    public String filePrint(String fileName, String textType) {
+    public static void  filePrint(String fileName, String output) {
         /* validate file name */
         String validFilename = fileName
                 .replaceAll("[\\\\/:*?\"<>| ]", "_");
@@ -48,17 +29,13 @@ public class PrintResults {
         FileWriter fw = null;
         try {
             fw = new FileWriter(file, true);
-            if (textType.equals("text/html")) {
-                fw.write(commandResult.printHtml() + "\n\n");
-            } else {
-                fw.write(commandResult.printPlainText() + "\n\n");
-            }
-
+            fw.write(output + "\n\n");
             fw.flush();
             fw.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "File " + validFilename + " created";
+
+        System.out.println("File " + validFilename + " created");
     }
 }
