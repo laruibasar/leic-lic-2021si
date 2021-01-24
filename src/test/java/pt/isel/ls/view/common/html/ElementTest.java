@@ -149,14 +149,14 @@ public class ElementTest {
         assertEquals(
                 "<form action=\"#\" method=\"GET\">\n"
                         + "<label for=\"movie\">Title</label>\n"
-                        + "<input type=\"text\" id=\"movie\" name=\"movie\">\n"
+                        + "<input type=\"text\" id=\"movie\" name=\"movie\"  >\n"
                         + "<label for=\"year\">Release Year</label>\n"
-                        + "<input type=\"number\" id=\"year\" name=\"year\">\n"
+                        + "<input type=\"number\" id=\"year\" name=\"year\"  >\n"
                         + "<label for=\"story\">Summary</label>\n"
                         + "<textarea id=\"story\" name=\"story\" rows=\"5\" cols=\"33\">\n"
                         + "\n"
                         + "</textarea>\n"
-                        + "<input type=\"submit\" id=\"submit\" name=\"submit\">\n"
+                        + "<input type=\"submit\" id=\"submit\" name=\"submit\"  >\n"
                         + "</form>\n",
             form.print()
         );

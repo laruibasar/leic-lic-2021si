@@ -4,6 +4,7 @@ import pt.isel.ls.config.AppConfig;
 import pt.isel.ls.results.CommandResult;
 import pt.isel.ls.results.ExitResult;
 import pt.isel.ls.utils.Command;
+import pt.isel.ls.view.PrintResults;
 import pt.isel.ls.view.common.IView;
 import pt.isel.ls.view.common.ViewRouter;
 
@@ -88,7 +89,7 @@ public class App {
         ViewRouter viewRouter = AppConfig.getViewRouter();
         try {
             IView view = viewRouter.findView(cmd.getHeader(), cr);
-            System.out.println(view.print(cmd, cr));
+            PrintResults.output(cmd, view.print(cmd, cr));
         } catch (Exception e) {
             throw new Exception(e);
         }

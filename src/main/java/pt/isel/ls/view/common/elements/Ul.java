@@ -10,6 +10,10 @@ public class Ul implements Element {
         content.addAll(Arrays.asList(elements));
     }
 
+    public Ul(ArrayList<Li> elements) {
+        content = elements;
+    }
+
     @Override
     public String print() {
         StringBuilder sb = new StringBuilder("<ul>\n");
