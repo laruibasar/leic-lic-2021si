@@ -154,6 +154,7 @@ public class AppConfig {
         viewRouter.addView(new Header("accept:text/html"), new OptionResult(), new OptionHtmlView());
 
         viewRouter.addView(new Header("accept:text/plain"), new CreateMovieReviewResult(), new CreateMovieReviewTextView());
+        viewRouter.addView(new Header("accept:text/html"), new CreateMovieReviewResult(), new CreateMovieReviewHtmlView());
     }
 
     private AppConfig() {
