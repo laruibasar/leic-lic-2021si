@@ -155,6 +155,12 @@ public class AppConfig {
 
         viewRouter.addView(new Header("accept:text/plain"), new CreateMovieReviewResult(), new CreateMovieReviewTextView());
         viewRouter.addView(new Header("accept:text/html"), new CreateMovieReviewResult(), new CreateMovieReviewHtmlView());
+
+        viewRouter.addView(new Header("accept:text/plain"), new CreateUserResult(), new CreateUserTextView());
+        viewRouter.addView(new Header("accept:text/html"), new CreateUserResult(), new CreateUserHtmlView());
+
+        viewRouter.addView(new Header("accept:text/plain"), new DeleteMovieReviewResult(), new DeleteMovieReviewTextView());
+        viewRouter.addView(new Header("accept:text/html"), new DeleteMovieReviewResult(), new DeleteMovieReviewHtmlView());
     }
 
     private AppConfig() {

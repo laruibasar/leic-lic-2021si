@@ -19,51 +19,9 @@ public class CreateUserResult extends CommandResult {
         if (users.size() != 0) {
             this.user = (User) users.get(0);
         }
-
-
     }
 
-    public String printHtml() {
-        ArrayList<String> header = new ArrayList<>();
-        header.add("User Id");
-        header.add("Name");
-        header.add("Email");
-
-        ArrayList<String[]> rows = new ArrayList<>();
-        String title = "Created user";
-
-        if (user == null) {
-            title = "User not created";
-        } else {
-            rows.add(new String[] {
-                    String.valueOf(user.getId()),
-                    user.getName(),
-                    user.getEmail()});
-        }
-
-
-        Html h = new Html(
-                new Head(
-                        new Title(title)
-                ),
-                new Body(
-                        new Table(
-                                header,
-                                rows
-                        )
-                )
-        );
-        return h.toString();
-    }
-
-    public String printPlainText() {
-        return user == null ? "User not created" : "Created User -> "
-                + "\nUserid = "
-                + user.getId()
-                + "\nName = "
-                + user.getName()
-                + "\nEmail ="
-                + user.getEmail();
+    public CreateUserResult() {
     }
 
     @Override

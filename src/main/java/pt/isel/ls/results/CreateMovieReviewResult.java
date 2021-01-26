@@ -2,13 +2,7 @@ package pt.isel.ls.results;
 
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Review;
-import pt.isel.ls.view.htmlold.Html;
-import pt.isel.ls.view.htmlold.body.Body;
-import pt.isel.ls.view.htmlold.body.Table;
-import pt.isel.ls.view.htmlold.head.Head;
-import pt.isel.ls.view.htmlold.head.Title;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CreateMovieReviewResult extends CommandResult {
@@ -23,47 +17,6 @@ public class CreateMovieReviewResult extends CommandResult {
             this.review = (Review) reviews.get(0);
         }
 
-    }
-
-    public String printHtml() {
-        ArrayList<String> header = new ArrayList<>();
-        header.add("Id");
-        header.add("Summary");
-        header.add("Review");
-        header.add("Movie Id");
-        header.add("User Id");
-        header.add("Rating");
-
-        ArrayList<String[]> rows = new ArrayList<>();
-        String title = "Created Review";
-        if (review == null) {
-            title = "Review not created";
-        } else {
-            rows.add(
-                    new String[] {
-                            String.valueOf(review.getId()),
-                            review.getSummary(),
-                            review.getCompleteReview(),
-                            String.valueOf(review.getMovie()),
-                            String.valueOf(review.getMovieCritic()),
-                            String.valueOf(review.getRating())
-                    }
-            );
-        }
-
-        Html h = new Html(
-                new Head(
-                        new Title(title)
-                ),
-                new Body(
-                        new Table(
-                                header,
-                                rows
-                        )
-                )
-
-        );
-        return h.toString();
     }
 
     @Override
