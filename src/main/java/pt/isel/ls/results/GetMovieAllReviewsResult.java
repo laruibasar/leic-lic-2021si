@@ -3,26 +3,32 @@ package pt.isel.ls.results;
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Movie;
 import pt.isel.ls.model.Review;
-import pt.isel.ls.view.common.A;
-import pt.isel.ls.view.common.Body;
-import pt.isel.ls.view.common.Br;
-import pt.isel.ls.view.common.Element;
-import pt.isel.ls.view.common.Head;
-import pt.isel.ls.view.common.Html;
-import pt.isel.ls.view.common.Table;
-import pt.isel.ls.view.common.Tbody;
-import pt.isel.ls.view.common.Td;
-import pt.isel.ls.view.common.Text;
-import pt.isel.ls.view.common.Th;
-import pt.isel.ls.view.common.Thead;
-import pt.isel.ls.view.common.Tr;
+import pt.isel.ls.view.common.elements.A;
+import pt.isel.ls.view.common.elements.Body;
+import pt.isel.ls.view.common.elements.Br;
+import pt.isel.ls.view.common.elements.Element;
+import pt.isel.ls.view.common.elements.Head;
+import pt.isel.ls.view.common.elements.Html;
+import pt.isel.ls.view.common.elements.Table;
+import pt.isel.ls.view.common.elements.Tbody;
+import pt.isel.ls.view.common.elements.Td;
+import pt.isel.ls.view.common.elements.Text;
+import pt.isel.ls.view.common.elements.Th;
+import pt.isel.ls.view.common.elements.Thead;
+import pt.isel.ls.view.common.elements.Tr;
+import pt.isel.ls.view.common.elements.Title;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class GetMovieAllReviewsResult extends CommandResult {
 
-    private final List<Model> reviews;
+    private List<Model> reviews = new LinkedList<>();
+
+    public GetMovieAllReviewsResult() {
+
+    }
 
     public GetMovieAllReviewsResult(List<Model> reviews) {
 
@@ -48,9 +54,9 @@ public class GetMovieAllReviewsResult extends CommandResult {
                     ));
         }
 
-        pt.isel.ls.view.common.Html h = new Html(
+        Html h = new Html(
                 new Head(
-                        new pt.isel.ls.view.common.Title("Movie details")
+                        new Title("Movie details")
                 ),
                 new Body(
                         new A("Return home","/"),
@@ -93,5 +99,15 @@ public class GetMovieAllReviewsResult extends CommandResult {
     @Override
     public boolean asResult() {
         return !reviews.isEmpty();
+    }
+
+    @Override
+    public Object getResult() {
+        return reviews;
+    }
+
+    @Override
+    public int getResultId() {
+        return 0;
     }
 }

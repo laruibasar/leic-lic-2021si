@@ -3,22 +3,22 @@ package pt.isel.ls.results;
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Movie;
 import pt.isel.ls.model.Review;
-import pt.isel.ls.view.common.A;
-import pt.isel.ls.view.common.Body;
-import pt.isel.ls.view.common.Br;
-import pt.isel.ls.view.common.Element;
-import pt.isel.ls.view.common.Head;
-import pt.isel.ls.view.common.Html;
-import pt.isel.ls.view.common.Li;
-import pt.isel.ls.view.common.Table;
-import pt.isel.ls.view.common.Tbody;
-import pt.isel.ls.view.common.Td;
-import pt.isel.ls.view.common.Text;
-import pt.isel.ls.view.common.Th;
-import pt.isel.ls.view.common.Thead;
-import pt.isel.ls.view.common.Title;
-import pt.isel.ls.view.common.Tr;
-import pt.isel.ls.view.common.Ul;
+import pt.isel.ls.view.common.elements.A;
+import pt.isel.ls.view.common.elements.Body;
+import pt.isel.ls.view.common.elements.Br;
+import pt.isel.ls.view.common.elements.Element;
+import pt.isel.ls.view.common.elements.Head;
+import pt.isel.ls.view.common.elements.Html;
+import pt.isel.ls.view.common.elements.Li;
+import pt.isel.ls.view.common.elements.Table;
+import pt.isel.ls.view.common.elements.Tbody;
+import pt.isel.ls.view.common.elements.Td;
+import pt.isel.ls.view.common.elements.Text;
+import pt.isel.ls.view.common.elements.Th;
+import pt.isel.ls.view.common.elements.Thead;
+import pt.isel.ls.view.common.elements.Title;
+import pt.isel.ls.view.common.elements.Tr;
+import pt.isel.ls.view.common.elements.Ul;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +26,10 @@ import java.util.List;
 public class GetMovieDetailsResult extends CommandResult {
 
     private Movie movie;
+
+    public GetMovieDetailsResult() {
+
+    }
 
     public GetMovieDetailsResult(List<Model> movies) {
         if (movies.size() != 0) {
@@ -88,5 +92,15 @@ public class GetMovieDetailsResult extends CommandResult {
     @Override
     public boolean asResult() {
         return movie != null;
+    }
+
+    @Override
+    public Object getResult() {
+        return movie;
+    }
+
+    @Override
+    public int getResultId() {
+        return 0;
     }
 }

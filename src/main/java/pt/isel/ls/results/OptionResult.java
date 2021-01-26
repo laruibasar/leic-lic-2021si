@@ -14,6 +14,10 @@ public class OptionResult extends CommandResult {
 
     private Router router;
 
+    public OptionResult() {
+        router = new Router();
+    }
+
     public OptionResult(Router router) {
         this.router = router;
     }
@@ -72,5 +76,15 @@ public class OptionResult extends CommandResult {
     @Override
     public boolean asResult() {
         return false;
+    }
+
+    @Override
+    public Object getResult() {
+        return router;
+    }
+
+    @Override
+    public int getResultId() {
+        return 0;
     }
 }

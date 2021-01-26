@@ -15,4 +15,14 @@ public class ExitResult extends CommandResult {
     public boolean asResult() {
         return false;
     }
+
+    @Override
+    public Object getResult() {
+        return null;
+    }
+
+    @Override
+    public int getResultId() {
+        return 0;
+    }
 }
