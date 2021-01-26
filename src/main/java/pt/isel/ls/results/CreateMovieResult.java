@@ -34,7 +34,6 @@ public class CreateMovieResult extends CommandResult {
         return (movie != null) ? movie.getMid() : 0;
     }
 
-    @Override
     public String printHtml() {
         ArrayList<String> header = new ArrayList<>();
         header.add("Movie Id");
@@ -71,7 +70,6 @@ public class CreateMovieResult extends CommandResult {
         return h.toString();
     }
 
-    @Override
     public String printPlainText() {
         return movie == null ? "Movie not created" : "Created Movie -> "
                 + "MovieID = "

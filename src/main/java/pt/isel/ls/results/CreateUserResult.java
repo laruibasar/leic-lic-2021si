@@ -23,7 +23,6 @@ public class CreateUserResult extends CommandResult {
 
     }
 
-    @Override
     public String printHtml() {
         ArrayList<String> header = new ArrayList<>();
         header.add("User Id");
@@ -57,7 +56,6 @@ public class CreateUserResult extends CommandResult {
         return h.toString();
     }
 
-    @Override
     public String printPlainText() {
         return user == null ? "User not created" : "Created User -> "
                 + "\nUserid = "

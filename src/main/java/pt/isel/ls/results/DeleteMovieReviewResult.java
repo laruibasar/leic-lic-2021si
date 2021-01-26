@@ -22,7 +22,6 @@ public class DeleteMovieReviewResult extends CommandResult {
 
     }
 
-    @Override
     public String printHtml() {
         ArrayList<String> header = new ArrayList<>();
         header.add("Id");
@@ -63,7 +62,6 @@ public class DeleteMovieReviewResult extends CommandResult {
         return h.toString();
     }
 
-    @Override
     public String printPlainText() {
         return review == null ? "Review not deleted" : "Deleted Review -> "
                 + "ReviewID = " + review.getId()

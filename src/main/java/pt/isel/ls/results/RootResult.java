@@ -9,7 +9,6 @@ import pt.isel.ls.view.common.elements.Title;
 import pt.isel.ls.view.common.elements.Ul;
 
 public class RootResult extends CommandResult {
-    @Override
     public String printHtml() {
         Html html = new Html(
                 new Head(
@@ -33,7 +32,6 @@ public class RootResult extends CommandResult {
         return html.print();
     }
 
-    @Override
     public String printPlainText() {
         return "Welcome to root page!";
     }

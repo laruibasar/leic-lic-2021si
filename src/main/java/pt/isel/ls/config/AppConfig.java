@@ -16,18 +16,7 @@ import pt.isel.ls.handlers.OptionHandler;
 import pt.isel.ls.handlers.RateMovieHandler;
 import pt.isel.ls.handlers.RootHandler;
 import pt.isel.ls.http.AppHttpServlet;
-import pt.isel.ls.results.CreateMovieResult;
-import pt.isel.ls.results.GetAllUsersResult;
-import pt.isel.ls.results.GetMovieAllReviewsResult;
-import pt.isel.ls.results.GetMovieDetailsResult;
-import pt.isel.ls.results.GetMovieRatingResult;
-import pt.isel.ls.results.GetMovieReviewResult;
-import pt.isel.ls.results.GetMoviesResult;
-import pt.isel.ls.results.GetTopRatingResult;
-import pt.isel.ls.results.GetUserDetailsResult;
-import pt.isel.ls.results.ListenResult;
-import pt.isel.ls.results.OptionResult;
-import pt.isel.ls.results.RootResult;
+import pt.isel.ls.results.*;
 import pt.isel.ls.utils.Header;
 import pt.isel.ls.utils.Path;
 import pt.isel.ls.handlers.CreateUserHandler;
@@ -36,28 +25,8 @@ import pt.isel.ls.handlers.GetAllUsersHandler;
 import pt.isel.ls.utils.Method;
 import pt.isel.ls.handlers.GetUserDetailsHandler;
 import pt.isel.ls.view.common.ViewRouter;
-import pt.isel.ls.view.html.GetAllMoviesHtmlView;
-import pt.isel.ls.view.html.GetAllUsersHtmlView;
-import pt.isel.ls.view.html.GetMovieAllReviewsHtmlView;
-import pt.isel.ls.view.html.GetMovieDetailsHtmlView;
-import pt.isel.ls.view.html.GetMovieRatingsHtmlView;
-import pt.isel.ls.view.html.GetMovieReviewHtmlView;
-import pt.isel.ls.view.html.GetTopsRatingsHtmlView;
-import pt.isel.ls.view.html.GetUserDetailHtmlView;
-import pt.isel.ls.view.html.OptionHtmlView;
-import pt.isel.ls.view.html.RootHtmlView;
-import pt.isel.ls.view.text.CreateMovieTextView;
-import pt.isel.ls.view.text.GetAllMoviesTextView;
-import pt.isel.ls.view.text.GetAllUsersTextView;
-import pt.isel.ls.view.text.GetMovieAllReviewsTextView;
-import pt.isel.ls.view.text.GetMovieDetailsTextView;
-import pt.isel.ls.view.text.GetMovieRatingsTextView;
-import pt.isel.ls.view.text.GetMovieReviewTextView;
-import pt.isel.ls.view.text.GetTopsRatingsTextView;
-import pt.isel.ls.view.text.GetUserDetailTextView;
-import pt.isel.ls.view.text.ListenTextView;
-import pt.isel.ls.view.text.OptionTextView;
-import pt.isel.ls.view.text.RootTextView;
+import pt.isel.ls.view.html.*;
+import pt.isel.ls.view.text.*;
 
 
 /**
@@ -151,6 +120,7 @@ public class AppConfig {
         viewRouter.addView(new Header("accept:text/html"), new RootResult(), new RootHtmlView());
 
         viewRouter.addView(new Header("accept:text/plain"), new CreateMovieResult(), new CreateMovieTextView());
+        viewRouter.addView(new Header("accept:text/plain"), new CreateMovieResult(), new CreateMovieHtmlView());
 
         viewRouter.addView(new Header("accept:text/plain"), new GetAllUsersResult(), new GetAllUsersTextView());
         viewRouter.addView(new Header("accept:text/html"), new GetAllUsersResult(), new GetAllUsersHtmlView());
@@ -182,6 +152,8 @@ public class AppConfig {
 
         viewRouter.addView(new Header("accept:text/plain"), new OptionResult(), new OptionTextView());
         viewRouter.addView(new Header("accept:text/html"), new OptionResult(), new OptionHtmlView());
+
+        viewRouter.addView(new Header("accept:text/plain"), new CreateMovieReviewResult(), new CreateMovieReviewTextView());
     }
 
     private AppConfig() {

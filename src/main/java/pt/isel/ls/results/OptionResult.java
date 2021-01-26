@@ -22,7 +22,6 @@ public class OptionResult extends CommandResult {
         this.router = router;
     }
 
-    @Override
     public String printHtml() {
         ArrayList<String> arrayList = new ArrayList<>();
 
@@ -47,7 +46,6 @@ public class OptionResult extends CommandResult {
         return h.toString();
     }
 
-    @Override
     public String printPlainText() {
         StringBuilder sb = new StringBuilder();
         for (Command c : router) {

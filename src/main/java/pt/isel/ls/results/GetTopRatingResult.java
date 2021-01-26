@@ -32,7 +32,6 @@ public class GetTopRatingResult extends CommandResult {
         this.movies = movies;
     }
 
-    @Override
     public String printHtml() {
         ArrayList<Element> rows = new ArrayList<>();
         for (Model m: movies) {
@@ -72,7 +71,6 @@ public class GetTopRatingResult extends CommandResult {
         return html.print();
     }
 
-    @Override
     public String printPlainText() {
         StringBuilder sb = new StringBuilder("Top Ratings: \n");
         for (Model m : movies) {

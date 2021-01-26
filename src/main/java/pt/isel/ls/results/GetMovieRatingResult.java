@@ -33,7 +33,6 @@ public class GetMovieRatingResult extends CommandResult {
         }
     }
 
-    @Override
     public String printHtml() {
         Html html = new Html(
                 new Head(
@@ -77,7 +76,6 @@ public class GetMovieRatingResult extends CommandResult {
         return html.print();
     }
 
-    @Override
     public String printPlainText() {
         return movieRating == null ? "No movie rating available" : "Movie Rating:\n"
                 + movieRating.getMovieTitle()

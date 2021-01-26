@@ -32,7 +32,6 @@ public class GetAllUsersResult extends CommandResult {
         this.users = users;
     }
 
-    @Override
     public String printHtml() {
         ArrayList<Element> rows = new ArrayList<>();
         for (Model m: users) {
@@ -66,7 +65,6 @@ public class GetAllUsersResult extends CommandResult {
         return h.print();
     }
 
-    @Override
     public String printPlainText() {
         StringBuilder sb = new StringBuilder("All users -> \n");
         for (Model u : users) {

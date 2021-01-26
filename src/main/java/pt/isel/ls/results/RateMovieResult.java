@@ -22,7 +22,6 @@ public class RateMovieResult extends CommandResult {
 
     }
 
-    @Override
     public String printHtml() {
         ArrayList<String> header = new ArrayList<>();
         header.add("Review Id");
@@ -58,7 +57,6 @@ public class RateMovieResult extends CommandResult {
         return h.toString();
     }
 
-    @Override
     public String printPlainText() {
         return rating == null ? "Rating not created" : "Created Rating: "
                 + "\nRating = " + rating

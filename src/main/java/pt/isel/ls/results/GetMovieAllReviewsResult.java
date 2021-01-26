@@ -35,7 +35,6 @@ public class GetMovieAllReviewsResult extends CommandResult {
         this.reviews = reviews;
     }
 
-    @Override
     public String printHtml() {
 
         ArrayList<Element> rows = new ArrayList<>();
@@ -81,7 +80,6 @@ public class GetMovieAllReviewsResult extends CommandResult {
         return h.print();
     }
 
-    @Override
     public String printPlainText() {
         StringBuilder sb = new StringBuilder("User All Reviews -> \n");
         for (Model r : reviews) {

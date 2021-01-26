@@ -22,7 +22,6 @@ public class GetUserReviewResult extends CommandResult {
 
     }
 
-    @Override
     public String printHtml() {
         ArrayList<String> header = new ArrayList<>();
         header.add("Review Id");
@@ -62,7 +61,6 @@ public class GetUserReviewResult extends CommandResult {
         return h.toString();
     }
 
-    @Override
     public String printPlainText() {
         StringBuilder sb = new StringBuilder("\nReviewID = " + review.getId()
                 + "\nSummary = " + review.getSummary()

@@ -14,6 +14,10 @@ import java.util.List;
 public class CreateMovieReviewResult extends CommandResult {
     private Review review;
 
+    public CreateMovieReviewResult() {
+
+    }
+
     public CreateMovieReviewResult(List<Model> reviews) {
         if (reviews.size() != 0) {
             this.review = (Review) reviews.get(0);
@@ -21,7 +25,6 @@ public class CreateMovieReviewResult extends CommandResult {
 
     }
 
-    @Override
     public String printHtml() {
         ArrayList<String> header = new ArrayList<>();
         header.add("Id");
@@ -61,17 +64,6 @@ public class CreateMovieReviewResult extends CommandResult {
 
         );
         return h.toString();
-    }
-
-    @Override
-    public String printPlainText() {
-        return review == null ? "Review not created" : "Created Review -> "
-                + "ReviewID = " + review.getId()
-                + "\nSummary = " + review.getSummary()
-                + "\nComplete Review = " + review.getCompleteReview()
-                + "\nStars = " + review.getRating()
-                + "\nMovieID = " + review.getMovie().getMid()
-                + "\nMovie Critic = " + review.getMovieCritic().getName();
     }
 
     @Override

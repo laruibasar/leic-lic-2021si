@@ -37,7 +37,6 @@ public class GetMovieDetailsResult extends CommandResult {
         }
     }
 
-    @Override
     public String printHtml() {
 
         ArrayList<Element> rows = new ArrayList<>();
@@ -78,7 +77,6 @@ public class GetMovieDetailsResult extends CommandResult {
         return h.print();
     }
 
-    @Override
     public String printPlainText() {
         return movie == null ? "Movie details not available" : "Movie Details -> "
                 + "MovieID = "

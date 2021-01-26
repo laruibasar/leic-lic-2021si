@@ -30,7 +30,6 @@ public class GetMoviesResult extends CommandResult {
 
     }
 
-    @Override
     public String printHtml() {
 
         ArrayList<Element> rows = new ArrayList<>();
@@ -79,7 +78,6 @@ public class GetMoviesResult extends CommandResult {
         return h.print();
     }
 
-    @Override
     public String printPlainText() {
         StringBuilder sb = new StringBuilder("Movies list: \n");
         for (Model m : movies) {

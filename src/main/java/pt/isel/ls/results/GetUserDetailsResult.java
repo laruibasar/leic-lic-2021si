@@ -39,7 +39,6 @@ public class GetUserDetailsResult extends CommandResult {
         }
     }
 
-    @Override
     public String printHtml() {
         ArrayList<Element> rows = new ArrayList<>();
         for (Review r: reviews) {
@@ -86,7 +85,6 @@ public class GetUserDetailsResult extends CommandResult {
         return h.print();
     }
 
-    @Override
     public String printPlainText() {
         StringBuilder str = new StringBuilder("\nUserId = " + user.getId() + "\nName   = " + user.getName());
         if (user.getEmail() != null) {

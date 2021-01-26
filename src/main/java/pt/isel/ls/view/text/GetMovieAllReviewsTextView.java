@@ -19,8 +19,8 @@ public class GetMovieAllReviewsTextView extends TextView implements IView {
             sb.append("ReviewID = ").append(review.getId()).append("\n");
             sb.append("Summary = ").append(review.getSummary()).append("\n");
             sb.append("Stars =").append(review.getRating()).append("\n");
-            sb.append("MovieID = ").append(review.getMovie()).append("\n");
-            sb.append("Movie Critic = ").append(review.getMovieCritic()).append("\n");
+            sb.append("MovieID = ").append(review.getMovie().getMid()).append("\n");
+            sb.append("Movie Critic = ").append(review.getMovieCritic().getId()).append("\n");
             sb.append("\n\n");
         }
         return sb.toString();

@@ -29,7 +29,6 @@ public class GetMovieReviewResult extends CommandResult {
 
     }
 
-    @Override
     public String printHtml() {
         Html h = new Html(
                 new Head(
@@ -59,7 +58,6 @@ public class GetMovieReviewResult extends CommandResult {
         return h.print();
     }
 
-    @Override
     public String printPlainText() {
         return review == null ? "Review not available" : "Movie Review: "
                 + "\nCritic      = " + review.getMovieCritic().getName()

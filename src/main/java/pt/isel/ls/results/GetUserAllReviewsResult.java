@@ -19,7 +19,6 @@ public class GetUserAllReviewsResult extends CommandResult {
         this.reviews = reviews;
     }
 
-    @Override
     public String printHtml() {
         ArrayList<String> header = new ArrayList<>();
         header.add("Review Id");
@@ -58,7 +57,6 @@ public class GetUserAllReviewsResult extends CommandResult {
         return h.toString();
     }
 
-    @Override
     public String printPlainText() {
         StringBuilder sb = new StringBuilder("User All Reviews -> \n");
         for (Model r : reviews) {
