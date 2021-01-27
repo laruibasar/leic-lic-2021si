@@ -151,8 +151,10 @@ public class MovieData extends Data implements IMovieData {
                 if (rs.isFirst()) {
                     movie = new Movie(rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getInt(9));
                 }
-                reviews.add(new Review(rs.getInt(4),rs.getString(5),
-                        rs.getInt(6),new User(rs.getInt(7),rs.getString(8))));
+                if (rs.getInt(4) > 0) {
+                    reviews.add(new Review(rs.getInt(4), rs.getString(5),
+                            rs.getInt(6), new User(rs.getInt(7), rs.getString(8))));
+                }
             }
             if (movie != null) {
                 movie.setReviews(reviews);
