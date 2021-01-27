@@ -6,10 +6,14 @@ public class HttpServletConfig {
 
     public HttpServletConfig() {
         String getPort = System.getenv("LS_HTTP_PORT");
-        if (getPort == null || Integer.getInteger(getPort) == 0) {
+        try {
+            if (getPort == null || Integer.getInteger(getPort) == 0) {
+                port = DEFAULT_PORT;
+            } else {
+                port = Integer.getInteger(getPort);
+            }
+        } catch (Exception e) {
             port = DEFAULT_PORT;
-        } else {
-            port = Integer.getInteger(getPort);
         }
     }
 
