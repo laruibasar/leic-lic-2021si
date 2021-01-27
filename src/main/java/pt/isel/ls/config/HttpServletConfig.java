@@ -6,14 +6,11 @@ public class HttpServletConfig {
 
     public HttpServletConfig() {
         String getPort = System.getenv("PORT");
-        try {
-            if (getPort == null || Integer.getInteger(getPort) == 0) {
-                port = DEFAULT_PORT;
-            } else {
-                port = Integer.getInteger(getPort);
-            }
-        } catch (Exception e) {
+        System.out.println("DEBUG: " + getPort);
+        if (getPort == null || Integer.getInteger(getPort) == 0) {
             port = DEFAULT_PORT;
+        } else {
+            port = Integer.getInteger(getPort);
         }
     }
 
