@@ -7,10 +7,10 @@ public class HttpServletConfig {
     public HttpServletConfig() {
         String getPort = System.getenv("PORT");
         System.out.println("DEBUG: " + getPort);
-        if (getPort == null || Integer.getInteger(getPort) == 0) {
+        if (getPort == null || Integer.parseInt(getPort) == 0) {
             port = DEFAULT_PORT;
         } else {
-            port = Integer.getInteger(getPort);
+            port = Integer.parseInt(getPort);
         }
     }
 
