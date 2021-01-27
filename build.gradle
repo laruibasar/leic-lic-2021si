@@ -24,3 +24,5 @@ task copyRuntimeDependencies(type: Copy) {
     from configurations.runtime
 }
 
+// stage task is used by Heroku
+task stage(dependsOn: ['assemble', 'copyRuntimeDependencies'])
