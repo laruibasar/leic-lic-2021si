@@ -5,7 +5,7 @@ public class HttpServletConfig {
     private int port;
 
     public HttpServletConfig() {
-        String getPort = System.getenv("LS_HTTP_PORT");
+        String getPort = System.getenv("PORT");
         try {
             if (getPort == null || Integer.getInteger(getPort) == 0) {
                 port = DEFAULT_PORT;
