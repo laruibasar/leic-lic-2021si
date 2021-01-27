@@ -137,7 +137,7 @@ public class MovieData extends Data implements IMovieData {
                    + "from reviews "
                    + "where movie = ?) as rating) "
                    + "from movies left join reviews on(movies.mid = reviews.movie) "
-                   + "join left users on(reviews.movieCritic = users.uid) "
+                   + "left join users on(reviews.movieCritic = users.uid) "
                    + "where mid = ?;";
 
             PreparedStatement stmt = connection.prepareStatement(query);
