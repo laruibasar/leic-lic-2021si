@@ -22,7 +22,8 @@ public class Tree {
         } else {
             Handler handler = null;
             for (Node child : node.getChildren()) {
-                if ((handler = lookForHandler(child, cmd)) != null) {
+                if ((handler = lookForHandler(child, cmd)) != null &&
+                child.getCommand().getMethod() == cmd.getMethod()) {
                     return handler;
                 }
             }
@@ -39,7 +40,8 @@ public class Tree {
         } else {
             Command command = null;
             for (Node child : node.getChildren()) {
-                if ((command = findCommand(child, cmd)) != null) {
+                if ((command = findCommand(child, cmd)) != null &&
+                        child.getCommand().getMethod() == cmd.getMethod()) {
                     return command;
                 }
             }
@@ -48,16 +50,45 @@ public class Tree {
     }
 
 
-    public void buildTree(ArrayList<Node> leaves) {
+    public void buildTree(ArrayList<Node> leaves, int commandTypes) {
+
+        //get all commands to display OPTION / command
+        setCommands(leaves);
+
+        //Root is the listen method
         this.root = leaves.get(0);
-        commands.add(root.getCommand());
-        int children = 1;
-        for (Node l: leaves) {
-            for (int i = 0; i < 2 && children < leaves.size(); i++, children++) {
-                l.addChild(leaves.get(children));
-                commands.add(leaves.get(children).getCommand());
+
+        int index = commandTypes;
+        //add all app methods as children to root
+        for (int i = 1; i < commandTypes + 1; i++) {
+            this.root.addChild(leaves.get(i));
+            if (index < leaves.size() - 1) {
+                index = insert(leaves.get(i), index, i, leaves);
             }
         }
+    }
+
+    private void setCommands(ArrayList<Node> leaves) {
+        for (Node l: leaves) {
+            commands.add(l.getCommand());
+        }
+    }
+
+    //acrescenta todos os  childs ao respetivo method, e retorna o índice onde foi interrompido
+    public int insert(Node node, int start, int parent, ArrayList<Node> leaves) {
+        int index = start + 1;
+        leaves.get(parent).addChild(leaves.get(start));
+        while(leaves.get(index).getCommand().getMethod() == node.getCommand().getMethod()
+                && index < leaves.size() - 1) {
+
+            for (int i = 0; index < leaves.size() - 1 && i < 2; i++, index++) {
+                leaves.get(start).addChild(leaves.get(index));
+            }
+            ++start;
+        }
+
+        //position for next
+        return index;
     }
 
     public ArrayList<Command> getAllCommands() {
