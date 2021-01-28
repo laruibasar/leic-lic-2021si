@@ -2,27 +2,32 @@ package pt.isel.ls.results;
 
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Movie;
-import pt.isel.ls.view.common.A;
-import pt.isel.ls.view.common.Body;
-import pt.isel.ls.view.common.Br;
-import pt.isel.ls.view.common.Element;
-import pt.isel.ls.view.common.Head;
-import pt.isel.ls.view.common.Html;
-import pt.isel.ls.view.common.Table;
-import pt.isel.ls.view.common.Tbody;
-import pt.isel.ls.view.common.Td;
-import pt.isel.ls.view.common.Th;
-import pt.isel.ls.view.common.Thead;
-import pt.isel.ls.view.common.Title;
-import pt.isel.ls.view.common.Tr;
+import pt.isel.ls.view.common.elements.A;
+import pt.isel.ls.view.common.elements.Body;
+import pt.isel.ls.view.common.elements.Br;
+import pt.isel.ls.view.common.elements.Element;
+import pt.isel.ls.view.common.elements.Head;
+import pt.isel.ls.view.common.elements.Html;
+import pt.isel.ls.view.common.elements.Table;
+import pt.isel.ls.view.common.elements.Tbody;
+import pt.isel.ls.view.common.elements.Td;
+import pt.isel.ls.view.common.elements.Th;
+import pt.isel.ls.view.common.elements.Thead;
+import pt.isel.ls.view.common.elements.Title;
+import pt.isel.ls.view.common.elements.Tr;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class GetMoviesResult extends CommandResult {
-    private final List<Model> movies;
+    private List<Model> movies = new LinkedList<>();
 
     public GetMoviesResult(List<Model> movies) {
         this.movies = movies;
+    }
+
+    public GetMoviesResult() {
+
     }
 
     @Override
@@ -89,5 +94,15 @@ public class GetMoviesResult extends CommandResult {
     @Override
     public boolean asResult() {
         return !movies.isEmpty();
+    }
+
+    @Override
+    public Object getResult() {
+        return movies;
+    }
+
+    @Override
+    public int getResultId() {
+        return 0;
     }
 }

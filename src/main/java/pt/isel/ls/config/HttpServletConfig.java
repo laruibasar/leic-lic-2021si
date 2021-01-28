@@ -5,11 +5,11 @@ public class HttpServletConfig {
     private int port;
 
     public HttpServletConfig() {
-        String getPort = System.getenv("LS_HTTP_PORT");
-        if (getPort == null || Integer.getInteger(getPort) == 0) {
+        String getPort = System.getenv("PORT");
+        if (getPort == null || Integer.parseInt(getPort) == 0) {
             port = DEFAULT_PORT;
         } else {
-            port = Integer.getInteger(getPort);
+            port = Integer.parseInt(getPort);
         }
     }
 

@@ -1,13 +1,12 @@
 package pt.isel.ls;
 
 import pt.isel.ls.config.AppConfig;
-import pt.isel.ls.config.RouterException;
-import pt.isel.ls.handlers.common.HandlerException;
 import pt.isel.ls.results.CommandResult;
 import pt.isel.ls.results.ExitResult;
 import pt.isel.ls.utils.Command;
-import pt.isel.ls.utils.Header;
 import pt.isel.ls.view.PrintResults;
+import pt.isel.ls.view.common.IView;
+import pt.isel.ls.view.common.ViewRouter;
 
 import java.util.Scanner;
 
@@ -28,7 +27,9 @@ public class App {
             if (args.length == 0) {
                 /* run LISTEN / command on start interactive mode */
                 runOnce(new String[] {"LISTEN", "/"});
-                run();
+                if (!AppConfig.isRemoteDeploy()) {
+                    run();
+                }
             } else {
                 runOnce(args);
             }
@@ -79,15 +80,20 @@ public class App {
             }
 
             showResults(cmd, result);
-        } catch (RouterException | HandlerException e) {
+        } catch (Exception e) {
             System.out.println("ERROR " + e.getMessage() + "\n");
         }
 
         return true;
     }
 
-    private static void showResults(Command cmd, CommandResult cr) {
-        Header hd = cmd.getHeader();
-        System.out.println(new PrintResults(cr, hd).toString());
+    private static void showResults(Command cmd, CommandResult cr) throws Exception {
+        ViewRouter viewRouter = AppConfig.getViewRouter();
+        try {
+            IView view = viewRouter.findView(cmd.getHeader(), cr);
+            PrintResults.output(cmd, view.print(cmd, cr));
+        } catch (Exception e) {
+            throw new Exception(e);
+        }
     }
 }

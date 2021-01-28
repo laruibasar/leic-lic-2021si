@@ -2,26 +2,30 @@ package pt.isel.ls.results;
 
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.MovieRating;
-import pt.isel.ls.view.common.A;
-import pt.isel.ls.view.common.Body;
-import pt.isel.ls.view.common.Br;
-import pt.isel.ls.view.common.Head;
-import pt.isel.ls.view.common.Html;
-import pt.isel.ls.view.common.Li;
-import pt.isel.ls.view.common.Table;
-import pt.isel.ls.view.common.Tbody;
-import pt.isel.ls.view.common.Td;
-import pt.isel.ls.view.common.Text;
-import pt.isel.ls.view.common.Th;
-import pt.isel.ls.view.common.Thead;
-import pt.isel.ls.view.common.Title;
-import pt.isel.ls.view.common.Tr;
-import pt.isel.ls.view.common.Ul;
+import pt.isel.ls.view.common.elements.A;
+import pt.isel.ls.view.common.elements.Body;
+import pt.isel.ls.view.common.elements.Br;
+import pt.isel.ls.view.common.elements.Head;
+import pt.isel.ls.view.common.elements.Html;
+import pt.isel.ls.view.common.elements.Li;
+import pt.isel.ls.view.common.elements.Table;
+import pt.isel.ls.view.common.elements.Tbody;
+import pt.isel.ls.view.common.elements.Td;
+import pt.isel.ls.view.common.elements.Text;
+import pt.isel.ls.view.common.elements.Th;
+import pt.isel.ls.view.common.elements.Thead;
+import pt.isel.ls.view.common.elements.Title;
+import pt.isel.ls.view.common.elements.Tr;
+import pt.isel.ls.view.common.elements.Ul;
 
 import java.util.List;
 
 public class GetMovieRatingResult extends CommandResult {
     private MovieRating movieRating;
+
+    public GetMovieRatingResult() {
+
+    }
 
     public GetMovieRatingResult(List<Model> ratings) {
         if (ratings.size() != 0) {
@@ -89,5 +93,15 @@ public class GetMovieRatingResult extends CommandResult {
     @Override
     public boolean asResult() {
         return movieRating != null;
+    }
+
+    @Override
+    public Object getResult() {
+        return movieRating;
+    }
+
+    @Override
+    public int getResultId() {
+        return 0;
     }
 }

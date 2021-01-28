@@ -5,7 +5,10 @@ import pt.isel.ls.utils.Command;
 
 public class Router {
 
-    private final Tree tree;
+    private Tree tree;
+
+    public Router() {
+    }
 
     public Router(Tree tree) {
         this.tree = tree;
