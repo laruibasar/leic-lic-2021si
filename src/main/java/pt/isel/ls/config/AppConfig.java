@@ -46,6 +46,21 @@ public class AppConfig {
         return loadMessage;
     }
 
+    /* check for remote deploy environment
+    * this will allow to run only the servlet in endless loop
+    * until Heroku terminates the app when:
+    *  - no connections
+    *  - on git push
+    *  - there is a way with processes and workers?
+    *
+    * set environment variable REMOTE = 1 ou HEROKU
+    */
+    private static boolean remoteDeploy = false;
+
+    public static boolean isRemoteDeploy() {
+        return remoteDeploy;
+    }
+
     /* store db config */
     private static DataBaseConfig database;
 
@@ -168,7 +183,6 @@ public class AppConfig {
             database = new DataBaseConfig();
 
             router = new Router();
-
             loadRouter();
 
             viewRouter = new ViewRouter();
@@ -176,6 +190,11 @@ public class AppConfig {
 
             httpConfig = new HttpServletConfig();
             http = new AppHttpServlet();
+
+            String remote = System.getenv("REMOTE");
+            if (remote != null && remote.length() > 0) {
+                remoteDeploy = true;
+            }
 
             loadConfig = true;
             loadMessage = "OK";

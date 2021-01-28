@@ -57,7 +57,7 @@ public class ListenHttpServlet extends HttpServlet {
                     respBody = view.print(cmd, cr);
                 } catch (Exception e) {
                     statusCode = 404;
-                    respBody = "Resource not found";
+                    respBody = "Resource not found: " + e.getMessage();
                 }
             } else {
                 statusCode = 404;
@@ -65,10 +65,10 @@ public class ListenHttpServlet extends HttpServlet {
             }
         } catch (RouterException e) {
             statusCode = 404;
-            respBody = "Resource not found";
+            respBody = "Resource not found: " + e.getMessage();
         } catch (HandlerException e) {
             statusCode = 500;
-            respBody = "Internal Error";
+            respBody = "Internal Error: " + e.getMessage();
         }
 
         //Format response body to submit the View of the CommandResult

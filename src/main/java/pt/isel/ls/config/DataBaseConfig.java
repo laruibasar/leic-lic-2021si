@@ -9,7 +9,7 @@ public class DataBaseConfig {
     public DataBaseConfig() throws EnvironmentVariableException {
         jdbcUrl = System.getenv("JDBC_DATABASE_URL");
         if (jdbcUrl == null || jdbcUrl.length() == 0) {
-            throw new EnvironmentVariableException("JDBC_DATABASE_URL not set");
+            throw new EnvironmentVariableException("DATABASE_URL not set");
         }
         Data.setDataConnection(new DataConnection(jdbcUrl));
     }

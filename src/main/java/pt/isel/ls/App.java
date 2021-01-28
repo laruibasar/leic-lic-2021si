@@ -27,7 +27,9 @@ public class App {
             if (args.length == 0) {
                 /* run LISTEN / command on start interactive mode */
                 runOnce(new String[] {"LISTEN", "/"});
-                run();
+                if (!AppConfig.isRemoteDeploy()) {
+                    run();
+                }
             } else {
                 runOnce(args);
             }
