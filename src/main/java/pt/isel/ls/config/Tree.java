@@ -8,20 +8,12 @@ import java.util.ArrayList;
 public class Tree {
     private Node root;
 
-    /**Serve para listar os comandos disponíveis para o utilizador "OPTION /"*/
     private ArrayList<Command> commands = new ArrayList<>();
 
     public Node getRoot() {
         return root;
     }
 
-    /**
-                                1º
-                    2º                        9º
-              3º         6º             10º        13º
-           4º   5º    7º    8º      11º    12º  14º   15º
-
-     */
     public Handler lookForHandler(Node node, Command cmd) {
         if (node == null) {
             return null;
@@ -31,15 +23,31 @@ public class Tree {
         } else {
             Handler handler = null;
             for (Node child : node.getChildren()) {
-                if ((handler = lookForHandler(child, cmd)) != null &&
-                child.getCommand().getMethod() == cmd.getMethod()) {
-                    return handler;
+                if (child.getCommand().getMethod() == cmd.getMethod()) {
+                    if ((handler = lookForHandler(child, cmd)) != null) {
+                        return handler;
+                    }
                 }
             }
         }
         return null;
     }
 
+    /**
+     *
+     * @param node root of tree (first time method is called)
+     * @param cmd Command to search for
+     * @return null if Command is not found, or the respective Command
+     *
+     * search method
+     *
+     *                                   1º
+     *                          2º if child.getMethod == cmd.getMethod
+     *                          3º
+     *               4º                   11º
+     *          5º        8º         12º       15º
+     *      6º    7º  9º     10º 13º   14º 16º     17º
+     */
     public Command findCommand(Node node, Command cmd) {
         if (node == null) {
             return null;
@@ -49,20 +57,36 @@ public class Tree {
         } else {
             Command command = null;
             for (Node child : node.getChildren()) {
-                if ((command = findCommand(child, cmd)) != null &&
-                        child.getCommand().getMethod() == cmd.getMethod()) {
-                    return command;
+                if (child.getCommand().getMethod() == cmd.getMethod()) {
+                    if ((command = findCommand(child, cmd)) != null) {
+                        return command;
+                    }
                 }
             }
         }
         return null;
     }
 
-<<<<<<< HEAD
-
+    /**
+     *
+     * @param leaves tree nodes
+     * @param commandTypes number of different type of Command methods
+     * Every command method type has is own tree, in order to speed the search.
+     *
+     * Tree formation
+     *
+     *                                                      listen /
+     *
+     *                     get /                     post /                      delete /           option /        exit /
+     *
+     *                     get /                     post /                      delete /
+     *               get /      get /            post /     post /          delete /     delete /
+     *          get /  get / get /  get /   post /  post / post /  post /
+     *                     ......                       .....                       ........
+     */
     public void buildTree(ArrayList<Node> leaves, int commandTypes) {
 
-        //get all commands to display OPTION / command
+        //get all commands ir order to display Command -> OPTION /
         setCommands(leaves);
 
         //Root is the listen method
@@ -78,13 +102,15 @@ public class Tree {
         }
     }
 
-    private void setCommands(ArrayList<Node> leaves) {
-        for (Node l: leaves) {
-            commands.add(l.getCommand());
-        }
-    }
 
-    //acrescenta todos os  childs ao respetivo method, e retorna o índice onde foi interrompido
+    /**
+     * Add all children to the respective Method type, making an sub-tree
+     * @param node parent node
+     * @param start position of first children
+     * @param parent parent position
+     * @param leaves tree nodes list
+     * @return position of the next children type, for other parent type
+     */
     public int insert(Node node, int start, int parent, ArrayList<Node> leaves) {
         int index = start + 1;
         leaves.get(parent).addChild(leaves.get(start));
@@ -93,28 +119,16 @@ public class Tree {
 
             for (int i = 0; index < leaves.size() - 1 && i < 2; i++, index++) {
                 leaves.get(start).addChild(leaves.get(index));
-=======
-    /**
-     * Cada folha da árvore têm no máximo dois filhos próximos.
-     * A raíz da árvore é o primeiro elemento do arrayList.
-     *
-     * @param leaves arrayList of Router commands
-     */
-    public void buildTree(ArrayList<Node> leaves) {
-        this.root = leaves.get(0);
-        commands.add(root.getCommand());
-        int leaf = 1;
-        for (Node l: leaves) {
-            for (int i = 0; i < 2 && leaf < leaves.size(); i++, leaf++) {
-                l.addChild(leaves.get(leaf));
-                commands.add(leaves.get(leaf).getCommand());
->>>>>>> 70d472368bface5f825e642076d5205a4c192c7d
             }
             ++start;
         }
-
-        //position for next
         return index;
+    }
+
+    private void setCommands(ArrayList<Node> leaves) {
+        for (Node l: leaves) {
+            commands.add(l.getCommand());
+        }
     }
 
     public ArrayList<Command> getAllCommands() {
