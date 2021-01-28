@@ -2,11 +2,11 @@ package pt.isel.ls.results;
 
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.User;
-import pt.isel.ls.view.html.body.Body;
-import pt.isel.ls.view.html.body.Table;
-import pt.isel.ls.view.html.head.Head;
-import pt.isel.ls.view.html.head.Title;
-import pt.isel.ls.view.html.Html;
+import pt.isel.ls.view.htmlold.Html;
+import pt.isel.ls.view.htmlold.body.Body;
+import pt.isel.ls.view.htmlold.body.Table;
+import pt.isel.ls.view.htmlold.head.Head;
+import pt.isel.ls.view.htmlold.head.Title;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +59,17 @@ public class CreateUserResult extends CommandResult {
 
     @Override
     public String printPlainText() {
-        return user == null ? "User not created" : "Created User -> " + user.toString();
+        return user == null ? "User not created" : "Created User -> "
+                + "\nUserid = "
+                + user.getId()
+                + "\nName = "
+                + user.getName()
+                + "\nEmail ="
+                + user.getEmail();
+    }
+
+    @Override
+    public boolean asResult() {
+        return user != null;
     }
 }

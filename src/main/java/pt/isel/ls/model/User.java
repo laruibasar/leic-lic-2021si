@@ -1,9 +1,12 @@
 package pt.isel.ls.model;
 
+import java.util.ArrayList;
+
 public class User extends Model {
     private int id;
     private String name;
     private String email;
+    private ArrayList<Review> reviews = new ArrayList<>();
 
     public User(){
 
@@ -17,6 +20,10 @@ public class User extends Model {
 
     public User(int id, String name) {
         this.id = id;
+        this.name = name;
+    }
+
+    public User(String name) {
         this.name = name;
     }
 
@@ -44,13 +51,12 @@ public class User extends Model {
         this.email = email;
     }
 
-
-    @Override
-    public String toString() {
-        StringBuilder str = new StringBuilder("UserId = " + id + " Name = " + name);
-        if (email != null) {
-            str.append(" Email = " + email);
-        }
-        return str.toString();
+    public ArrayList<Review> getReviews() {
+        return reviews;
     }
+
+    public void setReviews(ArrayList<Review> reviews) {
+        this.reviews = reviews;
+    }
+
 }

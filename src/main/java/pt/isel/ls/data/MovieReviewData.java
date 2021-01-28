@@ -56,19 +56,21 @@ public class MovieReviewData extends Data implements IMovieReviewData {
 
         try {
 
-            final String query = "select rid, summary, completeReview, rating, "
-                    + "movie, movieCritic from reviews where movie = ? and rid = ?;";
+            final String query = "select reviews.rid, reviews.summary, reviews.completeReview, reviews.rating,"
+                    + " movies.mid, movies.title, movies.year, users.uid, users.name"
+                    + " from reviews"
+                    + " inner join movies on reviews.movie = movies.mid"
+                    + " inner join users on reviews.movieCritic = users.uid"
+                    + " where rid = ? and movie = ?;";
 
             PreparedStatement stmt = connection.prepareStatement(query);
-            stmt.setInt(1, movieId);
-            stmt.setInt(2, review);
+            stmt.setInt(1, review);
+            stmt.setInt(2, movieId);
 
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                User user = new User();
-                Movie movie = new Movie();
-                movie.setId(movieId);
-                user.setId(rs.getInt(6));
+                User user = new User(rs.getInt(8), rs.getString(9));
+                Movie movie = new Movie(rs.getInt(5), rs.getString(6), rs.getInt(7));
                 reviews.add(
                         new Review(
                             rs.getInt(1),
@@ -97,18 +99,19 @@ public class MovieReviewData extends Data implements IMovieReviewData {
 
         try {
 
-            final String query = "select rid, summary, rating, "
-                    + "movie, movieCritic from reviews where movie = ?;";
+            final String query = "select rid, summary, rating,"
+                    + "movies.mid, movies.title, users.name "
+                    + "from reviews join movies on(reviews.movie = movies.mid) "
+                    + "join users on(reviews.movieCritic = users.uid)"
+                    + "where movie = ?;";
 
             PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setInt(1, movieId);
 
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                User user = new User();
-                Movie movie = new Movie();
-                movie.setId(movieId);
-                user.setId(rs.getInt(5));
+                User user = new User(rs.getString(6));
+                Movie movie = new Movie(rs.getInt(4),rs.getString(5));
                 reviews.add(
                         new Review(
                                 rs.getInt(1),

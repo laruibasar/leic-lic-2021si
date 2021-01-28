@@ -2,11 +2,11 @@ package pt.isel.ls.results;
 
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Review;
-import pt.isel.ls.view.html.Html;
-import pt.isel.ls.view.html.body.Body;
-import pt.isel.ls.view.html.body.Table;
-import pt.isel.ls.view.html.head.Head;
-import pt.isel.ls.view.html.head.Title;
+import pt.isel.ls.view.htmlold.Html;
+import pt.isel.ls.view.htmlold.body.Body;
+import pt.isel.ls.view.htmlold.body.Table;
+import pt.isel.ls.view.htmlold.head.Head;
+import pt.isel.ls.view.htmlold.head.Title;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +65,17 @@ public class DeleteMovieReviewResult extends CommandResult {
 
     @Override
     public String printPlainText() {
-        return review == null ? "Review not deleted" : "Deleted Review -> " + review.toString();
+        return review == null ? "Review not deleted" : "Deleted Review -> "
+                + "ReviewID = " + review.getId()
+                + "\nSummary = " + review.getSummary()
+                + "\nComplete Review = " + review.getCompleteReview()
+                + "\nStars = " + review.getRating()
+                + "\nMovieID = " + review.getMovie().getMid()
+                + "\nMovie Critic = " + review.getMovieCritic().getName();
+    }
+
+    @Override
+    public boolean asResult() {
+        return review != null;
     }
 }

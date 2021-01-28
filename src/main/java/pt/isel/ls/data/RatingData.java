@@ -123,6 +123,16 @@ public class RatingData extends Data implements IRatingData {
                         rs.getInt(6)));
             }
 
+            stmt = connection.prepareStatement(
+                    "select title from movies where mid = ?"
+            );
+            stmt.setInt(1, movieId);
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                MovieRating mr = (MovieRating) ratings.get(0);
+                mr.getMovie().setTitle(rs.getString(1));
+            }
+
             stmt.close();
         } catch (Exception e) {
             throw new DataConnectionException("Unable to get ratings "

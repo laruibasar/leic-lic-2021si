@@ -14,6 +14,7 @@ import pt.isel.ls.handlers.GetUserReviewHandler;
 import pt.isel.ls.handlers.ListenHandler;
 import pt.isel.ls.handlers.OptionHandler;
 import pt.isel.ls.handlers.RateMovieHandler;
+import pt.isel.ls.handlers.RootHandler;
 import pt.isel.ls.http.AppHttpServlet;
 import pt.isel.ls.utils.Command;
 import pt.isel.ls.utils.Path;
@@ -24,7 +25,6 @@ import pt.isel.ls.utils.Method;
 import pt.isel.ls.handlers.GetUserDetailsHandler;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 
 /**
@@ -77,15 +77,12 @@ public class AppConfig {
         config = new AppConfig();
     }
 
-    public static AppConfig getInstance() {
-        return config;
-    }
-
     private Tree tree;
-    private ArrayList<Node> nodes;
+    private ArrayList<Node> nodes = new ArrayList<>();
 
     private void loadRouter() {
         tree = new Tree();
+<<<<<<< HEAD
         nodes = new ArrayList<>(Arrays.asList(
 
                 //root
@@ -117,6 +114,40 @@ public class AppConfig {
                 new Node(new Command(Method.DELETE, new Path("/movies/{mid}/review/{rid}")), new DeleteMovieReviewHandler())
         ));
         tree.buildTree(nodes, 6);
+=======
+        nodes.add(new Node(new Command(Method.POST, new Path("/users")), new CreateUserHandler()));
+        nodes.add(new Node(new Command(Method.POST, new Path("/users")), new CreateUserHandler()));
+        nodes.add(new Node(new Command(Method.GET, new Path("/users")), new GetAllUsersHandler()));
+
+        nodes.add(new Node(new Command(Method.POST, new Path("/movies")), new CreateMovieHandler()));
+        nodes.add(new Node(new Command(Method.POST, new Path("/movies/{mid}/ratings")), new RateMovieHandler()));
+
+        nodes.add(new Node(new Command(Method.GET, new Path("/users/{uid}")), new GetUserDetailsHandler()));
+        nodes.add(new Node(new Command(Method.GET, new Path("/movies")), new GetMoviesHandler()));
+
+        nodes.add(new Node(new Command(Method.POST, new Path("/movies/{mid}/reviews")), new CreateMovieReviewHandler()));
+        nodes.add(new Node(new Command(Method.EXIT, new Path("/")), new ExitHandler()));
+        nodes.add(new Node(new Command(Method.OPTION, new Path("/")), new OptionHandler()));
+        nodes.add(new Node(new Command(Method.DELETE, new Path("/movies/{mid}/review/{rid}")), new DeleteMovieReviewHandler()));
+
+        nodes.add(new Node(new Command(Method.GET, new Path("/movies/{mid}")), new GetMovieDetailsHandler()));
+        nodes.add(new Node(new Command(Method.GET, new Path("/movies/{mid}/ratings")), new GetMovieRatingHandler()));
+        nodes.add(new Node(new Command(Method.GET, new Path("/movies/{mid}/reviews")), new GetMovieAllReviewsHandler()));
+        nodes.add(new Node(new Command(Method.GET, new Path("/movies/{mid}/reviews/{rid}")), new GetMovieReviewHandler()));
+
+        nodes.add(new Node(new Command(Method.GET, new Path("/users/{uid}/reviews")), new GetUserAllReviewsHandler()));
+        nodes.add(new Node(new Command(Method.GET, new Path("/users/{uid}/reviews/{rid}")), new GetUserReviewHandler()));
+        nodes.add(new Node(new Command(Method.GET, new Path("tops/ratings")), new GetTopRatingsHandler()));
+
+        nodes.add(new Node(new Command(Method.EXIT, new Path("/")), new ExitHandler()));
+        nodes.add(new Node(new Command(Method.OPTION, new Path("/")), new OptionHandler()));
+
+        nodes.add(new Node(new Command(Method.LISTEN, new Path("/")), new ListenHandler()));
+        nodes.add(new Node(new Command(Method.GET, new Path("/")), new RootHandler()));
+        tree.buildTree(nodes);
+>>>>>>> 70d472368bface5f825e642076d5205a4c192c7d
+
+
 
     }
 

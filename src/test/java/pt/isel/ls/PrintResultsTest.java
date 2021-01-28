@@ -35,7 +35,10 @@ public class PrintResultsTest {
         handler.setDataTransaction(new MockDataTransaction());
         CommandResult cr = handler.execute(cmd);
         PrintResults pr = new PrintResults(cr, cmd.getHeader());
-        final String aux = "Movies list: \n";
+        final String aux = "Movies list: \nMovieID = 1\tTitle = Gladiator\n"
+                + "MovieID = 2\tTitle = The Fast and the Furious\n"
+                + "MovieID = 3\tTitle = Finding Nemo\n"
+                + "MovieID = 4\tTitle = The Godfather\n";
         assertEquals(aux,pr.toString());
     }
 

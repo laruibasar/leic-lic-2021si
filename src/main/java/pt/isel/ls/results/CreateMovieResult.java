@@ -2,11 +2,6 @@ package pt.isel.ls.results;
 
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Movie;
-import pt.isel.ls.view.html.body.Body;
-import pt.isel.ls.view.html.body.Table;
-import pt.isel.ls.view.html.head.Head;
-import pt.isel.ls.view.html.head.Title;
-import pt.isel.ls.view.html.Html;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +38,7 @@ public class CreateMovieResult extends CommandResult {
             );
         }
 
+        /**
         Html h = new Html(
                 new Head(
                         new Title(title)
@@ -56,10 +52,23 @@ public class CreateMovieResult extends CommandResult {
 
         );
         return h.toString();
+         **/
+        return null;
     }
 
     @Override
     public String printPlainText() {
-        return movie == null ? "Movie not created" : "Created Movie -> " + movie.toString();
+        return movie == null ? "Movie not created" : "Created Movie -> "
+                + "MovieID = "
+                + movie.getMid()
+                + "\tTitle = "
+                + movie.getTitle()
+                + "\tYear = "
+                + movie.getYear();
+    }
+
+    @Override
+    public boolean asResult() {
+        return movie != null;
     }
 }
