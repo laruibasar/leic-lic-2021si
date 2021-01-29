@@ -2,14 +2,6 @@ package pt.isel.ls.results;
 
 import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Review;
-import pt.isel.ls.view.htmlold.Html;
-import pt.isel.ls.view.htmlold.body.Body;
-import pt.isel.ls.view.htmlold.body.Table;
-import pt.isel.ls.view.htmlold.head.Head;
-import pt.isel.ls.view.htmlold.head.Title;
-import pt.isel.ls.view.text.DeleteMovieReviewTextView;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class DeleteMovieReviewResult extends CommandResult {
