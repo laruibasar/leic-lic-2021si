@@ -163,13 +163,12 @@ public class AppConfig {
                 new Node(new Command(Method.GET, new Path("/users/{uid}/reviews")), new GetUserAllReviewsHandler()),
                 new Node(new Command(Method.GET, new Path("/users/{uid}/reviews/{rid}")), new GetUserReviewHandler()),
                 new Node(new Command(Method.GET, new Path("tops/ratings")), new GetTopRatingsHandler()),
+                new Node(new Command(Method.GET, new Path("/")), new RootHandler()),
 
-                new Node(new Command(Method.POST, new Path("/users")), new CreateUserHandler()),
                 new Node(new Command(Method.POST, new Path("/movies")), new CreateMovieHandler()),
                 new Node(new Command(Method.POST, new Path("/movies/{mid}/ratings")), new RateMovieHandler()),
-                new Node(new Command(Method.POST, new Path("/movies/{mid}/reviews")), new CreateMovieReviewHandler()),
+                new Node(new Command(Method.POST, new Path("/movies/{mid}/reviews")), new CreateMovieReviewHandler())
 
-                new Node(new Command(Method.DELETE, new Path("/movies/{mid}/review/{rid}")), new DeleteMovieReviewHandler())
         ));
         tree.buildTree(nodes, 6);
     }

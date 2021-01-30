@@ -9,7 +9,6 @@ import pt.isel.ls.view.htmlold.body.Bullets;
 import pt.isel.ls.view.htmlold.head.Head;
 import pt.isel.ls.view.htmlold.head.Title;
 
-
 import java.util.ArrayList;
 
 public class OptionResult extends CommandResult {

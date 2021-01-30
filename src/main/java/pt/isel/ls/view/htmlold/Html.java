@@ -1,6 +1,5 @@
 package pt.isel.ls.view.htmlold;
 
-
 import pt.isel.ls.view.htmlold.body.Body;
 import pt.isel.ls.view.htmlold.head.Head;
 

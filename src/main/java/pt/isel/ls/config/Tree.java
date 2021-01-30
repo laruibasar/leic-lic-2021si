@@ -75,13 +75,13 @@ public class Tree {
      *
      * Tree formation
      *
-     *                                                      listen /
+     *                                                 listen /
      *
-     *                     get /                     post /                      delete /           option /        exit /
+     *            get /                     post /                      delete /           option /        exit /
      *
-     *                     get /                     post /                      delete /
-     *               get /      get /            post /     post /          delete /     delete /
-     *          get /  get / get /  get /   post /  post / post /  post /
+     *            get /                     post /                      delete /
+     *      get /      get /            post /     post /          delete /     delete /
+     * get /  get / get /  get /   post /  post / post /  post /
      *                     ......                       .....                       ........
      */
     public void buildTree(ArrayList<Node> leaves, int commandTypes) {
@@ -93,6 +93,7 @@ public class Tree {
         this.root = leaves.get(0);
 
         int index = commandTypes;
+
         //add all app methods as children to root
         for (int i = 1; i < commandTypes + 1; i++) {
             this.root.addChild(leaves.get(i));
@@ -114,7 +115,7 @@ public class Tree {
     public int insert(Node node, int start, int parent, ArrayList<Node> leaves) {
         int index = start + 1;
         leaves.get(parent).addChild(leaves.get(start));
-        while(leaves.get(index).getCommand().getMethod() == node.getCommand().getMethod()
+        while (leaves.get(index).getCommand().getMethod() == node.getCommand().getMethod()
                 && index < leaves.size() - 1) {
 
             for (int i = 0; index < leaves.size() - 1 && i < 2; i++, index++) {
