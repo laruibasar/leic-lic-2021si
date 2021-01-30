@@ -20,6 +20,7 @@ import pt.isel.ls.results.CreateMovieResult;
 import pt.isel.ls.results.CreateMovieReviewResult;
 import pt.isel.ls.results.CreateUserResult;
 import pt.isel.ls.results.DeleteMovieReviewResult;
+import pt.isel.ls.results.ExitResult;
 import pt.isel.ls.results.GetAllUsersResult;
 import pt.isel.ls.results.GetMovieAllReviewsResult;
 import pt.isel.ls.results.GetMovieDetailsResult;
@@ -43,6 +44,7 @@ import pt.isel.ls.view.html.CreateMovieHtmlView;
 import pt.isel.ls.view.html.CreateMovieReviewHtmlView;
 import pt.isel.ls.view.html.CreateUserHtmlView;
 import pt.isel.ls.view.html.DeleteMovieReviewHtmlView;
+import pt.isel.ls.view.html.ExitHtmlView;
 import pt.isel.ls.view.html.GetAllMoviesHtmlView;
 import pt.isel.ls.view.html.GetAllUsersHtmlView;
 import pt.isel.ls.view.html.GetMovieAllReviewsHtmlView;
@@ -51,12 +53,14 @@ import pt.isel.ls.view.html.GetMovieRatingsHtmlView;
 import pt.isel.ls.view.html.GetMovieReviewHtmlView;
 import pt.isel.ls.view.html.GetTopsRatingsHtmlView;
 import pt.isel.ls.view.html.GetUserDetailHtmlView;
+import pt.isel.ls.view.html.ListenHtmlView;
 import pt.isel.ls.view.html.OptionHtmlView;
 import pt.isel.ls.view.html.RootHtmlView;
 import pt.isel.ls.view.text.CreateMovieReviewTextView;
 import pt.isel.ls.view.text.CreateMovieTextView;
 import pt.isel.ls.view.text.CreateUserTextView;
 import pt.isel.ls.view.text.DeleteMovieReviewTextView;
+import pt.isel.ls.view.text.ExitTextView;
 import pt.isel.ls.view.text.GetAllMoviesTextView;
 import pt.isel.ls.view.text.GetAllUsersTextView;
 import pt.isel.ls.view.text.GetMovieAllReviewsTextView;
@@ -205,9 +209,13 @@ public class AppConfig {
         viewRouter.addView(new Header("accept:text/html"), new GetTopRatingResult(), new GetTopsRatingsHtmlView());
 
         viewRouter.addView(new Header("accept:text/plain"), new ListenResult(), new ListenTextView());
+        viewRouter.addView(new Header("accept:text/html"), new ListenResult(), new ListenHtmlView());
 
         viewRouter.addView(new Header("accept:text/plain"), new OptionResult(), new OptionTextView());
         viewRouter.addView(new Header("accept:text/html"), new OptionResult(), new OptionHtmlView());
+
+        viewRouter.addView(new Header("accept:text/plain"), new ExitResult(), new ExitTextView());
+        viewRouter.addView(new Header("accept:text/html"), new OptionResult(), new ExitHtmlView());
 
         viewRouter.addView(new Header("accept:text/plain"),
                 new CreateMovieReviewResult(), new CreateMovieReviewTextView());
