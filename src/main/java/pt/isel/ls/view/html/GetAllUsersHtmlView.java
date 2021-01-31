@@ -19,7 +19,6 @@ import pt.isel.ls.view.common.elements.Table;
 import pt.isel.ls.view.common.elements.Tbody;
 import pt.isel.ls.view.common.elements.Td;
 import pt.isel.ls.view.common.elements.Text;
-import pt.isel.ls.view.common.elements.Textarea;
 import pt.isel.ls.view.common.elements.Th;
 import pt.isel.ls.view.common.elements.Thead;
 import pt.isel.ls.view.common.elements.Title;
@@ -47,7 +46,7 @@ public class GetAllUsersHtmlView extends HtmlView implements IView {
                         new Title("Users List")
                 ),
                 new Body(
-                        new A("Home", "/"),
+                        new A("Return home", "/"),
                         new Br(),
                         new Br(),
                         new Table(

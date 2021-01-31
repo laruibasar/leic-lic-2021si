@@ -6,7 +6,6 @@ import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Movie;
 import pt.isel.ls.model.Review;
 import pt.isel.ls.model.User;
-import pt.isel.ls.view.common.elements.A;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

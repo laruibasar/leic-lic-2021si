@@ -76,7 +76,8 @@ public class GetUserDetailHtmlView extends HtmlView implements IView {
                 new Body(
                         new A("Return home", "/"),
                         new Br(),
-                        new A("Users", "/users/"),
+                        new Br(),
+                        new A("Return all users", "/users/"),
                         new Ul(
                                 new Li(new Text(user.getName())),
                                 new Li(new Text(user.getEmail()))
