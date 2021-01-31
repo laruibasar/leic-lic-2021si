@@ -6,6 +6,7 @@ import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Movie;
 import pt.isel.ls.model.Review;
 import pt.isel.ls.model.User;
+import pt.isel.ls.view.common.elements.A;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -80,21 +81,23 @@ public class UserData extends Data implements IUserData {
                     "select users.uid, users.name, users.email, reviews.rid, reviews.summary,"
                             + " reviews.rating, movies.mid, movies.title, movies.year\n"
                             + "from users\n"
-                            + "    inner join reviews on users.uid = reviews.movieCritic\n"
-                            + "     inner join movies on reviews.movie = movies.mid\n"
+                            + "    left join reviews on users.uid = reviews.movieCritic\n"
+                            + "     left join movies on reviews.movie = movies.mid\n"
                             + "         where uid = ?;";
             PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
+            ArrayList<Review> reviews = new ArrayList<>();
             if (rs.next()) {
-                ArrayList<Review> reviews = new ArrayList<>();
                 userInformation.add(
                         new User(
                             rs.getInt(1),
                             rs.getString(2),
                             rs.getString(3))
                 );
-                do {
+            }
+            do {
+                if (rs.getInt(4) > 0) {
                     reviews.add(
                             new Review(
                                     rs.getInt(4),
@@ -105,9 +108,9 @@ public class UserData extends Data implements IUserData {
                                             rs.getInt(9)))
 
                     );
-                } while (rs.next());
-                ((User) userInformation.get(0)).setReviews(reviews);
-            }
+                }
+            } while (rs.next());
+            ((User) userInformation.get(0)).setReviews(reviews);
 
             stmt.close();
         } catch (Exception e) {
