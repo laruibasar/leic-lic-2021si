@@ -162,7 +162,7 @@ public class AppConfig {
                 new Node(new Command(Method.GET, new Path("/movies/{mid}/reviews/{rid}")), new GetMovieReviewHandler()),
                 new Node(new Command(Method.GET, new Path("/users/{uid}/reviews")), new GetUserAllReviewsHandler()),
                 new Node(new Command(Method.GET, new Path("/users/{uid}/reviews/{rid}")), new GetUserReviewHandler()),
-                new Node(new Command(Method.GET, new Path("tops/ratings")), new GetTopRatingsHandler()),
+                new Node(new Command(Method.GET, new Path("/tops/ratings")), new GetTopRatingsHandler()),
                 new Node(new Command(Method.GET, new Path("/")), new RootHandler()),
 
                 new Node(new Command(Method.POST, new Path("/movies")), new CreateMovieHandler()),

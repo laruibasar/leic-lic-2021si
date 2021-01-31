@@ -92,13 +92,14 @@ public class Tree {
         //Root is the listen method
         this.root = leaves.get(0);
 
+        //position of the second children level, left side
         int index = commandTypes;
 
-        //add all app methods as children to root
-        for (int i = 1; i < commandTypes + 1; i++) {
+        //add add remaining commands as children of the root (Method LISTEN /)
+        for (int i = 1; i < commandTypes; i++) {
             this.root.addChild(leaves.get(i));
             if (index < leaves.size() - 1) {
-                index = insert(leaves.get(i), index, i, leaves);
+                index = subTreeGenerator(leaves.get(i), index, i, leaves);
             }
         }
     }
@@ -108,18 +109,22 @@ public class Tree {
      * Add all children to the respective Method type, making an sub-tree
      * @param node parent node
      * @param start position of first children
-     * @param parent parent position
+     * @param parent root of this subtree
      * @param leaves tree nodes list
      * @return position of the next children type, for other parent type
      */
-    public int insert(Node node, int start, int parent, ArrayList<Node> leaves) {
+    public int subTreeGenerator(Node node, int start, int parent, ArrayList<Node> leaves) {
+
         int index = start + 1;
         leaves.get(parent).addChild(leaves.get(start));
+
         while (leaves.get(index).getCommand().getMethod() == node.getCommand().getMethod()
                 && index < leaves.size() - 1) {
 
-            for (int i = 0; index < leaves.size() - 1 && i < 2; i++, index++) {
-                leaves.get(start).addChild(leaves.get(index));
+            for (int i = 0; index < leaves.size() - 1 && i < 2; ++i) {
+                if (leaves.get(index).getCommand().getMethod() == node.getCommand().getMethod()) {
+                    leaves.get(start).addChild(leaves.get(index++));
+                }
             }
             ++start;
         }
