@@ -33,7 +33,9 @@ public class GetAllMoviesHtmlView extends HtmlView implements IView {
         LinkedList<Model> movies = (LinkedList<Model>) cr.getResult();
         ArrayList<Element> rows = new ArrayList<>();
         System.out.println("GET ALL MOVIES");
-        System.out.println(cmd.getParameters().getParameters());
+        String aux = cmd.getParameters().getParameters().get("skip");
+        if (aux == null) aux = "0";
+        System.out.println(aux);
 
         int count = 0;
         for (Model m : movies) {
