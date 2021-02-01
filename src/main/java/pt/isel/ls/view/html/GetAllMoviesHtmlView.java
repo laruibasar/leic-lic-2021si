@@ -42,11 +42,11 @@ public class GetAllMoviesHtmlView extends HtmlView implements IView {
             rows.add(
                     new Tr(
                             new Td(
-                                        new A(movie.getTitle(), "/movies/" + String.valueOf(movie.getMid())),
-                                        new Td(String.valueOf(movie.getYear()))
-                                )
-                        )
-                );
+                                    new A(movie.getTitle(), "/movies/" + String.valueOf(movie.getMid())),
+                                    new Td(String.valueOf(movie.getYear()))
+                            )
+                    )
+            );
         }
 
         //If size minor than 5 must not add on body
