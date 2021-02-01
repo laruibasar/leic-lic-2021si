@@ -32,6 +32,7 @@ public class GetAllMoviesHtmlView extends HtmlView implements IView {
     public String print(Command cmd, CommandResult cr) {
         LinkedList<Model> movies = (LinkedList<Model>) cr.getResult();
         ArrayList<Element> rows = new ArrayList<>();
+        int skip = Integer.parseInt(cmd.getParameters().getValue("skip"));
 
         for (Model m: movies) {
             Movie movie = (Movie) m;
@@ -47,11 +48,13 @@ public class GetAllMoviesHtmlView extends HtmlView implements IView {
 
         //If size minor than 5 must not add on body
         A nextPage = movies.size() >= 5
-                ? new A("Next page ","/movies?top=5&skip=")
+                ? new A("Next page ","/movies?top=5&skip=" + (skip + 5))
                 : new A("","");
 
         //Verify in cmd View the field skip
-        A prevPage = new A("Previous page", "/movies?top=5&skip=");
+        A prevPage = skip != 5
+                ? new A("Previous page", "/movies?top=5&skip=" + (skip - 5))
+                : new A("","");
 
         html = new Html(
                 new Head(
