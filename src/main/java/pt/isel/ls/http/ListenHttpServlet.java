@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class ListenHttpServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(ListenHttpServlet.class);
+    private Charset utf8 = StandardCharsets.UTF_8;
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -72,7 +73,6 @@ public class ListenHttpServlet extends HttpServlet {
         }
 
         //Format response body to submit the View of the CommandResult
-        Charset utf8 = StandardCharsets.UTF_8;
         resp.setContentType(String.format("text/html; charset=%s", utf8.name()));
 
         //No need to change
@@ -91,7 +91,7 @@ public class ListenHttpServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int statusCode = 200;
+        int statusCode = 303;
         String respBody = "";
         Command cmd = new Command();
         CommandResult cr;
@@ -103,7 +103,6 @@ public class ListenHttpServlet extends HttpServlet {
                 req.getHeader("Accept"));
 
         try {
-            resp.setStatus(303);
 
             cmd = AppCommand.setCommand(
                     set(req.getMethod(), req.getRequestURI(), parameters)
@@ -122,23 +121,20 @@ public class ListenHttpServlet extends HttpServlet {
                 }
             } else {
                 statusCode = 404;
-                //respBody = "Resource not found";
-                resp.setHeader("Location", "/redirectFailed/" + statusCode);
+                respBody = "Resource not found";
             }
         } catch (RouterException e) {
 
-            statusCode = 404;
-            resp.setHeader("Location", "/redirectFailed/" + statusCode);
+            statusCode = 500;
+            respBody = "Internal Error: " + e.getMessage();
 
             //respBody = "Resource not found";
         } catch (HandlerException e) {
-            statusCode = 500;
-            resp.setStatus(500);
-            resp.setHeader("Location", "/redirectFailed/" + statusCode);
-            respBody = "Internal Error" + e.getMessage();
+            statusCode = 404;
+            respBody = "Resource not found: " + e.getMessage();
         }
+
         //Format response body to submit the View of the CommandResult
-        Charset utf8 = StandardCharsets.UTF_8;
         resp.setContentType(String.format("text/html; charset=%s", utf8.name()));
 
         //No need to change

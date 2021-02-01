@@ -42,8 +42,7 @@ public class MovieReviewData extends Data implements IMovieReviewData {
 
             stmt.close();
         } catch (Exception e) {
-            throw new DataConnectionException("Unable to add review to movie"
-                + review.getMovie() + "\n" + e.getMessage(), e);
+            throw new DataConnectionException("Unable to add review to movie, user not exists", e);
         }
 
         return reviews;
