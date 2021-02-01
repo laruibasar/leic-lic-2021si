@@ -30,28 +30,40 @@ import java.util.LinkedList;
 public class GetAllMoviesHtmlView extends HtmlView implements IView {
     @Override
     public String print(Command cmd, CommandResult cr) {
-        LinkedList<Model> movies = (LinkedList<Model>) cr.getResult();
-        ArrayList<Element> rows = new ArrayList<>();
 
-        for (Model m: movies) {
+        ArrayList<Element> rows = new ArrayList<>();
+        String aux = cmd.getValue("skip");
+        int skip = 0;
+        if (aux != null) {
+            skip = Integer.parseInt(aux);
+        }
+
+        LinkedList<Model> movies = (LinkedList<Model>) cr.getResult();
+        int count = 0;
+        for (Model m : movies) {
+            if (count++ == 5) {
+                break;
+            }
             Movie movie = (Movie) m;
             rows.add(
-                new Tr(
-                        new Td(
-                                new A(movie.getTitle(), "/movies/" + String.valueOf(movie.getMid())),
-                                new Td(String.valueOf(movie.getYear()))
-                        )
-                )
+                    new Tr(
+                            new Td(
+                                    new A(movie.getTitle(), "/movies/" + String.valueOf(movie.getMid())),
+                                    new Td(String.valueOf(movie.getYear()))
+                            )
+                    )
             );
         }
 
         //If size minor than 5 must not add on body
-        A nextPage = movies.size() >= 5
-                ? new A("Next page ","/movies?top=5&skip=")
+        A nextPage = movies.size() > 5
+                ? new A("Next page ","/movies?top=5&skip=" + (skip + 5))
                 : new A("","");
 
         //Verify in cmd View the field skip
-        A prevPage = new A("Previous page", "/movies?top=5&skip=");
+        A prevPage = skip >= 5
+                ? new A("Previous page", "/movies?top=5&skip=" + (skip - 5))
+                : new A("","");
 
 
         html = new Html(

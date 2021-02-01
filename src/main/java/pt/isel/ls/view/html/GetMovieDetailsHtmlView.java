@@ -29,6 +29,7 @@ import pt.isel.ls.view.common.elements.Tr;
 import pt.isel.ls.view.common.elements.Ul;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class GetMovieDetailsHtmlView extends HtmlView implements IView {
     @Override
@@ -36,7 +37,8 @@ public class GetMovieDetailsHtmlView extends HtmlView implements IView {
         Movie movie = (Movie) cr.getResult();
 
         ArrayList<Element> rows = new ArrayList<>();
-        for (Review r: movie.getReviews()) {
+        LinkedList<Review> reviews = movie.getReviews();
+        for (Review r: reviews) {
             rows.add(
                     new Tr(
                             new Td(new A(r.getSummary(),"/movies/" + movie.getMid() + "/reviews/" + r.getId())),
@@ -45,6 +47,10 @@ public class GetMovieDetailsHtmlView extends HtmlView implements IView {
                     )
             );
         }
+
+        A allReviews = reviews.size() != 0
+                ? new A("All reviews", "/movies/" + movie.getMid() + "/reviews")
+                : new A("","");
 
         html = new Html(
                 new Head(
@@ -65,7 +71,7 @@ public class GetMovieDetailsHtmlView extends HtmlView implements IView {
                                 new Tbody(rows)
                         ),
                         new Br(),
-                        new A("All reviews", "/movies/" + movie.getMid() + "/reviews"),
+                        allReviews,
                         new Br(),
                         new Text("<p>Add new review</p>"),
                         new Form(
