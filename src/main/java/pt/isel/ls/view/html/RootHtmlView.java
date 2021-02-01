@@ -27,7 +27,7 @@ public class RootHtmlView extends HtmlView implements IView {
                                         new A("List movies", "/movies")
                                 ),
                                 new Li(
-                                        new A("Top movies", "/tops/ratings&n=5&average=highest&min=1")
+                                        new A("Top movies", "/tops/ratings?n=5&average=highest&min=1")
                                 )
                         )
                 )
