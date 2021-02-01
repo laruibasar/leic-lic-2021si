@@ -34,13 +34,13 @@ public class GetMoviesHandler extends Handler implements IHandler {
 
     @Override
     public CommandResult execute(Command cmd) throws HandlerException {
-        int top = 5;
+        int top = 0; /* change to 0 for allow ALL */
         int skip = 0;
         try {
             if (cmd.getValue("top") != null) {
                 top = Integer.parseInt(cmd.getValue("top"));
-                if (top <= 0) {
-                    throw new NumberFormatException("Top cannot be negative or zero: " + top);
+                if (top < 0) {
+                    throw new NumberFormatException("Top cannot be negative: " + top);
                 }
             }
 
