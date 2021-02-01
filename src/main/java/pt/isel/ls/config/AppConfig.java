@@ -172,7 +172,6 @@ public class AppConfig {
         router.addHandler(Method.DELETE, new Path("/movies/{mid}/review/{rid}"), new DeleteMovieReviewHandler());
         router.addHandler(Method.LISTEN, new Path("/"), new ListenHandler());
         router.addHandler(Method.GET, new Path("/"), new RootHandler());
-
     }
 
     /* load all views into view router */
@@ -232,7 +231,6 @@ public class AppConfig {
                 new DeleteMovieReviewResult(), new DeleteMovieReviewTextView());
         viewRouter.addView(new Header("accept:text/html"),
                 new DeleteMovieReviewResult(), new DeleteMovieReviewHtmlView());
-
     }
 
     private AppConfig() {

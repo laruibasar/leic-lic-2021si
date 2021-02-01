@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -49,7 +48,6 @@ public class ListenHttpServlet extends HttpServlet {
             );
 
             cr = AppCommand.runCommand(cmd);
-
             if (cr.asResult()) {
                 try {
                     ViewRouter viewRouter = AppConfig.getViewRouter();
@@ -59,7 +57,7 @@ public class ListenHttpServlet extends HttpServlet {
                     respBody = view.print(cmd, cr);
                 } catch (Exception e) {
                     statusCode = 404;
-                    respBody = "Resource not found: " + e.getMessage();
+                    respBody = "Resource not found.";
                 }
             } else {
                 statusCode = 404;
@@ -67,10 +65,10 @@ public class ListenHttpServlet extends HttpServlet {
             }
         } catch (RouterException e) {
             statusCode = 404;
-            respBody = "Resource not found: " + e.getMessage();
+            respBody = "Resource not found.";
         } catch (HandlerException e) {
             statusCode = 500;
-            respBody = "Internal Error: " + e.getMessage();
+            respBody = "Internal Erro.";
         }
 
         //Format response body to submit the View of the CommandResult
@@ -91,7 +89,7 @@ public class ListenHttpServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         int statusCode = 303;
         String respBody = "";
         Command cmd = new Command();
@@ -104,13 +102,11 @@ public class ListenHttpServlet extends HttpServlet {
                 req.getHeader("Accept"));
 
         try {
-
             cmd = AppCommand.setCommand(
                     set(req.getMethod(), req.getRequestURI(), parameters)
             );
 
             cr = AppCommand.runCommand(cmd);
-
             if (cr.asResult()) {
                 /* This is a problem because on this special case, we don't go
                  * to the rating ID.
@@ -122,17 +118,14 @@ public class ListenHttpServlet extends HttpServlet {
                 }
             } else {
                 statusCode = 404;
-                respBody = "Resource not found";
+                respBody = "Resource not found.";
             }
         } catch (RouterException e) {
-
-            statusCode = 500;
-            respBody = "Internal Error: " + e.getMessage();
-
-            //respBody = "Resource not found";
-        } catch (HandlerException e) {
             statusCode = 404;
-            respBody = "Resource not found: " + e.getMessage();
+            respBody = "Resource not found.";
+        } catch (HandlerException e) {
+            statusCode = 500;
+            respBody = "Internal error.";
         }
 
         //Format response body to submit the View of the CommandResult
