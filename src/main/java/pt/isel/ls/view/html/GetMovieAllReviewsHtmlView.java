@@ -70,31 +70,6 @@ public class GetMovieAllReviewsHtmlView extends HtmlView implements IView {
                                         )
                                 ),
                                 new Tbody(rows)
-                        ),
-                        new Br(),
-                        new Text("<p>Add new review</p>"),
-                        new Form(
-                                Method.POST,
-                                "/movies/" + movie.getMid() + "/reviews",
-                                new Div(new Label("Reviewer:"),
-                                        new Input("number","uid")),
-                                new Div(new Label("Title of Review"),
-                                        new Input("text","reviewSummary")),
-                                new Label("Rate this movie:"),
-                                new Div(new Label("1"),
-                                        new Input("radio", "rating", "value=\"1\" required"),
-                                        new Label("2"),
-                                        new Input("radio", "rating", "value=\"2\" required"),
-                                        new Label("3"),
-                                        new Input("radio", "rating", "value=\"3\" required"),
-                                        new Label("4"),
-                                        new Input("radio", "rating", "value=\"4\" required"),
-                                        new Label("5"),
-                                        new Input("radio", "rating", "value=\"5\" required")),
-                                new Div(new Label("Write your review"),
-                                        new Textarea("review")),
-                                new Br(),
-                                new Input("submit", "submit")
                         )
                 )
         );
