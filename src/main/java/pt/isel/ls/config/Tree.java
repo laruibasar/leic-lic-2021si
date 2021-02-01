@@ -118,10 +118,10 @@ public class Tree {
         int index = start + 1;
         leaves.get(parent).addChild(leaves.get(start));
 
-        while (leaves.get(index).getCommand().getMethod() == node.getCommand().getMethod()
-                && index < leaves.size() - 1) {
+        while (index < leaves.size() &&
+                leaves.get(index).getCommand().getMethod() == node.getCommand().getMethod()) {
 
-            for (int i = 0; index < leaves.size() - 1 && i < 2; ++i) {
+            for (int i = 0; index < leaves.size() && i < 2; ++i) {
                 if (leaves.get(index).getCommand().getMethod() == node.getCommand().getMethod()) {
                     leaves.get(start).addChild(leaves.get(index++));
                 }
