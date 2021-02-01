@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.LinkedList;
 
 public class MovieData extends Data implements IMovieData {
@@ -99,7 +100,7 @@ public class MovieData extends Data implements IMovieData {
             if (top > 0) {
                 stmt.setInt(1, top);
             } else {
-                stmt.setString(1, "ALL");
+                stmt.setNull(1, Types.BIGINT); /* Allow for ALL */
             }
             stmt.setInt(2, skip);
             ResultSet rs = stmt.executeQuery();
