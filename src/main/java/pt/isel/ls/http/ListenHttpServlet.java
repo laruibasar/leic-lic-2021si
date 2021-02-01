@@ -36,6 +36,7 @@ public class ListenHttpServlet extends HttpServlet {
         String respBody = "";
         Command cmd = new Command();
         CommandResult cr;
+        Map<String, String[]> parameters = req.getParameterMap();
 
         log.info("incoming request: method={}, uri={}, accept={}",
                 req.getMethod(),
@@ -44,7 +45,7 @@ public class ListenHttpServlet extends HttpServlet {
 
         try {
             cmd = AppCommand.setCommand(
-                    set(req.getMethod(), req.getRequestURI(), null)
+                    set(req.getMethod(), req.getRequestURI(), parameters)
             );
 
             cr = AppCommand.runCommand(cmd);
