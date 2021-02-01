@@ -25,7 +25,7 @@ public class GetMovieReviewHtmlView extends HtmlView implements IView {
                 new Body(
                         new A("Return home", "/"),
                         new Br(),
-                        new A("Back", "/users/" + review.getMovieCritic().getId()),
+                        new A("User details", "/users/" + review.getMovieCritic().getId()),
                         new Br(),
                         new Br(),
                         new Br(),

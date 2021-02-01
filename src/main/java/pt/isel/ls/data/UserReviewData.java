@@ -68,14 +68,16 @@ public class UserReviewData extends Data implements IUserReviewData {
                 Movie movie = new Movie();
                 movie.setId(rs.getInt(5));
                 user.setId(userId);
-                reviews.add(
-                        new Review(
-                            rs.getInt(1),
-                            rs.getString(2),
-                            rs.getString(3),
-                            rs.getInt(4),
-                            movie,
-                            user));
+                if (rs.getInt(1) > 0) {
+                    reviews.add(
+                            new Review(
+                                    rs.getInt(1),
+                                    rs.getString(2),
+                                    rs.getString(3),
+                                    rs.getInt(4),
+                                    movie,
+                                    user));
+                }
             }
 
             stmt.close();

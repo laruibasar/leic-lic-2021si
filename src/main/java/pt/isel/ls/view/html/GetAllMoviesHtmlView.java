@@ -4,16 +4,21 @@ import pt.isel.ls.model.Model;
 import pt.isel.ls.model.Movie;
 import pt.isel.ls.results.CommandResult;
 import pt.isel.ls.utils.Command;
+import pt.isel.ls.utils.Method;
 import pt.isel.ls.view.common.IView;
 import pt.isel.ls.view.common.elements.A;
 import pt.isel.ls.view.common.elements.Body;
 import pt.isel.ls.view.common.elements.Br;
 import pt.isel.ls.view.common.elements.Element;
+import pt.isel.ls.view.common.elements.Form;
 import pt.isel.ls.view.common.elements.Head;
 import pt.isel.ls.view.common.elements.Html;
+import pt.isel.ls.view.common.elements.Input;
+import pt.isel.ls.view.common.elements.Label;
 import pt.isel.ls.view.common.elements.Table;
 import pt.isel.ls.view.common.elements.Tbody;
 import pt.isel.ls.view.common.elements.Td;
+import pt.isel.ls.view.common.elements.Text;
 import pt.isel.ls.view.common.elements.Th;
 import pt.isel.ls.view.common.elements.Thead;
 import pt.isel.ls.view.common.elements.Title;
@@ -48,6 +53,7 @@ public class GetAllMoviesHtmlView extends HtmlView implements IView {
         //Verify in cmd View the field skip
         A prevPage = new A("Previous page", "/movies?top=5&skip=");
 
+
         html = new Html(
                 new Head(
                         new Title("Movies List:")
@@ -68,7 +74,22 @@ public class GetAllMoviesHtmlView extends HtmlView implements IView {
                         new Br(),
                         new Br(),
                         prevPage,
-                        nextPage
+                        nextPage,
+                        new Br(),
+                        new Br(),
+                        new Text("<p>Add new Movie</p>"),
+                        new Form(
+                                Method.POST,
+                                "/movies",
+                                new Label("Title"),
+                                new Input("text", "title", "required"),
+                                new Br(),
+                                new Label("Release Year"),
+                                new Input("number", "releaseYear", "required"),
+                                new Br(),
+                                new Br(),
+                                new Input("submit", "submit")
+                        )
                 )
         );
 

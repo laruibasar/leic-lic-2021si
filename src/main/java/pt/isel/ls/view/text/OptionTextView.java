@@ -31,7 +31,6 @@ public class OptionTextView extends TextView implements IView {
                             .append("\n");
                 }
             }
-
             sb.append("\n");
         }
 

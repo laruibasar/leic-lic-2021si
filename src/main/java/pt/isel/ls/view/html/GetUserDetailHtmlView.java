@@ -26,6 +26,7 @@ import pt.isel.ls.view.common.elements.Ul;
 import java.util.ArrayList;
 
 public class GetUserDetailHtmlView extends HtmlView implements IView {
+
     @Override
     public String print(Command cmd, CommandResult cr) {
         /*
@@ -33,23 +34,39 @@ public class GetUserDetailHtmlView extends HtmlView implements IView {
          * all information available
          */
         GetUserDetailsResult result = (GetUserDetailsResult) cr;
-
-        User user = (User) result.getResult();
         ArrayList<Review> reviews = result.getReviews();
-
+        User user = (User) result.getResult();
         ArrayList<Element> rows = new ArrayList<>();
-        for (Review r: reviews) {
-            rows.add(
-                    new Tr(
-                            new Td(new A(r.getSummary(), "/movies/"
-                                    + r.getMovie().getMid()
-                                    + "/reviews/"
-                                    + r.getId())),
-                            new Td(new Text(String.valueOf(r.getRating()))),
-                            new Td(new Text(r.getMovie().getTitle())),
-                            new Td(new Text(String.valueOf(r.getMovie().getYear())))
-                    )
-            );
+        Table table;
+        if (reviews.isEmpty()) {
+            table = new Table(new Tr(
+            ));
+        } else {
+            for (Review r: reviews) {
+                rows.add(
+                        new Tr(
+                                new Td(new A(r.getSummary(), "/movies/"
+                                        + r.getMovie().getMid()
+                                        + "/reviews/"
+                                        + r.getId())),
+                                new Td(new Text(String.valueOf(r.getRating()))),
+                                new Td(new Text(r.getMovie().getTitle())),
+                                new Td(new Text(String.valueOf(r.getMovie().getYear())))
+                        )
+                );
+            }
+            table = new Table(
+                    new Thead(
+                            new Tr(
+                                    new Th("Summary"),
+                                    new Th("Rating"),
+                                    new Th("Title"),
+                                    new Th("Year")
+                            )
+                    ),
+                    new Tbody(
+                            rows
+                    ));
         }
 
         html = new Html(
@@ -57,30 +74,19 @@ public class GetUserDetailHtmlView extends HtmlView implements IView {
                         new Title("User Details")
                 ),
                 new Body(
-                        new A("Home", "/"),
+                        new A("Return home", "/"),
                         new Br(),
-                        new A("Users", "/users/"),
+                        new Br(),
+                        new A("Return all users", "/users/"),
                         new Ul(
                                 new Li(new Text(user.getName())),
                                 new Li(new Text(user.getEmail()))
                         ),
-                        new Table(
-                                new Thead(
-                                        new Tr(
-                                                new Th("Summary"),
-                                                new Th("Rating"),
-                                                new Th("Title"),
-                                                new Th("Year")
-                                        )
-                                ),
-                                new Tbody(
-                                        rows
-                                )
-                        )
-
+                        table
                 )
         );
 
         return html.print();
     }
 }
+
