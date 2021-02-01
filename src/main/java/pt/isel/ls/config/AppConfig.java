@@ -1,20 +1,6 @@
 package pt.isel.ls.config;
 
-import pt.isel.ls.handlers.CreateMovieHandler;
-import pt.isel.ls.handlers.CreateMovieReviewHandler;
-import pt.isel.ls.handlers.ExitHandler;
-import pt.isel.ls.handlers.GetMovieAllReviewsHandler;
-import pt.isel.ls.handlers.GetMovieDetailsHandler;
-import pt.isel.ls.handlers.GetMovieRatingHandler;
-import pt.isel.ls.handlers.GetMovieReviewHandler;
-import pt.isel.ls.handlers.GetMoviesHandler;
-import pt.isel.ls.handlers.GetTopRatingsHandler;
-import pt.isel.ls.handlers.GetUserAllReviewsHandler;
-import pt.isel.ls.handlers.GetUserReviewHandler;
-import pt.isel.ls.handlers.ListenHandler;
-import pt.isel.ls.handlers.OptionHandler;
-import pt.isel.ls.handlers.RateMovieHandler;
-import pt.isel.ls.handlers.RootHandler;
+import pt.isel.ls.handlers.*;
 import pt.isel.ls.http.AppHttpServlet;
 import pt.isel.ls.results.CreateMovieResult;
 import pt.isel.ls.results.CreateMovieReviewResult;
@@ -29,16 +15,13 @@ import pt.isel.ls.results.GetMovieReviewResult;
 import pt.isel.ls.results.GetMoviesResult;
 import pt.isel.ls.results.GetTopRatingResult;
 import pt.isel.ls.results.GetUserDetailsResult;
+import pt.isel.ls.results.GetRedirectErrorResult;
 import pt.isel.ls.results.ListenResult;
 import pt.isel.ls.results.OptionResult;
 import pt.isel.ls.results.RootResult;
 import pt.isel.ls.utils.Header;
 import pt.isel.ls.utils.Path;
-import pt.isel.ls.handlers.CreateUserHandler;
-import pt.isel.ls.handlers.DeleteMovieReviewHandler;
-import pt.isel.ls.handlers.GetAllUsersHandler;
 import pt.isel.ls.utils.Method;
-import pt.isel.ls.handlers.GetUserDetailsHandler;
 import pt.isel.ls.view.common.ViewRouter;
 import pt.isel.ls.view.html.CreateMovieHtmlView;
 import pt.isel.ls.view.html.CreateMovieReviewHtmlView;
@@ -56,6 +39,7 @@ import pt.isel.ls.view.html.GetUserDetailHtmlView;
 import pt.isel.ls.view.html.ListenHtmlView;
 import pt.isel.ls.view.html.OptionHtmlView;
 import pt.isel.ls.view.html.RootHtmlView;
+import pt.isel.ls.view.html.GetRedirectErrorHtmlView;
 import pt.isel.ls.view.text.CreateMovieReviewTextView;
 import pt.isel.ls.view.text.CreateMovieTextView;
 import pt.isel.ls.view.text.CreateUserTextView;
@@ -172,6 +156,8 @@ public class AppConfig {
         router.addHandler(Method.DELETE, new Path("/movies/{mid}/review/{rid}"), new DeleteMovieReviewHandler());
         router.addHandler(Method.LISTEN, new Path("/"), new ListenHandler());
         router.addHandler(Method.GET, new Path("/"), new RootHandler());
+
+        router.addHandler(Method.GET, new Path("/redirectFailed/{error}"), new GetRedirectErrorHandler());
     }
 
     /* load all views into view router */
@@ -231,6 +217,10 @@ public class AppConfig {
                 new DeleteMovieReviewResult(), new DeleteMovieReviewTextView());
         viewRouter.addView(new Header("accept:text/html"),
                 new DeleteMovieReviewResult(), new DeleteMovieReviewHtmlView());
+
+        viewRouter.addView(new Header("accept:text/html"),
+                new GetRedirectErrorResult(), new GetRedirectErrorHtmlView());
+
     }
 
     private AppConfig() {

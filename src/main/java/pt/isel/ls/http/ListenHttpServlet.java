@@ -103,6 +103,8 @@ public class ListenHttpServlet extends HttpServlet {
                 req.getHeader("Accept"));
 
         try {
+            resp.setStatus(303);
+
             cmd = AppCommand.setCommand(
                     set(req.getMethod(), req.getRequestURI(), parameters)
             );
@@ -110,7 +112,6 @@ public class ListenHttpServlet extends HttpServlet {
             cr = AppCommand.runCommand(cmd);
 
             if (cr.asResult()) {
-                resp.setStatus(303);
                 /* This is a problem because on this special case, we don't go
                  * to the rating ID.
                  */
@@ -121,16 +122,32 @@ public class ListenHttpServlet extends HttpServlet {
                 }
             } else {
                 statusCode = 404;
-                respBody = "Resource not found";
+                //respBody = "Resource not found";
+                resp.setHeader("Location", "/redirectFailed/" + statusCode);
             }
         } catch (RouterException e) {
+
             statusCode = 404;
-            respBody = "Resource not found";
+            resp.setHeader("Location", "/redirectFailed/" + statusCode);
+
+            //respBody = "Resource not found";
         } catch (HandlerException e) {
             statusCode = 500;
-            respBody = "Internal Error";
+            resp.setStatus(500);
+            resp.setHeader("Location", "/redirectFailed/" + statusCode);
+            respBody = "Internal Error" + e.getMessage();
         }
+        //Format response body to submit the View of the CommandResult
+        Charset utf8 = StandardCharsets.UTF_8;
+        resp.setContentType(String.format("text/html; charset=%s", utf8.name()));
 
+        //No need to change
+        byte[] respBodyBytes = respBody.getBytes(utf8);
+        resp.setStatus(statusCode);
+        resp.setContentLength(respBodyBytes.length);
+        OutputStream os = resp.getOutputStream();
+        os.write(respBodyBytes);
+        os.flush();
         log.info("outgoing response: status={}, Location={}",
                 resp.getStatus(),
                 resp.getHeader("Location"));
