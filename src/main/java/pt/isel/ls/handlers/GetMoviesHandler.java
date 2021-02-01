@@ -45,7 +45,7 @@ public class GetMoviesHandler extends Handler implements IHandler {
             }
 
             if (cmd.getValue("skip") != null) {
-                skip = Integer.parseInt(cmd.getValue("skip"));
+                skip = Integer.parseInt(cmd.getValue("skip")) + 1;
                 if (skip < 0) {
                     throw new NumberFormatException("Skip cannot be negative: " + skip);
                 }
